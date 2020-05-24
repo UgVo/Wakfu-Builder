@@ -1,0 +1,14 @@
+{
+	"version" : "1.67.2.178339",
+	"url_json" : "https://wakfu.cdn.ankama.com/gamedata/",
+	"url_image" : "https://static.ankama.com/wakfu/portal/game/item/64/",
+	"path_json" : "json",
+	"path_images" : "images/Items",
+	"filelist" : { 
+		"1": "items.json",
+		"2": "equipmentItemTypes.json",
+		"3": "itemProperties.json",
+		"4": "actions.json",
+		"5": "states.json"
+	}
+}
