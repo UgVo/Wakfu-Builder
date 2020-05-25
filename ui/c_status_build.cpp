@@ -25,7 +25,7 @@ c_status_build::c_status_build(QWidget *parent) :
     ui->nation_cb->setToolTip("Bonus de nation");
     ui->hm_cb->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/9_dark.png);}"
                                 "QCheckBox::indicator:checked {image: url(images/divers/9_light.png);} ");
-    ui->hm_cb->setToolTip("Bonus de nation");
+    ui->hm_cb->setToolTip("Bonus de Havre-monde");
 
     ui->bonuses->setStyleSheet(QString("background-color : %1; border-radius: 3px; color:white").arg(app_color::dark_blue));
     shadow = new QGraphicsDropShadowEffect(ui->bonuses);
