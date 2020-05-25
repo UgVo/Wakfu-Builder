@@ -24,7 +24,6 @@ class c_search_widget : public QWidget
 public:
     explicit c_search_widget(c_dbmanager* manager,QWidget *parent = nullptr);
     ~c_search_widget();
-    void setLvl(int lvl);
 
 private:
     Ui::c_search_widget *ui;
@@ -47,6 +46,7 @@ public slots:
     void init_comboBox(QComboBox* cb);
     void slot_reset();
    static bool compare_pair_id_lvl(QPair<int,int> p1, QPair<int,int> p2);
+    void setLvl(int lvl);
 
 signals:
     void new_search_result(QList<int>);

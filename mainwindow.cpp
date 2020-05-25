@@ -51,8 +51,9 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(search,&c_search_widget::new_search_result,result_display,&c_result_display::slot_new_search_result);
     build_display =  new c_build_display();
     build_display->setBuild(build);
+    status_build = new c_status_build;
     QObject::connect(result_display,&c_result_display::item_doubleCliked,build_display,&c_build_display::equip_new_item);
-
+    QObject::connect(status_build,&c_status_build::lvl_changed,search,&c_search_widget::setLvl);
     //m_watcher.setFuture(m_init = QtConcurrent::run(init,this));
 
     test();
