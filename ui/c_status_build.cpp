@@ -11,7 +11,6 @@ c_status_build::c_status_build(QWidget *parent) :
     ui->image_label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     ui->image_label->setScaledContents(true);
 
-    //ui->image_classe->setStyleSheet(QString("QWidget{background-color : %1; border: 1px solid %1; border-radius : 3px;}").arg(app_color::grey_blue));
     setStyleSheet(QString("c_status_build{background-color: %1; color:white} QLabel{color:white;} QLineEdit{color : %2;} QSpinBox{color : %2;}").arg(app_color::grey_blue).arg(app_color::green_blue));
     QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->image_label);
     shadow->setColor(QColor(91, 108, 142, 180));
