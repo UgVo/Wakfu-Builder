@@ -1,10 +1,11 @@
 #include "c_build_display.h"
 #include "ui_c_build_display.h"
 
-c_build_display::c_build_display(QWidget *parent) :
+c_build_display::c_build_display(c_build* build, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::c_build_display) {
     ui->setupUi(this);
+    _build = build;
     QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->widget_vie);
     shadow->setColor(QColor(91, 108, 142, 180));
     shadow->setOffset(2,2);
@@ -138,11 +139,11 @@ c_build_display::c_build_display(QWidget *parent) :
     foreach (QString position, c_item::position()) {
         item_position_map[position] = new c_item_viewer(position,this);
         item_position_map[position]->setStyleSheet(".QWidget{background-color: #6A8BA8; border: 1px solid #6A8BA8;}");
-        connect(item_position_map[position],&c_item_viewer::unequip,&_build,&c_build::unequip);
+        connect(item_position_map[position],&c_item_viewer::unequip,_build,&c_build::unequip);
         equipementLayout->insertWidget(item_position_map.size(),item_position_map[position]);
     }
-    connect(&_build,&c_build::updated,this,&c_build_display::update_view);
-    connect(&_build,&c_build::disableSecondWeapon,this,&c_build_display::slot_second_hand_disabled);
+    connect(_build,&c_build::updated,this,&c_build_display::update_view);
+    connect(_build,&c_build::disableSecondWeapon,this,&c_build_display::slot_second_hand_disabled);
 
 }
 
@@ -150,17 +151,17 @@ c_build_display::~c_build_display() {
     delete ui;
 }
 
-c_build c_build_display::build() const {
+c_build* c_build_display::build() const {
     return _build;
 }
 
-void c_build_display::setBuild(const c_build &build) {
+void c_build_display::setBuild(c_build* build) {
     _build = build;
     update_view();
 }
 
 void c_build_display::update_view() {
-    QMap<QString,int> bonuses = _build.getBonuses();
+    QMap<QString,int> bonuses = _build->getBonuses();
     ui->sp_pv->setValue(bonuses["Vie"]);
     ui->sp_pa->setValue(bonuses["PA"]);
     ui->sp_pm->setValue(bonuses["PM"]);
@@ -197,11 +198,11 @@ void c_build_display::update_view() {
     ui->sp_m_soin->setValue(bonuses["Maîtrise Soin"]);
     ui->sp_berserk->setValue(bonuses["Maîtrise Berserk"]);
 
-    ui->sp_r_air_100->setValue(calcul.compute_reduction(bonuses["Résistance Air"]));
-    ui->sp_r_feu_100->setValue(calcul.compute_reduction(bonuses["Résistance Feu"]));
-    ui->sp_r_eau_100->setValue(calcul.compute_reduction(bonuses["Résistance Eau"]));
-    ui->sp_r_terre_100->setValue(calcul.compute_reduction(bonuses["Résistance Terre"]));
-    QMap<QString,c_item*> equipement = _build.getEquipment_pt();
+    ui->sp_r_air_100->setValue(c_calcul::compute_reduction(bonuses["Résistance Air"]));
+    ui->sp_r_feu_100->setValue(c_calcul::compute_reduction(bonuses["Résistance Feu"]));
+    ui->sp_r_eau_100->setValue(c_calcul::compute_reduction(bonuses["Résistance Eau"]));
+    ui->sp_r_terre_100->setValue(c_calcul::compute_reduction(bonuses["Résistance Terre"]));
+    QMap<QString,c_item*> equipement = _build->getEquipment_pt();
     equipement.remove("");
 
     foreach (QString position, equipement.keys()) {
@@ -210,7 +211,7 @@ void c_build_display::update_view() {
 }
 
 void c_build_display::equip_new_item(c_item item) {
-    _build.equip(item);
+    _build->equip(item);
 }
 
 void c_build_display::slot_second_hand_disabled(bool state) {
