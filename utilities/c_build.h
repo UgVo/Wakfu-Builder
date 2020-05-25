@@ -4,6 +4,7 @@
 #include <QObject>
 #include "c_item.h"
 #include "utilities.h"
+#include "c_calcul.h"
 
 
 class c_build : public QObject
@@ -44,6 +45,7 @@ private:
     QList<QString> elements;
     QMap<QString,int> bonuses;
     QMap<QString,c_item> equipment;
+    int lvl;
 
 signals:
     void disableSecondWeapon(bool);
@@ -52,6 +54,7 @@ signals:
 public slots:
     QMap<QString,QString> equip(const c_item &item);
     void unequip(QString position);
+    void setLvl(int new_lvl);
 
 };
 
