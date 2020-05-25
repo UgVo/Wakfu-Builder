@@ -50,3 +50,8 @@ void c_status_build::slot_enter_pressed() {
     ui->image_label->setFocus();
     emit lvl_changed(ui->build_lvl->value());
 }
+
+void c_status_build::setLvl(int lvl) {
+    ui->build_lvl->setValue(lvl);
+    emit lvl_changed(lvl);
+}
