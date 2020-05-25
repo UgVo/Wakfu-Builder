@@ -102,7 +102,6 @@ public slots:
 
 
     void test();
-    void test_2();
     void test_interpret_effect();
 
 signals:

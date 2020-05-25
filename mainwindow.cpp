@@ -8,7 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     app_path = qApp->applicationDirPath();
     ui->setupUi(this);
-    //database_manager.open(QString(app_path + "/bdd/database.db"));
     datamanager.setDBManager(&database_manager);
     ui->actionCheck_new_version->setIcon(QIcon("images/divers/update32.png"));
     item_model = new c_item_model(&database_manager,this);
@@ -94,47 +93,9 @@ void MainWindow::test() {
     Q_ASSERT(!tok.formatString(QString("[ally] Applique [st5885] (1 par tour)"),{},200,4).compare("ally Applique [5885] (1 par tour)"));
     Q_ASSERT(tok.get_id_state("Applique [5885] (1 par tour)") == 5885);
     Q_ASSERT(tok.get_id_state("Applique (1 par tour)") == 0);
-    c_item epee_amakna = database_manager.get_item(26494); //Epée d'Amakna
-    c_item item = database_manager.get_item(2022); // anneau de bouze le clerc
-    c_item chap_pandawan = database_manager.get_item(24124);
-    c_item ceinture = database_manager.get_item(27492);
-    c_item vide;
-    c_build build;
-    build.equip(epee_amakna);
-    build.equip(item);
-    build.equip(chap_pandawan);
-    build.equip(ceinture);
-    build_display->setBuild(build);
-    build_display->show();
-    //item_view = new c_item_viewer(c_item::PET);
-    //item_view->setItem(&epee_amakna);
-    //item_view->show();
-    //qDebug() << tok.tokenize("[el6] : [#1]{[+3]?% des PV:}{[+3]?{[1=3]? max:{[2=3]? courants:{[3=3]? manquants:{[4=3]? max:{[5=3]? courants:{[6=3]? manquants:}}}}}}:}{[+3]?{[4<3]? du lanceur:{[7<3]? de la cible:}}:}{[-2]?{[0=2]? [ecnbi] [ecnbr]:}:}{[+2]?{[2=2]? [ecnbi]:}:}{[+2]?{[1=2]? [ecnbr]:}:}");
-    //qDebug() << tok.formatString("[el6] : [#1]{[+3]?% des PV:}{[+3]?{[1=3]? max:{[2=3]? courants:{[3=3]? manquants:{[4=3]? max:{[5=3]? courants:{[6=3]? manquants:}}}}}}:}{[+3]?{[4<3]? du lanceur:{[7<3]? de la cible:}}:}{[-2]?{[0=2]? [ecnbi] [ecnbr]:}:}{[+2]?{[2=2]? [ecnbi]:}:}{[+2]?{[1=2]? [ecnbr]:}:}",{6,1},200,2);
-    //QDir directory("images/items");
-    //QStringList images = directory.entryList(QStringList() << "*.png",QDir::Files);
-    //qDebug() << images.size();
-    //test_interpret_effect();
-    search->show();
+
     this->setWindowState(Qt::WindowMinimized);
-    //item_lite = new c_item_lite(epee_amakna);
-    //item_lite->show();
-    //QElapsedTimer timer;
-    //timer.start();
-    //database_manager.getid_item_from_actions({80,41},{5,3},{119});
-    //qDebug() << timer.nsecsElapsed();
-    //qDebug() << timer.elapsed();
     result_display->slot_new_search_result({17543, 17544, 17545, 17546, 18005, 18381, 18464, 18537, 19062, 19432, 19746, 20278, 20757, 21207, 21707, 21868, 23924, 24309, 24329, 24331, 24725, 24790, 25073, 25076, 26288, 26498, 26500, 26502, 26506, 26508, 27026, 27030, 27038, 27354, 27358});
-    //result_display->slot_new_search_result({17543, 17544, 17545});
-    //result_display->fill_page({26497});
-    result_display->show();
-    QList<c_item> item_list = database_manager.getItems({26497,26496,26495,26494});
-    database_manager.get_state(0);
-}
-
-void MainWindow::test_2() {
-    //result_display->fill_page({26497,26496,26495});
-
 }
 
 void MainWindow::test_interpret_effect() {
