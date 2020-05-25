@@ -130,6 +130,9 @@
             <property name="text">
              <string>nom</string>
             </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
           <item>
