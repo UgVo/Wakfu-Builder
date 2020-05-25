@@ -5,7 +5,7 @@ c_status_build::c_status_build(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::c_status_build) {
     ui->setupUi(this);
-    QPixmap image = QPixmap("images/portrait/190.png");
+    QPixmap image = QPixmap("images/portrait/aleat.png");
     ui->image_label->setPixmap(image);
     ui->image_label->setBackgroundRole(QPalette::Base);
     ui->image_label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
