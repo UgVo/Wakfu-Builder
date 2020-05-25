@@ -212,7 +212,7 @@ void c_search_widget::slot_niveau_preDef_changed(const QString& string) {
 void c_search_widget::setLvl(int new_lvl) {
     foreach (QString string,paliers) {
         QStringList values = string.split("-");
-        if (values.at(1).toInt()>new_lvl && values.at(0).toInt() < new_lvl) {
+        if (values.at(1).toInt()>=new_lvl && values.at(0).toInt() <= new_lvl) {
             ui->niveau_preDef->setCurrentText(string);
             lvl = new_lvl;
             return;
