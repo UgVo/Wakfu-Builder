@@ -29,6 +29,7 @@
 #include "ui/c_search_widget.h"
 #include "ui/c_item_lite.h"
 #include "ui/c_result_display.h"
+#include "ui/c_status_build.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -87,6 +88,7 @@ private:
     c_item_lite* item_lite;
     c_result_display* result_display;
     c_build build;
+    c_status_build *status_build;
 
 public slots:
     void slot_update_item(QWidget *parent);

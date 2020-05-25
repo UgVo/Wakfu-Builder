@@ -32,6 +32,7 @@ SOURCES += \
     ui/c_item_viewer.cpp \
     ui/c_result_display.cpp \
     ui/c_search_widget.cpp \
+    ui/c_status_build.cpp \
     utilities/c_action.cpp \
     utilities/c_build.cpp \
     utilities/c_calcul.cpp \
@@ -56,6 +57,7 @@ HEADERS += \
     ui/c_item_viewer.h \
     ui/c_result_display.h \
     ui/c_search_widget.h \
+    ui/c_status_build.h \
     ui/ui.h \
     utilities/c_action.h \
     utilities/c_build.h \
@@ -80,7 +82,8 @@ FORMS += \
     ui/c_item_lite.ui \
     ui/c_item_viewer.ui \
     ui/c_result_display.ui \
-    ui/c_search_widget.ui
+    ui/c_search_widget.ui \
+    ui/c_status_build.ui
 
 TRANSLATIONS += \
     Builder_Wakfu_fr_FR.ts
