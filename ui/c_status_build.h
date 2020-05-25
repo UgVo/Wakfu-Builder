@@ -23,6 +23,7 @@ private:
 
 public slots:
     void slot_enter_pressed();
+    void setLvl(int lvl);
 
 signals:
     void lvl_changed(int new_lvl);
