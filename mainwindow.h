@@ -87,7 +87,7 @@ private:
     c_search_widget* search;
     c_item_lite* item_lite;
     c_result_display* result_display;
-    c_build build;
+    c_build* build;
     c_status_build *status_build;
 
 public slots:
