@@ -16,11 +16,11 @@ class c_build_display : public QWidget
     Q_OBJECT
 
 public:
-    explicit c_build_display(QWidget *parent = nullptr);
+    explicit c_build_display(c_build* build,QWidget *parent = nullptr);
     ~c_build_display();
 
-    c_build build() const;
-    void setBuild(const c_build &build);
+    c_build* build() const;
+    void setBuild(c_build* build);
 public slots:
     void update_view();
     void equip_new_item(c_item item);
@@ -28,8 +28,7 @@ public slots:
 
 private:
     Ui::c_build_display *ui;
-    c_build _build;
-    c_calcul calcul;
+    c_build *_build;
     QMap<QString,c_item_viewer*> item_position_map;
 
 };
