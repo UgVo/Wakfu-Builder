@@ -10,7 +10,9 @@ c_item_lite::c_item_lite(c_dbmanager * database_manager, c_item item, QWidget *p
     _item = item;
     setStyleSheet(QString(".c_item_lite {background-color: %1; border: 1px solid %2; border-radius: 4px;}").arg(app_color::dark_blue).arg(app_color::color_rarity.at(_item.getRarity())));
     ui->widget_background->setStyleSheet(QString(".QWidget#widget_background{background-color: %1; border : 1px solid %1; border-radius: 4px;}").arg(app_color::dark_blue));
-    ui->name->setText(item.getName());
+    QFontMetrics metrics(ui->name->font());
+    QString elidedText = metrics.elidedText(item.getName(), Qt::ElideRight, ui->name->width());
+    ui->name->setText(elidedText);
     ui->name->setStyleSheet(QString("color : %1").arg(app_color::color_rarity.at(_item.getRarity())));
     ui->lvl->setText(QString("LvL.%1").arg(item.getLvl()));
     ui->lvl->setStyleSheet(QString("background-color: %1; border: 1px solid white; border-radius: 5px; color:white; padding: 2px ").arg(app_color::dark));
