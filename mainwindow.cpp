@@ -37,26 +37,32 @@ MainWindow::MainWindow(QWidget *parent)
     tab_3_layout->insertLayout(0,item_table_layout);
     tab_3_layout->addWidget(initModelProgress);
 
-    diag = nullptr;
-
     diag = new DialogGestion(&datamanager,datamanager.getVersion(),this);
+
+    build = new c_build;
+    build_display =  new c_build_display(build);
+    build_display->show();
+
+    search = new c_search_widget(&database_manager);
+    search->show();
+    result_display = new c_result_display(&database_manager);
+    result_display->show();
+    status_build = new c_status_build;
+    status_build->show();
+
+    QObject::connect(search,&c_search_widget::new_search_result,result_display,&c_result_display::slot_new_search_result);
+    QObject::connect(result_display,&c_result_display::item_doubleCliked,build_display,&c_build_display::equip_new_item);
+    QObject::connect(status_build,&c_status_build::lvl_changed,search,&c_search_widget::setLvl);
+    QObject::connect(status_build,&c_status_build::lvl_changed,build,&c_build::setLvl);
 
     QObject::connect(ui->actionCheck_new_version,SIGNAL(triggered()),this,SLOT(slot_check_version_clicked()),Qt::UniqueConnection);
     QObject::connect(item_model,SIGNAL(new_row(int,int)),this,SLOT(slot_new_row(int,int)));
-    connect(&m_watcher,&QFutureWatcher<void>::finished,this,&MainWindow::slot_init_done);
-    c_item::init_mapTypeToId();
-    search = new c_search_widget(&database_manager);
-    result_display = new c_result_display(&database_manager);
-    QObject::connect(search,&c_search_widget::new_search_result,result_display,&c_result_display::slot_new_search_result);
-    build_display =  new c_build_display();
-    build_display->setBuild(build);
-    status_build = new c_status_build;
-    QObject::connect(result_display,&c_result_display::item_doubleCliked,build_display,&c_build_display::equip_new_item);
-    QObject::connect(status_build,&c_status_build::lvl_changed,search,&c_search_widget::setLvl);
+    QObject::connect(&m_watcher,&QFutureWatcher<void>::finished,this,&MainWindow::slot_init_done);
+
+    status_build->setLvl(200);
     //m_watcher.setFuture(m_init = QtConcurrent::run(init,this));
 
     test();
-
 }
 
 void MainWindow::init(MainWindow * MainWindow) {
