@@ -2,8 +2,6 @@
 
 c_build::c_build() {
 
-    bonuses = resetMap();
-
     elements << "Feu" << "Eau"
              << "Terre" << "Air";
 
@@ -23,6 +21,10 @@ c_build::c_build() {
 
     epique_free = true;
     relique_free = true;
+
+    lvl = 0;
+
+    bonuses = resetMap();
 }
 
 c_build::c_build(const c_build &build) {
@@ -186,6 +188,12 @@ void c_build::unequip(QString position) {
 
 QMap<QString,QString> c_build::check_constraints(c_item item) {
     QMap<QString,QString> res;
+    if (lvl + bonuses["Art du barda"] < item.getLvl()) {
+        res["status"] = "error";
+        res["error"] = "Lvl too low";
+        res["message"] = "Vous ne pouvez pas équiper cet objet : son niveau est trop élevé par rapport à votre build";
+        return res;
+    }
     QString position = mapItemToType[item.getType().getTitle()];
     // check unicité des anneaux
     if (!position.compare("RING")) {
@@ -257,8 +265,9 @@ c_build& c_build::operator=(const c_build& build) {
 }
 
 QMap<QString,int> c_build::resetMap() {
+    qDebug() << "c_build::resetMap";
     bonuses.clear();
-    bonuses["Vie"] = 2050;
+    bonuses["Vie"] = c_calcul::compute_life(lvl);
     bonuses["PA"] = 6;
     bonuses["PM"] = 3;
     bonuses["PW"] = 6;
@@ -300,5 +309,12 @@ QMap<QString,int> c_build::resetMap() {
     return bonuses;
 }
 
+
+void c_build::setLvl(int new_lvl) {
+    qDebug() << "c_build::setLvl" << QObject::sender();
+    lvl = new_lvl;
+    computeBonuses();
+    emit updated();
+}
 
 

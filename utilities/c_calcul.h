@@ -8,7 +8,8 @@ class c_calcul
 {
 public:
     c_calcul();
-    int compute_reduction(const int resistances) const;
+    static int compute_reduction(const int resistances);
+    static int compute_life(const int niveau);
 };
 
 #endif // C_CALCUL_H
