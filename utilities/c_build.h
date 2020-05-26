@@ -46,6 +46,9 @@ private:
     QMap<QString,int> bonuses;
     QMap<QString,c_item> equipment;
     int lvl;
+    bool nation_bonus;
+    bool guilde_bonus;
+    bool hm_bonus;
 
 signals:
     void disableSecondWeapon(bool);
@@ -55,6 +58,7 @@ public slots:
     QMap<QString,QString> equip(const c_item &item);
     void unequip(QString position);
     void setLvl(int new_lvl);
+    void slot_bonus_changed(QList<bool> bonus);
 
 };
 
