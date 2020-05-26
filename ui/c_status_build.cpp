@@ -38,6 +38,9 @@ c_status_build::c_status_build(QWidget *parent) :
     shadow->setOffset(2,2);
     ui->widget_name_lvl->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     QObject::connect(ui->build_lvl,&QSpinBox::editingFinished,this,&c_status_build::slot_enter_pressed);
+    QObject::connect(ui->nation_cb,&QCheckBox::clicked,this,&c_status_build::slot_bonus_changed);
+    QObject::connect(ui->guild_cb,&QCheckBox::clicked,this,&c_status_build::slot_bonus_changed);
+    QObject::connect(ui->hm_cb,&QCheckBox::clicked,this,&c_status_build::slot_bonus_changed);
 
 }
 
@@ -54,4 +57,12 @@ void c_status_build::slot_enter_pressed() {
 void c_status_build::setLvl(int lvl) {
     ui->build_lvl->setValue(lvl);
     emit lvl_changed(lvl);
+}
+
+void c_status_build::slot_bonus_changed() {
+    QList<bool> res;
+    res.push_back(ui->nation_cb->checkState()==Qt::CheckState::Checked);
+    res.push_back(ui->guild_cb->checkState()==Qt::CheckState::Checked);
+    res.push_back(ui->hm_cb->checkState()==Qt::CheckState::Checked);
+    emit bonus_changed(res);
 }

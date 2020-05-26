@@ -24,9 +24,11 @@ private:
 public slots:
     void slot_enter_pressed();
     void setLvl(int lvl);
+    void slot_bonus_changed();
 
 signals:
     void lvl_changed(int new_lvl);
+    void bonus_changed(QList<bool> bonus);
 };
 
 #endif // C_STATUS_BUILD_H

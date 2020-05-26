@@ -267,30 +267,30 @@ c_build& c_build::operator=(const c_build& build) {
 QMap<QString,int> c_build::resetMap() {
     qDebug() << "c_build::resetMap";
     bonuses.clear();
-    bonuses["Vie"] = c_calcul::compute_life(lvl);
+    bonuses["Vie"] = c_calcul::compute_life(lvl) + (guilde_bonus?55:0) + (nation_bonus?20:0);
     bonuses["PA"] = 6;
     bonuses["PM"] = 3;
     bonuses["PW"] = 6;
-    bonuses["Maîtrise Élémentaire Feu"] = 0;
+    bonuses["Maîtrise Élémentaire Feu"] = 0 ;
     bonuses["Maîtrise Élémentaire Eau"] = 0;
     bonuses["Maîtrise Élémentaire Terre"] = 0;
     bonuses["Maîtrise Élémentaire Air"] = 0;
-    bonuses["Résistance Feu"] = 0;
-    bonuses["Résistance Eau"] = 0;
-    bonuses["Résistance Terre"] = 0;
-    bonuses["Résistance Air"] = 0;
-    bonuses["Dommages infligés"] = 0;
-    bonuses["Soins réalisés"] = 0;
+    bonuses["Résistance Feu"] = 0 + (guilde_bonus?20:0);
+    bonuses["Résistance Eau"] = 0 + (guilde_bonus?20:0);
+    bonuses["Résistance Terre"] = 0 + (guilde_bonus?20:0);
+    bonuses["Résistance Air"] = 0 + (guilde_bonus?20:0);
+    bonuses["Dommages infligés"] = 0 + (guilde_bonus?8:0) + (nation_bonus?5:0);
+    bonuses["Soins réalisés"] = 0 + (guilde_bonus?8:0);
     bonuses["Parade"] = 0;
     bonuses["Coup Critique"] = 3;
-    bonuses["Initiative"] = 0;
+    bonuses["Initiative"] = 0 + (guilde_bonus?10:0);
     bonuses["Portée"] = 0;
-    bonuses["Esquive"] = 0;
-    bonuses["Tacle"] = 0;
-    bonuses["Sagesse"] = 0;
-    bonuses["Prospection"] = 0;
+    bonuses["Esquive"] = 0 + (guilde_bonus?20:0);
+    bonuses["Tacle"] = 0 + (guilde_bonus?20:0);
+    bonuses["Sagesse"] = 0 + (guilde_bonus?10:0) + (hm_bonus?10:0);
+    bonuses["Prospection"] = 0 + (guilde_bonus?10:0) + (hm_bonus?10:0);
     bonuses["Contrôle"] = 1;
-    bonuses["Art du barda"] = 0;
+    bonuses["Art du barda"] = 0 + (guilde_bonus?2:0) + (hm_bonus?1:0);
     bonuses["Volonté"] = 0;
     bonuses["Maîtrise Critique"] = 0;
     bonuses["Résistance Critique"] = 0;
@@ -317,4 +317,11 @@ void c_build::setLvl(int new_lvl) {
     emit updated();
 }
 
+void c_build::slot_bonus_changed(QList<bool> bonus) {
+    nation_bonus = bonus.at(0);
+    guilde_bonus = bonus.at(1);
+    hm_bonus = bonus.at(2);
+    computeBonuses();
+    emit updated();
+}
 
