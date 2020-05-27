@@ -77,7 +77,6 @@ void c_elements_display::mouseDoubleClickEvent(QMouseEvent* /*event*/) {
     c_element_dialog diag(3);
     diag.setElems(elems_chosen);
     if (diag.exec()==QDialog::Accepted) {
-        qDebug() << "coucou";
         elems_chosen = diag.getElems();
         update_view();
     }
