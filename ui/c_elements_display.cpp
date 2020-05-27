@@ -79,5 +79,14 @@ void c_elements_display::mouseDoubleClickEvent(QMouseEvent* /*event*/) {
     if (diag.exec()==QDialog::Accepted) {
         elems_chosen = diag.getElems();
         update_view();
+        QList<QString> new_elems_list;
+        for (int i = 0; i < elems_chosen.size(); ++i) {
+            if (elems_chosen.at(i)) {
+                new_elems_list.push_front(elems.at(i));
+            } else {
+                new_elems_list.push_back(elems.at(i));
+            }
+        }
+        emit newElements(new_elems_list);
     }
 }
