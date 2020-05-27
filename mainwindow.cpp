@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(status_build,&c_status_build::lvl_changed,search,&c_search_widget::setLvl);
     QObject::connect(status_build,&c_status_build::lvl_changed,build,&c_build::setLvl);
     QObject::connect(status_build,&c_status_build::bonus_changed,build,&c_build::slot_bonus_changed);
+    QObject::connect(element_display,&c_elements_display::newElements,build,&c_build::setElements);
 
     QObject::connect(ui->actionCheck_new_version,SIGNAL(triggered()),this,SLOT(slot_check_version_clicked()),Qt::UniqueConnection);
     QObject::connect(item_model,SIGNAL(new_row(int,int)),this,SLOT(slot_new_row(int,int)));
