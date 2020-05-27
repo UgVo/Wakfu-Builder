@@ -20,7 +20,6 @@ public:
     void setBonuses(const QMap<QString, int> &value);
 
     QList<QString> getElements() const;
-    void setElements(const QList<QString> &value);
 
     QMap<QString, c_item*> getEquipment_pt();
     QMap<QString, c_item> getEquipment() const;
@@ -59,6 +58,7 @@ public slots:
     void unequip(QString position);
     void setLvl(int new_lvl);
     void slot_bonus_changed(QList<bool> bonus);
+    void setElements(const QList<QString> &value);
 
 };
 
