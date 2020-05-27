@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>498</width>
-    <height>424</height>
+    <height>503</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,112 +33,42 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="6" column="0">
-       <widget class="QComboBox" name="niveau_preDef">
-        <property name="editable">
-         <bool>false</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QComboBox" name="name_search">
+       <widget class="QQuickWidget" name="double_slide_bar">
         <property name="minimumSize">
          <size>
-          <width>200</width>
-          <height>0</height>
+          <width>460</width>
+          <height>20</height>
          </size>
         </property>
-        <property name="editable">
-         <bool>true</bool>
+        <property name="maximumSize">
+         <size>
+          <width>462</width>
+          <height>20</height>
+         </size>
         </property>
-        <property name="currentText">
-         <string/>
+        <property name="resizeMode">
+         <enum>QQuickWidget::SizeRootObjectToView</enum>
         </property>
        </widget>
       </item>
       <item row="8" column="0">
-       <widget class="QPushButton" name="search_button">
-        <property name="text">
-         <string>Rechercher</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QComboBox" name="carac_search">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="editable">
-         <bool>false</bool>
-        </property>
-        <property name="currentText">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QLabel" name="label">
+         <widget class="QCheckBox" name="final_object_check">
           <property name="text">
-           <string>Rareté : </string>
+           <string/>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="pb_mythique">
-          <property name="toolTip">
-           <string>Mythique</string>
-          </property>
+         <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>Mythique</string>
+           <string>Equipement finaux uniquement</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="pb_legend">
-          <property name="toolTip">
-           <string>Légendaire</string>
-          </property>
-          <property name="text">
-           <string>Légendaire</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="pb_relique">
-          <property name="toolTip">
-           <string>Relique</string>
-          </property>
-          <property name="text">
-           <string>Relique</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="pb_epique">
-          <property name="toolTip">
-           <string>Epique</string>
-          </property>
-          <property name="text">
-           <string>Epique</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="pb_souvenir">
-          <property name="toolTip">
-           <string>Souvenir</string>
-          </property>
-          <property name="text">
-           <string>Souvenir</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_11">
+         <spacer name="horizontalSpacer_4">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -151,6 +81,23 @@
          </spacer>
         </item>
        </layout>
+      </item>
+      <item row="10" column="0">
+       <widget class="QPushButton" name="reset_button">
+        <property name="text">
+         <string>Reset</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QComboBox" name="niveau_preDef">
+        <property name="editable">
+         <bool>false</bool>
+        </property>
+        <property name="currentText">
+         <string/>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0">
        <widget class="QWidget" name="widget" native="true">
@@ -290,26 +237,94 @@
         </layout>
        </widget>
       </item>
-      <item row="5" column="0">
-       <widget class="QQuickWidget" name="double_slide_bar">
-        <property name="minimumSize">
-         <size>
-          <width>460</width>
-          <height>20</height>
-         </size>
+      <item row="4" column="0">
+       <widget class="QComboBox" name="carac_search">
+        <property name="enabled">
+         <bool>true</bool>
         </property>
-        <property name="maximumSize">
-         <size>
-          <width>462</width>
-          <height>20</height>
-         </size>
+        <property name="editable">
+         <bool>false</bool>
         </property>
-        <property name="resizeMode">
-         <enum>QQuickWidget::SizeRootObjectToView</enum>
+        <property name="currentText">
+         <string/>
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="1" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Rareté : </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="pb_mythique">
+          <property name="toolTip">
+           <string>Mythique</string>
+          </property>
+          <property name="text">
+           <string>Mythique</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="pb_legend">
+          <property name="toolTip">
+           <string>Légendaire</string>
+          </property>
+          <property name="text">
+           <string>Légendaire</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="pb_relique">
+          <property name="toolTip">
+           <string>Relique</string>
+          </property>
+          <property name="text">
+           <string>Relique</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="pb_epique">
+          <property name="toolTip">
+           <string>Epique</string>
+          </property>
+          <property name="text">
+           <string>Epique</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="pb_souvenir">
+          <property name="toolTip">
+           <string>Souvenir</string>
+          </property>
+          <property name="text">
+           <string>Souvenir</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_11">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="5" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">
          <number>2</number>
@@ -406,43 +421,15 @@
         </item>
        </layout>
       </item>
-      <item row="7" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QCheckBox" name="final_object_check">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Equipement finaux uniquement</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_4">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
       <item row="9" column="0">
-       <widget class="QPushButton" name="reset_button">
+       <widget class="QPushButton" name="search_button">
         <property name="text">
-         <string>Reset</string>
+         <string>Rechercher</string>
         </property>
        </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLineEdit" name="name_search"/>
       </item>
      </layout>
     </widget>
