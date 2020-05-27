@@ -325,3 +325,7 @@ void c_build::slot_bonus_changed(QList<bool> bonus) {
     emit updated();
 }
 
+void c_build::slot_item_element_changed() {
+    computeBonuses();
+    emit updated();
+}

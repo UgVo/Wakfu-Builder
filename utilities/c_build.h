@@ -59,6 +59,7 @@ public slots:
     void setLvl(int new_lvl);
     void slot_bonus_changed(QList<bool> bonus);
     void setElements(const QList<QString> &value);
+    void slot_item_element_changed();
 
 };
 

@@ -23,11 +23,11 @@ public:
     ~c_elements_display() override;
     static QMap<QString,QString> set_frTo_En_elem();
     static QMap<QString,int> set_frToId_elem();
+    static QMap<QString,QString> frToEn_elem;
+    static QMap<QString,int> frToId_elem;
 
 private:
     Ui::c_elements_display *ui;
-    static QMap<QString,QString> frToEn_elem;
-    static QMap<QString,int> frToId_elem;
     QList<QString> elems;
     QList<bool> elems_chosen;
 
