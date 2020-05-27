@@ -58,7 +58,7 @@ public:
     bool add_state(c_state state);
     c_state get_state(int id);
 
-    QList<QPair<int,int>> getid_item_from_actions(QList<int> action_ids, QList<int> rarities, QList<int> types, QList<int> bondaries = {1,200});
+    QList<QPair<int,int>> getid_item_from_actions(QList<int> action_ids, QList<int> rarities, QList<int> types, QList<int> bondaries = {1,200}, QString name = QString());
     QList<c_item> getItems(QList<int> ids);
     c_item getItemFromQueryLite(QSqlQuery record);
 

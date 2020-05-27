@@ -82,7 +82,8 @@ c_search_widget::c_search_widget(c_dbmanager *manager, QWidget *parent) :
     ui->cb_second_hand->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallsecondhand_low.png);}"
                               "QCheckBox::indicator:checked {image: url(images/divers/smallsecondhand_high.png);} ");
 
-    ui->name_search->lineEdit()->setPlaceholderText("Recherche par nom");
+    ui->name_search->setPlaceholderText("Recherche par nom");
+    ui->name_search->setStyleSheet(QString(" background-color: %1;  border: 1px solid %1; color:white;   border-radius: 3px; ").arg(app_color::grey_blue));
 
     ui->carac_search->addItem("Recherche par caractéristique");
     ui->carac_search->addItem("Principales");
@@ -259,7 +260,7 @@ void c_search_widget::slot_search() {
 
     QList<int> caract;
     if (ui->carac_search->currentIndex()!=0) caract.append(c_item::mapCaracToId[ui->carac_search->currentText()]);
-    QList<QPair<int,int>> item_list_pair = dbmanager->getid_item_from_actions(caract,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()});
+    QList<QPair<int,int>> item_list_pair = dbmanager->getid_item_from_actions(caract,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text());
     qDebug() << item_list_pair.size();
     std::sort(item_list_pair.begin(),item_list_pair.end(),c_search_widget::compare_pair_id_lvl);
     QList<int> item_list;
@@ -309,4 +310,5 @@ void c_search_widget::slot_reset() {
     ui->pb_mythique->setCheckState(Qt::CheckState::Unchecked);
     ui->pb_relique->setCheckState(Qt::CheckState::Unchecked);
     ui->pb_souvenir->setCheckState(Qt::CheckState::Unchecked);
+    ui->name_search->setText("");
 }

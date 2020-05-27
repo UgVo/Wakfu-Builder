@@ -621,7 +621,7 @@ c_state c_dbmanager::get_state(int id) {
     return state;
 }
 
-QList<QPair<int,int>> c_dbmanager::getid_item_from_actions(QList<int> action_ids, QList<int> rarities, QList<int> types, QList<int> bondaries) {
+QList<QPair<int,int>> c_dbmanager::getid_item_from_actions(QList<int> action_ids, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name) {
     QList<QPair<int,int>> res;
     QSqlQuery query(m_db);
     QString query_string;
@@ -663,6 +663,9 @@ QList<QPair<int,int>> c_dbmanager::getid_item_from_actions(QList<int> action_ids
         query_string += (" ) ");
     }
     query_string.remove(QRegExp("AND$"));
+    if (!name.isEmpty()) {
+        query_string.append(QString(" AND item.title LIKE '\%%1\%' ").arg(name));
+    }
     query_string.push_back(" ORDER BY item.lvl DESC");
     query.prepare(query_string);
     for (int i = 0; i < action_ids.size(); ++i) {
