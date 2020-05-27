@@ -49,6 +49,8 @@ MainWindow::MainWindow(QWidget *parent)
     result_display->show();
     status_build = new c_status_build;
     status_build->show();
+    element_display = new c_elements_display;
+    element_display->show();
 
     QObject::connect(search,&c_search_widget::new_search_result,result_display,&c_result_display::slot_new_search_result);
     QObject::connect(result_display,&c_result_display::item_doubleCliked,build_display,&c_build_display::equip_new_item);
