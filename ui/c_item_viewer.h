@@ -11,6 +11,8 @@
 #include <QMenu>
 #include <QAction>
 #include "utilities/c_item.h"
+#include "c_element_dialog.h"
+#include "c_elements_display.h"
 
 
 namespace Ui {
@@ -51,8 +53,10 @@ public slots:
     void disable(int gfxId);
     void enable();
     c_item *get_item();
+
 signals:
     void unequip(QString position);
+    void elementsChanged();
 
 };
 

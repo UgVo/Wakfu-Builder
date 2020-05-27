@@ -115,7 +115,36 @@ void c_item_viewer::slot_unequip() {
 }
 
 void c_item_viewer::slot_refresh_elements() {
-    //TODO
+    int number_elements = item->getNumber_element();
+    c_element_dialog diag(number_elements);
+    QList<QString> elems;
+    elems << "Feu" << "Eau" << "Terre" << "Air";
+    QList<QString> item_elem = item->getElements();
+    qDebug() << item_elem;
+    QList<bool> item_chosen_elem;
+    for (int i = 0; i < item_elem.size(); ++i) {
+        item_chosen_elem.push_back(false);
+    }
+    for (int i = 0; i < number_elements; ++i) {
+        item_chosen_elem.replace(c_elements_display::frToId_elem[item_elem.at(i)],true);
+    }
+    diag.setElems(item_chosen_elem);
+    QList<QString> new_elems_list;
+    if (diag.exec()==QDialog::Accepted) {
+        item_chosen_elem = diag.getElems();
+        for (int i = 0; i < item_chosen_elem.size(); ++i) {
+            if (item_chosen_elem.at(i)) {
+                new_elems_list.push_front(elems.at(i));
+            } else {
+                new_elems_list.push_back(elems.at(i));
+            }
+        }
+    } else {
+        new_elems_list = item_elem;
+    }
+    item->setElements(new_elems_list);
+    updateView();
+    emit elementsChanged();
 }
 
 void c_item_viewer::disable(int gfxId) {

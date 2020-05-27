@@ -140,6 +140,7 @@ c_build_display::c_build_display(c_build* build, QWidget *parent) :
         item_position_map[position] = new c_item_viewer(position,this);
         item_position_map[position]->setStyleSheet(".QWidget{background-color: #6A8BA8; border: 1px solid #6A8BA8;}");
         connect(item_position_map[position],&c_item_viewer::unequip,_build,&c_build::unequip);
+        connect(item_position_map[position],&c_item_viewer::elementsChanged,_build,&c_build::slot_item_element_changed);
         equipementLayout->insertWidget(item_position_map.size(),item_position_map[position]);
     }
     connect(_build,&c_build::updated,this,&c_build_display::update_view);
