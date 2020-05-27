@@ -39,9 +39,9 @@ QMap<QString,QString> c_elements_display::set_frTo_En_elem() {
 QMap<QString,int> c_elements_display::set_frToId_elem() {
     QMap<QString,int> res;
     res["Feu"] = 0;
-    res["Terre"] = 1;
-    res["Air"] = 2;
-    res["Eau"] = 3;
+    res["Eau"] = 1;
+    res["Terre"] = 2;
+    res["Air"] = 3;
     return res;
 }
 
