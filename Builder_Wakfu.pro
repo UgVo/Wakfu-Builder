@@ -27,6 +27,8 @@ SOURCES += \
     mainwindow.cpp \
     ui/c_build_display.cpp \
     ui/c_dialoggestion.cpp \
+    ui/c_element_dialog.cpp \
+    ui/c_elements_display.cpp \
     ui/c_item_display.cpp \
     ui/c_item_lite.cpp \
     ui/c_item_viewer.cpp \
@@ -52,6 +54,8 @@ HEADERS += \
     mainwindow.h \
     ui/c_build_display.h \
     ui/c_dialoggestion.h \
+    ui/c_element_dialog.h \
+    ui/c_elements_display.h \
     ui/c_item_display.h \
     ui/c_item_lite.h \
     ui/c_item_viewer.h \
@@ -78,6 +82,8 @@ FORMS += \
     mainwindow.ui \
     ui/c_build_display.ui \
     ui/c_dialoggestion.ui \
+    ui/c_element_dialog.ui \
+    ui/c_elements_display.ui \
     ui/c_item_display.ui \
     ui/c_item_lite.ui \
     ui/c_item_viewer.ui \

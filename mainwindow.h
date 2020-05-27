@@ -30,6 +30,7 @@
 #include "ui/c_item_lite.h"
 #include "ui/c_result_display.h"
 #include "ui/c_status_build.h"
+#include "ui/c_elements_display.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -89,6 +90,7 @@ private:
     c_result_display* result_display;
     c_build* build;
     c_status_build *status_build;
+    c_elements_display *element_display;
 
 public slots:
     void slot_update_item(QWidget *parent);
