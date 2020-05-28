@@ -2,6 +2,7 @@
 #define C_ITEM_LITE_H
 
 #include <QWidget>
+#include <QTimer>
 #include "utilities/utilities.h"
 #include "ui.h"
 #include "c_item_display.h"
@@ -27,9 +28,11 @@ private:
     c_item_display *it_display;
     QWidget* _parent;
     c_dbmanager *_database_manager;
+    QTimer *timer;
 
 public slots:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
+    void check_mouse_over();
 
 signals:
     void item_doubleCliked(c_item item);

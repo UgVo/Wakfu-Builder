@@ -89,6 +89,9 @@ bool c_item_lite::event(QEvent *event) {
         it_display->completeData(_database_manager);
         it_display->move(res);
         it_display->show();
+        timer = new QTimer(this);
+        connect(timer,&QTimer::timeout,this,&c_item_lite::check_mouse_over);
+        timer->start(100);
 
     } else if ( event->type() == QEvent::HoverLeave ) {
         it_display->hide();
@@ -101,4 +104,13 @@ void c_item_lite::mouseDoubleClickEvent(QMouseEvent* /*event*/) {
     it_display->completeData(_database_manager);
     _item = it_display->getItem();
     emit item_doubleCliked(_item);
+}
+
+void c_item_lite::check_mouse_over() {
+    if(underMouse()) {
+        timer->start(100);
+    } else {
+        disconnect(timer,&QTimer::timeout,this,&c_item_lite::check_mouse_over);
+        it_display->hide();
+    }
 }
