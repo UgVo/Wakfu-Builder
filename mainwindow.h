@@ -21,16 +21,8 @@
 #include "utilities/c_datamanager.h"
 #include "ui/c_dialoggestion.h"
 #include "utilities/c_tokenizer.h"
-#include "ui/c_item_display.h"
 #include "utilities/c_item_model.h"
-#include "utilities/c_build.h"
-#include "ui/c_build_display.h"
-#include "ui/c_item_viewer.h"
-#include "ui/c_search_widget.h"
-#include "ui/c_item_lite.h"
-#include "ui/c_result_display.h"
-#include "ui/c_status_build.h"
-#include "ui/c_elements_display.h"
+#include "ui/c_builder_view.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -83,14 +75,7 @@ private:
     QFuture<void> m_init;
     QFutureWatcher<void> m_watcher;
     QMovie *movie;
-    c_build_display *build_display;
-    c_item_viewer *item_view;
-    c_search_widget* search;
-    c_item_lite* item_lite;
-    c_result_display* result_display;
-    c_build* build;
-    c_status_build *status_build;
-    c_elements_display *element_display;
+   c_builder_view* builder;
 
 public slots:
     void slot_update_item(QWidget *parent);

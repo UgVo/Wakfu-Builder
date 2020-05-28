@@ -1,0 +1,43 @@
+#include "c_builder_view.h"
+#include "ui_c_builder_view.h"
+
+c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::c_builder_view)
+{
+    ui->setupUi(this);
+    manager = _manager;
+    build = new c_build;
+
+    //UI
+    result_display = new c_result_display(manager);
+    status_build = new c_status_build;
+    element_display = new c_elements_display;
+    build_display = new c_build_display(build);
+    //build_display->set_item_viewers();
+    search_widget = new c_search_widget(manager);
+
+    ui->build_layout->addWidget(status_build);
+    ui->build_layout->addWidget(build_display);
+    ui->build_layout->addWidget(element_display);
+
+    ui->horizontalLayout->insertWidget(2,search_widget);
+    ui->horizontalLayout->insertWidget(2,result_display);
+
+    QObject::connect(search_widget,&c_search_widget::new_search_result,result_display,&c_result_display::slot_new_search_result);
+    QObject::connect(result_display,&c_result_display::item_doubleCliked,build_display,&c_build_display::equip_new_item);
+    QObject::connect(status_build,&c_status_build::lvl_changed,search_widget,&c_search_widget::setLvl);
+    QObject::connect(status_build,&c_status_build::lvl_changed,build,&c_build::setLvl);
+    QObject::connect(status_build,&c_status_build::bonus_changed,build,&c_build::slot_bonus_changed);
+    QObject::connect(element_display,&c_elements_display::newElements,build,&c_build::setElements);
+
+    ui->widget->setStyleSheet(QString("QWidget#widget{background-color:%1}").arg(app_color::grey_blue));
+    status_build->setLvl(200);
+
+    this->setWindowState(Qt::WindowMaximized);
+}
+
+c_builder_view::~c_builder_view()
+{
+    delete ui;
+}
