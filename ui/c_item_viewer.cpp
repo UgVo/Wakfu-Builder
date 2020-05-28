@@ -155,6 +155,7 @@ void c_item_viewer::disable(int gfxId) {
 }
 
 void c_item_viewer::enable() {
+    item->setGfxId(0);
     disabled = false;
     updateView();
 }
