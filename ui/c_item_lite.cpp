@@ -24,6 +24,7 @@ c_item_lite::c_item_lite(c_dbmanager * database_manager, c_item item, QWidget *p
     ui->image->setScaledContents(true);
 
     image = QPixmap("images/divers/smallneck.png");
+    ui->icon->setStyleSheet(QString("background-color: %1;").arg(app_color::dark_blue));
     ui->icon->setPixmap(image);
     ui->icon->setBackgroundRole(QPalette::Base);
     ui->icon->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
