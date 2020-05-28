@@ -39,33 +39,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     diag = new DialogGestion(&datamanager,datamanager.getVersion(),this);
 
-    build = new c_build;
-    build_display =  new c_build_display(build);
-    build_display->show();
-
-    search = new c_search_widget(&database_manager);
-    search->show();
-    result_display = new c_result_display(&database_manager);
-    result_display->show();
-    status_build = new c_status_build;
-    status_build->show();
-    element_display = new c_elements_display;
-    element_display->show();
-
-    QObject::connect(search,&c_search_widget::new_search_result,result_display,&c_result_display::slot_new_search_result);
-    QObject::connect(result_display,&c_result_display::item_doubleCliked,build_display,&c_build_display::equip_new_item);
-    QObject::connect(status_build,&c_status_build::lvl_changed,search,&c_search_widget::setLvl);
-    QObject::connect(status_build,&c_status_build::lvl_changed,build,&c_build::setLvl);
-    QObject::connect(status_build,&c_status_build::bonus_changed,build,&c_build::slot_bonus_changed);
-    QObject::connect(element_display,&c_elements_display::newElements,build,&c_build::setElements);
-
     QObject::connect(ui->actionCheck_new_version,SIGNAL(triggered()),this,SLOT(slot_check_version_clicked()),Qt::UniqueConnection);
     QObject::connect(item_model,SIGNAL(new_row(int,int)),this,SLOT(slot_new_row(int,int)));
     QObject::connect(&m_watcher,&QFutureWatcher<void>::finished,this,&MainWindow::slot_init_done);
 
-    status_build->setLvl(200);
     //m_watcher.setFuture(m_init = QtConcurrent::run(init,this));
 
+    builder = new c_builder_view(&database_manager);
+    builder->show();
     test();
 }
 
@@ -105,7 +86,6 @@ void MainWindow::test() {
     Q_ASSERT(tok.get_id_state("Applique (1 par tour)") == 0);
 
     this->setWindowState(Qt::WindowMinimized);
-    result_display->slot_new_search_result({17543, 17544, 17545, 17546, 18005, 18381, 18464, 18537, 19062, 19432, 19746, 20278, 20757, 21207, 21707, 21868, 23924, 24309, 24329, 24331, 24725, 24790, 25073, 25076, 26288, 26498, 26500, 26502, 26506, 26508, 27026, 27030, 27038, 27354, 27358});
 }
 
 void MainWindow::test_interpret_effect() {

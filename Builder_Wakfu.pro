@@ -26,6 +26,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     ui/c_build_display.cpp \
+    ui/c_builder_view.cpp \
     ui/c_dialoggestion.cpp \
     ui/c_element_dialog.cpp \
     ui/c_elements_display.cpp \
@@ -53,6 +54,7 @@ SOURCES += \
 HEADERS += \
     mainwindow.h \
     ui/c_build_display.h \
+    ui/c_builder_view.h \
     ui/c_dialoggestion.h \
     ui/c_element_dialog.h \
     ui/c_elements_display.h \
@@ -81,6 +83,7 @@ HEADERS += \
 FORMS += \
     mainwindow.ui \
     ui/c_build_display.ui \
+    ui/c_builder_view.ui \
     ui/c_dialoggestion.ui \
     ui/c_element_dialog.ui \
     ui/c_elements_display.ui \
