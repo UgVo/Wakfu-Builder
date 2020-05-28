@@ -53,7 +53,7 @@ c_effect c_dbmanager::get_effect(const int id) {
             QVector<float> params;
             for (QStringList::iterator it = List_Params.begin(); it != List_Params.end(); ++it) {
                 if(*it != ",") {
-                    params.push_back(int(it->toFloat()));
+                    params.push_back(it->toFloat());
                 }
             }
             new_effect.setParams(params);
