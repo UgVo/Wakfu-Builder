@@ -23,6 +23,9 @@ c_build::c_build() {
     relique_free = true;
 
     lvl = 0;
+    nation_bonus = false;
+    guilde_bonus = false;
+    hm_bonus = false;
 
     bonuses = resetMap();
 }
