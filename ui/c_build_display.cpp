@@ -145,7 +145,7 @@ c_build_display::c_build_display(c_build* build, QWidget *parent) :
     }
     connect(_build,&c_build::updated,this,&c_build_display::update_view);
     connect(_build,&c_build::disableSecondWeapon,this,&c_build_display::slot_second_hand_disabled);
-
+    update_view();
 }
 
 c_build_display::~c_build_display() {
