@@ -42,6 +42,7 @@ SOURCES += \
     utilities/c_datamanager.cpp \
     utilities/c_dbmanager.cpp \
     utilities/c_equipmentitemtypes.cpp \
+    utilities/c_io_manager.cpp \
     utilities/c_item.cpp \
     utilities/c_effect.cpp \
     utilities/c_itemproperties.cpp \
@@ -71,6 +72,7 @@ HEADERS += \
     utilities/c_datamanager.h \
     utilities/c_dbmanager.h \
     utilities/c_equipmentitemtypes.h \
+    utilities/c_io_manager.h \
     utilities/c_item.h \
     utilities/c_effect.h \
     utilities/c_itemproperties.h \
