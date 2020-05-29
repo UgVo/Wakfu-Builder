@@ -153,7 +153,6 @@ QMap<QString,int> c_item::init_mapTypeToId() {
     _mapTypeToId.insertMulti("PET",582);
     _mapTypeToId.insertMulti("ACCESSORY",646);
     _mapTypeToId.insertMulti("COSTUME",647);
-    qDebug() << _mapTypeToId;
     return _mapTypeToId;
 }
 
