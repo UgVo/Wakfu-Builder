@@ -66,3 +66,15 @@ void c_status_build::slot_bonus_changed() {
     res.push_back(ui->hm_cb->checkState()==Qt::CheckState::Checked);
     emit bonus_changed(res);
 }
+
+QString c_status_build::getName() {
+    return ui->build_name->text();
+}
+
+int c_status_build::getLvl() {
+    return ui->build_lvl->value();
+}
+
+void c_status_build::setName(QString name) {
+    ui->build_name->setText(name);
+}
