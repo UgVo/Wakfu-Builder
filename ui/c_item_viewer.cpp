@@ -163,3 +163,11 @@ void c_item_viewer::enable() {
 c_item *c_item_viewer::get_item() {
     return item;
 }
+
+c_item c_item_viewer::get_item_const() const {
+    return *item;
+}
+
+QString c_item_viewer::getPosition() const {
+    return position;
+}

@@ -53,6 +53,8 @@ public slots:
     void disable(int gfxId);
     void enable();
     c_item *get_item();
+    c_item get_item_const() const;
+    QString getPosition() const;
 
 signals:
     void unequip(QString position);
