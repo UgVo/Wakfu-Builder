@@ -10,10 +10,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     datamanager.setDBManager(&database_manager);
     ui->actionCheck_new_version->setIcon(QIcon("images/divers/update32.png"));
+    ui->menuSauvegarder_Build->setEnabled(false);
+    ui->tabWidget->setTabsClosable(true);
 
     diag = new DialogGestion(&datamanager,datamanager.getVersion(),this);
 
     QObject::connect(ui->actionCheck_new_version,SIGNAL(triggered()),this,SLOT(slot_check_version_clicked()),Qt::UniqueConnection);
+    QObject::connect(ui->actionCr_er_nouveau_Build,&QAction::triggered,this,&MainWindow::slot_actionCr_er_nouveau_Build_cliked);
+    QObject::connect(ui->tabWidget,&QTabWidget::tabCloseRequested,this,&MainWindow::slot_on_close_table);
+    QObject::connect(ui->actionSauvegarder_Build,&QAction::triggered,this,&MainWindow::slot_actionSauvegarder_Build);
+    QObject::connect(ui->action_open_Depuis_un_fichier,&QAction::triggered,this,&MainWindow::slot_action_open_Depuis_un_fichier);
+
+    this->setWindowState(Qt::WindowMaximized);
 }
 
 MainWindow::~MainWindow()
@@ -55,6 +63,12 @@ void MainWindow::test_interpret_effect() {
      qDebug() << tok.interpret_effect("5 Niv. aux sorts Feu");
 }
 
+void MainWindow::slot_actionCr_er_nouveau_Build_cliked() {
+    ui->menuSauvegarder_Build->setEnabled(true);
+    builder_list.push_back(new c_builder_view(&database_manager));
+    ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
+}
+
 void MainWindow::slot_check_version_clicked() {
     datamanager.checkVersion();
     QObject::connect(&datamanager,SIGNAL(newVersion(QString)),this,SLOT(slot_version_check(QString)));
@@ -71,4 +85,46 @@ void MainWindow::slot_version_check(QString version) {
     }
     diag->setVersionText(format);
     diag->show();
+}
+
+void MainWindow::slot_on_close_table(const int &index) {
+    if (index == -1) {
+        return;
+    }
+
+    QWidget* tabItem = ui->tabWidget->widget(index);
+    // Check for save
+    ui->tabWidget->removeTab(index);
+    builder_list.removeAt(index);
+
+    delete(tabItem);
+    tabItem = nullptr;
+
+    if (!builder_list.size()) {
+        ui->menuSauvegarder_Build->setEnabled(false);
+    }
+}
+
+void MainWindow::slot_actionSauvegarder_Build() {
+    if (ui->tabWidget->currentIndex() == -1) {
+        return;
+    }
+    QString fileName = QFileDialog::getSaveFileName(this,
+        tr("Save Build"), app_path + "/save", tr("Json files (*.json)"));
+
+    if (!fileName.isEmpty()) {
+        c_builder_view* builder = static_cast<c_builder_view*>(ui->tabWidget->currentWidget());
+        builder->slot_save(c_io_manager::jsonformat::file,fileName);
+    }
+}
+
+void MainWindow::slot_action_open_Depuis_un_fichier() {
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Save Build"), app_path + "/save", tr("Json files (*.json)"));
+    if (!fileName.isEmpty()) {
+        ui->menuSauvegarder_Build->setEnabled(true);
+        builder_list.push_back(new c_builder_view(&database_manager));
+        ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
+        builder_list.last()->slot_load(c_io_manager::jsonformat::file,fileName);
+    }
 }

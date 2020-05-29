@@ -15,6 +15,7 @@
 #include <QtConcurrent>
 #include <QEventLoop>
 #include <QElapsedTimer>
+#include <QFileDialog>
 #include "utilities/c_dbmanager.h"
 #include "utilities/c_effect.h"
 #include "utilities/c_networkmanager.h"
@@ -23,6 +24,8 @@
 #include "utilities/c_tokenizer.h"
 #include "utilities/c_item_model.h"
 #include "ui/c_builder_view.h"
+
+#include "utilities/c_io_manager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -61,6 +64,7 @@ private:
     c_dbmanager database_manager;
     c_datamanager datamanager;
     DialogGestion *diag;
+    QList<c_builder_view*> builder_list;
 
 public slots:
     void slot_check_version_clicked();
@@ -68,6 +72,11 @@ public slots:
 
     void test();
     void test_interpret_effect();
+
+    void slot_actionCr_er_nouveau_Build_cliked();
+    void slot_on_close_table(const int &index);
+    void slot_actionSauvegarder_Build();
+    void slot_action_open_Depuis_un_fichier();
 
 signals:
     void init_done();
