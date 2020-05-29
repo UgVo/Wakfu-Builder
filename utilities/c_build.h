@@ -38,6 +38,8 @@ public:
     c_build& operator=(const c_build& build);
     QMap<QString,int> resetMap();
 
+    int getLvl() const;
+
 private:
     bool epique_free;
     bool relique_free;
