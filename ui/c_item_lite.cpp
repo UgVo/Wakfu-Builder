@@ -99,6 +99,10 @@ bool c_item_lite::event(QEvent *event) {
     return QWidget::event(event);
 }
 
+c_item c_item_lite::item() const {
+    return _item;
+}
+
 void c_item_lite::mouseDoubleClickEvent(QMouseEvent* /*event*/) {
     it_display->completeData(_database_manager);
     _item = it_display->getItem();

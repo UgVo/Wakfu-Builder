@@ -22,6 +22,8 @@ public:
     void set_icon();
     bool event(QEvent *event) override;
 
+    c_item item() const;
+
 private:
     Ui::c_item_lite *ui;
     c_item _item;
