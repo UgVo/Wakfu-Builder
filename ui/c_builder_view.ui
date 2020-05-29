@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>c_builder_view</class>
- <widget class="QWidget" name="c_builder">
+ <widget class="QWidget" name="c_builder_view">
   <property name="geometry">
    <rect>
     <x>0</x>
