@@ -122,7 +122,9 @@ void c_build::computeBonuses() {
 QMap<QString, QString> c_build::equip(const c_item &item) {
     QMap<QString,QString> res;
     c_item item2equip = item;
-    item2equip.setElements(elements);
+    if (item2equip.getElements().isEmpty()) {
+        item2equip.setElements(elements);
+    }
     QString type = mapItemToType[item2equip.getType().getTitle()];
     res = check_constraints(item2equip);
     if (res["status"] == "error") {
@@ -312,6 +314,9 @@ QMap<QString,int> c_build::resetMap() {
     return bonuses;
 }
 
+int c_build::getLvl() const {
+    return lvl;
+}
 
 void c_build::setLvl(int new_lvl) {
     qDebug() << "c_build::setLvl" << QObject::sender();
