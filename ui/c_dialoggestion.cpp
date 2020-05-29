@@ -66,6 +66,9 @@ void DialogGestion::slot_update_database() {
     data_manager->parseItemproperties();
     data_manager->parseEquipementItemType();
     data_manager->parseStates();
+    ui->pb_update_files->setEnabled(false);
+    ui->pb_update_data_base->setEnabled(false);
+    ui->pb_update_images->setEnabled(false);
     ui->progressBar->setMinimum(0);
     ui->progressBar->setMaximum(0);
 
