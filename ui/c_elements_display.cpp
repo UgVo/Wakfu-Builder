@@ -70,7 +70,9 @@ void c_elements_display::setElements(QList<QString> new_elems) {
     foreach (QString elem, new_elems) {
         elems_chosen.replace(frToId_elem[elem],true);
     }
+    elems_chosen.replace(frToId_elem[new_elems.last()],false);
     update_view();
+    emit newElements(new_elems);
 }
 
 void c_elements_display::mouseDoubleClickEvent(QMouseEvent* /*event*/) {
