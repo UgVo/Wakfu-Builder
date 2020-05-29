@@ -41,6 +41,7 @@ c_result_display::~c_result_display() {
 void c_result_display::slot_new_search_result(QList<int> item_id_list) {
     empty_pages();
     id_list = item_id_list;
+    std::reverse(id_list.begin(), id_list.end());
     current_page = 0;
     stackedWidget->setCurrentIndex(current_page);
     used_page_number = item_id_list.size()/(ROW_PER_PAGE*COLUMN_PER_PAGE);
