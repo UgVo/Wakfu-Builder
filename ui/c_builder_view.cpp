@@ -17,12 +17,14 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *parent) :
     //build_display->set_item_viewers();
     search_widget = new c_search_widget(manager);
 
-    ui->build_layout->addWidget(status_build);
-    ui->build_layout->addWidget(build_display);
-    ui->build_layout->addWidget(element_display);
+    ui->build_layout->insertWidget(0,status_build);
+    ui->build_layout->insertWidget(1,build_display);
+    ui->build_layout->insertWidget(2,element_display);
 
-    ui->horizontalLayout->insertWidget(2,search_widget);
     ui->horizontalLayout->insertWidget(2,result_display);
+    ui->horizontalLayout->setAlignment(result_display,Qt::AlignTop);
+    ui->horizontalLayout->insertWidget(3,search_widget);
+    ui->horizontalLayout->setAlignment(search_widget,Qt::AlignTop);
 
     QObject::connect(search_widget,&c_search_widget::new_search_result,result_display,&c_result_display::slot_new_search_result);
     QObject::connect(result_display,&c_result_display::item_doubleCliked,build_display,&c_build_display::equip_new_item);
