@@ -54,7 +54,6 @@ c_item::c_item(int id, int lvl, QString name, QString description, c_equipmentIt
     _useCriticalEffects = useCriticalEffects;
     _equipEffects = equipEffects;
     _gfxId = gfxId;
-    _elements << "Feu" << "Eau" << "Terre" << "Air";
     _number_element = 0;
 
     initBonuses();
