@@ -29,6 +29,8 @@ c_result_display::c_result_display(c_dbmanager* _data_base, QWidget *parent) :
 
     ui->next->setIcon(QIcon("images/divers/next_arrow.png"));
     ui->preview->setIcon(QIcon("images/divers/preview_arrow.png"));
+
+    loading->hide();
 }
 
 c_result_display::~c_result_display() {
@@ -58,6 +60,7 @@ void c_result_display::create_page(int number) {
         QWidget *widget = new QWidget;
         QGridLayout *layout = new QGridLayout;
         widget->setLayout(layout);
+        layout->setMargin(0);
         stackedWidget->addWidget(widget);
     }
 }

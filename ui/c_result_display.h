@@ -23,7 +23,7 @@ class c_result_display : public QWidget
 {
     Q_OBJECT
 
-    static const int ROW_PER_PAGE = 12;
+    static const int ROW_PER_PAGE = 13;
     static const int COLUMN_PER_PAGE = 3;
 
 public:
