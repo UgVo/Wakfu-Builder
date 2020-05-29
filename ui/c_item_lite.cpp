@@ -82,10 +82,9 @@ void c_item_lite::set_icon() {
 bool c_item_lite::event(QEvent *event) {
     if ( event->type() == QEvent::HoverEnter ) {
         QPoint p = this->pos();
-        QPoint p_parent = _parent->pos();
-        QSize size = this->size();
-        p.setY(p.y()+size.height()*2);
-        QPoint res = p + p_parent;
+        p.setY(p.y()+60);
+        p.setX(p.x()+9);
+        QPoint res = _parent->mapToGlobal(p);
         it_display->completeData(_database_manager);
         it_display->move(res);
         it_display->show();
