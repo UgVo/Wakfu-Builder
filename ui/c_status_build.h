@@ -25,6 +25,9 @@ public slots:
     void slot_enter_pressed();
     void setLvl(int lvl);
     void slot_bonus_changed();
+    QString getName();
+    int getLvl();
+    void setName(QString name);
 
 signals:
     void lvl_changed(int new_lvl);
