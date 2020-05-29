@@ -18,33 +18,8 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>-1</number>
       </property>
-      <widget class="QWidget" name="tab">
-       <attribute name="title">
-        <string>Recherche</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>Tab 2</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tab_3">
-       <attribute name="title">
-        <string>Page</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tab_4">
-       <attribute name="title">
-        <string>Page</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="QTableView" name="tableView"/>
-        </item>
-       </layout>
-      </widget>
      </widget>
     </item>
    </layout>
@@ -64,6 +39,30 @@
     </property>
     <addaction name="actionCheck_new_version"/>
    </widget>
+   <widget class="QMenu" name="menuFichiers">
+    <property name="title">
+     <string>Fichiers</string>
+    </property>
+    <widget class="QMenu" name="menuOuvrir_Build">
+     <property name="title">
+      <string>Ouvrir Build</string>
+     </property>
+     <addaction name="action_open_Depuis_un_fichier"/>
+     <addaction name="actionDepuis_la_base_de_donn_e"/>
+    </widget>
+    <widget class="QMenu" name="menuSauvegarder_Build">
+     <property name="title">
+      <string>Sauvegarder Build</string>
+     </property>
+     <addaction name="actionSauvegarder_Build"/>
+     <addaction name="actionVers_la_base_de_donnee"/>
+    </widget>
+    <addaction name="actionCr_er_nouveau_Build"/>
+    <addaction name="menuOuvrir_Build"/>
+    <addaction name="separator"/>
+    <addaction name="menuSauvegarder_Build"/>
+   </widget>
+   <addaction name="menuFichiers"/>
    <addaction name="menuGestion"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -73,6 +72,46 @@
    </property>
    <property name="text">
     <string>Check new version</string>
+   </property>
+  </action>
+  <action name="actionOuvrir_build">
+   <property name="text">
+    <string>Ouvrir Build</string>
+   </property>
+  </action>
+  <action name="actionImporter_Build">
+   <property name="text">
+    <string>Importer Build</string>
+   </property>
+  </action>
+  <action name="actionCr_er_nouveau_Build">
+   <property name="text">
+    <string>Créer nouveau Build</string>
+   </property>
+  </action>
+  <action name="actionImporte_Build">
+   <property name="text">
+    <string>Importer Build</string>
+   </property>
+  </action>
+  <action name="actionSauvegarder_Build">
+   <property name="text">
+    <string>Vers un fichier</string>
+   </property>
+  </action>
+  <action name="action_open_Depuis_un_fichier">
+   <property name="text">
+    <string>Depuis un fichier</string>
+   </property>
+  </action>
+  <action name="actionDepuis_la_base_de_donn_e">
+   <property name="text">
+    <string>Depuis la base de donnée</string>
+   </property>
+  </action>
+  <action name="actionVers_la_base_de_donnee">
+   <property name="text">
+    <string>Vers la base de donnée</string>
    </property>
   </action>
  </widget>

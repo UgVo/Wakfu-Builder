@@ -43,3 +43,25 @@ c_builder_view::~c_builder_view()
 {
     delete ui;
 }
+
+c_status_build *c_builder_view::getStatus_build() const {
+    return status_build;
+}
+
+c_build_display *c_builder_view::getBuild_display() const {
+    return build_display;
+}
+
+c_elements_display *c_builder_view::getElement_display() const {
+    return element_display;
+}
+
+void c_builder_view::slot_save(c_io_manager::jsonformat format, QString path) {
+    c_io_manager io_manager(manager);
+    io_manager.save(this,format,path);
+}
+
+void c_builder_view::slot_load(c_io_manager::jsonformat format, QString path) {
+    c_io_manager io_manager(manager);
+    io_manager.load(this,format,path);
+}
