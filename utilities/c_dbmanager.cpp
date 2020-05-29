@@ -666,7 +666,7 @@ QList<QPair<int,int>> c_dbmanager::getid_item_from_actions(QList<int> action_ids
     if (!name.isEmpty()) {
         query_string.append(QString(" AND item.title LIKE '\%%1\%' ").arg(name));
     }
-    query_string.push_back(" ORDER BY item.lvl DESC");
+    query_string.push_back(" AND item.rarity > 2 ORDER BY item.lvl DESC");
     query.prepare(query_string);
     for (int i = 0; i < action_ids.size(); ++i) {
         query.bindValue(QString(":action_id%1").arg(i),action_ids.at(i));
@@ -703,6 +703,7 @@ QList<c_item> c_dbmanager::getItems(QList<int> ids) {
     }
     query_string.remove(QRegExp("OR$"));
     query_string.push_back(")");
+    query_string.push_back("ORDER BY item.lvl DESC");
     if (query.exec(query_string)) {
         while (query.next()) {
             c_item item = getItemFromQueryLite(query);
