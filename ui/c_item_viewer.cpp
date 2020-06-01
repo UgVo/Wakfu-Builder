@@ -171,3 +171,20 @@ c_item c_item_viewer::get_item_const() const {
 QString c_item_viewer::getPosition() const {
     return position;
 }
+
+void c_item_viewer::mouseReleaseEvent(QMouseEvent */*event*/) {
+    if (item->isEmpty()) {
+        if (!block) {
+            emit clicked(position);
+        } else {
+            block = false;
+        }
+    }
+}
+
+void c_item_viewer::mouseDoubleClickEvent(QMouseEvent */*event*/) {
+    if (!item->isEmpty()) {
+        emit unequip(position);
+        block = true;
+    }
+}

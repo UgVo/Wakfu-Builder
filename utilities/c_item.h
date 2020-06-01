@@ -87,10 +87,12 @@ private:
 
 public:
     static QMap<QString,int> mapTypeToId;
+    static QMap<QString,QString> mapPositionToType;
     static QMap<QString,int> mapRarityToId;
     static QMap<QString,int> mapCaracToId;
     static QMap<QString,int> mapFamilierSpeToLvl;
     static QMap<QString,int> init_mapTypeToId();
+    static QMap<QString,QString> init_mapPositionToType();
     static QMap<QString,int> init_mapRarityToId();
     static QMap<QString,int> init_mapCaracToId();
     static QMap<QString,int> ini_mapFamilierSpeToLvl();
