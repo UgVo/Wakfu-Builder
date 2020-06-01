@@ -217,7 +217,6 @@ void c_build_display::equip_new_item(c_item item) {
 }
 
 void c_build_display::slot_second_hand_disabled(bool state) {
-    qDebug() << "slot_second_hand_disabled";
     if (state) {
         item_position_map["SECOND_WEAPON"]->disable(item_position_map["FIRST_WEAPON"]->get_item()->getGfxId());
     } else {
