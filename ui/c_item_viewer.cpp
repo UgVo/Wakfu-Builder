@@ -6,12 +6,14 @@ c_item_viewer::c_item_viewer(const QString item_position, QWidget *parent) :
     ui(new Ui::c_item_viewer) {
     ui->setupUi(this);
 
+    _parent = parent;
+    this->setAttribute(Qt::WA_Hover);
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this,&c_item_viewer::customContextMenuRequested,this,&c_item_viewer::slot_context_menu);
 
     int size_widget = 40;
 
-    this->setStyleSheet(QString("QWidget#c_item_viewer{background-color: #6A8BA8;} img {vertical-align:middle;}"));
+    this->setStyleSheet(QString("QWidget#c_item_viewer{background-color: %1;} img {vertical-align:middle;}").arg(app_color::dark_blue));
     image_layout = new QStackedLayout();
     ui->image_widget->setLayout(image_layout);
     background = new QLabel();
@@ -43,6 +45,8 @@ c_item_viewer::c_item_viewer(const QString item_position, QWidget *parent) :
     own_item = true;
     disabled = false;
 
+    it_display = nullptr;
+    block = false;
 }
 
 c_item_viewer::~c_item_viewer() {
@@ -172,6 +176,37 @@ QString c_item_viewer::getPosition() const {
     return position;
 }
 
+bool c_item_viewer::event(QEvent *event) {
+    if ( event->type() == QEvent::HoverEnter ) {
+        if (item->isEmpty()) {
+            return QWidget::event(event);
+        }
+        QPoint p = this->pos();
+        p.setY(p.y());
+        p.setX(p.x()+150);
+        QPoint res = _parent->mapToGlobal(p);
+        if (it_display == nullptr) {
+            it_display = new c_item_display(*item);
+            it_display->setWindowFlags(Qt::ToolTip | Qt::Popup);
+            it_display->setFocusPolicy(Qt::NoFocus);
+        }
+        it_display->move(res);
+        it_display->show();
+        timer = new QTimer(this);
+        connect(timer,&QTimer::timeout,this,&c_item_viewer::check_mouse_over);
+        timer->start(100);
+        qDebug() << "hover";
+
+    } else if ( event->type() == QEvent::HoverLeave ) {
+        if (item->isEmpty()) {
+            return QWidget::event(event);
+        }
+        it_display->hide();
+
+    }
+    return QWidget::event(event);
+}
+
 void c_item_viewer::mouseReleaseEvent(QMouseEvent */*event*/) {
     if (item->isEmpty()) {
         if (!block) {
@@ -186,5 +221,14 @@ void c_item_viewer::mouseDoubleClickEvent(QMouseEvent */*event*/) {
     if (!item->isEmpty()) {
         emit unequip(position);
         block = true;
+    }
+}
+
+void c_item_viewer::check_mouse_over() {
+    if(underMouse()) {
+        timer->start(100);
+    } else {
+        disconnect(timer,&QTimer::timeout,this,&c_item_viewer::check_mouse_over);
+        it_display->hide();
     }
 }
