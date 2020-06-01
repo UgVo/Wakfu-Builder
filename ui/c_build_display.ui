@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
+    <width>482</width>
     <height>608</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>482</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>482</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -3170,13 +3182,13 @@
     <widget class="QFrame" name="equipement_frame">
      <property name="minimumSize">
       <size>
-       <width>65</width>
+       <width>58</width>
        <height>600</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>65</width>
+       <width>58</width>
        <height>600</height>
       </size>
      </property>
@@ -3185,16 +3197,16 @@
        <number>4</number>
       </property>
       <property name="leftMargin">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>3</number>
+       <number>0</number>
       </property>
       <item>
        <spacer name="verticalSpacer_4">
@@ -3203,7 +3215,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>20</width>
+          <width>10</width>
           <height>40</height>
          </size>
         </property>
@@ -3216,7 +3228,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>20</width>
+          <width>10</width>
           <height>40</height>
          </size>
         </property>
