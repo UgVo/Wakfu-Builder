@@ -32,6 +32,7 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *parent) :
     QObject::connect(status_build,&c_status_build::lvl_changed,build,&c_build::setLvl);
     QObject::connect(status_build,&c_status_build::bonus_changed,build,&c_build::slot_bonus_changed);
     QObject::connect(element_display,&c_elements_display::newElements,build,&c_build::setElements);
+    QObject::connect(build_display,&c_build_display::load_search_position,search_widget,&c_search_widget::slot_load_search_position);
 
     ui->widget->setStyleSheet(QString("QWidget#widget{background-color:%1}").arg(app_color::grey_blue));
     status_build->setLvl(200);

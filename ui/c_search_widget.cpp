@@ -221,6 +221,33 @@ void c_search_widget::setLvl(int new_lvl) {
     }
 }
 
+void c_search_widget::slot_load_search_position(QString position) {
+    QList<int> itemType;
+    QStringList map = c_item::mapPositionToType.values(position);
+    foreach(QString position_elem, map) {
+        itemType.append(c_item::mapTypeToId.values(position_elem));
+    }
+
+    if (ui->cb_2_hands->isChecked()) itemType.append(c_item::mapTypeToId.values("TWO_HAND_WEAPON"));
+
+    QList<int> rarities;
+    if (ui->pb_epique->isChecked()) rarities.append(c_item::mapRarityToId["Epique"]);
+    if (ui->pb_legend->isChecked()) rarities.append(c_item::mapRarityToId["Légendaire"]);
+    if (ui->pb_mythique->isChecked()) rarities.append(c_item::mapRarityToId["Mythique"]);
+    if (ui->pb_relique->isChecked()) rarities.append(c_item::mapRarityToId["Relique"]);
+    if (ui->pb_souvenir->isChecked()) rarities.append(c_item::mapRarityToId["Souvenir"]);
+
+    QList<int> caract;
+    if (ui->carac_search->currentIndex()!=0) caract.append(c_item::mapCaracToId[ui->carac_search->currentText()]);
+    QList<QPair<int,int>> item_list_pair = dbmanager->getid_item_from_actions(caract,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text(),ui->final_object_check->checkState()==Qt::CheckState::Checked);
+    std::sort(item_list_pair.begin(),item_list_pair.end(),c_search_widget::compare_pair_id_lvl);
+    QList<int> item_list;
+    for(int i = 0; i < item_list_pair.size(); ++i) {
+        item_list.push_back(item_list_pair.at(i).first);
+    }
+    emit new_search_result(item_list);
+}
+
 void c_search_widget::slot_rarity_change_state(bool checked) {
      QCheckBox* sender = static_cast<QCheckBox*>(QObject::sender());
 

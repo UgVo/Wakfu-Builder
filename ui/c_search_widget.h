@@ -47,6 +47,8 @@ public slots:
     void slot_reset();
    static bool compare_pair_id_lvl(QPair<int,int> p1, QPair<int,int> p2);
     void setLvl(int lvl);
+    void slot_load_search_position(QString position);
+
 
 signals:
     void new_search_result(QList<int>);

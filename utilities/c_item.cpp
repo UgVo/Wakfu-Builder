@@ -17,6 +17,7 @@ const QString c_item::PET = "PET";
 const QString c_item::NONE = "NONE";
 
 QMap<QString,int> c_item::mapTypeToId = c_item::init_mapTypeToId();
+QMap<QString,QString> c_item::mapPositionToType = c_item::init_mapPositionToType();
 QMap<QString,int> c_item::mapRarityToId = c_item::init_mapRarityToId();
 QMap<QString,int> c_item::mapCaracToId = c_item::init_mapCaracToId();
 QMap<QString,int> c_item::mapFamilierSpeToLvl = c_item::ini_mapFamilierSpeToLvl();
@@ -153,6 +154,26 @@ QMap<QString,int> c_item::init_mapTypeToId() {
     _mapTypeToId.insertMulti("ACCESSORY",646);
     _mapTypeToId.insertMulti("COSTUME",647);
     return _mapTypeToId;
+}
+
+QMap<QString, QString> c_item::init_mapPositionToType() {
+    QMap<QString,QString> _mapPositionToType;
+    _mapPositionToType.insertMulti("HEAD","HEAD");
+    _mapPositionToType.insertMulti("NECK","NECK");
+    _mapPositionToType.insertMulti("BACK","BACK");
+    _mapPositionToType.insertMulti("SHOULDERS","SHOULDERS");
+    _mapPositionToType.insertMulti("CHEST","CHEST");
+    _mapPositionToType.insertMulti("BELT","BELT");
+    _mapPositionToType.insertMulti("LEFT_HAND","RING");
+    _mapPositionToType.insertMulti("RIGHT_HAND","RING");
+    _mapPositionToType.insertMulti("LEGS","LEGS");
+    _mapPositionToType.insertMulti("FIRST_WEAPON","ONE_HAND_WEAPON");
+    _mapPositionToType.insertMulti("FIRST_WEAPON","TWO_HAND_WEAPON");
+    _mapPositionToType.insertMulti("SECOND_WEAPON","SECOND_HAND");
+    _mapPositionToType.insertMulti("ACCESSORY","ACCESSORY");
+    _mapPositionToType.insertMulti("PET","PET");
+
+    return _mapPositionToType;
 }
 
 QMap<QString,int> c_item::init_mapRarityToId() {

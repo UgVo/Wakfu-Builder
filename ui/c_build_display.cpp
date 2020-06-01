@@ -141,6 +141,7 @@ c_build_display::c_build_display(c_build* build, QWidget *parent) :
         item_position_map[position]->setStyleSheet(".QWidget{background-color: #6A8BA8; border: 1px solid #6A8BA8;}");
         connect(item_position_map[position],&c_item_viewer::unequip,_build,&c_build::unequip);
         connect(item_position_map[position],&c_item_viewer::elementsChanged,_build,&c_build::slot_item_element_changed);
+        connect(item_position_map[position],&c_item_viewer::clicked,this,&c_build_display::slot_item_view_cliked);
         equipementLayout->insertWidget(item_position_map.size(),item_position_map[position]);
     }
     connect(_build,&c_build::updated,this,&c_build_display::update_view);
@@ -223,4 +224,8 @@ void c_build_display::slot_second_hand_disabled(bool state) {
         item_position_map["SECOND_WEAPON"]->enable();
     }
 
+}
+
+void c_build_display::slot_item_view_cliked(QString position) {
+    emit load_search_position(position);
 }
