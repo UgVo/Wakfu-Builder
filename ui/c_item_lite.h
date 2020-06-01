@@ -17,10 +17,11 @@ class c_item_lite : public QWidget
     Q_OBJECT
 
 public:
-    explicit c_item_lite(c_dbmanager * database_manager, c_item item = c_item(), QWidget *parent = nullptr);
+    explicit c_item_lite(c_dbmanager * database_manager = nullptr, c_item item = c_item(), QWidget *parent = nullptr);
     ~c_item_lite() override;
     void set_icon();
     bool event(QEvent *event) override;
+    void setDatabase_manager(c_dbmanager* manager);
 
     c_item item() const;
 

@@ -36,6 +36,7 @@ public:
     void empty_pages();
     void empty_page(int page);
     void clearLayout(QLayout* layout, bool deleteWidgets = true);
+    static c_item_lite* generate_item_lite(c_item item);
 
 private:
     Ui::c_result_display *ui;
