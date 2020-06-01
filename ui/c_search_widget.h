@@ -45,7 +45,7 @@ public slots:
     void slot_search();
     void init_comboBox(QComboBox* cb);
     void slot_reset();
-   static bool compare_pair_id_lvl(QPair<int,int> p1, QPair<int,int> p2);
+    static bool compare_pair_id_lvl(QPair<int,int> p1, QPair<int,int> p2);
     void setLvl(int lvl);
     void slot_load_search_position(QString position);
 
