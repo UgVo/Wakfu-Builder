@@ -14,7 +14,7 @@ c_result_display::c_result_display(c_dbmanager* _data_base, QWidget *parent) :
     stacklayout = new QStackedLayout;
     stacklayout->setStackingMode(QStackedLayout::StackAll);
     loading = new QLabel;
-    movie = new QMovie("images/divers/LameDifferentBalloonfish-small.gif");
+    movie = new QMovie("images/divers/Eliacube.gif");
     loading->setMovie(movie);
     loading->setAlignment(Qt::AlignCenter);
     movie->start();
@@ -40,6 +40,7 @@ c_result_display::~c_result_display() {
 
 void c_result_display::slot_new_search_result(QList<int> item_id_list) {
     empty_pages();
+    loading->show();
     id_list = item_id_list;
     std::reverse(id_list.begin(), id_list.end());
     current_page = 0;
@@ -67,16 +68,37 @@ void c_result_display::create_page(int number) {
 }
 
 void c_result_display::fill_page(int page) {
+    QElapsedTimer timer;
     loading->show();
     QList<int> sub_item_id_list;
     sub_item_id_list = id_list.mid(ROW_PER_PAGE*COLUMN_PER_PAGE*page,ROW_PER_PAGE*COLUMN_PER_PAGE);
     QList<c_item> item_list;
     QList<c_item_lite*> item_lite_list;
+    timer.start();
     item_list = data_base->getItems(sub_item_id_list);
-    for(int i = 0; i < item_list.size(); ++i) {
+    qDebug() << "getItem from data base :" << timer.elapsed() << "ms";
+    timer.restart();
+    int n = 4;
+    int size = item_list.size();
+    int done = (size/n)*n;
+    qDebug() << n << size << done << size-done;
+    for(int i = 0; i < size/n; ++i) {
+        movie->jumpToNextFrame();
+        item_lite_list.push_back(new c_item_lite(data_base,item_list.at(n*i),this));
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
+        item_lite_list.push_back(new c_item_lite(data_base,item_list.at(n*i+1),this));
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
+        item_lite_list.push_back(new c_item_lite(data_base,item_list.at(n*i+2),this));
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
+        item_lite_list.push_back(new c_item_lite(data_base,item_list.at(n*i+3),this));
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
+    }
+    for (int i = done; i < size; ++i ) {
         item_lite_list.push_back(new c_item_lite(data_base,item_list.at(i),this));
         QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
     }
+    qDebug() << "Creation of item_lite :" << timer.elapsed() << "ms";
+    timer.restart();
     int i = 0;
     for(int j = 0; j < item_list.size(); ++j) {
         QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(item_lite_list.at(j));
@@ -86,6 +108,8 @@ void c_result_display::fill_page(int page) {
         static_cast<QGridLayout*>(stackedWidget->widget(page)->layout())->addWidget(item_lite_list.at(j),i/COLUMN_PER_PAGE,i%COLUMN_PER_PAGE);
         ++i;
     }
+    qDebug() << "Creation of shadows and added to the widget :" << timer.elapsed() << "ms";
+    timer.restart();
     QSpacerItem *spacer = new QSpacerItem(20,40,QSizePolicy::Expanding,QSizePolicy::Expanding);
     static_cast<QGridLayout*>(stackedWidget->widget(page)->layout())->addItem(spacer,ROW_PER_PAGE,COLUMN_PER_PAGE);
     stackedWidget->widget(page)->show();
@@ -120,6 +144,15 @@ void c_result_display::clearLayout(QLayout* layout, bool deleteWidgets)
         }
         delete item;
     }
+}
+
+c_item_lite *c_result_display::generate_item_lite(c_item item) {
+    c_item_lite *item_lite = new c_item_lite(nullptr,item);
+    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(item_lite);
+    shadow->setColor(QColor(91, 108, 142, 180));
+    shadow->setOffset(2,2);
+    item_lite->setGraphicsEffect(shadow);
+    return item_lite;
 }
 
 void c_result_display::slot_next() {

@@ -30,9 +30,7 @@ c_item_lite::c_item_lite(c_dbmanager * database_manager, c_item item, QWidget *p
     ui->icon->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     ui->icon->setScaledContents(true);
     set_icon();
-    it_display = new c_item_display(_item);
-    it_display->setWindowFlags(Qt::ToolTip | Qt::Popup);
-    it_display->setFocusPolicy(Qt::NoFocus);
+    it_display = nullptr;
     _database_manager = database_manager;
 }
 
@@ -84,6 +82,14 @@ bool c_item_lite::event(QEvent *event) {
         QPoint p = this->pos();
         p.setY(p.y()+60);
         p.setX(p.x()+9);
+        if (it_display == nullptr) {
+            it_display = new c_item_display(_item);
+            it_display->setWindowFlags(Qt::ToolTip | Qt::Popup);
+            it_display->setFocusPolicy(Qt::NoFocus);
+        }
+        if ((p.y() + it_display->size().height()) > (_parent->size().height() + 100)) {
+            p.setY(p.y()-it_display->size().height()-70);
+        }
         QPoint res = _parent->mapToGlobal(p);
         it_display->completeData(_database_manager);
         it_display->move(res);
@@ -97,6 +103,10 @@ bool c_item_lite::event(QEvent *event) {
 
     }
     return QWidget::event(event);
+}
+
+void c_item_lite::setDatabase_manager(c_dbmanager *manager) {
+    _database_manager = manager;
 }
 
 c_item c_item_lite::item() const {
