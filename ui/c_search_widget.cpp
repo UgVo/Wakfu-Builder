@@ -260,7 +260,7 @@ void c_search_widget::slot_search() {
 
     QList<int> caract;
     if (ui->carac_search->currentIndex()!=0) caract.append(c_item::mapCaracToId[ui->carac_search->currentText()]);
-    QList<QPair<int,int>> item_list_pair = dbmanager->getid_item_from_actions(caract,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text());
+    QList<QPair<int,int>> item_list_pair = dbmanager->getid_item_from_actions(caract,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text(),ui->final_object_check->checkState()==Qt::CheckState::Checked);
     std::sort(item_list_pair.begin(),item_list_pair.end(),c_search_widget::compare_pair_id_lvl);
     QList<int> item_list;
     for(int i = 0; i < item_list_pair.size(); ++i) {
