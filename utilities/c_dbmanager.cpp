@@ -621,17 +621,25 @@ c_state c_dbmanager::get_state(int id) {
     return state;
 }
 
-QList<QPair<int,int>> c_dbmanager::getid_item_from_actions(QList<int> action_ids, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name) {
+QList<QPair<int,int>> c_dbmanager::getid_item_from_actions(QList<int> action_ids, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final) {
     QList<QPair<int,int>> res;
     QSqlQuery query(m_db);
     QString query_string;
-    query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item";
+    if (final) {
+        query_string = QString("SELECT item.id,item.lvl FROM (SELECT item1.* FROM (select * from wakfu_builder.item WHERE item.lvl >= %1 AND item.lvl <= %2) item1 LEFT OUTER JOIN (select * from wakfu_builder.item WHERE item.lvl >= %1 AND item.lvl <= %2) AS item2 ON item1.rarity < item2.rarity AND item1.title = item2.title WHERE item2.title IS NULL) item ").arg(bondaries.at(0)).arg(bondaries.at(1));
+    } else {
+        query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
+    }
     for (int i = 0; i< action_ids.size(); ++i) {
         query_string += QString(", wakfu_builder.effect as effect%1, wakfu_builder.item_useEquipEffect_relation as relation%1").arg(i);
     }
-    query_string += QString(" WHERE item.lvl >= %1 AND item.lvl <= %2 ").arg(bondaries.at(0)).arg(bondaries.at(1));
+    if (!final) {
+        query_string += QString(" WHERE item.lvl >= %1 AND item.lvl <= %2 AND").arg(bondaries.at(0)).arg(bondaries.at(1));
+    } else {
+        query_string+= " WHERE";
+    }
+
     if (!action_ids.isEmpty()) {
-        query_string.append("AND");
         for (int i = 0; i < action_ids.size(); ++i) {
             query_string += QString(" item.id = relation%1.id_item AND").arg(i);
         }
@@ -643,30 +651,34 @@ QList<QPair<int,int>> c_dbmanager::getid_item_from_actions(QList<int> action_ids
             query_string += QString(" effect%1.actionId = :action_id%1 AND").arg(i);
         }
         query_string.remove(QRegExp("AND$"));
+        query_string.append(" AND");
     }
     if (!rarities.isEmpty()) {
-        query_string.append("AND");
         query_string += (" ( ");
         for (int i = 0; i < rarities.size(); ++i) {
             query_string += QString(" item.rarity = :rarity%1 OR").arg(i);
         }
         query_string.remove(QRegExp("OR$"));
         query_string += (" ) ");
+        query_string.append(" AND");
     }
     if (!types.isEmpty()) {
-        query_string.append("AND");
         query_string += (" ( ");
         for (int i = 0; i < types.size(); ++i) {
             query_string += QString(" item.itemTypeId = :types%1 OR").arg(i);
         }
         query_string.remove(QRegExp("OR$"));
         query_string += (" ) ");
+        query_string.append(" AND");
+    }
+    if (!name.isEmpty()) {
+        query_string.append(QString(" item.title LIKE '\%%1\%' ").arg(name));
+        query_string.append(" AND");
     }
     query_string.remove(QRegExp("AND$"));
-    if (!name.isEmpty()) {
-        query_string.append(QString(" AND item.title LIKE '\%%1\%' ").arg(name));
-    }
-    query_string.push_back(" AND item.rarity > 2 ORDER BY item.lvl DESC");
+    query_string.remove(QRegExp("WHERE$"));
+    query_string.push_back(" ORDER BY item.lvl DESC");
+    qDebug() << query_string;
     query.prepare(query_string);
     for (int i = 0; i < action_ids.size(); ++i) {
         query.bindValue(QString(":action_id%1").arg(i),action_ids.at(i));
@@ -785,5 +797,5 @@ QVector<c_effect> c_dbmanager::getEquipEffectFromItemId(int id) {
             equipEffect.push_back(get_effect(s_query.value(id).toInt()));
         }
     }
-     return equipEffect;
+    return equipEffect;
 }
