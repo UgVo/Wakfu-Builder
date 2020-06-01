@@ -16,6 +16,7 @@
 #include <QEventLoop>
 #include <QElapsedTimer>
 #include <QFileDialog>
+#include <QMessageBox>
 #include "utilities/c_dbmanager.h"
 #include "utilities/c_effect.h"
 #include "utilities/c_networkmanager.h"
@@ -77,6 +78,11 @@ public slots:
     void slot_on_close_table(const int &index);
     void slot_actionSauvegarder_Build();
     void slot_action_open_Depuis_un_fichier();
+    void slot_action_save_Vers_la_base_de_donnee();
+    void slot_action_open_Depuis_la_base_de_donn_e();
+    void slot_actionEnregistrer();
+
+    void set_save_enabled(bool flag);
 
 signals:
     void init_done();

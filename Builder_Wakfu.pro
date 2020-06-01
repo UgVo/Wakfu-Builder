@@ -33,6 +33,7 @@ SOURCES += \
     ui/c_item_display.cpp \
     ui/c_item_lite.cpp \
     ui/c_item_viewer.cpp \
+    ui/c_load_builder_dialog.cpp \
     ui/c_result_display.cpp \
     ui/c_search_widget.cpp \
     ui/c_status_build.cpp \
@@ -47,6 +48,7 @@ SOURCES += \
     utilities/c_effect.cpp \
     utilities/c_itemproperties.cpp \
     utilities/c_networkmanager.cpp \
+    utilities/c_save_builder_model.cpp \
     utilities/c_state.cpp \
     utilities/c_tokenizer.cpp \
     utilities/c_item_model.cpp\
@@ -62,6 +64,7 @@ HEADERS += \
     ui/c_item_display.h \
     ui/c_item_lite.h \
     ui/c_item_viewer.h \
+    ui/c_load_builder_dialog.h \
     ui/c_result_display.h \
     ui/c_search_widget.h \
     ui/c_status_build.h \
@@ -77,6 +80,7 @@ HEADERS += \
     utilities/c_effect.h \
     utilities/c_itemproperties.h \
     utilities/c_networkmanager.h \
+    utilities/c_save_builder_model.h \
     utilities/c_state.h \
     utilities/c_tokenizer.h \
     utilities/c_item_model.h \
@@ -92,6 +96,7 @@ FORMS += \
     ui/c_item_display.ui \
     ui/c_item_lite.ui \
     ui/c_item_viewer.ui \
+    ui/c_load_builder_dialog.ui \
     ui/c_result_display.ui \
     ui/c_search_widget.ui \
     ui/c_status_build.ui

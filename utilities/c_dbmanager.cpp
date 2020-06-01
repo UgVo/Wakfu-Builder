@@ -799,3 +799,40 @@ QVector<c_effect> c_dbmanager::getEquipEffectFromItemId(int id) {
     }
     return equipEffect;
 }
+
+int c_dbmanager::add_save_builder(QString json, QString name, int lvl) {
+    QSqlQuery query(m_db);
+    query.prepare("INSERT INTO wakfu_builder.builder_save (json,name,niveau) VALUES (:json,:name,:lvl)");
+    query.bindValue(":json",json);
+    query.bindValue(":lvl",lvl);
+    query.bindValue(":name",name);
+    if (query.exec()) {
+        QSqlQuery s_query(m_db);
+        s_query.prepare("SELECT LASTVAL()");
+        if (s_query.exec()) {
+            int id = s_query.record().indexOf("lastval");
+            while (s_query.next()) {
+                return s_query.value(id).toInt();
+            }
+        }
+    }
+    return 0;
+}
+
+int c_dbmanager::update_save_builder(QString json, int id, QString name, int lvl) {
+    QSqlQuery query(m_db);
+    query.prepare("UPDATE wakfu_builder.builder_save SET json = :json, name = :name, niveau = :lvl  WHERE id = :id");
+    query.bindValue(":json",json);
+    query.bindValue(":id",id);
+    query.bindValue(":lvl",lvl);
+    query.bindValue(":name",name);
+    if (query.exec()) {
+        return 1;
+    }
+    return 0;
+}
+
+QSqlDatabase c_dbmanager::getDb() const
+{
+    return m_db;
+}
