@@ -16,6 +16,9 @@ CREATE TABLE wakfu_builder.item_useEffect_relation(id_item integer, id_E integer
 CREATE TABLE wakfu_builder.item_useCriticalEffect_relation(id_item integer, id_E integer, CONSTRAINT relation_uCE_pk PRIMARY KEY(id_item,id_E));
 CREATE TABLE wakfu_builder.item_useEquipEffect_relation(id_item integer, id_E integer, CONSTRAINT relation_uEE_pk PRIMARY KEY(id_item,id_E));
 
+CREATE TABLE wakfu_builder.builder_save (id SERIAL UNIQUE, json text, name text, niveau integer);
+
+
 delete from wakfu_builder.action;
 delete from wakfu_builder.itemproperties;
 delete from wakfu_builder.equipmentItemType;

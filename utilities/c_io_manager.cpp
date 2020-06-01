@@ -3,6 +3,7 @@
 
 c_io_manager::c_io_manager(c_dbmanager *_db_manager, QObject *parent) : QObject(parent) {
     db_manager = _db_manager;
+    load_builder_dialog = new c_load_builder_dialog(db_manager);
 }
 
 QJsonObject c_io_manager::itemToJson(const c_item &item) {
@@ -30,7 +31,7 @@ QJsonObject c_io_manager::builderToJson(const c_builder_view *builder) {
     return res;
 }
 
-QByteArray c_io_manager::save(const c_builder_view *builder, const c_io_manager::jsonformat format, const QString path) {
+QByteArray c_io_manager::save(c_builder_view *builder, const c_io_manager::jsonformat format, const QString path) {
     QJsonDocument doc;
     doc.setObject(builderToJson(builder));
 
@@ -40,8 +41,14 @@ QByteArray c_io_manager::save(const c_builder_view *builder, const c_io_manager:
         file.open(QIODevice::ReadWrite | QIODevice::Text);
         file.write(doc.toJson(QJsonDocument::Indented));
         file.close();
+        builder->setId(-1);
     } else if (format ==  c_io_manager::jsonformat::database) {
-        // TODO insert to database
+        if (!builder->getId()) {
+            int id = db_manager->add_save_builder(doc.toJson(QJsonDocument::Indented),builder->getStatus_build()->getName(),builder->getStatus_build()->getLvl());
+            builder->setId(id);
+        } else {
+            db_manager->update_save_builder(doc.toJson(QJsonDocument::Indented),builder->getId(),builder->getStatus_build()->getName(),builder->getStatus_build()->getLvl());
+        }
     }
 
     return doc.toJson(QJsonDocument::Compact);
@@ -74,18 +81,53 @@ void c_io_manager::jsonToBuilder(c_builder_view *builder, const QJsonObject &jso
 }
 
 
-void c_io_manager::load(c_builder_view *builder, const c_io_manager::jsonformat format, QString path, int id) {
+bool c_io_manager::load(c_builder_view *builder, const c_io_manager::jsonformat format, QString path, int id) {
     QFile file;
     QJsonDocument doc;
     QString val;
     QJsonArray JsonArray;
 
     if (format == c_io_manager::jsonformat::file) {
+        bool res;
         file.setFileName(path);
-        file.open(QIODevice::ReadOnly | QIODevice::Text);
+        res = file.open(QIODevice::ReadOnly | QIODevice::Text);
         val = file.readAll();
         file.close();
         doc = QJsonDocument::fromJson(val.toUtf8());
         jsonToBuilder(builder,doc.object());
+        builder->setId(-1);
+        builder->setPath(path);
+        return res;
+    } else if (format == c_io_manager::jsonformat::database) {
+        if (QDialog::Accepted == load_builder_dialog->exec()) {
+            QString json = load_builder_dialog->getCurrent_json();
+            if (json.isEmpty()) {
+                return false;
+            }
+            doc = QJsonDocument::fromJson(json.toUtf8());
+            jsonToBuilder(builder,doc.object());
+            builder->setId(load_builder_dialog->getCurrent_id());
+            return true;
+        } else {
+            return false;
+        }
+    }
+    return false;
+}
+
+void c_io_manager::update(c_builder_view *builder, const c_io_manager::jsonformat format, const QString path) {
+    QJsonDocument doc;
+    doc.setObject(builderToJson(builder));
+
+    if (format == c_io_manager::jsonformat::file) {
+        QFile file;
+        file.setFileName(path);
+        file.open(QIODevice::ReadWrite | QIODevice::Text);
+        file.resize(0);
+        file.write(doc.toJson(QJsonDocument::Indented));
+        file.close();
+        builder->setId(-1);
+    } else if (format ==  c_io_manager::jsonformat::database) {
+        db_manager->update_save_builder(doc.toJson(QJsonDocument::Indented),builder->getId(),builder->getStatus_build()->getName(),builder->getStatus_build()->getLvl());
     }
 }

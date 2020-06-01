@@ -65,6 +65,11 @@ public:
     QVector<c_effect> getUseEffectFromItemId(int id);
     QVector<c_effect> getEquipEffectFromItemId(int id);
 
+    int add_save_builder(QString json, QString name, int lvl);
+    int update_save_builder(QString json, int id, QString name, int lvl);
+
+    QSqlDatabase getDb() const;
+
 private:
     QSqlDatabase m_db;
     QStringList PositionTypeList;

@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     datamanager.setDBManager(&database_manager);
     ui->actionCheck_new_version->setIcon(QIcon("images/divers/update32.png"));
-    ui->menuSauvegarder_Build->setEnabled(false);
+    set_save_enabled(false);
     ui->tabWidget->setTabsClosable(true);
 
     diag = new DialogGestion(&datamanager,datamanager.getVersion(),this);
@@ -20,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(ui->tabWidget,&QTabWidget::tabCloseRequested,this,&MainWindow::slot_on_close_table);
     QObject::connect(ui->actionSauvegarder_Build,&QAction::triggered,this,&MainWindow::slot_actionSauvegarder_Build);
     QObject::connect(ui->action_open_Depuis_un_fichier,&QAction::triggered,this,&MainWindow::slot_action_open_Depuis_un_fichier);
+    QObject::connect(ui->action_save_Vers_la_base_de_donnee,&QAction::triggered,this,&MainWindow::slot_action_save_Vers_la_base_de_donnee);
+    QObject::connect(ui->action_open_Depuis_la_base_de_donn_e,&QAction::triggered,this,&MainWindow::slot_action_open_Depuis_la_base_de_donn_e);
+    QObject::connect(ui->actionEnregistrer,&QAction::triggered,this,&MainWindow::slot_actionEnregistrer);
 
     this->setWindowState(Qt::WindowMaximized);
 }
@@ -64,9 +67,10 @@ void MainWindow::test_interpret_effect() {
 }
 
 void MainWindow::slot_actionCr_er_nouveau_Build_cliked() {
-    ui->menuSauvegarder_Build->setEnabled(true);
+    set_save_enabled(true);
     builder_list.push_back(new c_builder_view(&database_manager));
     ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
 }
 
 void MainWindow::slot_check_version_clicked() {
@@ -101,7 +105,7 @@ void MainWindow::slot_on_close_table(const int &index) {
     tabItem = nullptr;
 
     if (!builder_list.size()) {
-        ui->menuSauvegarder_Build->setEnabled(false);
+        set_save_enabled(false);
     }
 }
 
@@ -122,9 +126,53 @@ void MainWindow::slot_action_open_Depuis_un_fichier() {
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Save Build"), app_path + "/save", tr("Json files (*.json)"));
     if (!fileName.isEmpty()) {
-        ui->menuSauvegarder_Build->setEnabled(true);
-        builder_list.push_back(new c_builder_view(&database_manager));
-        ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
-        builder_list.last()->slot_load(c_io_manager::jsonformat::file,fileName);
+        c_builder_view *builder = new c_builder_view(&database_manager);
+        if (builder->slot_load(c_io_manager::jsonformat::file,fileName)) {
+            set_save_enabled(true);
+            builder_list.push_back(builder);
+            ui->tabWidget->addTab(builder,QString("Builder %1").arg(builder_list.size()));
+            ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+        } else {
+            builder->deleteLater();
+        }
     }
 }
+
+void MainWindow::slot_action_save_Vers_la_base_de_donnee() {
+    if (ui->tabWidget->currentIndex() == -1) {
+        return;
+    }
+    c_builder_view* builder = static_cast<c_builder_view*>(ui->tabWidget->currentWidget());
+    builder->slot_save(c_io_manager::jsonformat::database);
+}
+
+void MainWindow::slot_action_open_Depuis_la_base_de_donn_e() {
+    c_builder_view *builder = new c_builder_view(&database_manager);
+    if (builder->slot_load(c_io_manager::jsonformat::database)) {
+        set_save_enabled(true);
+        builder_list.push_back(builder);
+        ui->tabWidget->addTab(builder,QString("Builder %1").arg(builder_list.size()));
+        ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+    }
+}
+
+void MainWindow::slot_actionEnregistrer() {
+    if (ui->tabWidget->currentIndex() == -1) {
+        return;
+    }
+    c_builder_view* builder = static_cast<c_builder_view*>(ui->tabWidget->currentWidget());
+    if (!builder->getId()) {
+        QMessageBox::critical(this,"Pas de sauvegarde préalable","Le build n'a pas eu de sauvegarde préalable, utilisez \"Enregistrer vers la base de donnée \" ou \"Enregistrer vers un fichier\" plutôt.");
+    } else if (builder->getId() > 0) {
+        builder->slot_update(c_io_manager::jsonformat::database);
+    } else if (builder->getId() == -1) {
+        builder->slot_update(c_io_manager::jsonformat::file);
+    }
+}
+
+void MainWindow::set_save_enabled(bool flag) {
+    ui->actionSauvegarder_Build->setEnabled(flag);
+    ui->action_save_Vers_la_base_de_donnee->setEnabled(flag);
+    ui->actionEnregistrer->setEnabled(flag);
+}
+

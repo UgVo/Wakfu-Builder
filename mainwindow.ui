@@ -38,29 +38,20 @@
      <string>Gestion</string>
     </property>
     <addaction name="actionCheck_new_version"/>
+    <addaction name="actionContraintes"/>
    </widget>
    <widget class="QMenu" name="menuFichiers">
     <property name="title">
      <string>Fichiers</string>
     </property>
-    <widget class="QMenu" name="menuOuvrir_Build">
-     <property name="title">
-      <string>Ouvrir Build</string>
-     </property>
-     <addaction name="action_open_Depuis_un_fichier"/>
-     <addaction name="actionDepuis_la_base_de_donn_e"/>
-    </widget>
-    <widget class="QMenu" name="menuSauvegarder_Build">
-     <property name="title">
-      <string>Sauvegarder Build</string>
-     </property>
-     <addaction name="actionSauvegarder_Build"/>
-     <addaction name="actionVers_la_base_de_donnee"/>
-    </widget>
     <addaction name="actionCr_er_nouveau_Build"/>
-    <addaction name="menuOuvrir_Build"/>
     <addaction name="separator"/>
-    <addaction name="menuSauvegarder_Build"/>
+    <addaction name="action_open_Depuis_un_fichier"/>
+    <addaction name="action_open_Depuis_la_base_de_donn_e"/>
+    <addaction name="separator"/>
+    <addaction name="actionEnregistrer"/>
+    <addaction name="actionSauvegarder_Build"/>
+    <addaction name="action_save_Vers_la_base_de_donnee"/>
    </widget>
    <addaction name="menuFichiers"/>
    <addaction name="menuGestion"/>
@@ -86,7 +77,7 @@
   </action>
   <action name="actionCr_er_nouveau_Build">
    <property name="text">
-    <string>Créer nouveau Build</string>
+    <string>Nouveau builder</string>
    </property>
   </action>
   <action name="actionImporte_Build">
@@ -96,22 +87,32 @@
   </action>
   <action name="actionSauvegarder_Build">
    <property name="text">
-    <string>Vers un fichier</string>
+    <string>Enregistrer vers un fichier</string>
    </property>
   </action>
   <action name="action_open_Depuis_un_fichier">
    <property name="text">
-    <string>Depuis un fichier</string>
+    <string>Ouvrir depuis un fichier</string>
    </property>
   </action>
-  <action name="actionDepuis_la_base_de_donn_e">
+  <action name="action_open_Depuis_la_base_de_donn_e">
    <property name="text">
-    <string>Depuis la base de donnée</string>
+    <string>Ouvrir depuis la base de donnée</string>
    </property>
   </action>
-  <action name="actionVers_la_base_de_donnee">
+  <action name="action_save_Vers_la_base_de_donnee">
    <property name="text">
-    <string>Vers la base de donnée</string>
+    <string>Enregistrer vers la base de donnée</string>
+   </property>
+  </action>
+  <action name="actionContraintes">
+   <property name="text">
+    <string>Contraintes</string>
+   </property>
+  </action>
+  <action name="actionEnregistrer">
+   <property name="text">
+    <string>Enregistrer</string>
    </property>
   </action>
  </widget>

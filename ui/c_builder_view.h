@@ -27,6 +27,12 @@ public:
     c_build_display *getBuild_display() const;
     c_elements_display *getElement_display() const;
 
+    int getId() const;
+    void setId(int value);
+
+    QString getPath() const;
+    void setPath(const QString &value);
+
 private:
     Ui::c_builder_view *ui;
     c_dbmanager *manager;
@@ -36,10 +42,13 @@ private:
     c_elements_display *element_display;
     c_build_display *build_display;
     c_search_widget *search_widget;
+    int id; // -1 if comes or saved as a file, >0 if comes from or saved in the database, else 0
+    QString path;
 
 public slots:
-    void slot_save(c_io_manager::jsonformat format, QString path);
-    void slot_load(c_io_manager::jsonformat format, QString path);
+    void slot_save(c_io_manager::jsonformat format, QString path = QString());
+    bool slot_load(c_io_manager::jsonformat format, QString path = QString());
+    void slot_update(c_io_manager::jsonformat format);
 };
 
 #endif // C_BUILDER_VIEW_H

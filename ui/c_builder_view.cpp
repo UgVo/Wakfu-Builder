@@ -8,6 +8,7 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *parent) :
     ui->setupUi(this);
     manager = _manager;
     build = new c_build;
+    id = 0;
 
     //UI
     result_display = new c_result_display(manager);
@@ -57,12 +58,35 @@ c_elements_display *c_builder_view::getElement_display() const {
     return element_display;
 }
 
+int c_builder_view::getId() const {
+    return id;
+}
+
+void c_builder_view::setId(int value) {
+    id = value;
+}
+
+QString c_builder_view::getPath() const
+{
+    return path;
+}
+
+void c_builder_view::setPath(const QString &value)
+{
+    path = value;
+}
+
 void c_builder_view::slot_save(c_io_manager::jsonformat format, QString path) {
     c_io_manager io_manager(manager);
     io_manager.save(this,format,path);
 }
 
-void c_builder_view::slot_load(c_io_manager::jsonformat format, QString path) {
+bool c_builder_view::slot_load(c_io_manager::jsonformat format, QString path) {
     c_io_manager io_manager(manager);
-    io_manager.load(this,format,path);
+    return io_manager.load(this,format,path);
+}
+
+void c_builder_view::slot_update(c_io_manager::jsonformat format) {
+    c_io_manager io_manager(manager);
+    io_manager.update(this,format,path);
 }
