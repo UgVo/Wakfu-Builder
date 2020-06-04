@@ -48,10 +48,14 @@ public slots:
     static bool compare_pair_id_lvl(QPair<int,int> p1, QPair<int,int> p2);
     void setLvl(int lvl);
     void slot_load_search_position(QString position);
+    void slot_combi_search();
+
+    void set_comboBox_model(QComboBox* cb);
 
 
 signals:
     void new_search_result(QList<int>);
+    void new_search_result_sorted(QList<int>);
 };
 
 #endif // C_SEARCH_WIDGET_H

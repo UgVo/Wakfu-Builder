@@ -18,6 +18,7 @@ c_build::c_build() {
     equipment["SHOULDERS"] = c_item();
     equipment["ACCESSORY"] = c_item();
     equipment["PET"] = c_item();
+    equipment["MOUNT"] = c_item();
 
     epique_free = true;
     relique_free = true;
@@ -60,6 +61,7 @@ void c_build::setElements(const QList<QString> &value) {
 
 QMap<QString, c_item*> c_build::getEquipment_pt() {
     QMap<QString,c_item*> res;
+    qDebug() << "getEquipment_pt" <<  equipment.keys();
     foreach(QString key, equipment.keys()) {
         res[key] = &equipment[key];
     }
@@ -126,10 +128,13 @@ QMap<QString, QString> c_build::equip(const c_item &item) {
         item2equip.setElements(elements);
     }
     QString type = mapItemToType[item2equip.getType().getTitle()];
+    qDebug() << type;
+    qDebug() << item2equip.getName();
     res = check_constraints(item2equip);
     if (res["status"] == "error") {
         return res;
     }
+    qDebug() << "Constrainte check passed";
     if (!type.compare("SECOND_HAND")) {
         if (!equipment["FIRST_WEAPON"].isEmpty()) {
             if (!mapItemToType[equipment["FIRST_WEAPON"].getType().getTitle()].compare("TWO_HAND_WEAPON")) {
@@ -162,9 +167,8 @@ QMap<QString, QString> c_build::equip(const c_item &item) {
         unequip("SECOND_WEAPON");
         equipment["FIRST_WEAPON"] = item2equip;
         emit disableSecondWeapon(true);
-        qDebug() << "TWO_HAND_WEAPON";
     } else {
-        unequip(type);
+        qDebug() << "other" << item2equip.getType().getTitle();
         equipment[type] = item2equip;
     }
     if (item2equip.getRarity() == 5) {
@@ -311,6 +315,8 @@ QMap<QString,int> c_build::resetMap() {
     bonuses["Niv. aux sorts Eau"] = 0;
     bonuses["Niv. aux sorts Terre"] = 0;
     bonuses["Niv. aux sorts Air"] = 0;
+    bonuses["Armure donnée"] = 0;
+    bonuses["Armure reçue"] = 0;
     return bonuses;
 }
 

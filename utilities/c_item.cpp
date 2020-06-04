@@ -14,6 +14,7 @@ const QString c_item::CHEST = "CHEST";
 const QString c_item::SHOULDERS = "SHOULDERS";
 const QString c_item::ACCESSORY = "ACCESSORY";
 const QString c_item::PET = "PET";
+const QString c_item::MOUNT = "MOUNT";
 const QString c_item::NONE = "NONE";
 
 QMap<QString,int> c_item::mapTypeToId = c_item::init_mapTypeToId();
@@ -115,10 +116,18 @@ c_item::c_item(QJsonObject object, c_dbmanager *dbManager) {
         } else {
             _lvl = 50;
         }
+    } else if (_itemType.getId() == 611) {
+        _lvl = 50;
     }
-
     initBonuses();
-    init_mapTypeToId();
+}
+
+QList<c_carac> c_item::getList_bonuses() const {
+    return _list_bonuses;
+}
+
+void c_item::setList_bonuses(const QList<c_carac> &list_bonuses) {
+    _list_bonuses = list_bonuses;
 }
 
 QMap<QString,int> c_item::init_mapTypeToId() {
@@ -153,6 +162,7 @@ QMap<QString,int> c_item::init_mapTypeToId() {
     _mapTypeToId.insertMulti("PET",582);
     _mapTypeToId.insertMulti("ACCESSORY",646);
     _mapTypeToId.insertMulti("COSTUME",647);
+    _mapTypeToId.insertMulti("MOUNT",611);
     return _mapTypeToId;
 }
 
@@ -172,6 +182,7 @@ QMap<QString, QString> c_item::init_mapPositionToType() {
     _mapPositionToType.insertMulti("SECOND_WEAPON","SECOND_HAND");
     _mapPositionToType.insertMulti("ACCESSORY","ACCESSORY");
     _mapPositionToType.insertMulti("PET","PET");
+    _mapPositionToType.insertMulti("MOUNT","MOUNT");
 
     return _mapPositionToType;
 }
@@ -192,7 +203,7 @@ QMap<QString,int> c_item::init_mapRarityToId() {
 QMap<QString,int> c_item::init_mapCaracToId() {
     QMap<QString,int> _mapCaracToId;
     _mapCaracToId = {
-        {"Vie",21},
+        {"Vie",20},
         {"PA",31},
         {"PM",41},
         {"PW",191},
@@ -411,6 +422,15 @@ void c_item::setDescription(const QString description) {
 
 void c_item::setType(const c_equipmentItemTypes itemType) {
     _itemType = itemType;
+    if (_itemType.getId() == 582) {
+        if (mapFamilierSpeToLvl.contains(_name)) {
+            _lvl = mapFamilierSpeToLvl[_name];
+        } else {
+            _lvl = 50;
+        }
+    } else if (_itemType.getId() == 611) {
+        _lvl = 50;
+    }
 }
 
 void c_item::setSetId(const int setId) {
@@ -498,6 +518,7 @@ void c_item::initBonuses() {
     foreach (c_effect effect, _equipEffects) {
         QMap<QString,QString> map = effect.getEffectMap(_lvl);
         _bonuses[map["effect"]] = map["value"].toInt();
+        _list_bonuses.push_back(c_carac(effect.getId(),map["effect"],map["value"].toInt()));
         if (map["effect"].contains("1")) {
             _number_element = 1;
         }
@@ -519,7 +540,7 @@ bool c_item::isEmpty() {
 }
 
 QStringList c_item::position() {
-    return {HEAD, NECK, BACK, SHOULDERS, CHEST, BELT,LEFT_HAND, RIGHT_HAND, LEGS, FIRST_WEAPON, SECOND_WEAPON, ACCESSORY, PET};
+    return {HEAD, NECK, BACK, SHOULDERS, CHEST, BELT,LEFT_HAND, RIGHT_HAND, LEGS, FIRST_WEAPON, SECOND_WEAPON, ACCESSORY, PET, MOUNT};
 }
 
 QMap<QString,int> c_item::ini_mapFamilierSpeToLvl() {

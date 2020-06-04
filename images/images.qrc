@@ -71,5 +71,65 @@
         <file>divers/SHOULDERS_ts.png</file>
         <file>divers/loading.gif</file>
         <file>divers/update32.png</file>
+        <file>divers/smallaccessory.png</file>
+        <file>divers/smallaccessory;png.webp</file>
+        <file>divers/smallaccessory_high.png</file>
+        <file>divers/smallaccessory_inked.png</file>
+        <file>divers/smallaccessory_low.png</file>
+        <file>divers/smallback.png</file>
+        <file>divers/smallback_high.png</file>
+        <file>divers/smallback_inked.png</file>
+        <file>divers/smallback_low.png</file>
+        <file>divers/smallbelt.png</file>
+        <file>divers/smallbelt_high.png</file>
+        <file>divers/smallbelt_inked.png</file>
+        <file>divers/smallbelt_low.png</file>
+        <file>divers/smallchest.png</file>
+        <file>divers/smallchest_high.png</file>
+        <file>divers/smallchest_inked.png</file>
+        <file>divers/smallchest_low.png</file>
+        <file>divers/smalldoublehand.png</file>
+        <file>divers/smalldoublehand_high.png</file>
+        <file>divers/smalldoublehand_inked.png</file>
+        <file>divers/smalldoublehand_low.png</file>
+        <file>divers/smallfirsthand.png</file>
+        <file>divers/smallfirsthand_high.png</file>
+        <file>divers/smallfirsthand_inked.png</file>
+        <file>divers/smallfirsthand_low.png</file>
+        <file>divers/smallhead.png</file>
+        <file>divers/smallhead_high.png</file>
+        <file>divers/smallhead_inked.png</file>
+        <file>divers/smallhead_low.png</file>
+        <file>divers/smalllegs.png</file>
+        <file>divers/smalllegs_high.png</file>
+        <file>divers/smalllegs_inked.png</file>
+        <file>divers/smalllegs_low.png</file>
+        <file>divers/smallmount.png</file>
+        <file>divers/smallmount_high.png</file>
+        <file>divers/smallmount_inked.png</file>
+        <file>divers/smallmount_low.png</file>
+        <file>divers/smallneck.png</file>
+        <file>divers/smallneck_high.png</file>
+        <file>divers/smallneck_inked.png</file>
+        <file>divers/smallneck_low.png</file>
+        <file>divers/smallpet.png</file>
+        <file>divers/smallpet_high.png</file>
+        <file>divers/smallpet_inked.png</file>
+        <file>divers/smallpet_low.png</file>
+        <file>divers/smallring.png</file>
+        <file>divers/smallring_high.png</file>
+        <file>divers/smallring_inked.png</file>
+        <file>divers/smallring_low.png</file>
+        <file>divers/smallsecondhand.png</file>
+        <file>divers/smallsecondhand_high.png</file>
+        <file>divers/smallsecondhand_inked.png</file>
+        <file>divers/smallsecondhand_low.png</file>
+        <file>divers/smallshoulders.png</file>
+        <file>divers/smallshoulders_high.png</file>
+        <file>divers/smallshoulders_inked.png</file>
+        <file>divers/smallshoulders_low.png</file>
+        <file>divers/MOUNT.png</file>
+        <file>Aptitudes/armor_given.png</file>
+        <file>Aptitudes/armor_gotten.png</file>
     </qresource>
 </RCC>

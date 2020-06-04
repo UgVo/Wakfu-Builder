@@ -26,9 +26,6 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
-   <property name="spacing">
-    <number>0</number>
-   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -267,6 +264,13 @@
              </widget>
             </item>
             <item>
+             <widget class="QCheckBox" name="cb_mount">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="horizontalSpacer_5">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -412,7 +416,7 @@
               <number>1</number>
              </property>
              <property name="maximum">
-              <number>200</number>
+              <number>215</number>
              </property>
             </widget>
            </item>
@@ -444,7 +448,7 @@
               <number>1</number>
              </property>
              <property name="maximum">
-              <number>200</number>
+              <number>215</number>
              </property>
              <property name="value">
               <number>200</number>
@@ -498,25 +502,81 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QGroupBox" name="groupBox_3">
+          <widget class="QGroupBox" name="best_combi_gb">
            <property name="title">
-            <string>Recherche conditionnelle</string>
+            <string>Meilleure combinaison</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <item>
-               <widget class="QComboBox" name="comboBox_6">
+               <widget class="QComboBox" name="cb_first_carac">
+                <property name="minimumSize">
+                 <size>
+                  <width>194</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="editable">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="currentText">
-                 <string>Première caractéristique</string>
+                 <string/>
                 </property>
                </widget>
               </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
-               <widget class="QComboBox" name="comboBox_7">
+               <widget class="QComboBox" name="cb_second_condi">
+                <property name="maximumSize">
+                 <size>
+                  <width>40</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QComboBox::AdjustToContents</enum>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Et</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Ou</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cb_second_carac">
+                <property name="minimumSize">
+                 <size>
+                  <width>194</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
+                <property name="currentText">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
+              <item>
+               <widget class="QComboBox" name="cb_last_condi">
                 <property name="maximumSize">
                  <size>
                   <width>40</width>
@@ -539,57 +599,43 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_8">
+               <widget class="QComboBox" name="cb_last_carac">
+                <property name="minimumSize">
+                 <size>
+                  <width>194</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="editable">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="currentText">
-                 <string>Seconde caractéristique</string>
+                 <string/>
                 </property>
                </widget>
               </item>
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
-               <widget class="QComboBox" name="comboBox_9">
-                <item>
-                 <property name="text">
-                  <string>Non trié</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Trié</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="comboBox_10">
-                <property name="editable">
-                 <bool>true</bool>
-                </property>
-                <property name="currentText">
-                 <string>Caractéristique</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
+             <widget class="QCheckBox" name="tri_best_combi_check">
+              <property name="text">
+               <string>Tri</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="best_combi_search">
+              <property name="text">
+               <string>Rechercher</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="best_combi_reset">
+              <property name="text">
+               <string>Reset</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>

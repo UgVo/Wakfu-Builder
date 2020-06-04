@@ -30,6 +30,7 @@ c_result_display::c_result_display(c_dbmanager* _data_base, QWidget *parent) :
     ui->next->setIcon(QIcon("images/divers/next_arrow.png"));
     ui->preview->setIcon(QIcon("images/divers/preview_arrow.png"));
 
+    sorted = false;
     loading->hide();
 }
 
@@ -40,9 +41,23 @@ c_result_display::~c_result_display() {
 
 void c_result_display::slot_new_search_result(QList<int> item_id_list) {
     empty_pages();
+    sorted = false;
     loading->show();
     id_list = item_id_list;
     std::reverse(id_list.begin(), id_list.end());
+    current_page = 0;
+    stackedWidget->setCurrentIndex(current_page);
+    used_page_number = item_id_list.size()/(ROW_PER_PAGE*COLUMN_PER_PAGE);
+    number_items = item_id_list.size();
+    fill_page(0);
+}
+
+void c_result_display::slot_new_search_result_sorted(QList<int> item_id_list) {
+    empty_pages();
+    sorted = true;
+    loading->show();
+    id_list = item_id_list;
+    qDebug() << item_id_list;
     current_page = 0;
     stackedWidget->setCurrentIndex(current_page);
     used_page_number = item_id_list.size()/(ROW_PER_PAGE*COLUMN_PER_PAGE);
@@ -68,22 +83,28 @@ void c_result_display::create_page(int number) {
 }
 
 void c_result_display::fill_page(int page) {
-    QElapsedTimer timer;
+    QElapsedTimer timer,timer2;
     loading->show();
     QList<int> sub_item_id_list;
     sub_item_id_list = id_list.mid(ROW_PER_PAGE*COLUMN_PER_PAGE*page,ROW_PER_PAGE*COLUMN_PER_PAGE);
     QList<c_item> item_list;
     QList<c_item_lite*> item_lite_list;
     timer.start();
-    item_list = data_base->getItems(sub_item_id_list);
+    if (!sorted) {
+        item_list = data_base->getItems(sub_item_id_list);
+    } else {
+        for ( int i = 0; i < sub_item_id_list.size(); ++i) {
+            item_list.append(data_base->getItems(sub_item_id_list.mid(i,1)));
+        }
+    }
     qDebug() << "getItem from data base :" << timer.elapsed() << "ms";
     timer.restart();
     int n = 4;
     int size = item_list.size();
     int done = (size/n)*n;
-    qDebug() << n << size << done << size-done;
     for(int i = 0; i < size/n; ++i) {
         movie->jumpToNextFrame();
+        timer2.restart();
         item_lite_list.push_back(new c_item_lite(data_base,item_list.at(n*i),this));
         QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
         item_lite_list.push_back(new c_item_lite(data_base,item_list.at(n*i+1),this));
@@ -92,10 +113,14 @@ void c_result_display::fill_page(int page) {
         QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
         item_lite_list.push_back(new c_item_lite(data_base,item_list.at(n*i+3),this));
         QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
+        QThread::msleep(1);
     }
+    timer2.restart();
+    qDebug() << "filling of item_lite :" << timer.elapsed() << "ms";
     for (int i = done; i < size; ++i ) {
         item_lite_list.push_back(new c_item_lite(data_base,item_list.at(i),this));
         QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
+        QThread::msleep(1);
     }
     qDebug() << "Creation of item_lite :" << timer.elapsed() << "ms";
     timer.restart();
@@ -108,11 +133,12 @@ void c_result_display::fill_page(int page) {
         static_cast<QGridLayout*>(stackedWidget->widget(page)->layout())->addWidget(item_lite_list.at(j),i/COLUMN_PER_PAGE,i%COLUMN_PER_PAGE);
         ++i;
     }
-    qDebug() << "Creation of shadows and added to the widget :" << timer.elapsed() << "ms";
+    qDebug() << "Creation of shadows and added to the widget :" << timer.elapsed() << "ms : " << stackedWidget->widget(page)->layout()->count() << " elements";
     timer.restart();
     QSpacerItem *spacer = new QSpacerItem(20,40,QSizePolicy::Expanding,QSizePolicy::Expanding);
     static_cast<QGridLayout*>(stackedWidget->widget(page)->layout())->addItem(spacer,ROW_PER_PAGE,COLUMN_PER_PAGE);
     stackedWidget->widget(page)->show();
+    qDebug() << stackedWidget->widget(page)->layout()->count() ;
     ui->page_indicator->setText(QString("%1 - %2 de %3").arg(current_page*COLUMN_PER_PAGE*ROW_PER_PAGE+1).arg(sub_item_id_list.size()+page*COLUMN_PER_PAGE*ROW_PER_PAGE).arg(number_items));
     loading->hide();
 }
@@ -130,6 +156,17 @@ void c_result_display::empty_page(int page) {
     }
 }
 
+void c_result_display::hide_widgets() {
+    for (int i = 0; i < 1; ++i) {
+        int count = stackedWidget->widget(i)->layout()->count();
+        for (int j = 0; j < count; ++j) {
+            QWidget *widget = stackedWidget->widget(i)->layout()->itemAt(j)->widget();
+            if (widget != nullptr) {
+                widget->setVisible(false);
+            }
+        }
+    }
+}
 
 void c_result_display::clearLayout(QLayout* layout, bool deleteWidgets)
 {

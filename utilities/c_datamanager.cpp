@@ -168,7 +168,7 @@ void c_datamanager::parseItem() {
         if (!idList.contains(item.getId())) {
             dbmanager->add_item(item);
         } else {
-            qInfo() << item.getName() << " : Already in Database";
+            //qInfo() << item.getName() << " : Already in Database";
         }
     }
     emit updateItemFinished();

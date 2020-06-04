@@ -50,7 +50,8 @@ const QMap<QString,QString> mapItemToType{
     {"Outils","ACCESSORY"},
     {"Familiers","PET"},
     {"Emblème","ACCESSORY"},
-    {"Costumes","COSTUME"}};
+    {"Costumes","COSTUME"},
+    {"Montures","MOUNT"}};
 
 const QMap<QString,QString> mapTypeToItem{
     {"TWO_HAND_WEAPON","Hache"},

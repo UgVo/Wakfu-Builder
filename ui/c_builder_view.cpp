@@ -28,6 +28,7 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *parent) :
     ui->horizontalLayout->setAlignment(search_widget,Qt::AlignTop);
 
     QObject::connect(search_widget,&c_search_widget::new_search_result,result_display,&c_result_display::slot_new_search_result);
+    QObject::connect(search_widget,&c_search_widget::new_search_result_sorted,result_display,&c_result_display::slot_new_search_result_sorted);
     QObject::connect(result_display,&c_result_display::item_doubleCliked,build_display,&c_build_display::equip_new_item);
     QObject::connect(status_build,&c_status_build::lvl_changed,search_widget,&c_search_widget::setLvl);
     QObject::connect(status_build,&c_status_build::lvl_changed,build,&c_build::setLvl);

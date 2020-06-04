@@ -1,0 +1,110 @@
+{
+    "elements": [
+        "Feu",
+        "Eau",
+        "Terre",
+        "Air"
+    ],
+    "equipment": {
+        "": {
+            "elems": [
+                "Feu",
+                "Eau",
+                "Terre",
+                "Air"
+            ],
+            "id": 0
+        },
+        "ACCESSORY": {
+            "elems": [
+            ],
+            "id": 0
+        },
+        "BACK": {
+            "elems": [
+                "Feu",
+                "Eau",
+                "Terre",
+                "Air"
+            ],
+            "id": 27403
+        },
+        "BELT": {
+            "elems": [
+            ],
+            "id": 0
+        },
+        "CHEST": {
+            "elems": [
+            ],
+            "id": 0
+        },
+        "FIRST_WEAPON": {
+            "elems": [
+            ],
+            "id": 0
+        },
+        "HEAD": {
+            "elems": [
+                "Feu",
+                "Eau",
+                "Terre",
+                "Air"
+            ],
+            "id": 27421
+        },
+        "LEFT_HAND": {
+            "elems": [
+                "Feu",
+                "Eau",
+                "Terre",
+                "Air"
+            ],
+            "id": 27416
+        },
+        "LEGS": {
+            "elems": [
+                "Feu",
+                "Eau",
+                "Terre",
+                "Air"
+            ],
+            "id": 27413
+        },
+        "NECK": {
+            "elems": [
+                "Feu",
+                "Eau",
+                "Terre",
+                "Air"
+            ],
+            "id": 27440
+        },
+        "PET": {
+            "elems": [
+            ],
+            "id": 0
+        },
+        "RIGHT_HAND": {
+            "elems": [
+                "Feu",
+                "Eau",
+                "Terre",
+                "Air"
+            ],
+            "id": 27437
+        },
+        "SECOND_WEAPON": {
+            "elems": [
+            ],
+            "id": 0
+        },
+        "SHOULDERS": {
+            "elems": [
+            ],
+            "id": 0
+        }
+    },
+    "lvl": 200,
+    "name": "un petit nom pour passer"
+}
