@@ -29,7 +29,7 @@ Item {
         anchors.fill: parent
         anchors.bottom: parent.bottom
         anchors.top: parent.top
-        to: 200
+        to: 215
         padding: 6
         hoverEnabled: false
         first.handle.height: 20

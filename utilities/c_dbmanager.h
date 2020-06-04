@@ -58,7 +58,8 @@ public:
     bool add_state(c_state state);
     c_state get_state(int id);
 
-    QList<QPair<int,int>> getid_item_from_actions(QList<int> action_ids, QList<int> rarities, QList<int> types, QList<int> bondaries = {1,200}, QString name = QString(), bool final = false);
+    QList<QPair<int,int>> getid_item_from_actions(QList<int> action_ids, QList<int> rarities, QList<int> types, QList<int> bondaries = {1,200}, QString name = QString(), bool final = false, QList<bool> condi = QList<bool>());
+    QList<int> getid_item_from_actions_sorted(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries = {1,200}, QString name = QString(), bool final = false, QList<bool> condi = QList<bool>());
     QList<c_item> getItems(QList<int> ids);
     c_item getItemFromQueryLite(QSqlQuery record);
 
@@ -69,6 +70,16 @@ public:
     int update_save_builder(QString json, int id, QString name, int lvl);
 
     QSqlDatabase getDb() const;
+
+    bool add_carac(c_carac carac);
+    c_carac get_carac(int id);
+    bool add_relation_item_carac(int id_item, int id_carac);
+
+    QString generateCombiQuery_action(QList<bool> condi);
+    QString generateCombiQuery_carac(QList<bool> condi);
+    QString prepareQuery(QList<int> action_ids, QList<int> rarities, QList<int> types, QList<int> bondaries = {1,200}, QString name = QString(), bool final = false, QList<bool> condi = QList<bool>());
+    QString prepareQuery_actionName(QList<QString> action_ids, QList<int> rarities, QList<int> types, QList<int> bondaries = {1,200}, QString name = QString(), bool final = false, QList<bool> condi = QList<bool>());
+
 
 private:
     QSqlDatabase m_db;

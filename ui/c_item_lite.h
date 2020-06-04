@@ -36,6 +36,8 @@ private:
 public slots:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     void check_mouse_over();
+    void setItem(const c_item &item);
+    void updateView();
 
 signals:
     void item_doubleCliked(c_item item);

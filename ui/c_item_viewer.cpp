@@ -14,6 +14,7 @@ c_item_viewer::c_item_viewer(const QString item_position, QWidget *parent) :
     int size_widget = 40;
 
     this->setStyleSheet(QString("QWidget#c_item_viewer{background-color: %1;} img {vertical-align:middle;}").arg(app_color::dark_blue));
+    //ui->widget_elements->setStyleSheet(QString("QWidget{background-color: %1;} img {vertical-align:middle;}").arg(app_color::dark_blue));
     image_layout = new QStackedLayout();
     ui->image_widget->setLayout(image_layout);
     background = new QLabel();
@@ -60,6 +61,7 @@ c_item_viewer::~c_item_viewer() {
 }
 
 void c_item_viewer::setItem(c_item *new_item) {
+    qDebug() << position << new_item->getGfxId() << new_item->getName();
     if (new_item == nullptr) {
         item = new c_item();
     } else {
@@ -114,7 +116,6 @@ void c_item_viewer::slot_context_menu(const QPoint &pos) {
 }
 
 void c_item_viewer::slot_unequip() {
-    qDebug() << item;
     emit unequip(position);
 }
 
@@ -124,7 +125,6 @@ void c_item_viewer::slot_refresh_elements() {
     QList<QString> elems;
     elems << "Feu" << "Eau" << "Terre" << "Air";
     QList<QString> item_elem = item->getElements();
-    qDebug() << item_elem;
     QList<bool> item_chosen_elem;
     for (int i = 0; i < item_elem.size(); ++i) {
         item_chosen_elem.push_back(false);
@@ -207,13 +207,17 @@ bool c_item_viewer::event(QEvent *event) {
     return QWidget::event(event);
 }
 
-void c_item_viewer::mouseReleaseEvent(QMouseEvent */*event*/) {
-    if (item->isEmpty()) {
-        if (!block) {
-            emit clicked(position);
-        } else {
-            block = false;
+void c_item_viewer::mouseReleaseEvent(QMouseEvent *event) {
+    if (event->button() == Qt::LeftButton)  {
+        if (item->isEmpty()) {
+            if (!block) {
+                emit clicked(position);
+            } else {
+                block = false;
+            }
         }
+    } else {
+        event->ignore();
     }
 }
 
@@ -232,3 +236,4 @@ void c_item_viewer::check_mouse_over() {
         it_display->hide();
     }
 }
+

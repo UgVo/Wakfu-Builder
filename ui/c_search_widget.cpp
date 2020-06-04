@@ -55,105 +55,61 @@ c_search_widget::c_search_widget(c_dbmanager *manager, QWidget *parent) :
     shadow->setColor(QColor(91, 108, 142, 180));
     shadow->setOffset(2,2);
     ui->advance_search->setGraphicsEffect(shadow);
-    ui->cb_pet->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallpet_low.png);}"
-                              "QCheckBox::indicator:checked {image: url(images/divers/smallpet_high.png);} ");
-    ui->cb_back->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallback_low.png);}"
-                              "QCheckBox::indicator:checked {image: url(images/divers/smallback_high.png);} ");
-    ui->cb_belt->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallbelt_low.png);}"
-                              "QCheckBox::indicator:checked {image: url(images/divers/smallbelt_high.png);} ");
-    ui->cb_head->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallhead_low.png);}"
-                               "QCheckBox::indicator:checked {image: url(images/divers/smallhead_high.png);} ");
-    ui->cb_legs->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smalllegs_low.png);}"
-                              "QCheckBox::indicator:checked {image: url(images/divers/smalllegs_high.png);} ");
-    ui->cb_neck->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallneck_low.png);}"
-                              "QCheckBox::indicator:checked {image: url(images/divers/smallneck_high.png);} ");
-    ui->cb_ring->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallring_low.png);}"
-                              "QCheckBox::indicator:checked {image: url(images/divers/smallring_high.png);} ");
-    ui->cb_chest->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallchest_low.png);}"
-                              "QCheckBox::indicator:checked {image: url(images/divers/smallchest_high.png);} ");
-    ui->cb_2_hands->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smalldoublehand_low.png);}"
-                              "QCheckBox::indicator:checked {image: url(images/divers/smalldoublehand_high.png);} ");
-    ui->cb_accessory->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallaccessory_low.png);}"
-                              "QCheckBox::indicator:checked {image: url(images/divers/smallaccessory_high.png);} ");
-    ui->cb_shoulders->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallshoulders_low.png);}"
-                              "QCheckBox::indicator:checked {image: url(images/divers/smallshoulders_high.png);} ");
-    ui->cb_first_hand->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallfirsthand_low.png);}"
-                              "QCheckBox::indicator:checked {image: url(images/divers/smallfirsthand_high.png);} ");
-    ui->cb_second_hand->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallsecondhand_low.png);}"
-                              "QCheckBox::indicator:checked {image: url(images/divers/smallsecondhand_high.png);} ");
+    ui->cb_pet->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallpet_inked.png);}"
+                              "QCheckBox::indicator:checked {image: url(images/divers/smallpet.png);} ");
+    ui->cb_back->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallback_inked.png);}"
+                              "QCheckBox::indicator:checked {image: url(images/divers/smallback.png);} ");
+    ui->cb_belt->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallbelt_inked.png);}"
+                              "QCheckBox::indicator:checked {image: url(images/divers/smallbelt.png);} ");
+    ui->cb_head->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallhead_inked.png);}"
+                               "QCheckBox::indicator:checked {image: url(images/divers/smallhead.png);} ");
+    ui->cb_legs->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smalllegs_inked.png);}"
+                              "QCheckBox::indicator:checked {image: url(images/divers/smalllegs.png);} ");
+    ui->cb_neck->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallneck_inked.png);}"
+                              "QCheckBox::indicator:checked {image: url(images/divers/smallneck.png);} ");
+    ui->cb_ring->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallring_inked.png);}"
+                              "QCheckBox::indicator:checked {image: url(images/divers/smallring.png);} ");
+    ui->cb_chest->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallchest_inked.png);}"
+                              "QCheckBox::indicator:checked {image: url(images/divers/smallchest.png);} ");
+    ui->cb_2_hands->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smalldoublehand_inked.png);}"
+                              "QCheckBox::indicator:checked {image: url(images/divers/smalldoublehand.png);} ");
+    ui->cb_accessory->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallaccessory_inked.png);}"
+                              "QCheckBox::indicator:checked {image: url(images/divers/smallaccessory.png);} ");
+    ui->cb_shoulders->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallshoulders_inked.png);}"
+                              "QCheckBox::indicator:checked {image: url(images/divers/smallshoulders.png);} ");
+    ui->cb_first_hand->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallfirsthand_inked.png);}"
+                              "QCheckBox::indicator:checked {image: url(images/divers/smallfirsthand.png);} ");
+    ui->cb_second_hand->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallsecondhand_inked.png);}"
+                              "QCheckBox::indicator:checked {image: url(images/divers/smallsecondhand.png);} ");
+    ui->cb_mount->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/smallmount_inked.png);}"
+                                "QCheckBox::indicator:checked {image: url(images/divers/smallmount.png);} ");
 
     ui->name_search->setPlaceholderText("Recherche par nom");
     ui->name_search->setStyleSheet(QString(" background-color: %1;  border: 1px solid %1; color:white;   border-radius: 3px; ").arg(app_color::grey_blue));
 
-    ui->carac_search->addItem("Recherche par caractéristique");
-    ui->carac_search->addItem("Principales");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/vie.png"),"Vie");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/pa.png"),"PA");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/pm.png"),"PM");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/wakfu.png"),"PW");
-    ui->carac_search->addItem("Secondaires");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/resi.png"),"Parade");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/critique.png"),"Coup Critique");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/init.png"),"Initiative");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/porte.png"),"Portée");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/esquive.png"),"Esquive");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/tacle.png"),"Tacle");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/sagesse.png"),"Sagesse");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/prospection.png"),"Prospection");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/controle.png"),"Contrôle");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/barda.png"),"Art du barda");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/volonte.png"),"Volonté");
-    ui->carac_search->addItem("Maitrises");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/dommages.png"),"Maîtrise Élémentaire");
-    ui->carac_search->addItem(QIcon(":/elements/FIRE.png"),"Maîtrise Élémentaire Feu");
-    ui->carac_search->addItem(QIcon(":/elements/WATER.png"),"Maîtrise Élémentaire Eau");
-    ui->carac_search->addItem(QIcon(":/elements/EARTH.png"),"Maîtrise Élémentaire Terre");
-    ui->carac_search->addItem(QIcon(":/elements/WIND.png"),"Maîtrise Élémentaire Air");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/dommages.png"),"Maîtrise sur 1 éléments");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/dommages.png"),"Maîtrise sur 2 éléments");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/dommages.png"),"Maîtrise sur 3 éléments");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/maitrise_critique.png"),"Maîtrise Critique");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/maitrise_dos.png"),"Maîtrise Dos");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/distance.png"),"Maîtrise Distance");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/melee.png"),"Maîtrise Mêlée");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/mono.png"),"Maîtrise Monocible");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/zone.png"),"Maîtrise Zone");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/soin.png"),"Maîtrise Soin");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/berserk.png"),"Maîtrise Berserk");
-    ui->carac_search->addItem("Résistances");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/resi.png"),"Résistance Élémentaire");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/resi.png"),"Résistance sur 1 éléments");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/resi.png"),"Résistance sur 2 éléments");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/resi.png"),"Résistance sur 3 éléments");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/resistance_critique.png"),"Résistance Critique");
-    ui->carac_search->addItem(QIcon(":/Aptitudes/resistance_dos.png"),"Résistance Dos");
-
-    ui->carac_search->addItem("Niveaux de sort");
-    ui->carac_search->addItem(QIcon(":/elements/FIRE.png"),"Niv. aux sorts Feu");
-    ui->carac_search->addItem(QIcon(":/elements/WATER.png"),"Niv. aux sorts Eau");
-    ui->carac_search->addItem(QIcon(":/elements/EARTH.png"),"Niv. aux sorts Terre");
-    ui->carac_search->addItem(QIcon(":/elements/WIND.png"),"Niv. aux sorts Air");
-    ui->carac_search->setCurrentIndex(0);
-
-    init_comboBox(ui->carac_search);
-
-    QFont font = static_cast<QStandardItemModel *>(ui->carac_search->model())->item(1,0)->font();
-    qDebug() << font.pointSize();
-    font.setPointSize(9);
-    font.setBold(true);
-    static_cast<QStandardItemModel *>(ui->carac_search->model())->item(1,0)->setFont(font);
-    static_cast<QStandardItemModel *>(ui->carac_search->model())->item(1,0)->setEnabled(false);
-    static_cast<QStandardItemModel *>(ui->carac_search->model())->item(6,0)->setFont(font);
-    static_cast<QStandardItemModel *>(ui->carac_search->model())->item(6,0)->setEnabled(false);
-    static_cast<QStandardItemModel *>(ui->carac_search->model())->item(18,0)->setFont(font);
-    static_cast<QStandardItemModel *>(ui->carac_search->model())->item(18,0)->setEnabled(false);
-    static_cast<QStandardItemModel *>(ui->carac_search->model())->item(35,0)->setFont(font);
-    static_cast<QStandardItemModel *>(ui->carac_search->model())->item(35,0)->setEnabled(false);
-    static_cast<QStandardItemModel *>(ui->carac_search->model())->item(42,0)->setFont(font);
-    static_cast<QStandardItemModel *>(ui->carac_search->model())->item(42,0)->setEnabled(false);
+    set_comboBox_model(ui->carac_search);
 
     QObject::connect(ui->search_button,&QPushButton::clicked,this,&c_search_widget::slot_search);
     QObject::connect(ui->reset_button,&QPushButton::clicked,this,&c_search_widget::slot_reset);
+
+    set_comboBox_model(ui->cb_first_carac);
+    static_cast<QStandardItemModel *>(ui->cb_first_carac->model())->item(0,0)->setText("Caractéristique principale");
+    set_comboBox_model(ui->cb_second_carac);
+    static_cast<QStandardItemModel *>(ui->cb_second_carac->model())->item(0,0)->setText("Caractéristique secondaire");
+    set_comboBox_model(ui->cb_last_carac);
+    static_cast<QStandardItemModel *>(ui->cb_last_carac->model())->item(0,0)->setText("Caractéristique tertiaire");
+    init_comboBox(ui->cb_first_carac);
+    init_comboBox(ui->cb_second_carac);
+    init_comboBox(ui->cb_last_carac);
+    init_comboBox(ui->cb_second_condi);
+    init_comboBox(ui->cb_last_condi);
+    ui->best_combi_gb->setStyleSheet("QGroupBox{color: white;}");
+
+    ui->tri_best_combi_check->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/unchecked.png);}"
+                                            "QCheckBox::indicator:checked {image: url(images/divers/checked.png);}"
+                                            "QCheckBox {color : white;}");
+
+    QObject::connect(ui->best_combi_search,&QPushButton::clicked,this,&c_search_widget::slot_combi_search);
 }
 
 c_search_widget::~c_search_widget() {
@@ -222,6 +178,49 @@ void c_search_widget::setLvl(int new_lvl) {
 }
 
 void c_search_widget::slot_load_search_position(QString position) {
+
+    ui->cb_back->setCheckState(Qt::CheckState::Unchecked);
+    ui->cb_pet->setCheckState(Qt::CheckState::Unchecked);
+    ui->cb_belt->setCheckState(Qt::CheckState::Unchecked);
+    ui->cb_2_hands->setCheckState(Qt::CheckState::Unchecked);
+    ui->cb_ring->setCheckState(Qt::CheckState::Unchecked);
+    ui->cb_first_hand->setCheckState(Qt::CheckState::Unchecked);
+    ui->cb_second_hand->setCheckState(Qt::CheckState::Unchecked);
+    ui->cb_legs->setCheckState(Qt::CheckState::Unchecked);
+    ui->cb_neck->setCheckState(Qt::CheckState::Unchecked);
+    ui->cb_head->setCheckState(Qt::CheckState::Unchecked);
+    ui->cb_chest->setCheckState(Qt::CheckState::Unchecked);
+    ui->cb_shoulders->setCheckState(Qt::CheckState::Unchecked);
+    ui->cb_accessory->setCheckState(Qt::CheckState::Unchecked);
+
+    if (!position.compare(c_item::FIRST_WEAPON)) {
+        ui->cb_first_hand->setCheckState(Qt::CheckState::Checked);
+        ui->cb_2_hands->setCheckState(Qt::CheckState::Checked);
+    } else if (!position.compare(c_item::SECOND_WEAPON)) {
+        ui->cb_second_hand->setCheckState(Qt::CheckState::Checked);
+    } else if (!position.compare(c_item::LEFT_HAND) || !position.compare(c_item::RIGHT_HAND)) {
+        ui->cb_ring->setCheckState(Qt::CheckState::Checked);
+    } else if (!position.compare(c_item::LEGS)) {
+        ui->cb_legs->setCheckState(Qt::CheckState::Checked);
+    } else if (!position.compare(c_item::NECK)) {
+        ui->cb_neck->setCheckState(Qt::CheckState::Checked);
+    } else if (!position.compare(c_item::BACK)) {
+        ui->cb_back->setCheckState(Qt::CheckState::Checked);
+    } else if (!position.compare(c_item::BELT)) {
+        ui->cb_belt->setCheckState(Qt::CheckState::Checked);
+    } else if (!position.compare(c_item::HEAD)) {
+        ui->cb_head->setCheckState(Qt::CheckState::Checked);
+    } else if (!position.compare(c_item::CHEST)) {
+        ui->cb_chest->setCheckState(Qt::CheckState::Checked);
+    } else if (!position.compare(c_item::SHOULDERS)) {
+        ui->cb_shoulders->setCheckState(Qt::CheckState::Checked);
+    } else if (!position.compare(c_item::ACCESSORY)) {
+        ui->cb_accessory->setCheckState(Qt::CheckState::Checked);
+    } else if (!position.compare(c_item::PET)) {
+        ui->cb_pet->setCheckState(Qt::CheckState::Checked);
+    } else if (!position.compare(c_item::MOUNT)) {
+        ui->cb_mount->setCheckState(Qt::CheckState::Checked);
+    }
     QList<int> itemType;
     QStringList map = c_item::mapPositionToType.values(position);
     foreach(QString position_elem, map) {
@@ -259,7 +258,6 @@ void c_search_widget::slot_rarity_change_state(bool checked) {
          sender->setStyleSheet( QString("QCheckBox::indicator:unchecked {image: url(images/divers/%1_low.png);}"
                                 "QCheckBox::indicator:checked {image: url(images/divers/%1_high.png);} QCheckBox {color : grey;}").arg(name));
      }
-
 }
 
 void c_search_widget::slot_search() {
@@ -277,6 +275,7 @@ void c_search_widget::slot_search() {
     if (ui->cb_chest->isChecked()) itemType.append(c_item::mapTypeToId["CHEST"]);
     if (ui->cb_shoulders->isChecked()) itemType.append(c_item::mapTypeToId["SHOULDERS"]);
     if (ui->cb_accessory->isChecked()) itemType.append(c_item::mapTypeToId.values("ACCESSORY"));
+    if (ui->cb_mount->isChecked()) itemType.append(c_item::mapTypeToId["MOUNT"]);
 
     QList<int> rarities;
     if (ui->pb_epique->isChecked()) rarities.append(c_item::mapRarityToId["Epique"]);
@@ -287,7 +286,7 @@ void c_search_widget::slot_search() {
 
     QList<int> caract;
     if (ui->carac_search->currentIndex()!=0) caract.append(c_item::mapCaracToId[ui->carac_search->currentText()]);
-    QList<QPair<int,int>> item_list_pair = dbmanager->getid_item_from_actions(caract,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text(),ui->final_object_check->checkState()==Qt::CheckState::Checked);
+    QList<QPair<int,int>> item_list_pair = dbmanager->getid_item_from_actions(caract,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text(),ui->final_object_check->isChecked());
     std::sort(item_list_pair.begin(),item_list_pair.end(),c_search_widget::compare_pair_id_lvl);
     QList<int> item_list;
     for(int i = 0; i < item_list_pair.size(); ++i) {
@@ -335,4 +334,127 @@ void c_search_widget::slot_reset() {
     ui->pb_relique->setCheckState(Qt::CheckState::Unchecked);
     ui->pb_souvenir->setCheckState(Qt::CheckState::Unchecked);
     ui->name_search->setText("");
+}
+
+void c_search_widget::slot_combi_search() {
+    QList<int> itemType;
+    if (ui->cb_back->isChecked()) itemType.append(c_item::mapTypeToId["BACK"]);
+    if (ui->cb_pet->isChecked()) itemType.append(c_item::mapTypeToId["PET"]);
+    if (ui->cb_belt->isChecked()) itemType.append(c_item::mapTypeToId["BELT"]);
+    if (ui->cb_2_hands->isChecked()) itemType.append(c_item::mapTypeToId.values("TWO_HAND_WEAPON"));
+    if (ui->cb_ring->isChecked()) itemType.append(c_item::mapTypeToId["RING"]);
+    if (ui->cb_first_hand->isChecked()) itemType.append(c_item::mapTypeToId.values("ONE_HAND_WEAPON"));
+    if (ui->cb_second_hand->isChecked()) itemType.append(c_item::mapTypeToId.values("SECOND_HAND"));
+    if (ui->cb_legs->isChecked()) itemType.append(c_item::mapTypeToId["LEGS"]);
+    if (ui->cb_neck->isChecked()) itemType.append(c_item::mapTypeToId["NECK"]);
+    if (ui->cb_head->isChecked()) itemType.append(c_item::mapTypeToId["HEAD"]);
+    if (ui->cb_chest->isChecked()) itemType.append(c_item::mapTypeToId["CHEST"]);
+    if (ui->cb_shoulders->isChecked()) itemType.append(c_item::mapTypeToId["SHOULDERS"]);
+    if (ui->cb_accessory->isChecked()) itemType.append(c_item::mapTypeToId.values("ACCESSORY"));
+    if (ui->cb_mount->isChecked()) itemType.append(c_item::mapTypeToId["MOUNT"]);
+
+    QList<int> rarities;
+    if (ui->pb_epique->isChecked()) rarities.append(c_item::mapRarityToId["Epique"]);
+    if (ui->pb_legend->isChecked()) rarities.append(c_item::mapRarityToId["Légendaire"]);
+    if (ui->pb_mythique->isChecked()) rarities.append(c_item::mapRarityToId["Mythique"]);
+    if (ui->pb_relique->isChecked()) rarities.append(c_item::mapRarityToId["Relique"]);
+    if (ui->pb_souvenir->isChecked()) rarities.append(c_item::mapRarityToId["Souvenir"]);
+
+    QList<int> caract;
+    if (ui->cb_first_carac->currentIndex()!=0) caract.append(c_item::mapCaracToId[ui->cb_first_carac->currentText()]);
+    if (ui->cb_second_carac->currentIndex()!=0) caract.append(c_item::mapCaracToId[ui->cb_second_carac->currentText()]);
+    if (ui->cb_last_carac->currentIndex()!=0) caract.append(c_item::mapCaracToId[ui->cb_last_carac->currentText()]);
+
+    QList<QString> caract_name;
+    if (ui->cb_first_carac->currentIndex()!=0) caract_name.append(ui->cb_first_carac->currentText());
+    if (ui->cb_second_carac->currentIndex()!=0) caract_name.append(ui->cb_second_carac->currentText());
+    if (ui->cb_last_carac->currentIndex()!=0) caract_name.append(ui->cb_last_carac->currentText());
+
+    QList<bool> caract_condi;
+    caract_condi.append(ui->cb_second_condi->currentText() == "Ou");
+    if (ui->cb_last_carac->currentIndex()==0) {ui->cb_last_condi->setCurrentIndex(0);}
+    caract_condi.append(ui->cb_last_condi->currentText() == "Ou");
+
+    if (ui->tri_best_combi_check->isChecked()) {
+        QList<int> item_list = dbmanager->getid_item_from_actions_sorted(caract_name,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text(),ui->final_object_check->isChecked(),caract_condi.mid(0,caract_name.size()-1));
+        emit new_search_result_sorted(item_list);
+        qDebug() << item_list;
+    } else {
+        QList<QPair<int,int>> item_list_pair = dbmanager->getid_item_from_actions(caract,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text(),ui->final_object_check->isChecked(),caract_condi);
+        std::sort(item_list_pair.begin(),item_list_pair.end(),c_search_widget::compare_pair_id_lvl);
+        QList<int> item_list;
+        for(int i = 0; i < item_list_pair.size(); ++i) {
+            item_list.push_back(item_list_pair.at(i).first);
+        }
+        emit new_search_result(item_list);
+    }
+}
+
+void c_search_widget::set_comboBox_model(QComboBox *cb) {
+    cb->addItem("Recherche par caractéristique");
+    cb->addItem("Principales");
+    cb->addItem(QIcon(":/Aptitudes/vie.png"),"Vie");
+    cb->addItem(QIcon(":/Aptitudes/pa.png"),"PA");
+    cb->addItem(QIcon(":/Aptitudes/pm.png"),"PM");
+    cb->addItem(QIcon(":/Aptitudes/wakfu.png"),"PW");
+    cb->addItem("Secondaires");
+    cb->addItem(QIcon(":/Aptitudes/resi.png"),"Parade");
+    cb->addItem(QIcon(":/Aptitudes/critique.png"),"Coup Critique");
+    cb->addItem(QIcon(":/Aptitudes/init.png"),"Initiative");
+    cb->addItem(QIcon(":/Aptitudes/porte.png"),"Portée");
+    cb->addItem(QIcon(":/Aptitudes/esquive.png"),"Esquive");
+    cb->addItem(QIcon(":/Aptitudes/tacle.png"),"Tacle");
+    cb->addItem(QIcon(":/Aptitudes/sagesse.png"),"Sagesse");
+    cb->addItem(QIcon(":/Aptitudes/prospection.png"),"Prospection");
+    cb->addItem(QIcon(":/Aptitudes/controle.png"),"Contrôle");
+    cb->addItem(QIcon(":/Aptitudes/barda.png"),"Art du barda");
+    cb->addItem(QIcon(":/Aptitudes/volonte.png"),"Volonté");
+    cb->addItem("Maitrises");
+    cb->addItem(QIcon(":/Aptitudes/dommages.png"),"Maîtrise Élémentaire");
+    cb->addItem(QIcon(":/elements/FIRE.png"),"Maîtrise Élémentaire Feu");
+    cb->addItem(QIcon(":/elements/WATER.png"),"Maîtrise Élémentaire Eau");
+    cb->addItem(QIcon(":/elements/EARTH.png"),"Maîtrise Élémentaire Terre");
+    cb->addItem(QIcon(":/elements/WIND.png"),"Maîtrise Élémentaire Air");
+    cb->addItem(QIcon(":/Aptitudes/dommages.png"),"Maîtrise sur 1 éléments");
+    cb->addItem(QIcon(":/Aptitudes/dommages.png"),"Maîtrise sur 2 éléments");
+    cb->addItem(QIcon(":/Aptitudes/dommages.png"),"Maîtrise sur 3 éléments");
+    cb->addItem(QIcon(":/Aptitudes/maitrise_critique.png"),"Maîtrise Critique");
+    cb->addItem(QIcon(":/Aptitudes/maitrise_dos.png"),"Maîtrise Dos");
+    cb->addItem(QIcon(":/Aptitudes/distance.png"),"Maîtrise Distance");
+    cb->addItem(QIcon(":/Aptitudes/melee.png"),"Maîtrise Mêlée");
+    cb->addItem(QIcon(":/Aptitudes/mono.png"),"Maîtrise Monocible");
+    cb->addItem(QIcon(":/Aptitudes/zone.png"),"Maîtrise Zone");
+    cb->addItem(QIcon(":/Aptitudes/soin.png"),"Maîtrise Soin");
+    cb->addItem(QIcon(":/Aptitudes/berserk.png"),"Maîtrise Berserk");
+    cb->addItem("Résistances");
+    cb->addItem(QIcon(":/Aptitudes/resi.png"),"Résistance Élémentaire");
+    cb->addItem(QIcon(":/Aptitudes/resi.png"),"Résistance sur 1 éléments");
+    cb->addItem(QIcon(":/Aptitudes/resi.png"),"Résistance sur 2 éléments");
+    cb->addItem(QIcon(":/Aptitudes/resi.png"),"Résistance sur 3 éléments");
+    cb->addItem(QIcon(":/Aptitudes/resistance_critique.png"),"Résistance Critique");
+    cb->addItem(QIcon(":/Aptitudes/resistance_dos.png"),"Résistance Dos");
+
+    cb->addItem("Niveaux de sort");
+    cb->addItem(QIcon(":/elements/FIRE.png"),"Niv. aux sorts Feu");
+    cb->addItem(QIcon(":/elements/WATER.png"),"Niv. aux sorts Eau");
+    cb->addItem(QIcon(":/elements/EARTH.png"),"Niv. aux sorts Terre");
+    cb->addItem(QIcon(":/elements/WIND.png"),"Niv. aux sorts Air");
+    cb->setCurrentIndex(0);
+
+    init_comboBox(cb);
+
+    QFont font = static_cast<QStandardItemModel *>(cb->model())->item(1,0)->font();
+    qDebug() << font.pointSize();
+    font.setPointSize(9);
+    font.setBold(true);
+    static_cast<QStandardItemModel *>(cb->model())->item(1,0)->setFont(font);
+    static_cast<QStandardItemModel *>(cb->model())->item(1,0)->setEnabled(false);
+    static_cast<QStandardItemModel *>(cb->model())->item(6,0)->setFont(font);
+    static_cast<QStandardItemModel *>(cb->model())->item(6,0)->setEnabled(false);
+    static_cast<QStandardItemModel *>(cb->model())->item(18,0)->setFont(font);
+    static_cast<QStandardItemModel *>(cb->model())->item(18,0)->setEnabled(false);
+    static_cast<QStandardItemModel *>(cb->model())->item(35,0)->setFont(font);
+    static_cast<QStandardItemModel *>(cb->model())->item(35,0)->setEnabled(false);
+    static_cast<QStandardItemModel *>(cb->model())->item(42,0)->setFont(font);
+    static_cast<QStandardItemModel *>(cb->model())->item(42,0)->setEnabled(false);
 }

@@ -2,6 +2,7 @@ Builder_Wakfu
 
 Database setup commands : 
 
+CREATE TABLE wakfu_builder.carac (id integer PRIMARY KEY, effect text, value integer);
 CREATE TABLE wakfu_builder.effect (id integer PRIMARY KEY, actionId integer,areaShape integer, areaSize text, params text, description text);
 CREATE TABLE wakfu_builder.action (id integer PRIMARY KEY, description text, effect text);
 CREATE TABLE wakfu_builder.itemproperties (id integer PRIMARY KEY, name text, description text);
@@ -11,6 +12,7 @@ CREATE TABLE wakfu_builder.eqpType_Pos_relation(id_ET integer, id_Pos integer, C
 CREATE TABLE wakfu_builder.eqpType_DisPos_relation(id_ET integer, id_Pos integer, CONSTRAINT relation_disPos_pk PRIMARY KEY(id_ET,id_Pos));
 
 CREATE TABLE wakfu_builder.item( id integer PRIMARY KEY, lvl integer, itemTypeId integer, itemSetId integer, rarity integer, bindType integer, minimumShardSlotNumber integer, maximumShardSlotNumber integer, useApCost integer, useMpCost integer, useWpCost integer, useMinRange integer, useMaxRange integer, useTestFreeCell bool, useTestLos bool, useTestOnlyLine bool, useTestNoBorderCell bool, useWorldTarget integer, gfxid integer, title text, description text);
+CREATE TABLE wakfu_builder.relation_item_carac( id_item integer, id_carac integer, FOREIGN KEY(id_item) REFERENCES wakfu_builder.item (id),FOREIGN KEY(id_carac) REFERENCES wakfu_builder.carac);
 CREATE TABLE wakfu_builder.item_properties_relation(id_item integer, id_property integer, CONSTRAINT relation_prop_pk PRIMARY KEY(id_item,id_property));
 CREATE TABLE wakfu_builder.item_useEffect_relation(id_item integer, id_E integer, CONSTRAINT relation_uE_pk PRIMARY KEY(id_item,id_E));
 CREATE TABLE wakfu_builder.item_useCriticalEffect_relation(id_item integer, id_E integer, CONSTRAINT relation_uCE_pk PRIMARY KEY(id_item,id_E));
@@ -32,3 +34,4 @@ delete from wakfu_builder.item_properties_relation;
 delete from wakfu_builder.item_useEffect_relation;
 delete from wakfu_builder.item_useCriticalEffect_relation;
 delete from wakfu_builder.item_useEquipEffect_relation;
+delete from wakfu_builder.carac;

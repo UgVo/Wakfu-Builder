@@ -12,6 +12,17 @@
 
 class c_dbmanager;
 
+class c_carac {
+public :
+    c_carac(int _id = 0, QString _effect = QString(),int _value = 0) {
+        id = _id;
+        effect = _effect;
+        value = _value;
+    }
+    int id;
+    QString effect;
+    int value;
+};
 
 class c_item
 {
@@ -42,6 +53,7 @@ public:
     const static QString SHOULDERS;
     const static QString ACCESSORY;
     const static QString PET;
+    const static QString MOUNT;
     const static QString NONE;
 
 //    enum class positions {FIRST_WEAPON, SECOND_WEAPON, LEFT_HAND, RIGHT_HAND,
@@ -81,6 +93,7 @@ private:
     QVector<c_effect> _equipEffects;
 
     QMap<QString,int> _bonuses;
+    QList<c_carac> _list_bonuses;
     QMap<QString,QString> _constraints;
     QList<QString> _elements;
     int _number_element;    
@@ -163,6 +176,8 @@ public:
     void setNumber_element(int value);
 
     static QStringList position();
+    QList<c_carac> getList_bonuses() const;
+    void setList_bonuses(const QList<c_carac> &list_bonuses);
 };
 
 #endif // C_ITEM_H

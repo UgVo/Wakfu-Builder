@@ -6,6 +6,7 @@
 #include <QStackedWidget>
 #include <QStackedLayout>
 #include <QMovie>
+#include <QtConcurrent>
 #include "utilities/c_item.h"
 #include "utilities/utilities.h"
 #include "utilities/c_item_model.h"
@@ -35,7 +36,9 @@ public:
     void fill_page(int page);
     void empty_pages();
     void empty_page(int page);
+    void hide_widgets();
     void clearLayout(QLayout* layout, bool deleteWidgets = true);
+    //void clearItemListIfFinal();
     static c_item_lite* generate_item_lite(c_item item);
 
 private:
@@ -52,8 +55,12 @@ private:
     QLabel *loading;
     QMovie *movie;
 
+    int index;
+    bool sorted;
+
 public slots:
     void slot_new_search_result(QList<int>);
+    void slot_new_search_result_sorted(QList<int>);
     void slot_next();
     void slot_preview();
     void slot_item_doubleCliked(c_item item);
