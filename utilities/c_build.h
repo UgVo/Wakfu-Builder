@@ -37,14 +37,18 @@ public:
 
     c_build& operator=(const c_build& build);
     QMap<QString,int> resetMap();
+    void init_bonus_aptitudes();
 
     int getLvl() const;
+
+    QMap<QString, int> getBonus_aptitudes() const;
 
 private:
     bool epique_free;
     bool relique_free;
     QList<QString> elements;
     QMap<QString,int> bonuses;
+    QMap<QString,int> bonus_aptitudes;
     QMap<QString,c_item> equipment;
     int lvl;
     bool nation_bonus;
@@ -62,6 +66,8 @@ public slots:
     void slot_bonus_changed(QList<bool> bonus);
     void setElements(const QList<QString> &value);
     void slot_item_element_changed();
+
+    void slot_aptitude_value_changed(QString type, int value);
 
 };
 
