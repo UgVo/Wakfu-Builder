@@ -433,8 +433,8 @@ void c_item::setType(const c_equipmentItemTypes itemType) {
     }
 }
 
-void c_item::setSetId(const int setId) {
-    _itemSetId = setId;
+void c_item::setSetId(const int _setId) {
+    _itemSetId = _setId;
 }
 
 void c_item::setRarity(const int rarity) {
