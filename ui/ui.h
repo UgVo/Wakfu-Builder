@@ -7,6 +7,8 @@
 namespace app_color {
     const QString dark = "#1C3449";
     const QString grey_blue = "#6A8BA8";
+    const QString grey_blue_2 = "#3B6F99";
+    const QString grey_blue_3 = "#7E98AD";
     const QString dark_blue = "#305A7F";
     const QString green_blue = "#40b2b5";
     const QList<QString> color_rarity = {"#ffffff","#ffffff","#28f18b","#fd8e39","#fede71","#ff47e7","#8fc7e2","#fd87ba"};
