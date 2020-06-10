@@ -61,7 +61,6 @@ c_item_viewer::~c_item_viewer() {
 }
 
 void c_item_viewer::setItem(c_item *new_item) {
-    qDebug() << position << new_item->getGfxId() << new_item->getName();
     if (new_item == nullptr) {
         item = new c_item();
     } else {
@@ -195,7 +194,6 @@ bool c_item_viewer::event(QEvent *event) {
         timer = new QTimer(this);
         connect(timer,&QTimer::timeout,this,&c_item_viewer::check_mouse_over);
         timer->start(100);
-        qDebug() << "hover";
 
     } else if ( event->type() == QEvent::HoverLeave ) {
         if (item->isEmpty()) {

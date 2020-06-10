@@ -44,7 +44,6 @@ void c_element_dialog::slot_accepted() {
             int(ui->elem2->checkState() == Qt::CheckState::Checked) +
             int(ui->elem3->checkState() == Qt::CheckState::Checked) +
             int(ui->elem4->checkState() == Qt::CheckState::Checked);
-    qDebug() << i;
     if (i != _number) {
         QMessageBox::critical(this,"Erreur dans le nombre d'éléments",QString("%1 éléments devraient être sélectionés").arg(_number));
     } else {

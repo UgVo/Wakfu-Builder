@@ -57,7 +57,6 @@ void c_result_display::slot_new_search_result_sorted(QList<int> item_id_list) {
     sorted = true;
     loading->show();
     id_list = item_id_list;
-    qDebug() << item_id_list;
     current_page = 0;
     stackedWidget->setCurrentIndex(current_page);
     used_page_number = item_id_list.size()/(ROW_PER_PAGE*COLUMN_PER_PAGE);
@@ -115,8 +114,6 @@ void c_result_display::fill_page(int page) {
         QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
         QThread::msleep(1);
     }
-    timer2.restart();
-    qDebug() << "filling of item_lite :" << timer.elapsed() << "ms";
     for (int i = done; i < size; ++i ) {
         item_lite_list.push_back(new c_item_lite(data_base,item_list.at(i),this));
         QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
@@ -138,7 +135,6 @@ void c_result_display::fill_page(int page) {
     QSpacerItem *spacer = new QSpacerItem(20,40,QSizePolicy::Expanding,QSizePolicy::Expanding);
     static_cast<QGridLayout*>(stackedWidget->widget(page)->layout())->addItem(spacer,ROW_PER_PAGE,COLUMN_PER_PAGE);
     stackedWidget->widget(page)->show();
-    qDebug() << stackedWidget->widget(page)->layout()->count() ;
     ui->page_indicator->setText(QString("%1 - %2 de %3").arg(current_page*COLUMN_PER_PAGE*ROW_PER_PAGE+1).arg(sub_item_id_list.size()+page*COLUMN_PER_PAGE*ROW_PER_PAGE).arg(number_items));
     loading->hide();
 }
@@ -193,7 +189,6 @@ c_item_lite *c_result_display::generate_item_lite(c_item item) {
 }
 
 void c_result_display::slot_next() {
-    qDebug() << current_page << used_page_number;
     if (current_page < used_page_number) {
         current_page++;
         fill_page(current_page);
@@ -205,7 +200,6 @@ void c_result_display::slot_next() {
 }
 
 void c_result_display::slot_preview() {
-    qDebug() << current_page;
     if (current_page > 0) {
         current_page--;
         fill_page(current_page);
