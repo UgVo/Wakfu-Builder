@@ -9,7 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
     QFontDatabase::addApplicationFont(":ressources/wci.ttf");
     app_path = qApp->applicationDirPath();
     ui->setupUi(this);
-    datamanager.setDBManager(&database_manager);
+    database_manager = new c_dbmanager(&datamanager);
+    datamanager.setDBManager(database_manager);
     ui->actionCheck_new_version->setIcon(QIcon("images/divers/update32.png"));
     set_save_enabled(false);
     ui->tabWidget->setTabsClosable(true);
@@ -69,7 +70,7 @@ void MainWindow::test_interpret_effect() {
 
 void MainWindow::slot_actionCr_er_nouveau_Build_clicked() {
     set_save_enabled(true);
-    builder_list.push_back(new c_builder_view(&database_manager));
+    builder_list.push_back(new c_builder_view(database_manager,this));
     ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
 }
@@ -127,7 +128,7 @@ void MainWindow::slot_action_open_Depuis_un_fichier() {
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Save Build"), app_path + "/save", tr("Json files (*.json)"));
     if (!fileName.isEmpty()) {
-        c_builder_view *builder = new c_builder_view(&database_manager);
+        c_builder_view *builder = new c_builder_view(database_manager,this);
         if (builder->slot_load(c_io_manager::jsonformat::file,fileName)) {
             set_save_enabled(true);
             builder_list.push_back(builder);
@@ -148,7 +149,7 @@ void MainWindow::slot_action_save_Vers_la_base_de_donnee() {
 }
 
 void MainWindow::slot_action_open_Depuis_la_base_de_donn_e() {
-    c_builder_view *builder = new c_builder_view(&database_manager);
+    c_builder_view *builder = new c_builder_view(database_manager,this);
     if (builder->slot_load(c_io_manager::jsonformat::database)) {
         set_save_enabled(true);
         builder_list.push_back(builder);

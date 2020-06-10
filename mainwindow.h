@@ -63,7 +63,7 @@ public:
 private:
     Ui::MainWindow *ui;
     QString app_path;
-    c_dbmanager database_manager;
+    c_dbmanager *database_manager;
     c_datamanager datamanager;
     DialogGestion *diag;
     QList<c_builder_view*> builder_list;
