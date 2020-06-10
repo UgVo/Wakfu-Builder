@@ -33,6 +33,10 @@ private:
     int lvl;
     QStringList paliers;
     c_dbmanager *dbmanager;
+    QList<QComboBox*> cb_carac_list;
+    QList<QComboBox*> cb_carac_condi;
+
+    int numberShown;
 
 
 public slots:
@@ -50,7 +54,10 @@ public slots:
     void slot_load_search_position(QString position);
     void slot_combi_search();
 
-    void set_comboBox_model(QComboBox* cb);
+    void set_comboBox_model(QComboBox *cb);
+    void slot_reset_combi();
+
+    void slot_new_condi_row();
 
 
 signals:

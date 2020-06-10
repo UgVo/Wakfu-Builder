@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>480</width>
-    <height>503</height>
+    <height>667</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -528,9 +528,47 @@
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_8">
-              <item>
-               <widget class="QComboBox" name="cb_second_condi">
+             <layout class="QGridLayout" name="carac_grid">
+              <item row="2" column="1">
+               <widget class="QComboBox" name="cb_carac_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>194</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
+                <property name="currentText">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="cb_carac_1">
+                <property name="minimumSize">
+                 <size>
+                  <width>194</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
+                <property name="currentText">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QComboBox" name="cb_carac_3"/>
+              </item>
+              <item row="5" column="1">
+               <widget class="QComboBox" name="cb_carac_5"/>
+              </item>
+              <item row="1" column="0">
+               <widget class="QComboBox" name="cb_condi_1">
                 <property name="maximumSize">
                  <size>
                   <width>40</width>
@@ -555,28 +593,8 @@
                 </item>
                </widget>
               </item>
-              <item>
-               <widget class="QComboBox" name="cb_second_carac">
-                <property name="minimumSize">
-                 <size>
-                  <width>194</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="editable">
-                 <bool>false</bool>
-                </property>
-                <property name="currentText">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_7">
-              <item>
-               <widget class="QComboBox" name="cb_last_condi">
+              <item row="2" column="0">
+               <widget class="QComboBox" name="cb_condi_2">
                 <property name="maximumSize">
                  <size>
                   <width>40</width>
@@ -598,19 +616,106 @@
                 </item>
                </widget>
               </item>
+              <item row="4" column="1">
+               <widget class="QComboBox" name="cb_carac_4"/>
+              </item>
+              <item row="6" column="1">
+               <widget class="QComboBox" name="cb_carac_6"/>
+              </item>
+              <item row="3" column="0">
+               <widget class="QComboBox" name="cb_condi_3">
+                <property name="maximumSize">
+                 <size>
+                  <width>40</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Et</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Ou</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QComboBox" name="cb_condi_4">
+                <property name="maximumSize">
+                 <size>
+                  <width>40</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Et</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Ou</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QComboBox" name="cb_condi_5">
+                <property name="maximumSize">
+                 <size>
+                  <width>40</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Et</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Ou</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QComboBox" name="cb_condi_6">
+                <property name="maximumSize">
+                 <size>
+                  <width>40</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Et</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Ou</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
               <item>
-               <widget class="QComboBox" name="cb_last_carac">
+               <widget class="QPushButton" name="pb_add_condition">
                 <property name="minimumSize">
                  <size>
-                  <width>194</width>
+                  <width>200</width>
                   <height>0</height>
                  </size>
                 </property>
-                <property name="editable">
-                 <bool>false</bool>
-                </property>
-                <property name="currentText">
-                 <string/>
+                <property name="text">
+                 <string>Nouvelle condition</string>
                 </property>
                </widget>
               </item>
