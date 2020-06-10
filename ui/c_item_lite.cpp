@@ -55,6 +55,8 @@ void c_item_lite::set_icon() {
             image = QPixmap(":/divers/smallfirsthand.png");
         } else if (!type.compare("TWO_HAND_WEAPON")) {
             image = QPixmap(":/divers/smalldoublehand.png");
+        } else if (!type.compare("MOUNT")) {
+            image = QPixmap(":/divers/smallmount.png");
         }
     ui->icon->setPixmap(image);
     ui->icon->setBackgroundRole(QPalette::Base);
