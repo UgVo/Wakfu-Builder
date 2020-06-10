@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    QFontDatabase::addApplicationFont(":ressources/wci.ttf");
     app_path = qApp->applicationDirPath();
     ui->setupUi(this);
     datamanager.setDBManager(&database_manager);

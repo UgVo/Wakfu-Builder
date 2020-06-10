@@ -25,6 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    ui/c_aptitude_unite.cpp \
+    ui/c_aptitudes_display.cpp \
     ui/c_build_display.cpp \
     ui/c_builder_view.cpp \
     ui/c_dialoggestion.cpp \
@@ -56,6 +58,8 @@ SOURCES += \
 
 HEADERS += \
     mainwindow.h \
+    ui/c_aptitude_unite.h \
+    ui/c_aptitudes_display.h \
     ui/c_build_display.h \
     ui/c_builder_view.h \
     ui/c_dialoggestion.h \
@@ -88,6 +92,8 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui \
+    ui/c_aptitude_unite.ui \
+    ui/c_aptitudes_display.ui \
     ui/c_build_display.ui \
     ui/c_builder_view.ui \
     ui/c_dialoggestion.ui \

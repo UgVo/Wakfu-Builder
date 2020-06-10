@@ -17,6 +17,7 @@
 #include <QElapsedTimer>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QFontDatabase>
 #include "utilities/c_dbmanager.h"
 #include "utilities/c_effect.h"
 #include "utilities/c_networkmanager.h"
