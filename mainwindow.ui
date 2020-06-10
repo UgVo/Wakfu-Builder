@@ -36,6 +36,26 @@
       </widget>
      </widget>
     </item>
+    <item>
+     <widget class="QLabel" name="label_licence_1">
+      <property name="text">
+       <string>WAKFU MMORPG : © 2012-2020 Ankama Studio. Tous droits réservés</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_licence_2">
+      <property name="text">
+       <string>&quot;Builder_wakfu&quot; et ses services dérivés sont des applications non-officiels sans aucun lien avec Ankama.</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">

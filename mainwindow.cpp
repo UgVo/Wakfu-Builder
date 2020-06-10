@@ -39,6 +39,9 @@ MainWindow::MainWindow(QWidget *parent)
     //QObject::connect(entry_point,&QPushButton::clicked,this,&MainWindow::slot_open_button);
 
     this->setWindowState(Qt::WindowMaximized);
+
+    ui->label_licence_1->setStyleSheet("color:white");
+    ui->label_licence_2->setStyleSheet("color:white");
 }
 
 MainWindow::~MainWindow()
