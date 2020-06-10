@@ -5,8 +5,6 @@ c_save_builder_model::c_save_builder_model(c_dbmanager *manager, QObject *parent
     m_db = manager->getDb();
     data_list = QList<struct_save>();
     populate();
-    qDebug() << data_list.size();
-
 }
 
 QVariant c_save_builder_model::headerData(int section, Qt::Orientation orientation, int role) const
@@ -61,7 +59,6 @@ QVariant c_save_builder_model::data(const QModelIndex &index, int role) const {
 
 bool c_save_builder_model::insertRow(struct_save save) {
     beginInsertRows(QModelIndex(), data_list.size(),data_list.size());
-    qDebug() << save.id << save.name;
     data_list.push_back(save);
     endInsertRows();
     return true;
@@ -76,13 +73,11 @@ bool c_save_builder_model::populate() {
         int idLvl = query.record().indexOf("niveau");
         int idName = query.record().indexOf("name");
         int idjson = query.record().indexOf("json");
-        qDebug() << query.record();
         while (query.next()) {
             save.id = query.value(id).toInt();
             save.lvl = query.value(idLvl).toInt();
             save.name = query.value(idName).toString();
             save.json = query.value(idjson).toString();
-            qDebug() << save.json;
             insertRow(save);
         }
         return true;

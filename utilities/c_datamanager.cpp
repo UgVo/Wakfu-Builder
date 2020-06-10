@@ -59,7 +59,6 @@ void c_datamanager::updateVersion(QString newVersion) {
 void c_datamanager::updateFiles() {
     index_fileList = 0;
     trigger_download_element();
-    qDebug() << this;
 }
 
 void c_datamanager::slot_downloadVersionFinished(QString out) {
@@ -186,8 +185,6 @@ void c_datamanager::getImages() {
     foreach (QString id, images) {
         images_id.push_back(id.replace(".png","").toInt());
     }
-    qDebug() << images_id;
-
     _imageList = dbmanager->getImagesList().toSet().subtract(images_id.toSet()).toList();
     index_imageList = 0;
 

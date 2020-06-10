@@ -358,10 +358,10 @@ bool c_dbmanager::add_item(c_item item) {
     }
 
     QList<c_carac> carac_list = item.getList_bonuses();
-    qDebug() << "carac size" << carac_list.size();
+
     foreach (c_carac carac, carac_list) {
-        qDebug() << "add_carac" << add_carac(carac);
-        qDebug() << "add_relation_item_carac" << add_relation_item_carac(item.getId(),carac.id);
+        add_carac(carac);
+        add_relation_item_carac(item.getId(),carac.id);
     }
 
     return true;
@@ -694,20 +694,14 @@ QList<int> c_dbmanager::getid_item_from_actions_sorted(QList<QString> carac_effe
         query.bindValue(QString(":carac_effect%1").arg(i),carac_effect.at(i));
     }
 
-    qDebug() << query_string_sorted;
-    qDebug() << carac_effect << query_string_sorted;
-    qDebug() << query.boundValues();
     if (query.exec()) {
-        qDebug() << query.record();
         int id = query.record().indexOf("id");
         while (query.next()) {
-            qDebug() << query.value(id).toInt();
             res.push_back(query.value(id).toInt());
         }
     } else {
         qDebug() << query.lastError();
     }
-
     return res;
 }
 

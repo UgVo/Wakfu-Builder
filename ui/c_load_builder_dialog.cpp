@@ -7,7 +7,6 @@ c_load_builder_dialog::c_load_builder_dialog(c_dbmanager *manager, QWidget *pare
 {
     ui->setupUi(this);
     QSqlDatabase sql_db = manager->getDb();
-    qDebug() << sql_db.tables();
     model = new c_save_builder_model(manager);
     ui->tableView->setModel(model);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);

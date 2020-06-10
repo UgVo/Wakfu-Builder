@@ -444,7 +444,6 @@ void c_search_widget::set_comboBox_model(QComboBox *cb) {
     init_comboBox(cb);
 
     QFont font = static_cast<QStandardItemModel *>(cb->model())->item(1,0)->font();
-    qDebug() << font.pointSize();
     font.setPointSize(9);
     font.setBold(true);
     static_cast<QStandardItemModel *>(cb->model())->item(1,0)->setFont(font);

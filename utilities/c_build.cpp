@@ -61,7 +61,6 @@ void c_build::setElements(const QList<QString> &value) {
 
 QMap<QString, c_item*> c_build::getEquipment_pt() {
     QMap<QString,c_item*> res;
-    qDebug() << "getEquipment_pt" <<  equipment.keys();
     foreach(QString key, equipment.keys()) {
         res[key] = &equipment[key];
     }
@@ -128,13 +127,10 @@ QMap<QString, QString> c_build::equip(const c_item &item) {
         item2equip.setElements(elements);
     }
     QString type = mapItemToType[item2equip.getType().getTitle()];
-    qDebug() << type;
-    qDebug() << item2equip.getName();
     res = check_constraints(item2equip);
     if (res["status"] == "error") {
         return res;
     }
-    qDebug() << "Constrainte check passed";
     if (!type.compare("SECOND_HAND")) {
         if (!equipment["FIRST_WEAPON"].isEmpty()) {
             if (!mapItemToType[equipment["FIRST_WEAPON"].getType().getTitle()].compare("TWO_HAND_WEAPON")) {
@@ -168,7 +164,6 @@ QMap<QString, QString> c_build::equip(const c_item &item) {
         equipment["FIRST_WEAPON"] = item2equip;
         emit disableSecondWeapon(true);
     } else {
-        qDebug() << "other" << item2equip.getType().getTitle();
         equipment[type] = item2equip;
     }
     if (item2equip.getRarity() == 5) {
@@ -274,7 +269,6 @@ c_build& c_build::operator=(const c_build& build) {
 }
 
 QMap<QString,int> c_build::resetMap() {
-    qDebug() << "c_build::resetMap";
     bonuses.clear();
     bonuses["Vie"] = c_calcul::compute_life(lvl) + (guilde_bonus?55:0) + (nation_bonus?20:0);
     bonuses["PA"] = 6;
@@ -325,7 +319,6 @@ int c_build::getLvl() const {
 }
 
 void c_build::setLvl(int new_lvl) {
-    qDebug() << "c_build::setLvl" << QObject::sender();
     lvl = new_lvl;
     computeBonuses();
     emit updated();

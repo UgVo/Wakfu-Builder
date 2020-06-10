@@ -146,7 +146,6 @@ void c_item_display::updateView() {
                 text_label = map.value("text");
                 label->setText(text_label);
                 label->setToolTip(map.value("description"));
-                qDebug() << text_label << map.value("description");
             }
             if (label_equip_list.size()%2) {
                 label->setStyleSheet(QString("QLabel { background-color : %1}").arg(color_foreground));

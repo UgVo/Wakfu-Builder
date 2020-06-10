@@ -120,6 +120,5 @@ bool c_item_model::insert_row(c_item &item) {
 }
 
 c_item c_item_model::itemFromId(int id) {
-    qDebug() << id;
     return c_item();
 }
