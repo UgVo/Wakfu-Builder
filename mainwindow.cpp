@@ -14,6 +14,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionCheck_new_version->setIcon(QIcon("images/divers/update32.png"));
     set_save_enabled(false);
     ui->tabWidget->setTabsClosable(true);
+    this->setStyleSheet(QString("MainWindow {background-color : %1}").arg(app_color::dark_blue));
+
+    QCoreApplication::setApplicationName(QString("Builder Wakfu"));
+    setWindowTitle(QCoreApplication::applicationName());
 
     diag = new DialogGestion(&datamanager,datamanager.getVersion(),this);
 
@@ -25,6 +29,14 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(ui->action_save_Vers_la_base_de_donnee,&QAction::triggered,this,&MainWindow::slot_action_save_Vers_la_base_de_donnee);
     QObject::connect(ui->action_open_Depuis_la_base_de_donn_e,&QAction::triggered,this,&MainWindow::slot_action_open_Depuis_la_base_de_donn_e);
     QObject::connect(ui->actionEnregistrer,&QAction::triggered,this,&MainWindow::slot_actionEnregistrer);
+
+    entry_point = new c_entry_point(this);
+    ui->page_1->layout()->addWidget(entry_point);
+
+    QObject::connect(entry_point,&c_entry_point::new_clicked,this,&MainWindow::slot_actionCr_er_nouveau_Build_clicked);
+    QObject::connect(entry_point,&c_entry_point::first_animation_finished,this,&MainWindow::slot_creation_builder);
+    QObject::connect(entry_point,&c_entry_point::second_animation_finished,this,&MainWindow::slot_creation_finished);
+    //QObject::connect(entry_point,&QPushButton::clicked,this,&MainWindow::slot_open_button);
 
     this->setWindowState(Qt::WindowMaximized);
 }
@@ -73,6 +85,7 @@ void MainWindow::slot_actionCr_er_nouveau_Build_clicked() {
     builder_list.push_back(new c_builder_view(database_manager,this));
     ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void MainWindow::slot_check_version_clicked() {
@@ -108,6 +121,7 @@ void MainWindow::slot_on_close_table(const int &index) {
 
     if (!builder_list.size()) {
         set_save_enabled(false);
+        ui->stackedWidget->setCurrentIndex(0);
     }
 }
 
@@ -172,9 +186,45 @@ void MainWindow::slot_actionEnregistrer() {
     }
 }
 
+void MainWindow::slot_creation_builder() {
+    QObject::disconnect(entry_point,&c_entry_point::first_animation_finished,this,&MainWindow::slot_creation_builder);set_save_enabled(true);
+    builder_list.push_back(new c_builder_view(database_manager,this));
+    ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+    QThread::msleep(10);
+    entry_point->slot_creation_builder_anim();
+}
+
+void MainWindow::slot_creation_finished() {
+    QObject::disconnect(entry_point,&c_entry_point::second_animation_finished,this,&MainWindow::slot_creation_finished);
+    entry_point->deleteLater();
+    entry_point = new c_entry_point(this);
+    ui->page_1->layout()->addWidget(entry_point);
+    QObject::connect(entry_point,&c_entry_point::new_clicked,this,&MainWindow::slot_actionCr_er_nouveau_Build_clicked);
+    QObject::connect(entry_point,&c_entry_point::first_animation_finished,this,&MainWindow::slot_creation_builder);
+    QObject::connect(entry_point,&c_entry_point::second_animation_finished,this,&MainWindow::slot_creation_finished);
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
 void MainWindow::set_save_enabled(bool flag) {
     ui->actionSauvegarder_Build->setEnabled(flag);
     ui->action_save_Vers_la_base_de_donnee->setEnabled(flag);
     ui->actionEnregistrer->setEnabled(flag);
 }
 
+
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    qDebug() << "keyPressEvent" <<  event->key();
+    if (event->key() == Qt::Key_Shift) {
+        emit shift_pressed(true);
+    } else if (event->matches(QKeySequence::Save)) {
+        slot_actionEnregistrer();
+    }
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *event) {
+    qDebug() << "keyReleaseEvent" << event->key();
+    if (event->key() == Qt::Key_Shift) {
+        emit shift_pressed(false);
+    }
+}
