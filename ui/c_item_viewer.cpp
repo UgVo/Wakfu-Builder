@@ -219,7 +219,7 @@ void c_item_viewer::mouseReleaseEvent(QMouseEvent *event) {
     }
 }
 
-void c_item_viewer::mouseDoubleClickEvent(QMouseEvent */*event*/) {
+void c_item_viewer::mouseDoubleClickEvent(QMouseEvent * /*event*/) {
     if (!item->isEmpty()) {
         emit unequip(position);
         block = true;

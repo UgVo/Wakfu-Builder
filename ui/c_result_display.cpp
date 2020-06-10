@@ -5,7 +5,8 @@ c_result_display::c_result_display(c_dbmanager* _data_base, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::c_result_display) {
     ui->setupUi(this);
-    this->setStyleSheet(QString("c_result_display{background-color : %1} c_item_lite{background-color : %2}").arg(app_color::grey_blue).arg(app_color::dark_blue));
+    this->setStyleSheet(QString("c_result_display{background-color : %1;} c_item_lite{background-color : %2}").arg(app_color::grey_blue).arg(app_color::dark_blue));
+    ui->page_indicator->setStyleSheet("color:white");
     while (ui->stackedWidget->count()) {
         ui->stackedWidget->removeWidget(ui->stackedWidget->widget(0));
     }
