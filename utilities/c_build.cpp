@@ -29,6 +29,7 @@ c_build::c_build() {
     hm_bonus = false;
 
     bonuses = resetMap();
+    init_bonus_aptitudes();
 }
 
 c_build::c_build(const c_build &build) {
@@ -44,7 +45,51 @@ c_build::~c_build() {
 }
 
 QMap<QString, int> c_build::getBonuses() const {
-    return bonuses;
+    QMap<QString, int> bonus_global;
+
+    bonus_global["Vie"] = int(qreal(bonuses["Vie"] + bonus_aptitudes["Point de Vie"]*20) * ((qreal(bonus_aptitudes["% Point de Vie"]*4)/100.0) + 1.0));
+    bonus_global["PA"] = bonuses["PA"] + bonus_aptitudes["Point d'action"];
+    bonus_global["PM"] = bonuses["PM"] + bonus_aptitudes["Point de Mouvement et dégâts"];
+    bonus_global["PW"] = bonuses["PW"] + bonus_aptitudes["Point de Wakfu"]*2;
+    bonus_global["Maîtrise Élémentaire Feu"] = bonuses["Maîtrise Élémentaire Feu"] +  bonus_aptitudes["Maitrise Élémentaire"]*5 + bonus_aptitudes["Point de Mouvement et dégâts"]*20 + bonus_aptitudes["Portée et dégâts"]*40 + bonus_aptitudes["Contrôle et dégâts"]*40;
+    bonus_global["Maîtrise Élémentaire Eau"] = bonuses["Maîtrise Élémentaire Eau"] +  bonus_aptitudes["Maitrise Élémentaire"]*5 + bonus_aptitudes["Point de Mouvement et dégâts"]*20 + bonus_aptitudes["Portée et dégâts"]*40 + bonus_aptitudes["Contrôle et dégâts"]*40;
+    bonus_global["Maîtrise Élémentaire Terre"] = bonuses["Maîtrise Élémentaire Terre"] +  bonus_aptitudes["Maitrise Élémentaire"]*5 + bonus_aptitudes["Point de Mouvement et dégâts"]*20 + bonus_aptitudes["Portée et dégâts"]*40 + bonus_aptitudes["Contrôle et dégâts"]*40;
+    bonus_global["Maîtrise Élémentaire Air"] = bonuses["Maîtrise Élémentaire Air"] +  bonus_aptitudes["Maitrise Élémentaire"]*5 + bonus_aptitudes["Point de Mouvement et dégâts"]*20 + bonus_aptitudes["Portée et dégâts"]*40 + bonus_aptitudes["Contrôle et dégâts"]*40;
+    bonus_global["Résistance Feu"] = bonuses["Résistance Feu"] + bonus_aptitudes["Résistance Élémentaire"]*10 + bonus_aptitudes["Résistance Élémentaire majeur"]*50;
+    bonus_global["Résistance Eau"] = bonuses["Résistance Eau"] + bonus_aptitudes["Résistance Élémentaire"]*10 + bonus_aptitudes["Résistance Élémentaire majeur"]*50;
+    bonus_global["Résistance Terre"] = bonuses["Résistance Terre"] + bonus_aptitudes["Résistance Élémentaire"]*10 + bonus_aptitudes["Résistance Élémentaire majeur"]*50;
+    bonus_global["Résistance Air"] = bonuses["Résistance Air"] + bonus_aptitudes["Résistance Élémentaire"]*10 + bonus_aptitudes["Résistance Élémentaire majeur"]*50;
+    bonus_global["Dommages infligés"] = bonuses["Dommages infligés"] + bonus_aptitudes["% Dommages infligés"]*10;
+    bonus_global["Soins réalisés"] = bonuses["Soins réalisés"];
+    bonus_global["Parade"] = bonuses["Parade"] + bonus_aptitudes["% Parade"];
+    bonus_global["Coup Critique"] = bonuses["Coup Critique"] + bonus_aptitudes["% Coup Critique"];
+    bonus_global["Initiative"] = bonuses["Initiative"] + bonus_aptitudes["Initiative"]*4;
+    bonus_global["Portée"] = bonuses["Portée"] + bonus_aptitudes["Portée et dégâts"];
+    bonus_global["Esquive"] = bonuses["Esquive"] + bonus_aptitudes["Esquive"]*6 + bonus_aptitudes["Tacle et Esquive"]*4;
+    bonus_global["Tacle"] = bonuses["Tacle"] + bonus_aptitudes["Tacle"]*6 + bonus_aptitudes["Tacle et Esquive"]*4;
+    bonus_global["Sagesse"] = bonuses["Sagesse"];
+    bonus_global["Prospection"] = bonuses["Prospection"];
+    bonus_global["Contrôle"] = bonuses["Contrôle"] + bonus_aptitudes["Contrôle et dégâts"]*2;
+    bonus_global["Art du barda"] = bonuses["Art du barda"];
+    bonus_global["Volonté"] = bonuses["Volonté"] + bonus_aptitudes["Volonté"];
+    bonus_global["Maîtrise Critique"] = bonuses["Maîtrise Critique"] + bonus_aptitudes["Maîtrise Critique"]*4;
+    bonus_global["Résistance Critique"] = bonuses["Résistance Critique"] + bonus_aptitudes["Résistance Critique"]*4;
+    bonus_global["Maîtrise Dos"] = bonuses["Maîtrise Dos"] + bonus_aptitudes["Maîtrise Dos"]*6;
+    bonus_global["Résistance Dos"] = bonuses["Résistance Dos"] + bonus_aptitudes["Résistance Dos"]*4;
+    bonus_global["Maîtrise Mêlée"] = bonuses["Maîtrise Mêlée"] + bonus_aptitudes["Maitrise Mêlée"]*8;
+    bonus_global["Maîtrise Distance"] = bonuses["Maîtrise Distance"] + bonus_aptitudes["Maitrise Distance"]*8;
+    bonus_global["Maîtrise Monocible"] = bonuses["Maîtrise Monocible"] +  bonus_aptitudes["Maitrise Monocible"]*8;
+    bonus_global["Maîtrise Zone"] = bonuses["Maîtrise Zone"] + bonus_aptitudes["Maitrise Zone"]*8;
+    bonus_global["Maîtrise Soin"] = bonuses["Maîtrise Soin"] + bonus_aptitudes["Maîtrise Soin"]*6;
+    bonus_global["Maîtrise Berserk"] = bonuses["Maîtrise Berserk"] + bonus_aptitudes["Maîtrise Berserk"]*8;
+    bonus_global["Niv. aux sorts Feu"] = bonuses["Niv. aux sorts Feu"];
+    bonus_global["Niv. aux sorts Eau"] = bonuses["Niv. aux sorts Eau"];
+    bonus_global["Niv. aux sorts Terre"] = bonuses["Niv. aux sorts Terre"];
+    bonus_global["Niv. aux sorts Air"] = bonuses["Niv. aux sorts Air"];
+    bonus_global["Armure donnée"] = bonuses["Armure donnée"];
+    bonus_global["Armure reçue"] = bonuses["Armure reçue"];
+    bonus_global["Armure"] = int(qreal(bonuses["Vie"]) * qreal(bonus_aptitudes["% Point de Vie en Armure"]*4)/100.0);
+    return bonus_global;
 }
 
 void c_build::setBonuses(const QMap<QString, int> &value) {
@@ -299,7 +344,7 @@ QMap<QString,int> c_build::resetMap() {
     bonuses["Résistance Critique"] = 0;
     bonuses["Maîtrise Dos"] = 0;
     bonuses["Résistance Dos"] = 0;
-    bonuses["Maîtrise Mélée"] = 0;
+    bonuses["Maîtrise Mêlée"] = 0;
     bonuses["Maîtrise Distance"] = 0;
     bonuses["Maîtrise Monocible"] = 0;
     bonuses["Maîtrise Zone"] = 0;
@@ -314,8 +359,50 @@ QMap<QString,int> c_build::resetMap() {
     return bonuses;
 }
 
+void c_build::init_bonus_aptitudes() {
+    bonus_aptitudes["% Point de Vie"] = 0;
+    bonus_aptitudes["Résistance Élémentaire"] = 0;
+    bonus_aptitudes["Barrière"] = 0;
+    bonus_aptitudes["% Soin Reçu"] = 0;
+    bonus_aptitudes["% Point de Vie en Armure"] = 0;
+
+    bonus_aptitudes["Maitrise Élémentaire"] = 0;
+    bonus_aptitudes["Maitrise Monocible"] = 0;
+    bonus_aptitudes["Maitrise Zone"] = 0;
+    bonus_aptitudes["Maitrise Mêlée"] = 0;
+    bonus_aptitudes["Maitrise Distance"] = 0;
+    bonus_aptitudes["Point de Vie"] = 0;
+
+    bonus_aptitudes["Tacle"] = 0;
+    bonus_aptitudes["Esquive"] = 0;
+    bonus_aptitudes["Initiative"] = 0;
+    bonus_aptitudes["Tacle et Esquive"] = 0;
+    bonus_aptitudes["Volonté"] = 0;
+
+    bonus_aptitudes["% Coup Critique"] = 0;
+    bonus_aptitudes["% Parade"] = 0;
+    bonus_aptitudes["Maîtrise Critique"] = 0;
+    bonus_aptitudes["Maîtrise Dos"] = 0;
+    bonus_aptitudes["Maîtrise Berserk"] = 0;
+    bonus_aptitudes["Maîtrise Soin"] = 0;
+    bonus_aptitudes["Résistance Dos"] = 0;
+    bonus_aptitudes["Résistance Critique"] = 0;
+
+    bonus_aptitudes["Point d'action"] = 0;
+    bonus_aptitudes["Point de Mouvement et dégâts"] = 0;
+    bonus_aptitudes["Portée et dégâts"] = 0;
+    bonus_aptitudes["Point de Wakfu"] = 0;
+    bonus_aptitudes["Contrôle et dégâts"] = 0;
+    bonus_aptitudes["% Dommages infligés"] = 0;
+    bonus_aptitudes["Résistance Élémentaire majeur"] = 0;
+}
+
 int c_build::getLvl() const {
     return lvl;
+}
+
+QMap<QString, int> c_build::getBonus_aptitudes() const {
+    return bonus_aptitudes;
 }
 
 void c_build::setLvl(int new_lvl) {
@@ -333,6 +420,12 @@ void c_build::slot_bonus_changed(QList<bool> bonus) {
 }
 
 void c_build::slot_item_element_changed() {
+    computeBonuses();
+    emit updated();
+}
+
+void c_build::slot_aptitude_value_changed(QString type, int value) {
+    bonus_aptitudes[type] = value;
     computeBonuses();
     emit updated();
 }
