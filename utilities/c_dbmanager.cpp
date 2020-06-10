@@ -1,13 +1,14 @@
 #include "c_dbmanager.h"
+#include "c_datamanager.h"
 
-c_dbmanager::c_dbmanager() {
+c_dbmanager::c_dbmanager(c_datamanager *manager) {
     m_db = QSqlDatabase::addDatabase("QPSQL");
     m_db.setHostName("localhost");
     m_db.setPort(5432);
     m_db.setUserName("postgres");
     m_db.setDatabaseName("postgres");
     m_db.setUserName("wakfu_builder");
-    m_db.setPassword("hY5L*2u6<q");
+    m_db.setPassword(manager->getPassword());
     qDebug() << "Openning database :" << m_db.open();
 }
 
