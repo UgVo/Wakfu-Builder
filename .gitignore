@@ -75,3 +75,7 @@ Thumbs.db
 /build/
 /images/items/*
 /images/other_unused/*
+
+/doc/
+/extern/
+/save/
