@@ -131,5 +131,44 @@
         <file>divers/MOUNT.png</file>
         <file>Aptitudes/armor_given.png</file>
         <file>Aptitudes/armor_gotten.png</file>
+        <file>divers/moins.png</file>
+        <file>divers/plus.png</file>
+        <file>Aptitudes/apt_agilite.png</file>
+        <file>Aptitudes/apt_chance.png</file>
+        <file>Aptitudes/apt_force.png</file>
+        <file>Aptitudes/apt_intelligence.png</file>
+        <file>Aptitudes/apt_majeur.png</file>
+        <file>Aptitudes/big_armure.png</file>
+        <file>Aptitudes/big_barriere.png</file>
+        <file>Aptitudes/big_berserk.png</file>
+        <file>Aptitudes/big_controle.png</file>
+        <file>Aptitudes/big_critique.png</file>
+        <file>Aptitudes/big_critique_m.png</file>
+        <file>Aptitudes/big_critique_r.png</file>
+        <file>Aptitudes/big_distance.png</file>
+        <file>Aptitudes/big_dommage.png</file>
+        <file>Aptitudes/big_dos_m.png</file>
+        <file>Aptitudes/big_dos_r.png</file>
+        <file>Aptitudes/big_elementaire.png</file>
+        <file>Aptitudes/big_esquive.png</file>
+        <file>Aptitudes/big_initiative.png</file>
+        <file>Aptitudes/big_melee.png</file>
+        <file>Aptitudes/big_monocible.png</file>
+        <file>Aptitudes/big_pa.png</file>
+        <file>Aptitudes/big_parade.png</file>
+        <file>Aptitudes/big_pm.png</file>
+        <file>Aptitudes/big_point_vie.png</file>
+        <file>Aptitudes/big_porte.png</file>
+        <file>Aptitudes/big_resistance.png</file>
+        <file>Aptitudes/big_soin.png</file>
+        <file>Aptitudes/big_soin_m.png</file>
+        <file>Aptitudes/big_tacle.png</file>
+        <file>Aptitudes/big_tacle_esquive.png</file>
+        <file>Aptitudes/big_vie_100.png</file>
+        <file>Aptitudes/big_volonte.png</file>
+        <file>Aptitudes/big_wakfu.png</file>
+        <file>Aptitudes/big_zone.png</file>
+        <file>divers/moins_dis.png</file>
+        <file>divers/plus_dis.png</file>
     </qresource>
 </RCC>
