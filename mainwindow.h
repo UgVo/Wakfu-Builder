@@ -75,7 +75,7 @@ public slots:
     void test();
     void test_interpret_effect();
 
-    void slot_actionCr_er_nouveau_Build_cliked();
+    void slot_actionCr_er_nouveau_Build_clicked();
     void slot_on_close_table(const int &index);
     void slot_actionSauvegarder_Build();
     void slot_action_open_Depuis_un_fichier();
