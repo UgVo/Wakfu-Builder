@@ -232,6 +232,7 @@ void c_item_viewer::check_mouse_over() {
     } else {
         disconnect(timer,&QTimer::timeout,this,&c_item_viewer::check_mouse_over);
         it_display->hide();
+        it_display->update();
     }
 }
 
