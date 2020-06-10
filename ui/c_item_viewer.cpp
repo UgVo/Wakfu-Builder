@@ -94,7 +94,7 @@ void c_item_viewer::setBackgroundImage() {
         if (item->isEmpty()) {
             background->setPixmap(QPixmap(QString(":/divers/%1.png").arg(position)));
         } else {
-            background->setPixmap(QPixmap(QString(":/divers/NONE_ts.png")));
+            background->setPixmap(QPixmap(QString(":/rarityborder/%1.png").arg(item->getRarity())));
         }
     } else {
         background->setPixmap(QPixmap());

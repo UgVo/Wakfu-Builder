@@ -170,5 +170,14 @@
         <file>Aptitudes/big_zone.png</file>
         <file>divers/moins_dis.png</file>
         <file>divers/plus_dis.png</file>
+        <file>rarityborder/0.png</file>
+        <file>rarityborder/1.png</file>
+        <file>rarityborder/2.png</file>
+        <file>rarityborder/3.png</file>
+        <file>rarityborder/4.png</file>
+        <file>rarityborder/5.png</file>
+        <file>rarityborder/6.png</file>
+        <file>rarityborder/7.png</file>
+        <file>rarityborder/10.png</file>
     </qresource>
 </RCC>
