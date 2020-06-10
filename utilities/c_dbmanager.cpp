@@ -637,41 +637,40 @@ c_state c_dbmanager::get_state(int id) {
     return state;
 }
 
-QList<QPair<int,int>> c_dbmanager::getid_item_from_actions(QList<int> action_ids, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final, QList<bool> condi) {
-    QList<QPair<int,int>> res;
+QList<int> c_dbmanager::getid_item_from_actions(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final, QList<bool> condi) {
+    QList<int> res;
     QSqlQuery query(m_db);
-    QString query_string = prepareQuery(action_ids,rarities,types,bondaries,name,final,condi);
-    qDebug() << query_string;
+    QString query_string;
+    if (condi.isEmpty()) {
+        query_string = prepareQuery_condi(carac_effect,rarities,types,bondaries,name,final,condi);
+    } else {
+        query_string = prepareQuery_simple(carac_effect,rarities,types,bondaries,name,final);
+    }
     query.prepare(query_string);
-    for (int i = 0; i < action_ids.size(); ++i) {
-        query.bindValue(QString(":action_id%1").arg(i),action_ids.at(i));
+    for (int i = 0; i < rarities.size(); ++i) {
+        query.bindValue(QString(":rarity%1").arg(i),rarities.at(i));
     }
-    if (!rarities.isEmpty()) {
-        for (int i = 0; i < rarities.size(); ++i) {
-            query.bindValue(QString(":rarity%1").arg(i),rarities.at(i));
-        }
+    for (int i = 0; i < types.size(); ++i) {
+        query.bindValue(QString(":types%1").arg(i),types.at(i));
     }
-    if (!types.isEmpty()) {
-        for (int i = 0; i < types.size(); ++i) {
-            query.bindValue(QString(":types%1").arg(i),types.at(i));
-        }
+    for (int i = 0; i < carac_effect.size(); ++i) {
+        query.bindValue(QString(":carac_effect%1").arg(i),carac_effect.at(i));
     }
     if (query.exec()) {
         int id = query.record().indexOf("id");
-        int idlvl = query.record().indexOf("lvl");
         while (query.next()) {
-            res.push_back(QPair<int,int>(query.value(id).toInt(),query.value(idlvl).toInt()));
+            res.push_back(query.value(id).toInt());
         }
     } else {
         qDebug() << query.lastError();
     }
-    return  res;
+    return res;
 }
 
 QList<int> c_dbmanager::getid_item_from_actions_sorted(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final, QList<bool> condi) {
     QList<int> res;
     QSqlQuery query(m_db);
-    QString query_string = prepareQuery_actionName(carac_effect,rarities,types,bondaries,name,final,condi);
+    QString query_string = prepareQuery_condi(carac_effect,rarities,types,bondaries,name,final,condi);
     QString query_string_sorted = QString("SELECT item.id,sum(carac.value) FROM ( %1 ) as item INNER JOIN wakfu_builder.relation_item_carac as r_item_carac ON item.id = r_item_carac.id_item INNER JOIN wakfu_builder.carac as carac ON r_item_carac.id_carac = carac.id WHERE ").arg(query_string);
     if (carac_effect.size() != 0) {
         query_string_sorted += "( carac.effect = :carac_effect0 OR";
@@ -880,15 +879,15 @@ bool c_dbmanager::add_relation_item_carac(int id_item, int id_carac) {
     return flag;
 }
 
-QString c_dbmanager::prepareQuery(QList<int> action_ids, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final, QList<bool> condi) {
+QString c_dbmanager::prepareQuery_simple(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final) {
     QString query_string;
     if (final) {
         query_string = QString("SELECT item.id,item.lvl FROM (SELECT item1.* FROM (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 OR item.lvl = -1)) item1 LEFT OUTER JOIN (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 OR item.lvl = -1)) AS item2 ON item1.rarity < item2.rarity AND item1.title = item2.title WHERE item2.title IS NULL) item ").arg(bondaries.at(0)).arg(bondaries.at(1));
     } else {
         query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
     }
-    for (int i = 0; i< action_ids.size(); ++i) {
-        query_string += QString(", wakfu_builder.effect as effect%1, wakfu_builder.item_useEquipEffect_relation as relation%1").arg(i);
+    for (int i = 0; i< carac_effect.size(); ++i) {
+        query_string += QString(", wakfu_builder.carac as carac%1, wakfu_builder.relation_item_carac as relation%1").arg(i);
     }
     if (!final) {
         query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 OR item.lvl = -1) AND").arg(bondaries.at(0)).arg(bondaries.at(1));
@@ -896,25 +895,16 @@ QString c_dbmanager::prepareQuery(QList<int> action_ids, QList<int> rarities, QL
         query_string+= " WHERE";
     }
 
-    if (!action_ids.isEmpty()) {
-        for (int i = 0; i < action_ids.size(); ++i) {
+    if (!carac_effect.isEmpty()) {
+        for (int i = 0; i < carac_effect.size(); ++i) {
             query_string += QString(" item.id = relation%1.id_item AND").arg(i);
         }
-        for (int i = 0; i < action_ids.size(); ++i) {
-            query_string += QString(" relation%1.id_E = effect%1.id AND").arg(i);
+        for (int i = 0; i < carac_effect.size(); ++i) {
+            query_string += QString(" relation%1.id_carac = carac%1.id AND").arg(i);
         }
-        if (!condi.isEmpty()) {
-            QString action0 = QString(" %2 effect0.actionId = :action_id0 %1 ").arg(condi.at(0)?"OR":"AND").arg(condi.at(0)?"(":"");
-            QString action1 = QString(" %2 effect1.actionId = :action_id1 %3%1").arg(condi.at(1)?"OR":"AND").arg(condi.at(1)?(condi.at(0)?"":"("):"").arg(condi.at(1)?(""):(condi.at(0)?")":""));
-            QString action2 = QString(" effect2.actionId = :action_id2 %1 ").arg(condi.at(1)?")":"");
-            QString action = QString(" %1%2%3").arg(action_ids.size()>0?action0:"").arg(action_ids.size()>1?action1:"").arg(action_ids.size()>2?action2:"");
-            qDebug() << action;
-            qDebug() << action_ids;
-            query_string += action;
-        } else {
-            for (int i = 0; i < action_ids.size(); ++i) {
-                query_string += QString(" effect%1.actionId = :action_id%1 AND").arg(i);
-            }
+
+        for (int i = 0; i < carac_effect.size(); ++i) {
+            query_string += QString(" carac%1.effect = :carac_effect%1 AND").arg(i);
         }
         query_string.remove(QRegExp("AND$"));
         query_string.remove(QRegExp("OR$"));
@@ -948,7 +938,7 @@ QString c_dbmanager::prepareQuery(QList<int> action_ids, QList<int> rarities, QL
     return query_string;
 }
 
-QString c_dbmanager::prepareQuery_actionName(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final, QList<bool> condi) {
+QString c_dbmanager::prepareQuery_condi(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final, QList<bool> condi) {
     QString query_string;
     if (final) {
         query_string = QString("SELECT item.id,item.lvl FROM (SELECT item1.* FROM (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 OR item.lvl = -1)) item1 LEFT OUTER JOIN (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 OR item.lvl = -1)) AS item2 ON item1.rarity < item2.rarity AND item1.title = item2.title WHERE item2.title IS NULL) item ").arg(bondaries.at(0)).arg(bondaries.at(1));
@@ -1004,22 +994,19 @@ QString c_dbmanager::prepareQuery_actionName(QList<QString> carac_effect, QList<
     return query_string;
 }
 
-
-QString c_dbmanager::generateCombiQuery_action(QList<bool> condi) {
-    QString action = QString(" %2 effect0.actionId = :action_id0 %1 ").arg(condi.at(0)?"OR":"AND").arg(condi.at(0)?"(":"");
-    for (int i = 1; i < condi.size(); ++i) {
-        action += QString("%2 effect%1.actionId = :action_id%1 %3 %4 ").arg(i).arg((!condi[i-1]&&condi[i])?"(":"").arg((condi[i-1]&&!condi[i])?")":"").arg(condi[i]?"OR":"AND");
-    }
-    action += QString("effect%1.actionId = :action_id%1 %2").arg(condi.size()).arg(condi.last()?")":"");
-    return action;
-}
-
 QString c_dbmanager::generateCombiQuery_carac(QList<bool> condi) {
-    QString action = QString(" %2 carac0.effect = :carac_effect0 %1 ").arg(condi.at(0)?"OR":"AND").arg(condi.at(0)?"(":"");
-    for (int i = 1; i < condi.size(); ++i) {
-        action += QString("%2 carac%1.effect = :carac_effect%1 %3 %4 ").arg(i).arg((!condi[i-1]&&condi[i])?"(":"").arg((condi[i-1]&&!condi[i])?")":"").arg(condi[i]?"OR":"AND");
+    QString action;
+    if (condi.isEmpty()) {
+        action = QString(" carac0.effect = :carac_effect0 ");
+    } else {
+        action = QString(" %2 carac0.effect = :carac_effect0 %1 ").arg(condi.at(0)?"OR":"AND").arg(condi.at(0)?"(":"");
+        for (int i = 1; i < condi.size(); ++i) {
+            action += QString("%2 carac%1.effect = :carac_effect%1 %3 %4 ").arg(i).arg((!condi[i-1]&&condi[i])?"(":"").arg((condi[i-1]&&!condi[i])?")":"").arg(condi[i]?"OR":"AND");
+        }
+        if (condi.size()) {
+            action += QString("carac%1.effect = :carac_effect%1 %2").arg(condi.size()).arg(condi.last()?")":"");
+        }
     }
-    action += QString("carac%1.effect = :carac_effect%1 %2").arg(condi.size()).arg(condi.last()?")":"");
     return action;
 }
 

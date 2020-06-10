@@ -92,17 +92,6 @@ c_search_widget::c_search_widget(c_dbmanager *manager, QWidget *parent) :
     QObject::connect(ui->search_button,&QPushButton::clicked,this,&c_search_widget::slot_search);
     QObject::connect(ui->reset_button,&QPushButton::clicked,this,&c_search_widget::slot_reset);
 
-    set_comboBox_model(ui->cb_first_carac);
-    static_cast<QStandardItemModel *>(ui->cb_first_carac->model())->item(0,0)->setText("Caractéristique principale");
-    set_comboBox_model(ui->cb_second_carac);
-    static_cast<QStandardItemModel *>(ui->cb_second_carac->model())->item(0,0)->setText("Caractéristique secondaire");
-    set_comboBox_model(ui->cb_last_carac);
-    static_cast<QStandardItemModel *>(ui->cb_last_carac->model())->item(0,0)->setText("Caractéristique tertiaire");
-    init_comboBox(ui->cb_first_carac);
-    init_comboBox(ui->cb_second_carac);
-    init_comboBox(ui->cb_last_carac);
-    init_comboBox(ui->cb_second_condi);
-    init_comboBox(ui->cb_last_condi);
     ui->best_combi_gb->setStyleSheet("QGroupBox{color: white;}");
 
     ui->tri_best_combi_check->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/divers/unchecked.png);}"
@@ -110,6 +99,59 @@ c_search_widget::c_search_widget(c_dbmanager *manager, QWidget *parent) :
                                             "QCheckBox {color : white;}");
 
     QObject::connect(ui->best_combi_search,&QPushButton::clicked,this,&c_search_widget::slot_combi_search);
+    //QObject::connect(ui->pb_add_condition)
+
+    set_comboBox_model(ui->cb_first_carac);
+    static_cast<QStandardItemModel *>(ui->cb_first_carac->model())->item(0,0)->setText("Caractéristique Principale");
+    init_comboBox(ui->cb_first_carac);
+
+    cb_carac_list.push_back(ui->cb_carac_1);
+    set_comboBox_model(ui->cb_carac_1);
+    static_cast<QStandardItemModel *>(ui->cb_carac_1->model())->item(0,0)->setText("Caractéristique secondaire");
+    init_comboBox(ui->cb_carac_1);
+    cb_carac_list.push_back(ui->cb_carac_2);
+    set_comboBox_model(ui->cb_carac_2);
+    static_cast<QStandardItemModel *>(ui->cb_carac_2->model())->item(0,0)->setText("Caractéristique secondaire");
+    init_comboBox(ui->cb_carac_2);
+    cb_carac_list.push_back(ui->cb_carac_3);
+    set_comboBox_model(ui->cb_carac_3);
+    static_cast<QStandardItemModel *>(ui->cb_carac_3->model())->item(0,0)->setText("Caractéristique secondaire");
+    init_comboBox(ui->cb_carac_3);
+    cb_carac_list.push_back(ui->cb_carac_4);
+    set_comboBox_model(ui->cb_carac_4);
+    static_cast<QStandardItemModel *>(ui->cb_carac_4->model())->item(0,0)->setText("Caractéristique secondaire");
+    init_comboBox(ui->cb_carac_4);
+    cb_carac_list.push_back(ui->cb_carac_5);
+    set_comboBox_model(ui->cb_carac_5);
+    static_cast<QStandardItemModel *>(ui->cb_carac_5->model())->item(0,0)->setText("Caractéristique secondaire");
+    init_comboBox(ui->cb_carac_5);
+    cb_carac_list.push_back(ui->cb_carac_6);
+    set_comboBox_model(ui->cb_carac_6);
+    static_cast<QStandardItemModel *>(ui->cb_carac_6->model())->item(0,0)->setText("Caractéristique secondaire");
+    init_comboBox(ui->cb_carac_6);
+
+    cb_carac_condi.push_back(ui->cb_condi_1);
+    init_comboBox(ui->cb_condi_1);
+    cb_carac_condi.push_back(ui->cb_condi_2);
+    init_comboBox(ui->cb_condi_2);
+    cb_carac_condi.push_back(ui->cb_condi_3);
+    init_comboBox(ui->cb_condi_3);
+    cb_carac_condi.push_back(ui->cb_condi_4);
+    init_comboBox(ui->cb_condi_4);
+    cb_carac_condi.push_back(ui->cb_condi_5);
+    init_comboBox(ui->cb_condi_5);
+    cb_carac_condi.push_back(ui->cb_condi_6);
+    init_comboBox(ui->cb_condi_6);
+
+    numberShown = 2;
+
+    for (int i = numberShown; i < cb_carac_list.size(); ++i) {
+        cb_carac_list[i]->hide();
+        cb_carac_condi[i]->hide();
+    }
+
+    QObject::connect(ui->pb_add_condition,&QPushButton::clicked,this,&c_search_widget::slot_new_condi_row);
+
 }
 
 c_search_widget::~c_search_widget() {
@@ -236,14 +278,9 @@ void c_search_widget::slot_load_search_position(QString position) {
     if (ui->pb_relique->isChecked()) rarities.append(c_item::mapRarityToId["Relique"]);
     if (ui->pb_souvenir->isChecked()) rarities.append(c_item::mapRarityToId["Souvenir"]);
 
-    QList<int> caract;
-    if (ui->carac_search->currentIndex()!=0) caract.append(c_item::mapCaracToId[ui->carac_search->currentText()]);
-    QList<QPair<int,int>> item_list_pair = dbmanager->getid_item_from_actions(caract,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text(),ui->final_object_check->checkState()==Qt::CheckState::Checked);
-    std::sort(item_list_pair.begin(),item_list_pair.end(),c_search_widget::compare_pair_id_lvl);
-    QList<int> item_list;
-    for(int i = 0; i < item_list_pair.size(); ++i) {
-        item_list.push_back(item_list_pair.at(i).first);
-    }
+    QList<QString> caract;
+    if (ui->carac_search->currentIndex()!=0) caract.append(ui->carac_search->currentText());
+    QList<int> item_list = dbmanager->getid_item_from_actions(caract,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text(),ui->final_object_check->checkState()==Qt::CheckState::Checked);
     emit new_search_result(item_list);
 }
 
@@ -284,14 +321,9 @@ void c_search_widget::slot_search() {
     if (ui->pb_relique->isChecked()) rarities.append(c_item::mapRarityToId["Relique"]);
     if (ui->pb_souvenir->isChecked()) rarities.append(c_item::mapRarityToId["Souvenir"]);
 
-    QList<int> caract;
-    if (ui->carac_search->currentIndex()!=0) caract.append(c_item::mapCaracToId[ui->carac_search->currentText()]);
-    QList<QPair<int,int>> item_list_pair = dbmanager->getid_item_from_actions(caract,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text(),ui->final_object_check->isChecked());
-    std::sort(item_list_pair.begin(),item_list_pair.end(),c_search_widget::compare_pair_id_lvl);
-    QList<int> item_list;
-    for(int i = 0; i < item_list_pair.size(); ++i) {
-        item_list.push_back(item_list_pair.at(i).first);
-    }
+    QList<QString> caract;
+    if (ui->carac_search->currentIndex()!=0) caract.append(ui->carac_search->currentText());
+    QList<int> item_list = dbmanager->getid_item_from_actions(caract,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text(),ui->final_object_check->isChecked());
     emit new_search_result(item_list);
 
 }
@@ -360,33 +392,48 @@ void c_search_widget::slot_combi_search() {
     if (ui->pb_relique->isChecked()) rarities.append(c_item::mapRarityToId["Relique"]);
     if (ui->pb_souvenir->isChecked()) rarities.append(c_item::mapRarityToId["Souvenir"]);
 
-    QList<int> caract;
-    if (ui->cb_first_carac->currentIndex()!=0) caract.append(c_item::mapCaracToId[ui->cb_first_carac->currentText()]);
-    if (ui->cb_second_carac->currentIndex()!=0) caract.append(c_item::mapCaracToId[ui->cb_second_carac->currentText()]);
-    if (ui->cb_last_carac->currentIndex()!=0) caract.append(c_item::mapCaracToId[ui->cb_last_carac->currentText()]);
-
-    QList<QString> caract_name;
-    if (ui->cb_first_carac->currentIndex()!=0) caract_name.append(ui->cb_first_carac->currentText());
-    if (ui->cb_second_carac->currentIndex()!=0) caract_name.append(ui->cb_second_carac->currentText());
-    if (ui->cb_last_carac->currentIndex()!=0) caract_name.append(ui->cb_last_carac->currentText());
-
     QList<bool> caract_condi;
-    caract_condi.append(ui->cb_second_condi->currentText() == "Ou");
-    if (ui->cb_last_carac->currentIndex()==0) {ui->cb_last_condi->setCurrentIndex(0);}
-    caract_condi.append(ui->cb_last_condi->currentText() == "Ou");
+    QList<QString> caract_name;
 
+    if (ui->cb_first_carac->currentIndex()!=0) caract_name.append(ui->cb_first_carac->currentText());
+    for (int i = 0; i < numberShown; ++i) {
+        if (cb_carac_list.at(i)->currentIndex()) {
+            caract_condi.append(cb_carac_condi.at(i)->currentText() == "Ou");
+            caract_name.append(cb_carac_list.at(i)->currentText());
+        }
+    }
+    slot_reset_combi();
+    numberShown  = caract_condi.size();
+    for (int i = 0; i < numberShown; ++i) {
+        cb_carac_list.at(i)->setCurrentText(caract_name.at(i+1));
+        cb_carac_condi.at(i)->setCurrentIndex(caract_condi.at(i));
+    }
+
+    for (int i = numberShown; i < cb_carac_list.size(); ++i) {
+        cb_carac_list.at(i)->hide();
+        cb_carac_condi.at(i)->hide();
+    }
     if (ui->tri_best_combi_check->isChecked()) {
         QList<int> item_list = dbmanager->getid_item_from_actions_sorted(caract_name,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text(),ui->final_object_check->isChecked(),caract_condi.mid(0,caract_name.size()-1));
         emit new_search_result_sorted(item_list);
-        qDebug() << item_list;
     } else {
-        QList<QPair<int,int>> item_list_pair = dbmanager->getid_item_from_actions(caract,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text(),ui->final_object_check->isChecked(),caract_condi);
-        std::sort(item_list_pair.begin(),item_list_pair.end(),c_search_widget::compare_pair_id_lvl);
-        QList<int> item_list;
-        for(int i = 0; i < item_list_pair.size(); ++i) {
-            item_list.push_back(item_list_pair.at(i).first);
-        }
+        QList<int> item_list = dbmanager->getid_item_from_actions(caract_name,rarities,itemType, {ui->lvl_low->value(),ui->lvl_high->value()},ui->name_search->text(),ui->final_object_check->isChecked(),caract_condi);
         emit new_search_result(item_list);
+    }
+}
+
+void c_search_widget::slot_reset_combi() {
+    for (int i = 0; i < cb_carac_list.size(); ++i) {
+        cb_carac_list.at(i)->setCurrentIndex(0);
+        cb_carac_condi.at(i)->setCurrentIndex(0);
+    }
+}
+
+void c_search_widget::slot_new_condi_row() {
+    if (numberShown < cb_carac_list.size()) {
+        cb_carac_list.at(numberShown)->show();
+        cb_carac_condi.at(numberShown)->show();
+        numberShown++;
     }
 }
 
