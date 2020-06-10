@@ -27,8 +27,17 @@ QJsonObject c_io_manager::builderToJson(const c_builder_view *builder) {
     res["lvl"] = status->getLvl();
     res["elements"] = QJsonArray::fromStringList(build->getElements());
     res["name"] = status->getName();
+    res["aptitudes"] = aptitudeToJson(build->getBonus_aptitudes());
 
     return res;
+}
+
+QJsonObject c_io_manager::aptitudeToJson(const QMap<QString, int> bonuses) {
+    QJsonObject array_item;
+    foreach(QString key, bonuses.keys()) {
+        array_item[key] = bonuses[key];
+    }
+    return array_item;
 }
 
 QByteArray c_io_manager::save(c_builder_view *builder, const c_io_manager::jsonformat format, const QString path) {
@@ -39,6 +48,7 @@ QByteArray c_io_manager::save(c_builder_view *builder, const c_io_manager::jsonf
         QFile file;
         file.setFileName(path);
         file.open(QIODevice::ReadWrite | QIODevice::Text);
+        file.resize(0);
         file.write(doc.toJson(QJsonDocument::Indented));
         file.close();
         builder->setId(-1);
@@ -58,6 +68,7 @@ void c_io_manager::jsonToBuilder(c_builder_view *builder, const QJsonObject &jso
     c_status_build *status = builder->getStatus_build();
     c_build_display *build_display = builder->getBuild_display();
     c_build *build = build_display->build();
+    c_aptitudes_display *apt_display = builder->getAptitude_display();
     status->setLvl(json.value("lvl").toInt());
     foreach(QString key, c_item::position()) {
         int id = json.value("equipment").toObject().value(key).toObject().value("id").toInt();
@@ -78,6 +89,19 @@ void c_io_manager::jsonToBuilder(c_builder_view *builder, const QJsonObject &jso
     c_elements_display *elem_display = builder->getElement_display();
     elem_display->setElements(elems);
     status->setName(json.value("name").toString());
+
+    if (json.contains("aptitudes")) {
+        apt_display->slot_set_aptitudes(jsonToAptitudeMap(json.value("aptitudes").toObject()));
+    }
+
+}
+
+QMap<QString,int> c_io_manager::jsonToAptitudeMap(const QJsonObject &json) {
+    QMap<QString,int> map;
+    foreach(QString key ,json.keys()) {
+        map[key] = json.value(key).toInt();
+    }
+    return map;
 }
 
 
