@@ -17,10 +17,12 @@
 #include <QStringList>
 #include <QElapsedTimer>
 
+class c_datamanager;
+
 class c_dbmanager
 {
 public:
-    c_dbmanager();
+    c_dbmanager(c_datamanager *manager);
     ~c_dbmanager();
 
     bool add_effect(c_effect new_effect);

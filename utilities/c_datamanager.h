@@ -35,6 +35,7 @@ public:
     QString getVersion();
     void getImages();
     void parseStates();
+    QString getPassword();
 
 private:
     QStringList _filelist;
@@ -45,6 +46,7 @@ private:
     QString version_local;
     QString pathJson;
     QString pathImage;
+    QString password;
     int index_fileList;
     QList<int> _imageList;
     int index_imageList;

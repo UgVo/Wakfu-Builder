@@ -24,6 +24,7 @@ c_datamanager::c_datamanager()
     url_json = jObject_config.value(QString("url_json")).toString();
     url_image = jObject_config.value(QString("url_image")).toString();
     pathImage = jObject_config.value(QString("path_images")).toString();
+    password = jObject_config.value(QString("password")).toString();
 
     JObject_nameList = jObject_config.value(QString("filelist")).toObject();
     for(int i = 0; i < JObject_nameList.size(); ++i) {
@@ -225,5 +226,9 @@ void c_datamanager::parseStates() {
         c_state state(it->toObject());
         dbmanager->add_state(state);
     }
+}
+
+QString c_datamanager::getPassword() {
+    return password;
 }
 
