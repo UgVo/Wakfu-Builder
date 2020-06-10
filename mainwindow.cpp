@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     diag = new DialogGestion(&datamanager,datamanager.getVersion(),this);
 
     QObject::connect(ui->actionCheck_new_version,SIGNAL(triggered()),this,SLOT(slot_check_version_clicked()),Qt::UniqueConnection);
-    QObject::connect(ui->actionCr_er_nouveau_Build,&QAction::triggered,this,&MainWindow::slot_actionCr_er_nouveau_Build_cliked);
+    QObject::connect(ui->actionCr_er_nouveau_Build,&QAction::triggered,this,&MainWindow::slot_actionCr_er_nouveau_Build_clicked);
     QObject::connect(ui->tabWidget,&QTabWidget::tabCloseRequested,this,&MainWindow::slot_on_close_table);
     QObject::connect(ui->actionSauvegarder_Build,&QAction::triggered,this,&MainWindow::slot_actionSauvegarder_Build);
     QObject::connect(ui->action_open_Depuis_un_fichier,&QAction::triggered,this,&MainWindow::slot_action_open_Depuis_un_fichier);
@@ -67,7 +67,7 @@ void MainWindow::test_interpret_effect() {
      qDebug() << tok.interpret_effect("5 Niv. aux sorts Feu");
 }
 
-void MainWindow::slot_actionCr_er_nouveau_Build_cliked() {
+void MainWindow::slot_actionCr_er_nouveau_Build_clicked() {
     set_save_enabled(true);
     builder_list.push_back(new c_builder_view(&database_manager));
     ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
