@@ -119,12 +119,6 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-#INCLUDEPATH += $$PWD\openssl\include
-#LIBS += $$PWD\openssl\lib\libcrypto.lib
-#LIBS += $$PWD\openssl\lib\libssl.lib
-
-#OPENSSL_LIBS='-L$$PWD/openssl/lib -lssl -lcrypto' ./configure -openssl-linked
-
 DISTFILES += \
     bdd/setup_database.sql \
     json/actions.json \
