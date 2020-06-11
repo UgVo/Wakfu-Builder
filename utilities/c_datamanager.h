@@ -50,6 +50,7 @@ private:
     int index_fileList;
     QList<int> _imageList;
     int index_imageList;
+    QString imageDir;
 
 public slots:
     void slot_downloadVersionFinished(QString out);

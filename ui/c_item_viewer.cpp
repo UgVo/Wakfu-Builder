@@ -13,6 +13,12 @@ c_item_viewer::c_item_viewer(const QString item_position, QWidget *parent) :
 
     int size_widget = 40;
 
+#ifdef Q_OS_MACX
+    imageDir = QCoreApplication::applicationDirPath() + "/../Resources";
+#else
+    imageDir = QCoreApplication::applicationDirPath();
+#endif
+
     this->setStyleSheet(QString("QWidget#c_item_viewer{background-color: %1;} img {vertical-align:middle;}").arg(app_color::dark_blue));
     //ui->widget_elements->setStyleSheet(QString("QWidget{background-color: %1;} img {vertical-align:middle;}").arg(app_color::dark_blue));
     image_layout = new QStackedLayout();
@@ -70,7 +76,7 @@ void c_item_viewer::setItem(c_item *new_item) {
     updateView();
 }
 void c_item_viewer::updateView() {
-    QPixmap pixmap_image(QString("images/items/%1.png").arg(item->getGfxId()));
+    QPixmap pixmap_image(QString(imageDir + "/images/items/%1.png").arg(item->getGfxId()));
     image->setPixmap(pixmap_image);
     image->setBackgroundRole(QPalette::Base);
     image->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);

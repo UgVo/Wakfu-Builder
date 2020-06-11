@@ -14,6 +14,12 @@ c_item_display::c_item_display(c_item item, QWidget *parent) :
 {
     ui->setupUi(this);
 
+#ifdef Q_OS_MACX
+    imageDir = QCoreApplication::applicationDirPath() + "/../Resources";
+#else
+    imageDir = QCoreApplication::applicationDirPath();
+#endif
+
     updateView();
     data_complete = false;
 }
@@ -71,7 +77,7 @@ void c_item_display::updateView() {
 
     ui->line_widget->setStyleSheet(QString("QWidget#line_widget {background-color: white;} "));
 
-    QPixmap pixmap(QString("images/items/%1.png").arg(_item.getGfxId()));
+    QPixmap pixmap(QString(imageDir + "/images/items/%1.png").arg(_item.getGfxId()));
     ui->item_image->setPixmap(pixmap);
     ui->item_image->setBackgroundRole(QPalette::Base);
     ui->item_image->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);

@@ -5,6 +5,12 @@ c_datamanager::c_datamanager()
     dbmanager = nullptr;
     networkManager = new c_networkManager();
 
+#ifdef Q_OS_MACX
+    imageDir = QCoreApplication::applicationDirPath() + "/../Resources";
+#else
+    imageDir = QCoreApplication::applicationDirPath();
+#endif
+
     QString val;
     QFile file;
     QString version;
@@ -179,7 +185,7 @@ QString c_datamanager::getVersion() {
 }
 
 void c_datamanager::getImages() {
-    QDir directory("images/items");
+    QDir directory(imageDir + "/images/items");
     QStringList images = directory.entryList(QStringList() << "*.png",QDir::Files);
     QList<int> images_id;
 

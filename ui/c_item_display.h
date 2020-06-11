@@ -45,6 +45,7 @@ private:
     QList<QLabel*> label_use_list;
     QList<QLabel*> label_equip_list;
     bool data_complete;
+    QString imageDir;
 };
 
 
