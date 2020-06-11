@@ -25,6 +25,8 @@ c_result_display::c_result_display(c_dbmanager* _data_base, QWidget *parent) :
     stacklayout->addWidget(stackedWidget);
     setUpWidget();
     current_page = 0;
+    used_page_number = 0;
+    number_items = 0;
     QObject::connect(ui->next,&QPushButton::pressed,this,&c_result_display::slot_next);
     QObject::connect(ui->preview,&QPushButton::pressed,this,&c_result_display::slot_preview);
 
@@ -48,7 +50,7 @@ void c_result_display::slot_new_search_result(QList<int> item_id_list) {
     std::reverse(id_list.begin(), id_list.end());
     current_page = 0;
     stackedWidget->setCurrentIndex(current_page);
-    used_page_number = item_id_list.size()/(ROW_PER_PAGE*COLUMN_PER_PAGE);
+    used_page_number = qCeil(qreal(item_id_list.size())/qreal((ROW_PER_PAGE*COLUMN_PER_PAGE))) - 1;
     number_items = item_id_list.size();
     fill_page(0);
 }
@@ -60,7 +62,7 @@ void c_result_display::slot_new_search_result_sorted(QList<int> item_id_list) {
     id_list = item_id_list;
     current_page = 0;
     stackedWidget->setCurrentIndex(current_page);
-    used_page_number = item_id_list.size()/(ROW_PER_PAGE*COLUMN_PER_PAGE);
+    used_page_number = qCeil(qreal(item_id_list.size())/qreal((ROW_PER_PAGE*COLUMN_PER_PAGE))) - 1;
     number_items = item_id_list.size();
     fill_page(0);
 }
@@ -197,7 +199,7 @@ void c_result_display::slot_next() {
         stackedWidget->setCurrentIndex(current_page);
     }
     int upper_bound = (current_page*COLUMN_PER_PAGE*ROW_PER_PAGE+COLUMN_PER_PAGE*ROW_PER_PAGE > number_items ? number_items : current_page*COLUMN_PER_PAGE*ROW_PER_PAGE+COLUMN_PER_PAGE*ROW_PER_PAGE);
-    ui->page_indicator->setText(QString("%1 - %2 de %3").arg(current_page*COLUMN_PER_PAGE*ROW_PER_PAGE+1).arg(upper_bound).arg(number_items));
+    ui->page_indicator->setText(QString("%1 - %2 de %3").arg(number_items?current_page*COLUMN_PER_PAGE*ROW_PER_PAGE+1:0).arg(upper_bound).arg(number_items));
 }
 
 void c_result_display::slot_preview() {
@@ -208,7 +210,7 @@ void c_result_display::slot_preview() {
         stackedWidget->setCurrentIndex(current_page);
     }
     int upper_bound = (current_page*COLUMN_PER_PAGE*ROW_PER_PAGE+COLUMN_PER_PAGE*ROW_PER_PAGE > number_items ? number_items : current_page*COLUMN_PER_PAGE*ROW_PER_PAGE+COLUMN_PER_PAGE*ROW_PER_PAGE);
-    ui->page_indicator->setText(QString("%1 - %2 de %3").arg(current_page*COLUMN_PER_PAGE*ROW_PER_PAGE+1).arg(upper_bound).arg(number_items));
+    ui->page_indicator->setText(QString("%1 - %2 de %3").arg(number_items?current_page*COLUMN_PER_PAGE*ROW_PER_PAGE+1:0).arg(upper_bound).arg(number_items));
 }
 
 void c_result_display::slot_item_doubleCliked(c_item item) {
