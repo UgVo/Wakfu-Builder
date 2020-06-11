@@ -46,19 +46,19 @@ QMap<QString,int> c_elements_display::set_frToId_elem() {
 }
 
 void c_elements_display::update_view() {
-    ui->elem1->setPixmap(QPixmap(QString("images/elements/%1_%2.png").arg(frToEn_elem[elems.at(0)]).arg(elems_chosen.at(0)?"big":"inked")));
+    ui->elem1->setPixmap(QPixmap(QString(":elements/%1_%2.png").arg(frToEn_elem[elems.at(0)]).arg(elems_chosen.at(0)?"big":"inked")));
     ui->elem1->setBackgroundRole(QPalette::Base);
     ui->elem1->setScaledContents(true);
 
-    ui->elem2->setPixmap(QPixmap(QString("images/elements/%1_%2.png").arg(frToEn_elem[elems.at(1)]).arg(elems_chosen.at(1)?"big":"inked")));
+    ui->elem2->setPixmap(QPixmap(QString(":elements/%1_%2.png").arg(frToEn_elem[elems.at(1)]).arg(elems_chosen.at(1)?"big":"inked")));
     ui->elem2->setBackgroundRole(QPalette::Base);
     ui->elem2->setScaledContents(true);
 
-    ui->elem3->setPixmap(QPixmap(QString("images/elements/%1_%2.png").arg(frToEn_elem[elems.at(2)]).arg(elems_chosen.at(2)?"big":"inked")));
+    ui->elem3->setPixmap(QPixmap(QString(":elements/%1_%2.png").arg(frToEn_elem[elems.at(2)]).arg(elems_chosen.at(2)?"big":"inked")));
     ui->elem3->setBackgroundRole(QPalette::Base);
     ui->elem3->setScaledContents(true);
 
-    ui->elem4->setPixmap(QPixmap(QString("images/elements/%1_%2.png").arg(frToEn_elem[elems.at(3)]).arg(elems_chosen.at(3)?"big":"inked")));
+    ui->elem4->setPixmap(QPixmap(QString(":elements/%1_%2.png").arg(frToEn_elem[elems.at(3)]).arg(elems_chosen.at(3)?"big":"inked")));
     ui->elem4->setBackgroundRole(QPalette::Base);
     ui->elem4->setScaledContents(true);
 }
