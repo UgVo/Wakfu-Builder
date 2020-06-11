@@ -57,7 +57,6 @@ SOURCES += \
     utilities/c_state.cpp \
     utilities/c_tokenizer.cpp \
     utilities/c_item_model.cpp\
-    utilities/c_item_model.cpp
 
 HEADERS += \
     mainwindow.h \
