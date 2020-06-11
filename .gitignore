@@ -74,8 +74,8 @@ Thumbs.db
 
 /build/
 /images/items/*
-/images/other_unused/*
-/images/Eliacube/*
+/resources/other_unused/*
+/resources/Eliacube/*
 
 /doc/
 /extern/
