@@ -15,7 +15,7 @@ c_result_display::c_result_display(c_dbmanager* _data_base, QWidget *parent) :
     stacklayout = new QStackedLayout;
     stacklayout->setStackingMode(QStackedLayout::StackAll);
     loading = new QLabel;
-    movie = new QMovie(":divers/Eliacube.gif");
+    movie = new QMovie(":/images/divers/Eliacube.gif");
     loading->setMovie(movie);
     loading->setAlignment(Qt::AlignCenter);
     movie->start();
@@ -28,8 +28,8 @@ c_result_display::c_result_display(c_dbmanager* _data_base, QWidget *parent) :
     QObject::connect(ui->next,&QPushButton::pressed,this,&c_result_display::slot_next);
     QObject::connect(ui->preview,&QPushButton::pressed,this,&c_result_display::slot_preview);
 
-    ui->next->setIcon(QIcon(":divers/next_arrow.png"));
-    ui->preview->setIcon(QIcon(":divers/preview_arrow.png"));
+    ui->next->setIcon(QIcon(":/images/divers/next_arrow.png"));
+    ui->preview->setIcon(QIcon(":/images/divers/preview_arrow.png"));
 
     sorted = false;
     loading->hide();

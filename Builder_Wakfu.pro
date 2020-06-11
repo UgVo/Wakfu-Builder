@@ -135,5 +135,4 @@ DISTFILES += \
     ui/qck_double_slider.qml
 
 RESOURCES += \
-    images/images.qrc \
-    ressources/ressources.qrc
+    resources/resources.qrc \

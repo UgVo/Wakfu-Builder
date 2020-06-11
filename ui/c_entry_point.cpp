@@ -11,7 +11,7 @@ c_entry_point::c_entry_point(QWidget *_parent) :
     anim_duration_ms = 1500;
     QObject::connect(ui->pushButton_new_build,&QPushButton::clicked,this,&c_entry_point::slot_new_button);
     QObject::connect(ui->pushButton_open_build,&QPushButton::clicked,this,&c_entry_point::slot_open_button);
-    movie = new QMovie(":divers/eliacubeHD.gif");
+    movie = new QMovie(":/images/divers/eliacubeHD.gif");
     ui->background_eliacube->setMovie(movie);
     ui->background_eliacube->setAlignment(Qt::AlignCenter);
     ui->background_eliacube->show();

@@ -19,12 +19,12 @@ c_item_display::c_item_display(c_item item, QWidget *parent) :
 }
 
 QString c_item_display::replace_image(QString text) {
-    text.replace("Lumière","<img src=':elements/smallLIGHT.png'>");
-    text.replace("Feu","<img src=':elements/smallFIRE.png'>");
-    text.replace("Terre","<img src=':elements/smallEARTH.png'>");
-    text.replace("Eau","<img src=':elements/smallWATER.png'>");
-    text.replace("Air","<img src=':elements/smallAIR.png'>");
-    text.replace("ally","<img src=':divers/ally.png'>");
+    text.replace("Lumière","<img src=':/images/elements/smallLIGHT.png'>");
+    text.replace("Feu","<img src=':/images/elements/smallFIRE.png'>");
+    text.replace("Terre","<img src=':/images/elements/smallEARTH.png'>");
+    text.replace("Eau","<img src=':/images/elements/smallWATER.png'>");
+    text.replace("Air","<img src=':/images/elements/smallAIR.png'>");
+    text.replace("ally","<img src=':/images/divers/ally.png'>");
     return text;
 }
 
@@ -77,7 +77,7 @@ void c_item_display::updateView() {
     ui->item_image->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     ui->item_image->setScaledContents(true);
 
-    ui->background_item->setStyleSheet(QString("QWidget#background_item {background-image: url(:divers/NONE.png) ;}"));
+    ui->background_item->setStyleSheet(QString("QWidget#background_item {background-image: url(:/images/divers/NONE.png) ;}"));
 
     QLabel *label;
     if (_item.getUseEffects().size()) {
