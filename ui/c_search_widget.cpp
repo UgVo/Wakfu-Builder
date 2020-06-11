@@ -438,6 +438,11 @@ void c_search_widget::slot_new_condi_row() {
 }
 
 void c_search_widget::set_comboBox_model(QComboBox *cb) {
+
+#if defined(Q_OS_MAC)
+    cb->setStyle(QStyleFactory::create("Windows"));
+#endif
+
     cb->addItem("Recherche par caractéristique");
     cb->addItem("Principales");
     cb->addItem(QIcon(":/images/Aptitudes/vie.png"),"Vie");

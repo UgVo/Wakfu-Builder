@@ -32,6 +32,7 @@ private:
     QWidget* _parent;
     c_dbmanager *_database_manager;
     QTimer *timer;
+    QString imageDir;
 
 public slots:
     void mouseDoubleClickEvent(QMouseEvent *event) override;

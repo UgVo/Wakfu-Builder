@@ -53,6 +53,8 @@ private:
     QTimer * timer;
     bool block;
 
+    QString imageDir;
+
 public slots:
     void slot_context_menu(const QPoint &pos);
     void slot_unequip();

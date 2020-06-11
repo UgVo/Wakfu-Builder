@@ -16,6 +16,12 @@ c_item_lite::c_item_lite(c_dbmanager * database_manager, c_item item, QWidget *p
     it_display = nullptr;
     _database_manager = database_manager;
 
+#ifdef Q_OS_MACX
+    imageDir = QCoreApplication::applicationDirPath() + "/../Resources";
+#else
+    imageDir = QCoreApplication::applicationDirPath();
+#endif
+
     updateView();
 }
 
@@ -131,7 +137,7 @@ void c_item_lite::updateView() {
     ui->name->setStyleSheet(QString("color : %1").arg(app_color::color_rarity.at(_item.getRarity())));
     ui->name->setText(elidedText);
     ui->lvl->setText(QString("LvL.%1").arg(_item.getLvl()));
-    QPixmap image = QPixmap(QString("images/items/%1.png").arg(_item.getGfxId()));
+    QPixmap image = QPixmap(QString(imageDir + "/images/items/%1.png").arg(_item.getGfxId()));
     ui->image->setPixmap(image);
     ui->image->setBackgroundRole(QPalette::Base);
     ui->image->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
