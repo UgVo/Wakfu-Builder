@@ -35,10 +35,10 @@ c_item_viewer::c_item_viewer(const QString item_position, QWidget *parent) :
     image_layout->setStackingMode(QStackedLayout::StackAll);
     image_layout->setContentsMargins(0,0,0,0);
 
-    images_elements["Feu"] = QPixmap(":/elements/smallFIRE.png");
-    images_elements["Eau"] = QPixmap(":/elements/smallWATER.png");
-    images_elements["Air"] = QPixmap(":/elements/smallAIR.png");
-    images_elements["Terre"] = QPixmap(":/elements/smallEARTH.png");
+    images_elements["Feu"] = QPixmap(":/images/elements/smallFIRE.png");
+    images_elements["Eau"] = QPixmap(":/images/elements/smallWATER.png");
+    images_elements["Air"] = QPixmap(":/images/elements/smallAIR.png");
+    images_elements["Terre"] = QPixmap(":/images/elements/smallEARTH.png");
 
     elements_layout = static_cast<QVBoxLayout*>(ui->widget_elements->layout());
 
@@ -92,9 +92,9 @@ void c_item_viewer::updateView() {
 void c_item_viewer::setBackgroundImage() {
     if (!disabled){
         if (item->isEmpty()) {
-            background->setPixmap(QPixmap(QString(":/divers/%1.png").arg(position)));
+            background->setPixmap(QPixmap(QString(":/images/divers/%1.png").arg(position)));
         } else {
-            background->setPixmap(QPixmap(QString(":/rarityborder/%1.png").arg(item->getRarity())));
+            background->setPixmap(QPixmap(QString(":/images/rarityborder/%1.png").arg(item->getRarity())));
         }
     } else {
         background->setPixmap(QPixmap());

@@ -6,12 +6,12 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    QFontDatabase::addApplicationFont(":ressources/wci.ttf");
+    QFontDatabase::addApplicationFont(":/wci.ttf");
     app_path = qApp->applicationDirPath();
     ui->setupUi(this);
     database_manager = new c_dbmanager(&datamanager);
     datamanager.setDBManager(database_manager);
-    ui->actionCheck_new_version->setIcon(QIcon(":divers/update32.png"));
+    ui->actionCheck_new_version->setIcon(QIcon(":/images/divers/update32.png"));
     set_save_enabled(false);
     ui->tabWidget->setTabsClosable(true);
     this->setStyleSheet(QString("MainWindow {background-color : %1}").arg(app_color::dark_blue));

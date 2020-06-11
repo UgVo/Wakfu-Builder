@@ -15,18 +15,18 @@ c_aptitude_unite::c_aptitude_unite(QString _text, int _max, QString image_name, 
     pack_increase = false;
 
     ui->value->setNum(value);
-    ui->icon->setPixmap(QPixmap(QString(":/Aptitudes/%1.png").arg(image_name)));
+    ui->icon->setPixmap(QPixmap(QString(":/images/Aptitudes/%1.png").arg(image_name)));
     ui->icon->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     ui->icon->setScaledContents(true);
 
     QIcon icon_plus;
-    icon_plus.addPixmap(QPixmap(":/divers/plus.png"),QIcon::Normal);
-    icon_plus.addPixmap(QPixmap(":/divers/plus_dis.png"),QIcon::Disabled);
+    icon_plus.addPixmap(QPixmap(":/images/divers/plus.png"),QIcon::Normal);
+    icon_plus.addPixmap(QPixmap(":/images/divers/plus_dis.png"),QIcon::Disabled);
     ui->pb_plus->setIcon(icon_plus);
 
     QIcon icon_minus;
-    icon_minus.addPixmap(QPixmap(":/divers/moins.png"),QIcon::Normal);
-    icon_minus.addPixmap(QPixmap(":/divers/moins_dis.png"),QIcon::Disabled);
+    icon_minus.addPixmap(QPixmap(":/images/divers/moins.png"),QIcon::Normal);
+    icon_minus.addPixmap(QPixmap(":/images/divers/moins_dis.png"),QIcon::Disabled);
     ui->pb_minus->setIcon(icon_minus);
 
     enable_minus(false);

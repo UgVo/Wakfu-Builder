@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/images">
         <file>elements/EARTH.png</file>
         <file>elements/earth_2.png</file>
         <file>elements/FIRE.png</file>
@@ -270,5 +270,11 @@
         <file>portrait/190.png</file>
         <file>portrait/191.png</file>
         <file>portrait/aleat.png</file>
+    </qresource>
+    <qresource prefix="/font">
+        <file>wci.ttf</file>
+    </qresource>
+    <qresource prefix="/qml">
+        <file>qck_double_slider.qml</file>
     </qresource>
 </RCC>

@@ -5,7 +5,7 @@ c_status_build::c_status_build(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::c_status_build) {
     ui->setupUi(this);
-    QPixmap image = QPixmap(":portrait/aleat.png");
+    QPixmap image = QPixmap(":/images/portrait/aleat.png");
     ui->image_label->setPixmap(image);
     ui->image_label->setBackgroundRole(QPalette::Base);
     ui->image_label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
@@ -17,14 +17,14 @@ c_status_build::c_status_build(QWidget *parent) :
     shadow->setOffset(2,2);
     ui->image_label->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
 
-    ui->guild_cb->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:divers/65_inked.png);}"
-                                "QCheckBox::indicator:checked {image: url(:divers/65.png);} ");
+    ui->guild_cb->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/divers/65_inked.png);}"
+                                "QCheckBox::indicator:checked {image: url(:/images/divers/65.png);} ");
     ui->guild_cb->setToolTip("Bonus de guilde");
-    ui->nation_cb->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:divers/6_inked.png);}"
-                                "QCheckBox::indicator:checked {image: url(:divers/6.png);} ");
+    ui->nation_cb->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/divers/6_inked.png);}"
+                                "QCheckBox::indicator:checked {image: url(:/images/divers/6.png);} ");
     ui->nation_cb->setToolTip("Bonus de nation");
-    ui->hm_cb->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:divers/9_inked.png);}"
-                                "QCheckBox::indicator:checked {image: url(:divers/9.png);} ");
+    ui->hm_cb->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/divers/9_inked.png);}"
+                                "QCheckBox::indicator:checked {image: url(:/images/divers/9.png);} ");
     ui->hm_cb->setToolTip("Bonus de Havre-monde");
 
     ui->bonuses->setStyleSheet(QString("background-color : %1; border-radius: 3px; color:white").arg(app_color::dark_blue));

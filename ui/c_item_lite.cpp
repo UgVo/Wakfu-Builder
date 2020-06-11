@@ -30,33 +30,33 @@ void c_item_lite::set_icon() {
         type = mapItemToType[_item.getType().getTitle()];
     }
         if(!type.compare("LEGS")) {
-            image = QPixmap(":/divers/smalllegs.png");
+            image = QPixmap(":/images/divers/smalllegs.png");
         } else if (!type.compare("RING")) {
-            image = QPixmap(":/divers/smallring.png");
+            image = QPixmap(":/images/divers/smallring.png");
         } else if (!type.compare("NECK")) {
-            image = QPixmap(":/divers/smallneck.png");
+            image = QPixmap(":/images/divers/smallneck.png");
         } else if (!type.compare("BACK")) {
-            image = QPixmap(":/divers/smallback.png");
+            image = QPixmap(":/images/divers/smallback.png");
         } else if (!type.compare("BELT")) {
-            image = QPixmap(":/divers/smallbelt.png");
+            image = QPixmap(":/images/divers/smallbelt.png");
         } else if (!type.compare("HEAD")) {
-            image = QPixmap(":/divers/smallhead.png");
+            image = QPixmap(":/images/divers/smallhead.png");
         } else if (!type.compare("CHEST")) {
-            image = QPixmap(":/divers/smallchest.png");
+            image = QPixmap(":/images/divers/smallchest.png");
         } else if (!type.compare("SHOULDERS")) {
-            image = QPixmap(":/divers/smallshoulders.png");
+            image = QPixmap(":/images/divers/smallshoulders.png");
         } else if (!type.compare("SECOND_HAND")) {
-            image = QPixmap(":/divers/smallsecondhand.png");
+            image = QPixmap(":/images/divers/smallsecondhand.png");
         } else if (!type.compare("PET")) {
-            image = QPixmap(":/divers/smallpet.png");
+            image = QPixmap(":/images/divers/smallpet.png");
         } else if (!type.compare("ACCESSORY")) {
-            image = QPixmap(":/divers/smallaccessory.png");
+            image = QPixmap(":/images/divers/smallaccessory.png");
         } else if (!type.compare("ONE_HAND_WEAPON")) {
-            image = QPixmap(":/divers/smallfirsthand.png");
+            image = QPixmap(":/images/divers/smallfirsthand.png");
         } else if (!type.compare("TWO_HAND_WEAPON")) {
-            image = QPixmap(":/divers/smalldoublehand.png");
+            image = QPixmap(":/images/divers/smalldoublehand.png");
         } else if (!type.compare("MOUNT")) {
-            image = QPixmap(":/divers/smallmount.png");
+            image = QPixmap(":/images/divers/smallmount.png");
         }
     ui->icon->setPixmap(image);
     ui->icon->setBackgroundRole(QPalette::Base);
