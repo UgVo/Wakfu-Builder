@@ -8,14 +8,14 @@ c_element_dialog::c_element_dialog(int number, QWidget *parent) :
     ui->setupUi(this);
     _number = number;
     this->setStyleSheet(QString("QDialog#c_element_dialog{background-color : %1}").arg(app_color::grey_blue));
-    ui->elem1->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/elements/fire_inked.png); height: 35px; width: auto;}"
-                                "QCheckBox::indicator:checked {image: url(images/elements/fire_big.png); height: 35px; width: auto;} ");
-    ui->elem2->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/elements/water_inked.png); height: 35px; width: auto;}"
-                                "QCheckBox::indicator:checked {image: url(images/elements/water_big.png); height: 35px; width: auto;} ");
-    ui->elem3->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/elements/earth_inked.png); height: 35px; width: auto;}"
-                                "QCheckBox::indicator:checked {image: url(images/elements/earth_big.png); height: 35px; width: auto;} ");
-    ui->elem4->setStyleSheet("QCheckBox::indicator:unchecked {image: url(images/elements/wind_inked.png); height: 35px; width: auto;}"
-                                "QCheckBox::indicator:checked {image: url(images/elements/wind_big.png); height: 35px; width: auto;} ");
+    ui->elem1->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:elements/fire_inked.png); height: 35px; width: auto;}"
+                                "QCheckBox::indicator:checked {image: url(:elements/fire_big.png); height: 35px; width: auto;} ");
+    ui->elem2->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:elements/water_inked.png); height: 35px; width: auto;}"
+                                "QCheckBox::indicator:checked {image: url(:elements/water_big.png); height: 35px; width: auto;} ");
+    ui->elem3->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:elements/earth_inked.png); height: 35px; width: auto;}"
+                                "QCheckBox::indicator:checked {image: url(:elements/earth_big.png); height: 35px; width: auto;} ");
+    ui->elem4->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:elements/wind_inked.png); height: 35px; width: auto;}"
+                                "QCheckBox::indicator:checked {image: url(:elements/wind_big.png); height: 35px; width: auto;} ");
     QObject::connect(ui->buttonBox,&QDialogButtonBox::accepted,this,&c_element_dialog::slot_accepted);
 }
 
