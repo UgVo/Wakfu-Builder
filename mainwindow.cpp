@@ -44,8 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label_licence_2->setStyleSheet("color:white");
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
