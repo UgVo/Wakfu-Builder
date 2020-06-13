@@ -21,6 +21,7 @@ class c_entry_point : public QWidget
 public:
     explicit c_entry_point(QWidget *parent = nullptr);
     ~c_entry_point();
+    virtual void resizeEvent(QResizeEvent *event);
 
 private:
     Ui::c_entry_point *ui;
