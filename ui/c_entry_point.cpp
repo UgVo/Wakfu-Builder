@@ -27,6 +27,20 @@ c_entry_point::~c_entry_point()
     delete ui;
 }
 
+void c_entry_point::resizeEvent(QResizeEvent * /*event*/) {
+    QRect rect = this->rect();
+    QPoint p_pb_new_build((rect.width()-506)/2,(rect.height()-172)/2);
+    QPoint p_pb_open_build = p_pb_new_build + QPoint(256,0);
+    QPoint p_label_creation_builder((rect.width()-106)/2,(rect.height()-172)/2 + 156);
+    QPoint p_w_file((rect.width()-1210)/2,rect.height());
+    QPoint p_w_bdd((rect.width()-1210)/2 + 610,rect.height());
+    ui->pushButton_new_build->move(p_pb_new_build);
+    ui->pushButton_open_build->move(p_pb_open_build);
+    ui->label_creation_builder->move(p_label_creation_builder);
+    ui->frame_bdd->move(p_w_bdd);
+    ui->frame_file->move(p_w_file);
+}
+
 void c_entry_point::slot_open_button() {
     ui->pushButton_open_build->raise();
     QPoint translation = QPoint(((ui->pushButton_new_build->width()*2)+6)/2 - ui->pushButton_new_build->width()/2,0);

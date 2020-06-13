@@ -32,106 +32,94 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="stackedWidgetPage1">
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="2" column="1">
-        <widget class="QLabel" name="label_creation_builder">
-         <property name="text">
-          <string>Création du builder ...</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="leftMargin">
-          <number>6</number>
-         </property>
-         <property name="rightMargin">
-          <number>6</number>
-         </property>
-         <item>
-          <widget class="QPushButton" name="pushButton_new_build">
-           <property name="minimumSize">
-            <size>
-             <width>250</width>
-             <height>150</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Nouveau Build</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_open_build">
-           <property name="minimumSize">
-            <size>
-             <width>250</width>
-             <height>150</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Ouvrir un build existant</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="0">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="2">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="3" column="1">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
+      <widget class="QLabel" name="label_creation_builder">
+       <property name="geometry">
+        <rect>
+         <x>430</x>
+         <y>390</y>
+         <width>106</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Création du builder ...</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QFrame" name="frame_file">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>450</y>
+         <width>281</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2"/>
+      </widget>
+      <widget class="QFrame" name="frame_bdd">
+       <property name="geometry">
+        <rect>
+         <x>400</x>
+         <y>450</y>
+         <width>281</width>
+         <height>141</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3"/>
+      </widget>
+      <widget class="QPushButton" name="pushButton_new_build">
+       <property name="geometry">
+        <rect>
+         <x>235</x>
+         <y>228</y>
+         <width>250</width>
+         <height>150</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>150</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Nouveau Build</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_open_build">
+       <property name="geometry">
+        <rect>
+         <x>491</x>
+         <y>228</y>
+         <width>250</width>
+         <height>150</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>150</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Ouvrir un build existant</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="page_3">
       <layout class="QVBoxLayout" name="verticalLayout_4">
