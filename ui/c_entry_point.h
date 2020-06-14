@@ -7,6 +7,9 @@
 #include <QGraphicsOpacityEffect>
 #include <QMovie>
 #include <QStackedLayout>
+#include <QFileDialog>
+#include "utilities/c_dbmanager.h"
+#include "c_load_builder_dialog.h"
 
 class MainWindow;
 
@@ -19,7 +22,7 @@ class c_entry_point : public QWidget
     Q_OBJECT
 
 public:
-    explicit c_entry_point(QWidget *parent = nullptr);
+    explicit c_entry_point(c_dbmanager *manager,QWidget *parent = nullptr);
     ~c_entry_point();
     virtual void resizeEvent(QResizeEvent *event);
 
@@ -34,10 +37,16 @@ private:
     QPropertyAnimation* animation2;
     QPropertyAnimation* animation3;
     QPropertyAnimation* animation4;
+    QPropertyAnimation* animation5;
     QGraphicsOpacityEffect *effect1;
     QGraphicsOpacityEffect *effect2;
 
     int anim_duration_ms;
+    c_load_builder_dialog *load_builder;
+    c_dbmanager *manager;
+    QFileDialog *file_dial;
+
+    int state;
 
 public slots:
     void slot_open_button();
