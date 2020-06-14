@@ -63,7 +63,7 @@
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2"/>
+       <layout class="QVBoxLayout" name="verticalLayout_file"/>
       </widget>
       <widget class="QFrame" name="frame_bdd">
        <property name="geometry">
@@ -80,7 +80,7 @@
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3"/>
+       <layout class="QVBoxLayout" name="verticalLayout_bdd"/>
       </widget>
       <widget class="QPushButton" name="pushButton_new_build">
        <property name="geometry">

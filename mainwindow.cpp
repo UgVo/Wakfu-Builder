@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(ui->action_open_Depuis_la_base_de_donn_e,&QAction::triggered,this,&MainWindow::slot_action_open_Depuis_la_base_de_donn_e);
     QObject::connect(ui->actionEnregistrer,&QAction::triggered,this,&MainWindow::slot_actionEnregistrer);
 
-    entry_point = new c_entry_point(this);
+    entry_point = new c_entry_point(database_manager,this);
     ui->page_1->layout()->addWidget(entry_point);
 
     QObject::connect(entry_point,&c_entry_point::new_clicked,this,&MainWindow::slot_actionCr_er_nouveau_Build_clicked);
@@ -200,7 +200,7 @@ void MainWindow::slot_creation_builder() {
 void MainWindow::slot_creation_finished() {
     QObject::disconnect(entry_point,&c_entry_point::second_animation_finished,this,&MainWindow::slot_creation_finished);
     entry_point->deleteLater();
-    entry_point = new c_entry_point(this);
+    entry_point = new c_entry_point(database_manager,this);
     ui->page_1->layout()->addWidget(entry_point);
     QObject::connect(entry_point,&c_entry_point::new_clicked,this,&MainWindow::slot_actionCr_er_nouveau_Build_clicked);
     QObject::connect(entry_point,&c_entry_point::first_animation_finished,this,&MainWindow::slot_creation_builder);
