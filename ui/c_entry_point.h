@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include "utilities/c_dbmanager.h"
 #include "c_load_builder_dialog.h"
+#include "ui/ui.h"
 
 class MainWindow;
 
