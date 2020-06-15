@@ -639,6 +639,9 @@
            <property name="suffix">
             <string/>
            </property>
+           <property name="minimum">
+            <number>-999999</number>
+           </property>
            <property name="maximum">
             <number>9999999</number>
            </property>
@@ -723,6 +726,9 @@
            </property>
            <property name="suffix">
             <string/>
+           </property>
+           <property name="minimum">
+            <number>-999999</number>
            </property>
            <property name="maximum">
             <number>9999999</number>
@@ -1340,6 +1346,9 @@
            <property name="suffix">
             <string/>
            </property>
+           <property name="minimum">
+            <number>-99</number>
+           </property>
            <property name="maximum">
             <number>9999999</number>
            </property>
@@ -1512,6 +1521,9 @@
            </property>
            <property name="suffix">
             <string/>
+           </property>
+           <property name="minimum">
+            <number>-999999</number>
            </property>
            <property name="maximum">
             <number>9999999</number>
@@ -1950,6 +1962,9 @@
            </property>
            <property name="suffix">
             <string/>
+           </property>
+           <property name="minimum">
+            <number>-99</number>
            </property>
            <property name="maximum">
             <number>9999999</number>
@@ -2734,6 +2749,9 @@
            <property name="suffix">
             <string/>
            </property>
+           <property name="minimum">
+            <number>-999999</number>
+           </property>
            <property name="maximum">
             <number>9999999</number>
            </property>
@@ -2906,6 +2924,9 @@
            </property>
            <property name="suffix">
             <string/>
+           </property>
+           <property name="minimum">
+            <number>-999999</number>
            </property>
            <property name="maximum">
             <number>9999999</number>
@@ -3163,6 +3184,9 @@
            </property>
            <property name="suffix">
             <string/>
+           </property>
+           <property name="minimum">
+            <number>-999999</number>
            </property>
            <property name="maximum">
             <number>9999999</number>
