@@ -53,9 +53,15 @@
         <rect>
          <x>90</x>
          <y>450</y>
-         <width>281</width>
-         <height>131</height>
+         <width>600</width>
+         <height>400</height>
         </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>600</width>
+         <height>400</height>
+        </size>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -70,9 +76,15 @@
         <rect>
          <x>400</x>
          <y>450</y>
-         <width>281</width>
-         <height>141</height>
+         <width>600</width>
+         <height>400</height>
         </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>600</width>
+         <height>400</height>
+        </size>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>

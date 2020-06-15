@@ -43,6 +43,18 @@ void c_entry_point::resizeEvent(QResizeEvent * /*event*/) {
         p_label_creation_builder = QPoint((rect.width()-106)/2,(rect.height()-172)/2 + 156);
         p_w_file = QPoint((rect.width()-1210)/2,rect.height());
         p_w_bdd = QPoint((rect.width()-1210)/2 + 610,rect.height());
+    } else if (state == 1) {
+        p_pb_new_build = QPoint((rect.width()-250)/2,(rect.height()-172)/2);
+        p_pb_open_build = p_pb_new_build;
+        p_label_creation_builder = QPoint((rect.width()-106)/2,(rect.height()-172)/2 + 156);
+        p_w_file = QPoint((rect.width()-1210)/2,rect.height());
+        p_w_bdd = QPoint((rect.width()-1210)/2 + 610,rect.height());
+    } else if (state == 2) {
+        p_w_file= QPoint((rect.width()-1210)/2,(rect.height()-150-400+20)/2 + 170);
+        p_w_bdd = QPoint((rect.width()-1210)/2 + 610,(rect.height()-150-400+20)/2 + 170);
+        p_pb_new_build = QPoint(20,20);
+        p_pb_open_build = QPoint((rect.width()-250)/2,(rect.height()-150-400+20)/2);
+        p_label_creation_builder = QPoint((rect.width()-106)/2,(rect.height()-172)/2 + 156);
     }
     ui->pushButton_new_build->move(p_pb_new_build);
     ui->pushButton_open_build->move(p_pb_open_build);
@@ -53,109 +65,237 @@ void c_entry_point::resizeEvent(QResizeEvent * /*event*/) {
 
 void c_entry_point::slot_open_button() {
 
-    ui->pushButton_open_build->raise();
-    load_builder = new c_load_builder_dialog(manager,this);
-    ui->verticalLayout_bdd->addWidget(load_builder);
-    load_builder->show();
-    file_dial = new QFileDialog(this,tr("Save Build"), "/save", tr("Json files (*.json)"));
-    ui->verticalLayout_file->addWidget(file_dial);
-    file_dial->show();
+    if (state == 0) {
+        ui->pushButton_open_build->raise();
+        if (load_builder == nullptr) {
+            load_builder = new c_load_builder_dialog(manager,this);
+            load_builder->setStyleSheet(QString("c_load_builder_dialog {background-color:%1; border-radius:3px;}").arg(app_color::grey_blue));
+            ui->verticalLayout_bdd->addWidget(load_builder);
+            QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->frame_bdd);
+            shadow->setColor(QColor(91, 108, 142, 180));
+            shadow->setOffset(2,2);
+            ui->frame_bdd->setGraphicsEffect(shadow);
+        }
+        if (file_dial == nullptr) {
+            file_dial = new QFileDialog(this,tr("Save Build"), "/save", tr("Json files (*.json)"));
+            file_dial->setStyleSheet(QString("QFileDialog{ background-color:%1; border-radius:3px;}").arg(app_color::grey_blue));
+            ui->verticalLayout_file->addWidget(file_dial);
+            QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->frame_file);
+            shadow->setColor(QColor(91, 108, 142, 180));
+            shadow->setOffset(2,2);
+            ui->frame_file->setGraphicsEffect(shadow);
+        }
 
-    QRect rect = this->rect();
-    QPoint p_w_file((rect.width()-1210)/2,rect.height());
-    QPoint p_w_file_final((rect.width()-1210)/2,rect.height());
-    QPoint p_w_bdd((rect.width()-1210)/2 + 610,rect.height());
-    QPoint p_w_bdd_final((rect.width()-1210)/2 + 610,rect.height());
-    QPoint p_pb_new_build((rect.width()-506)/2,(rect.height()-172)/2);
-    QPoint p_pb_new_build_final(20,20);
-    QPoint p_pb_open_build((rect.width()-506)/2 + 256,(rect.height()-172)/2);
-    QPoint p_pb_open_build_final((rect.width()-506)/2 + 256,(rect.height()-150-400)/3);
+        QRect rect = this->rect();
+        QPoint p_w_file((rect.width()-1210)/2,rect.height());
+        QPoint p_w_file_final((rect.width()-1210)/2,(rect.height()-150-400+20)/2 + 170);
+        QPoint p_w_bdd((rect.width()-1210)/2 + 610,rect.height());
+        QPoint p_w_bdd_final((rect.width()-1210)/2 + 610,(rect.height()-150-400+20)/2 + 170);
+        QPoint p_pb_new_build((rect.width()-506)/2,(rect.height()-172)/2);
+        QPoint p_pb_new_build_final(20,20);
+        QPoint p_pb_open_build((rect.width()-506)/2 + 256,(rect.height()-172)/2);
+        QPoint p_pb_open_build_final((rect.width()-250)/2,(rect.height()-150-400+20)/2);
 
-    animation1 = new QPropertyAnimation(ui->pushButton_new_build,"geometry");
-    animation1->setDuration(anim_duration_ms);
-    QRect rect_button_new = ui->pushButton_new_build->rect();
-    rect_button_new.setTopLeft(p_pb_new_build);
-    animation1->setKeyValueAt(0,rect_button_new);
-    animation1->setKeyValueAt(0.5,rect_button_new);
-    rect_button_new.setTopLeft(p_pb_new_build_final);
-    animation1->setKeyValueAt(1,rect_button_new);
-    animation1->setEasingCurve(QEasingCurve::InOutQuad);
+        animation1 = new QPropertyAnimation(ui->pushButton_new_build,"geometry");
+        animation1->setDuration(anim_duration_ms);
+        QRect rect_button_new = ui->pushButton_new_build->rect();
+        rect_button_new.setTopLeft(p_pb_new_build);
+        animation1->setKeyValueAt(0,rect_button_new);
+        animation1->setKeyValueAt(0.5,rect_button_new);
+        rect_button_new.setTopLeft(p_pb_new_build_final);
+        animation1->setKeyValueAt(1,rect_button_new);
+        animation1->setEasingCurve(QEasingCurve::InOutQuad);
 
-    ui->pushButton_new_build->setMinimumSize(ui->pushButton_new_build->size()/2);
-    animation2 = new QPropertyAnimation(ui->pushButton_new_build,"size");
-    animation2->setDuration(anim_duration_ms);
-    QSize size_button_new_size = ui->pushButton_new_build->size()/2;
-    animation2->setKeyValueAt(0,ui->pushButton_new_build->size());
-    animation2->setKeyValueAt(0.5,ui->pushButton_new_build->size());
-    animation2->setKeyValueAt(1,size_button_new_size);
-    animation2->setEasingCurve(QEasingCurve::InOutQuad);
+        ui->pushButton_new_build->setMinimumSize(ui->pushButton_new_build->size()/2);
+        animation2 = new QPropertyAnimation(ui->pushButton_new_build,"size");
+        animation2->setDuration(anim_duration_ms);
+        QSize size_button_new_size = ui->pushButton_new_build->size()/2;
+        animation2->setKeyValueAt(0,ui->pushButton_new_build->size());
+        animation2->setKeyValueAt(0.5,ui->pushButton_new_build->size());
+        animation2->setKeyValueAt(1,size_button_new_size);
+        animation2->setEasingCurve(QEasingCurve::InOutQuad);
 
-    parralle_anim = new QParallelAnimationGroup;
-    parralle_anim->addAnimation(animation1);
-    parralle_anim->addAnimation(animation2);
+        animation3 = new QPropertyAnimation(ui->pushButton_open_build,"geometry");
+        animation3->setDuration(anim_duration_ms);
+        QRect rect_button_open = ui->pushButton_open_build->rect();
+        rect_button_open.setTopLeft(p_pb_open_build);
+        animation3->setKeyValueAt(0,rect_button_open);
+        animation3->setKeyValueAt(0.5,rect_button_open);
+        rect_button_open.setTopLeft(p_pb_open_build_final);
+        animation3->setKeyValueAt(1,rect_button_open);
+        animation3->setEasingCurve(QEasingCurve::InOutQuad);
 
-    parralle_anim->start(QParallelAnimationGroup::DeleteWhenStopped);
+        animation4 = new QPropertyAnimation(ui->frame_bdd,"geometry");
+        animation4->setDuration(anim_duration_ms);
+        QRect rect_bdd = ui->frame_bdd->rect();
+        rect_bdd.setTopLeft(p_w_bdd);
+        animation4->setKeyValueAt(0,rect_bdd);
+        animation4->setKeyValueAt(0.5,rect_bdd);
+        rect_bdd.setTopLeft(p_w_bdd_final);
+        animation4->setKeyValueAt(1,rect_bdd);
+        animation4->setEasingCurve(QEasingCurve::InOutQuad);
+
+        animation5 = new QPropertyAnimation(ui->frame_file,"geometry");
+        animation5->setDuration(anim_duration_ms);
+        QRect rect_file = ui->frame_file->rect();
+        rect_file.setTopLeft(p_w_file);
+        animation5->setKeyValueAt(0,rect_file);
+        animation5->setKeyValueAt(0.5,rect_file);
+        rect_file.setTopLeft(p_w_file_final);
+        animation5->setKeyValueAt(1,rect_file);
+        animation5->setEasingCurve(QEasingCurve::InOutQuad);
+
+        parralle_anim = new QParallelAnimationGroup;
+        parralle_anim->addAnimation(animation1);
+        parralle_anim->addAnimation(animation2);
+        parralle_anim->addAnimation(animation3);
+        parralle_anim->addAnimation(animation4);
+        parralle_anim->addAnimation(animation5);
+
+        parralle_anim->start(QParallelAnimationGroup::DeleteWhenStopped);
+
+        state = 2;
+    }
 }
 
 void c_entry_point::slot_new_button() {
-    QRect rect = this->rect();
-    QPoint p_pb_new_build((rect.width()-506)/2,(rect.height()-172)/2);
-    QPoint p_pb_new_build_final((rect.width()-250)/2,(rect.height()-172)/2);
-    QPoint p_pb_open_build((rect.width()-506)/2 + 256,(rect.height()-172)/2);
-    QPoint p_pb_open_build_final = p_pb_new_build_final;
 
-    ui->label_creation_builder->setText("Création du builder ...");
+    if (state == 0) {
+        QRect rect = this->rect();
+        QPoint p_pb_new_build((rect.width()-506)/2,(rect.height()-172)/2);
+        QPoint p_pb_new_build_final((rect.width()-250)/2,(rect.height()-172)/2);
+        QPoint p_pb_open_build((rect.width()-506)/2 + 256,(rect.height()-172)/2);
+        QPoint p_pb_open_build_final = p_pb_new_build_final;
 
-    effect1 = new QGraphicsOpacityEffect(ui->background_eliacube);
-    ui->background_eliacube->setGraphicsEffect(effect1);
-    animation1 = new QPropertyAnimation(effect1, "opacity");
-    animation1->setDuration(anim_duration_ms);
-    animation1->setStartValue(1.0);
-    animation1->setEndValue(0.0);
-    animation1->setEasingCurve(QEasingCurve::OutQuad);
+        ui->label_creation_builder->setText("Création du builder ...");
+        ui->pushButton_new_build->setMinimumSize(QSize(250,150));
 
-    effect2 = new QGraphicsOpacityEffect(ui->pushButton_open_build);
-    ui->pushButton_open_build->setGraphicsEffect(effect2);
-    animation2 = new QPropertyAnimation(effect2, "opacity");
-    animation2->setDuration(anim_duration_ms);
-    animation2->setStartValue(1.0);
-    animation2->setEndValue(0.0);
-    animation2->setEasingCurve(QEasingCurve::OutQuad);
+        effect1 = new QGraphicsOpacityEffect(ui->background_eliacube);
+        ui->background_eliacube->setGraphicsEffect(effect1);
+        animation1 = new QPropertyAnimation(effect1, "opacity");
+        animation1->setDuration(anim_duration_ms);
+        animation1->setStartValue(1.0);
+        animation1->setEndValue(0.0);
+        animation1->setEasingCurve(QEasingCurve::OutQuad);
 
-    ui->pushButton_new_build->raise();
-    animation3 = new QPropertyAnimation(ui->pushButton_new_build,"geometry");
-    animation3->setDuration(anim_duration_ms);
-    QRect rect_button_new = ui->pushButton_new_build->rect();
-    rect_button_new.setTopLeft(p_pb_new_build);
-    animation3->setKeyValueAt(0,rect_button_new);
-    animation3->setKeyValueAt(0.5,rect_button_new);
-    rect_button_new.setTopLeft(p_pb_new_build_final);
-    animation3->setKeyValueAt(1,rect_button_new);
-    animation3->setEasingCurve(QEasingCurve::InOutQuad);
+        effect2 = new QGraphicsOpacityEffect(ui->pushButton_open_build);
+        ui->pushButton_open_build->setGraphicsEffect(effect2);
+        animation2 = new QPropertyAnimation(effect2, "opacity");
+        animation2->setDuration(anim_duration_ms);
+        animation2->setStartValue(1.0);
+        animation2->setEndValue(0.0);
+        animation2->setEasingCurve(QEasingCurve::OutQuad);
 
-    animation4 = new QPropertyAnimation(ui->pushButton_open_build,"geometry");
-    animation4->setDuration(anim_duration_ms);
-    QRect rect_button_open = ui->pushButton_open_build->rect();
-    rect_button_open.setTopLeft(p_pb_open_build);
-    animation4->setKeyValueAt(0,rect_button_open);
-    animation4->setKeyValueAt(0.5,rect_button_open);
-    rect_button_open.setTopLeft(p_pb_open_build_final);
-    animation4->setKeyValueAt(1,rect_button_open);
-    animation4->setEasingCurve(QEasingCurve::InOutQuad);
+        ui->pushButton_new_build->raise();
+        animation3 = new QPropertyAnimation(ui->pushButton_new_build,"geometry");
+        animation3->setDuration(anim_duration_ms);
+        QRect rect_button_new = ui->pushButton_new_build->rect();
+        rect_button_new.setTopLeft(p_pb_new_build);
+        animation3->setKeyValueAt(0,rect_button_new);
+        animation3->setKeyValueAt(0.5,rect_button_new);
+        rect_button_new.setTopLeft(p_pb_new_build_final);
+        animation3->setKeyValueAt(1,rect_button_new);
+        animation3->setEasingCurve(QEasingCurve::InOutQuad);
 
-    parralle_anim = new QParallelAnimationGroup;
-    parralle_anim->addAnimation(animation1);
-    parralle_anim->addAnimation(animation2);
-    parralle_anim->addAnimation(animation3);
-    parralle_anim->addAnimation(animation4);
+        animation4 = new QPropertyAnimation(ui->pushButton_open_build,"geometry");
+        animation4->setDuration(anim_duration_ms);
+        QRect rect_button_open = ui->pushButton_open_build->rect();
+        rect_button_open.setTopLeft(p_pb_open_build);
+        animation4->setKeyValueAt(0,rect_button_open);
+        animation4->setKeyValueAt(0.5,rect_button_open);
+        rect_button_open.setTopLeft(p_pb_open_build_final);
+        animation4->setKeyValueAt(1,rect_button_open);
+        animation4->setEasingCurve(QEasingCurve::InOutQuad);
 
-    parralle_anim->start(QParallelAnimationGroup::DeleteWhenStopped);
+        parralle_anim = new QParallelAnimationGroup;
+        parralle_anim->addAnimation(animation1);
+        parralle_anim->addAnimation(animation2);
+        parralle_anim->addAnimation(animation3);
+        parralle_anim->addAnimation(animation4);
 
-    QObject::connect(parralle_anim,&QParallelAnimationGroup::finished,this,&c_entry_point::slot_first_anim_finished);
+        parralle_anim->start(QParallelAnimationGroup::DeleteWhenStopped);
+
+        QObject::connect(parralle_anim,&QParallelAnimationGroup::finished,this,&c_entry_point::slot_first_anim_finished);
+
+        state = 1;
+    } else if (state == 2) {
+
+        QRect rect = this->rect();
+        QPoint p_w_file_final((rect.width()-1210)/2,rect.height());
+        QPoint p_w_file((rect.width()-1210)/2,(rect.height()-150-400+20)/2 + 170);
+        QPoint p_w_bdd_final((rect.width()-1210)/2 + 610,rect.height());
+        QPoint p_w_bdd((rect.width()-1210)/2 + 610,(rect.height()-150-400+20)/2 + 170);
+        QPoint p_pb_new_build_final((rect.width()-506)/2,(rect.height()-172)/2);
+        QPoint p_pb_new_build(20,20);
+        QPoint p_pb_open_build_final((rect.width()-506)/2 + 256,(rect.height()-172)/2);
+        QPoint p_pb_open_build((rect.width()-250)/2,(rect.height()-150-400+20)/2);
+
+        animation1 = new QPropertyAnimation(ui->pushButton_new_build,"geometry");
+        animation1->setDuration(anim_duration_ms);
+        QRect rect_button_new = ui->pushButton_new_build->rect();
+        rect_button_new.setTopLeft(p_pb_new_build);
+        animation1->setKeyValueAt(0,rect_button_new);
+        animation1->setKeyValueAt(0.5,rect_button_new);
+        rect_button_new.setTopLeft(p_pb_new_build_final);
+        animation1->setKeyValueAt(1,rect_button_new);
+        animation1->setEasingCurve(QEasingCurve::InOutQuad);
+
+        animation2 = new QPropertyAnimation(ui->pushButton_new_build,"size");
+        animation2->setDuration(anim_duration_ms);
+        QSize size_button_new_size = ui->pushButton_new_build->size()*2;
+        animation2->setKeyValueAt(0,ui->pushButton_new_build->size());
+        animation2->setKeyValueAt(0.5,ui->pushButton_new_build->size());
+        animation2->setKeyValueAt(1,size_button_new_size);
+        animation2->setEasingCurve(QEasingCurve::InOutQuad);
+
+        animation3 = new QPropertyAnimation(ui->pushButton_open_build,"geometry");
+        animation3->setDuration(anim_duration_ms);
+        QRect rect_button_open = ui->pushButton_open_build->rect();
+        rect_button_open.setTopLeft(p_pb_open_build);
+        animation3->setKeyValueAt(0,rect_button_open);
+        animation3->setKeyValueAt(0.5,rect_button_open);
+        rect_button_open.setTopLeft(p_pb_open_build_final);
+        animation3->setKeyValueAt(1,rect_button_open);
+        animation3->setEasingCurve(QEasingCurve::InOutQuad);
+
+        animation4 = new QPropertyAnimation(ui->frame_bdd,"geometry");
+        animation4->setDuration(anim_duration_ms);
+        QRect rect_bdd = ui->frame_bdd->rect();
+        rect_bdd.setTopLeft(p_w_bdd);
+        animation4->setKeyValueAt(0,rect_bdd);
+        animation4->setKeyValueAt(0.5,rect_bdd);
+        rect_bdd.setTopLeft(p_w_bdd_final);
+        animation4->setKeyValueAt(1,rect_bdd);
+        animation4->setEasingCurve(QEasingCurve::InOutQuad);
+
+        animation5 = new QPropertyAnimation(ui->frame_file,"geometry");
+        animation5->setDuration(anim_duration_ms);
+        QRect rect_file = ui->frame_file->rect();
+        rect_file.setTopLeft(p_w_file);
+        animation5->setKeyValueAt(0,rect_file);
+        animation5->setKeyValueAt(0.5,rect_file);
+        rect_file.setTopLeft(p_w_file_final);
+        animation5->setKeyValueAt(1,rect_file);
+        animation5->setEasingCurve(QEasingCurve::InOutQuad);
+
+        parralle_anim = new QParallelAnimationGroup;
+        parralle_anim->addAnimation(animation1);
+        parralle_anim->addAnimation(animation2);
+        parralle_anim->addAnimation(animation3);
+        parralle_anim->addAnimation(animation4);
+        parralle_anim->addAnimation(animation5);
+
+        parralle_anim->start(QParallelAnimationGroup::DeleteWhenStopped);
+
+        state = 0;
+
+        QObject::connect(parralle_anim,&QParallelAnimationGroup::finished,this,&c_entry_point::slot_new_button);
+    }
 }
 
 void c_entry_point::slot_first_anim_finished() {
     ui->pushButton_open_build->hide();
+    state = 1;
     emit first_animation_finished();
 }
 
