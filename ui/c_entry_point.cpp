@@ -75,15 +75,17 @@ void c_entry_point::slot_open_button() {
             shadow->setColor(QColor(91, 108, 142, 180));
             shadow->setOffset(2,2);
             ui->frame_bdd->setGraphicsEffect(shadow);
+            QObject::connect(load_builder,&c_load_builder_dialog::accepted,this,&c_entry_point::slot_open_from_source);
         }
         if (file_dial == nullptr) {
-            file_dial = new QFileDialog(this,tr("Save Build"), "/save", tr("Json files (*.json)"));
+            file_dial = new QFileDialog(this,tr("Save Build"), parent->getApp_path() + "/save", tr("Json files (*.json)"));
             file_dial->setStyleSheet(QString("QFileDialog{ background-color:%1; border-radius:3px;}").arg(app_color::grey_blue));
             ui->verticalLayout_file->addWidget(file_dial);
             QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->frame_file);
             shadow->setColor(QColor(91, 108, 142, 180));
             shadow->setOffset(2,2);
             ui->frame_file->setGraphicsEffect(shadow);
+            QObject::connect(file_dial,&QFileDialog::accepted,this,&c_entry_point::slot_open_from_source);
         }
 
         QRect rect = this->rect();
@@ -333,4 +335,23 @@ void c_entry_point::slot_creation_builder_anim() {
 
 void c_entry_point::slot_second_anim_finished() {
     emit second_animation_finished();
+}
+
+void c_entry_point::slot_open_from_source() {
+    load_builder->show();
+    file_dial->show();
+
+    effect2 = new QGraphicsOpacityEffect(ui->pushButton_new_build);
+    ui->pushButton_new_build->setGraphicsEffect(effect2);
+    animation1 = new QPropertyAnimation(effect2, "opacity");
+    animation1->setDuration(anim_duration_ms);
+    animation1->setStartValue(1.0);
+    animation1->setEndValue(0.0);
+    animation1->setEasingCurve(QEasingCurve::OutQuad);
+
+    parralle_anim = new QParallelAnimationGroup;
+    parralle_anim->addAnimation(animation1);
+    //parralle_anim->addAnimation(animation4);
+
+    parralle_anim->start(QParallelAnimationGroup::DeleteWhenStopped);
 }

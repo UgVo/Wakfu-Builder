@@ -55,6 +55,7 @@ public slots:
     void slot_first_anim_finished();
     void slot_creation_builder_anim();
     void slot_second_anim_finished();
+    void slot_open_from_source();
 
 signals:
     void open_clicked();
