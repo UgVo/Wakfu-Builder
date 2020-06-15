@@ -62,6 +62,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    QString getApp_path() const;
+
 private:
     Ui::MainWindow *ui;
     QString app_path;
