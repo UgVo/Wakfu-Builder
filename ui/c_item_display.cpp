@@ -167,3 +167,8 @@ void c_item_display::updateView() {
 c_item c_item_display::getItem() {
     return _item;
 }
+
+void c_item_display::setItem(c_item item) {
+    _item = item;
+    updateView();
+}

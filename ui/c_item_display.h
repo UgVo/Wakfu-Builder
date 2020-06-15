@@ -34,6 +34,7 @@ public:
     void completeData(c_dbmanager *manager);
     void updateView();
     c_item getItem();
+    void setItem(c_item item);
 
     const static QList<QString> color_rarity;
 

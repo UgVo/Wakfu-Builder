@@ -73,6 +73,9 @@ void c_item_viewer::setItem(c_item *new_item) {
         item = new_item;
         own_item = false;
     }
+    if (it_display != nullptr) {
+        it_display->setItem(*item);
+    }
     updateView();
 }
 void c_item_viewer::updateView() {
