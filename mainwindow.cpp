@@ -48,6 +48,11 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+QString MainWindow::getApp_path() const
+{
+    return app_path;
+}
+
 void MainWindow::test() {
     c_tokenizer tok;
     qDebug() << "------------------- Debuging and tests -------------------";
