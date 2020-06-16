@@ -887,7 +887,7 @@ bool c_dbmanager::add_relation_item_carac(int id_item, int id_carac) {
 QString c_dbmanager::prepareQuery_simple(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final) {
     QString query_string;
     if (final) {
-        query_string = QString("SELECT item.id,item.lvl FROM (SELECT item1.* FROM (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) item1 LEFT OUTER JOIN (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) AS item2 ON item1.rarity < item2.rarity AND item1.title = item2.title WHERE item2.title IS NULL) item ").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])?"OR item.lvl = -1":"");
+        query_string = QString("SELECT item.id,item.lvl FROM (SELECT item1.* FROM (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) item1 LEFT OUTER JOIN (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) AS item2 ON item1.rarity < item2.rarity AND item1.title = item2.title WHERE item2.title IS NULL) item ").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"");
     } else {
         query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
     }
@@ -895,7 +895,7 @@ QString c_dbmanager::prepareQuery_simple(QList<QString> carac_effect, QList<int>
         query_string += QString(", wakfu_builder.carac as carac%1, wakfu_builder.relation_item_carac as relation%1").arg(i);
     }
     if (!final) {
-        query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) AND").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])?"OR item.lvl = -1":"");
+        query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) AND").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"");
     } else {
         query_string+= " WHERE";
     }
@@ -946,7 +946,7 @@ QString c_dbmanager::prepareQuery_simple(QList<QString> carac_effect, QList<int>
 QString c_dbmanager::prepareQuery_condi(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final, QList<bool> condi) {
     QString query_string;
     if (final) {
-        query_string = QString("SELECT item.id,item.lvl FROM (SELECT item1.* FROM (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) item1 LEFT OUTER JOIN (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) AS item2 ON item1.rarity < item2.rarity AND item1.title = item2.title WHERE item2.title IS NULL) item ").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])?"OR item.lvl = -1":"");
+        query_string = QString("SELECT item.id,item.lvl FROM (SELECT item1.* FROM (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) item1 LEFT OUTER JOIN (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) AS item2 ON item1.rarity < item2.rarity AND item1.title = item2.title WHERE item2.title IS NULL) item ").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"");
     } else {
         query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
     }
@@ -954,7 +954,7 @@ QString c_dbmanager::prepareQuery_condi(QList<QString> carac_effect, QList<int> 
         query_string += QString(", wakfu_builder.carac as carac%1, wakfu_builder.relation_item_carac as relation%1").arg(i);
     }
     if (!final) {
-        query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) AND").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])?"OR item.lvl = -1":"");
+        query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) AND").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"");
     } else {
         query_string+= " WHERE";
     }
