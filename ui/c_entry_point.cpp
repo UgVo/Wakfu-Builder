@@ -23,6 +23,8 @@ c_entry_point::c_entry_point(c_dbmanager *_manager, QWidget *_parent) :
     ui->stackedWidget_entry_point->setCurrentIndex(0);
 
     state = 0;
+    QSize movie_size = movie->currentImage().size();
+    movie_aspect = (1920.0)/1080.0;
 }
 
 c_entry_point::~c_entry_point()
@@ -31,7 +33,18 @@ c_entry_point::~c_entry_point()
 }
 
 void c_entry_point::resizeEvent(QResizeEvent * /*event*/) {
+    int width = int(qreal(this->size().height()) * movie_aspect);
+    QSize movie_size;
+    if (width <= this->size().width()) {
+        movie_size = QSize(width,this->size().height());
+    } else {
+        int height = int(qreal(this->size().width()) / movie_aspect);
+        movie_size = QSize(this->size().width(),height);
+    }
     QRect rect = this->rect();
+    ui->background_eliacube->move((rect.width()-movie_size.width())/2,(rect.height()-movie_size.height())/2);
+    ui->background_eliacube->resize(movie_size);
+    movie->setScaledSize(movie_size);
     QPoint p_pb_new_build;
     QPoint p_pb_open_build;
     QPoint p_label_creation_builder;

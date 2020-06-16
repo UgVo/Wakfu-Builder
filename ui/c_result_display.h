@@ -24,8 +24,8 @@ class c_result_display : public QWidget
 {
     Q_OBJECT
 
-    static const int ROW_PER_PAGE = 13;
-    static const int COLUMN_PER_PAGE = 3;
+    int ROW_PER_PAGE = 13;
+    int COLUMN_PER_PAGE = 3;
 
 public:
     explicit c_result_display(c_dbmanager* _data_base, QWidget *parent = nullptr);
@@ -40,6 +40,10 @@ public:
     void clearLayout(QLayout* layout, bool deleteWidgets = true);
     //void clearItemListIfFinal();
     static c_item_lite* generate_item_lite(c_item item);
+
+    virtual void resizeEvent(QResizeEvent *event);
+
+    void refreshView();
 
 private:
     Ui::c_result_display *ui;

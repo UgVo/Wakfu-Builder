@@ -48,6 +48,7 @@ private:
     QFileDialog *file_dial;
 
     int state;
+    qreal movie_aspect;
 
 public slots:
     void slot_open_button();
