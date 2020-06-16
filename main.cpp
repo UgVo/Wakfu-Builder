@@ -32,10 +32,14 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    file_path = QString(qApp->applicationDirPath() + "/log/log%1.txt").arg(QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss"));
-    qInstallMessageHandler(myMessageOutput);
-    MainWindow w;
-    w.show();
-    return a.exec();
+    try {
+        QApplication a(argc, argv);
+        file_path = QString(qApp->applicationDirPath() + "/log/log%1.txt").arg(QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss"));
+        qInstallMessageHandler(myMessageOutput);
+        MainWindow w;
+        w.show();
+        return a.exec();
+    } catch (const std::exception & e) {
+        qFatal(e.what());
+    }
 }
