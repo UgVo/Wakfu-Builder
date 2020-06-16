@@ -214,6 +214,7 @@ void c_aptitudes_display::compute_counts() {
 
 void c_aptitudes_display::setLvl(int _lvl) {
     lvl = _lvl;
+    reset();
     compute_counts();
 }
 
