@@ -39,6 +39,8 @@ public:
 
     MainWindow *getParent() const;
 
+    virtual void resizeEvent(QResizeEvent *event);
+
 private:
     Ui::c_builder_view *ui;
     c_dbmanager *manager;
@@ -52,6 +54,8 @@ private:
     int id; // -1 if comes or saved as a file, >0 if comes from or saved in the database, else 0
     QString path;
     MainWindow *parent;
+
+    int state_column_number;
 
 public slots:
     void slot_save(c_io_manager::jsonformat format, QString path = QString());
