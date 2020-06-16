@@ -52,7 +52,7 @@ void c_item_display::updateView() {
 
     QList<QString> color_rarity = {"ffffff","ffffff","28f18b","fd8e39","fede71","fd87ba","8fc7e2","fd87ba"};
 
-    this->setStyleSheet(QString("QWidget#c_item_display {background-color: %1;} img {vertical-align:middle;}").arg(app_color::dark_blue));
+    ui->widget->setStyleSheet(QString("QWidget#widget {background-color: %1; border: solid 20px %2;} img {vertical-align:middle;}").arg(app_color::dark_blue).arg(app_color::green_blue));
     QFont font = ui->item_name->font();
     QFont font_bold = font;
     font_bold.setBold(true);

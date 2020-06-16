@@ -219,13 +219,13 @@ bool c_item_viewer::event(QEvent *event) {
 
 void c_item_viewer::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton)  {
-        if (item->isEmpty()) {
+        //if (item->isEmpty()) {
             if (!block) {
                 emit clicked(position);
             } else {
                 block = false;
             }
-        }
+        //}
     } else {
         event->ignore();
     }
