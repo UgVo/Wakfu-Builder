@@ -28,6 +28,12 @@ public slots:
     QString getName();
     int getLvl();
     void setName(QString name);
+    bool isActivated_HM();
+    bool isActivated_Nation();
+    bool isActivated_Guilde();
+    void Activated_HM(bool state);
+    void Activated_Nation(bool state);
+    void Activated_Guilde(bool state);
 
 signals:
     void lvl_changed(int new_lvl);

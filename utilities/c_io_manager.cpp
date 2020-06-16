@@ -28,6 +28,9 @@ QJsonObject c_io_manager::builderToJson(const c_builder_view *builder) {
     res["elements"] = QJsonArray::fromStringList(build->getElements());
     res["name"] = status->getName();
     res["aptitudes"] = aptitudeToJson(build->getBonus_aptitudes());
+    res["bonus_hm"] = status->isActivated_HM();
+    res["bonus_nation"] = status->isActivated_Nation();
+    res["bonus_guilde"] = status->isActivated_Guilde();
 
     return res;
 }
@@ -92,6 +95,15 @@ void c_io_manager::jsonToBuilder(c_builder_view *builder, const QJsonObject &jso
 
     if (json.contains("aptitudes")) {
         apt_display->slot_set_aptitudes(jsonToAptitudeMap(json.value("aptitudes").toObject()));
+    }
+    if (json.contains("bonus_hm")) {
+        status->Activated_HM(json.value("bonus_hm").toBool());
+    }
+    if (json.contains("bonus_nation")) {
+        status->Activated_Nation(json.value("bonus_nation").toBool());
+    }
+    if (json.contains("bonus_guilde")) {
+        status->Activated_Guilde(json.value("bonus_guilde").toBool());
     }
 
 }
