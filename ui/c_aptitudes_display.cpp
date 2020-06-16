@@ -81,7 +81,7 @@ c_aptitudes_display::c_aptitudes_display(QWidget *_parent) :
     ui->layout_agil->insertWidget(1,map_unites["agilite"]->last());
     map_unites["agilite"]->push_back(new c_aptitude_unite("Esquive",-1,"big_esquive","agilite",this));
     ui->layout_agil->insertWidget(2,map_unites["agilite"]->last());
-    map_unites["agilite"]->push_back(new c_aptitude_unite("Initiative",-1,"big_initiative","agilite",this));
+    map_unites["agilite"]->push_back(new c_aptitude_unite("Initiative",20,"big_initiative","agilite",this));
     ui->layout_agil->insertWidget(3,map_unites["agilite"]->last());
     map_unites["agilite"]->push_back(new c_aptitude_unite("Tacle et Esquive",-1,"big_tacle_esquive","agilite",this));
     ui->layout_agil->insertWidget(4,map_unites["agilite"]->last());
