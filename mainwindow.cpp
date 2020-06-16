@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(ui->action_save_Vers_la_base_de_donnee,&QAction::triggered,this,&MainWindow::slot_action_save_Vers_la_base_de_donnee);
     QObject::connect(ui->action_open_Depuis_la_base_de_donn_e,&QAction::triggered,this,&MainWindow::slot_action_open_Depuis_la_base_de_donn_e);
     QObject::connect(ui->actionEnregistrer,&QAction::triggered,this,&MainWindow::slot_actionEnregistrer);
+    QObject::connect(database_manager,&c_dbmanager::signal_connection_status,this,&MainWindow::slot_connection_status);
+    QObject::connect(ui->actionConnexion_bdd,&QAction::triggered,this,&MainWindow::slot_action_connection_bdd);
 
     entry_point = new c_entry_point(database_manager,this);
     ui->page_1->layout()->addWidget(entry_point);
@@ -42,6 +44,20 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->label_licence_1->setStyleSheet("color:white");
     ui->label_licence_2->setStyleSheet("color:white");
+
+
+
+    connection_status = new QLabel(this);
+    connection_status->setMinimumSize(QSize(40,40));
+    connection_status->setMaximumSize(QSize(40,40));
+    connection_status->setPixmap(QPixmap(":/images/divers/Network-Connected-icon.png"));
+    connection_status->setBackgroundRole(QPalette::Base);
+    connection_status->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    connection_status->setScaledContents(true);
+    connection_status->show();
+    ui->actionConnexion_bdd->setIcon(QIcon(":/images/divers/Network-Connected-icon.png"));
+
+    database_manager->connect();
 }
 
 MainWindow::~MainWindow() {
@@ -195,6 +211,16 @@ void MainWindow::slot_actionEnregistrer() {
     }
 }
 
+void MainWindow::slot_action_connection_bdd() {
+    c_bdd_password_dialog dial;
+    QString password;
+    if (dial.exec() == QDialog::Accepted) {
+        password = dial.get_password();
+    }
+    database_manager->connect(password);
+    datamanager.savePassword(password);
+}
+
 void MainWindow::slot_creation_builder() {
     QObject::disconnect(entry_point,&c_entry_point::first_animation_finished,this,&MainWindow::slot_creation_builder);set_save_enabled(true);
     builder_list.push_back(new c_builder_view(database_manager,this));
@@ -236,4 +262,20 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_Shift) {
         emit shift_pressed(false);
     }
+}
+
+void MainWindow::slot_connection_status(bool status) {
+    qDebug() << status;
+    connection_status->setPixmap(QPixmap(QString(":/images/divers/Network-%1onnected-icon.png").arg(status?"C":"Disc")));
+    connection_status->setBackgroundRole(QPalette::Base);
+    connection_status->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    connection_status->setScaledContents(true);
+    ui->actionConnexion_bdd->setIcon(QIcon(QString(":/images/divers/Network-%1onnected-icon.png").arg(status?"C":"Disc")));
+    ui->actionConnexion_bdd->setText(QString("%1onnexion Base de données").arg(status?"Dec":"C"));
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event) {
+    connection_status->move(20,rect().height()-60);
+    connection_status->show();
+    connection_status->raise();
 }
