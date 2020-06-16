@@ -2,7 +2,6 @@ QT       += core gui \
             sql \
             network \
             concurrent \
-            testlib \
             quickwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
