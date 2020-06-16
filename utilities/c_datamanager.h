@@ -4,6 +4,7 @@
 #include <utilities/utilities.h>
 #include "c_dbmanager.h"
 #include "c_networkmanager.h"
+#include "ui/c_bdd_password_dialog.h"
 #include <QObject>
 #include <QStringList>
 #include <QFile>
