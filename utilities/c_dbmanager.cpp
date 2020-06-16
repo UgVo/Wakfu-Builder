@@ -647,7 +647,6 @@ QList<int> c_dbmanager::getid_item_from_actions(QList<QString> carac_effect, QLi
     } else {
         query_string = prepareQuery_simple(carac_effect,rarities,types,bondaries,name,final);
     }
-    qDebug() << query_string;
     query.prepare(query_string);
     for (int i = 0; i < rarities.size(); ++i) {
         query.bindValue(QString(":rarity%1").arg(i),rarities.at(i));
@@ -666,6 +665,8 @@ QList<int> c_dbmanager::getid_item_from_actions(QList<QString> carac_effect, QLi
     } else {
         qDebug() << query.lastError();
     }
+    qDebug() << query_string;
+    qDebug() << query.boundValues();
     return res;
 }
 
@@ -703,6 +704,8 @@ QList<int> c_dbmanager::getid_item_from_actions_sorted(QList<QString> carac_effe
     } else {
         qDebug() << query.lastError();
     }
+    qDebug() << query_string;
+    qDebug() << query.boundValues();
     return res;
 }
 
