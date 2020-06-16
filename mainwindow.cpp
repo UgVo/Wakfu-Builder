@@ -155,11 +155,11 @@ void MainWindow::slot_action_open_Depuis_un_fichier() {
             builder_list.push_back(builder);
             ui->tabWidget->addTab(builder,QString("Builder %1").arg(builder_list.size()));
             ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+            ui->stackedWidget->setCurrentIndex(1);
         } else {
             builder->deleteLater();
         }
     }
-    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void MainWindow::slot_action_save_Vers_la_base_de_donnee() {
@@ -177,8 +177,8 @@ void MainWindow::slot_action_open_Depuis_la_base_de_donn_e() {
         builder_list.push_back(builder);
         ui->tabWidget->addTab(builder,QString("Builder %1").arg(builder_list.size()));
         ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+        ui->stackedWidget->setCurrentIndex(1);
     }
-    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void MainWindow::slot_actionEnregistrer() {
