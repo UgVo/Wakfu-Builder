@@ -11,23 +11,34 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
     data.open(QFile::WriteOnly | QFile::Append);
     QTextStream out(&data);
     QByteArray localMsg = msg.toLocal8Bit();
-    switch (type) {
-    case QtDebugMsg:
-        out << QString("[%1] Debug: %2 (%3:%4, %5)\n").arg(QDateTime::currentDateTime().toString("hhmmss")).arg(localMsg.constData()).arg(context.file).arg(context.line).arg(context.function);
-        break;
-    case QtInfoMsg:
-        out << QString("[%1] Info: %2 (%3:%4, %5)\n").arg(QDateTime::currentDateTime().toString("hhmmss")).arg(localMsg.constData()).arg(context.file).arg(context.line).arg(context.function);
-        break;
-    case QtWarningMsg:
-        out << QString("[%1] Warning: %2 (%3:%4, %5)\n").arg(QDateTime::currentDateTime().toString("hhmmss")).arg(localMsg.constData()).arg(context.file).arg(context.line).arg(context.function);
-        break;
-    case QtCriticalMsg:
-        out << QString("[%1] Critical: %2 (%3:%4, %5)\n").arg(QDateTime::currentDateTime().toString("hhmmss")).arg(localMsg.constData()).arg(context.file).arg(context.line).arg(context.function);
-        break;
-    case QtFatalMsg:
-        out << QString("[%1] Fatal: %2 (%3:%4, %5)\n").arg(QDateTime::currentDateTime().toString("hhmmss")).arg(localMsg.constData()).arg(context.file).arg(context.line).arg(context.function);
-        abort();
-    }
+    QString msg_f;
+       switch (type) {
+       case QtDebugMsg:
+           msg_f = QString("[%1] Debug: %2 (%3:%4, %5)\n").arg(QDateTime::currentDateTime().toString("hhmmss")).arg(localMsg.constData()).arg(context.file).arg(context.line).arg(context.function);
+           qDebug() << msg_f;
+           out << msg_f;
+           break;
+       case QtInfoMsg:
+           msg_f = QString("[%1] Info: %2 (%3:%4, %5)\n").arg(QDateTime::currentDateTime().toString("hhmmss")).arg(localMsg.constData()).arg(context.file).arg(context.line).arg(context.function);
+           qDebug() << msg_f;
+           out << msg_f;
+           break;
+       case QtWarningMsg:
+           msg_f = QString("[%1] Warning: %2 (%3:%4, %5)\n").arg(QDateTime::currentDateTime().toString("hhmmss")).arg(localMsg.constData()).arg(context.file).arg(context.line).arg(context.function);
+           qDebug() << msg_f;
+           out << msg_f;
+           break;
+       case QtCriticalMsg:
+           msg_f =  QString("[%1] Critical: %2 (%3:%4, %5)\n").arg(QDateTime::currentDateTime().toString("hhmmss")).arg(localMsg.constData()).arg(context.file).arg(context.line).arg(context.function);
+           qDebug() << msg_f;
+           out << msg_f;
+           break;
+       case QtFatalMsg:
+           msg_f = QString("[%1] Fatal: %2 (%3:%4, %5)\n").arg(QDateTime::currentDateTime().toString("hhmmss")).arg(localMsg.constData()).arg(context.file).arg(context.line).arg(context.function);
+           qDebug() << msg_f;
+           out << msg_f;
+           abort();
+       }
 }
 
 int main(int argc, char *argv[])
