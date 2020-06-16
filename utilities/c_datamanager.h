@@ -18,6 +18,7 @@
 #include <QVariantMap>
 #include <QJsonArray>
 #include <QProgressDialog>
+#include <QCoreApplication>
 
 class c_datamanager : public QObject
 {
