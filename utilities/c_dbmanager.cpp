@@ -642,11 +642,12 @@ QList<int> c_dbmanager::getid_item_from_actions(QList<QString> carac_effect, QLi
     QList<int> res;
     QSqlQuery query(m_db);
     QString query_string;
-    if (condi.isEmpty()) {
+    if (!condi.isEmpty()) {
         query_string = prepareQuery_condi(carac_effect,rarities,types,bondaries,name,final,condi);
     } else {
         query_string = prepareQuery_simple(carac_effect,rarities,types,bondaries,name,final);
     }
+    qDebug() << query_string;
     query.prepare(query_string);
     for (int i = 0; i < rarities.size(); ++i) {
         query.bindValue(QString(":rarity%1").arg(i),rarities.at(i));
@@ -883,7 +884,7 @@ bool c_dbmanager::add_relation_item_carac(int id_item, int id_carac) {
 QString c_dbmanager::prepareQuery_simple(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final) {
     QString query_string;
     if (final) {
-        query_string = QString("SELECT item.id,item.lvl FROM (SELECT item1.* FROM (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 OR item.lvl = -1)) item1 LEFT OUTER JOIN (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 OR item.lvl = -1)) AS item2 ON item1.rarity < item2.rarity AND item1.title = item2.title WHERE item2.title IS NULL) item ").arg(bondaries.at(0)).arg(bondaries.at(1));
+        query_string = QString("SELECT item.id,item.lvl FROM (SELECT item1.* FROM (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) item1 LEFT OUTER JOIN (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) AS item2 ON item1.rarity < item2.rarity AND item1.title = item2.title WHERE item2.title IS NULL) item ").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])?"OR item.lvl = -1":"");
     } else {
         query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
     }
@@ -891,7 +892,7 @@ QString c_dbmanager::prepareQuery_simple(QList<QString> carac_effect, QList<int>
         query_string += QString(", wakfu_builder.carac as carac%1, wakfu_builder.relation_item_carac as relation%1").arg(i);
     }
     if (!final) {
-        query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 OR item.lvl = -1) AND").arg(bondaries.at(0)).arg(bondaries.at(1));
+        query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) AND").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])?"OR item.lvl = -1":"");
     } else {
         query_string+= " WHERE";
     }
@@ -935,14 +936,14 @@ QString c_dbmanager::prepareQuery_simple(QList<QString> carac_effect, QList<int>
     }
     query_string.remove(QRegExp("AND$"));
     query_string.remove(QRegExp("WHERE$"));
-    query_string.push_back(" GROUP BY item.id,item.lvl ORDER BY item.lvl DESC");
+    query_string.push_back(" GROUP BY item.id,item.lvl ORDER BY item.lvl ASC");
     return query_string;
 }
 
 QString c_dbmanager::prepareQuery_condi(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final, QList<bool> condi) {
     QString query_string;
     if (final) {
-        query_string = QString("SELECT item.id,item.lvl FROM (SELECT item1.* FROM (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 OR item.lvl = -1)) item1 LEFT OUTER JOIN (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 OR item.lvl = -1)) AS item2 ON item1.rarity < item2.rarity AND item1.title = item2.title WHERE item2.title IS NULL) item ").arg(bondaries.at(0)).arg(bondaries.at(1));
+        query_string = QString("SELECT item.id,item.lvl FROM (SELECT item1.* FROM (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) item1 LEFT OUTER JOIN (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) AS item2 ON item1.rarity < item2.rarity AND item1.title = item2.title WHERE item2.title IS NULL) item ").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])?"OR item.lvl = -1":"");
     } else {
         query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
     }
@@ -950,7 +951,7 @@ QString c_dbmanager::prepareQuery_condi(QList<QString> carac_effect, QList<int> 
         query_string += QString(", wakfu_builder.carac as carac%1, wakfu_builder.relation_item_carac as relation%1").arg(i);
     }
     if (!final) {
-        query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 OR item.lvl = -1) AND").arg(bondaries.at(0)).arg(bondaries.at(1));
+        query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) AND").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])?"OR item.lvl = -1":"");
     } else {
         query_string+= " WHERE";
     }
