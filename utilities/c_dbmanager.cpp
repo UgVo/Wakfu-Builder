@@ -1,7 +1,7 @@
 #include "c_dbmanager.h"
 #include "c_datamanager.h"
 
-c_dbmanager::c_dbmanager(c_datamanager *manager) {
+c_dbmanager::c_dbmanager(c_datamanager *manager, QWidget *parent) : QWidget(parent){
     m_db = QSqlDatabase::addDatabase("QPSQL");
     m_db.setHostName("localhost");
     m_db.setPort(5432);
@@ -9,7 +9,10 @@ c_dbmanager::c_dbmanager(c_datamanager *manager) {
     m_db.setDatabaseName("postgres");
     m_db.setUserName("wakfu_builder");
     m_db.setPassword(manager->getPassword());
-    qDebug() << "Openning database :" << m_db.open();
+    bool flag = m_db.open();
+    qDebug() << "Openning database :" << flag;
+    emit signal_connection_status(flag);
+
 }
 
 c_dbmanager::~c_dbmanager() {
