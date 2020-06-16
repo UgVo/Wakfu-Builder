@@ -9,16 +9,22 @@ c_dbmanager::c_dbmanager(c_datamanager *manager, QWidget *parent) : QWidget(pare
     m_db.setDatabaseName("postgres");
     m_db.setUserName("wakfu_builder");
     m_db.setPassword(manager->getPassword());
-    bool flag = m_db.open();
-    qDebug() << "Openning database :" << flag;
-    emit signal_connection_status(flag);
-
 }
 
 c_dbmanager::~c_dbmanager() {
     QString database_name = m_db.connectionName();
     m_db.close();
     QSqlDatabase::removeDatabase(database_name);
+}
+
+bool c_dbmanager::connect(QString password) {
+    if (!password.isEmpty()) {
+        m_db.setPassword(password);
+    }
+    bool flag = m_db.open();
+    qDebug() << "Openning database :" << flag;
+    emit signal_connection_status(flag);
+    return flag;
 }
 
 bool c_dbmanager::add_effect(c_effect new_effect) {

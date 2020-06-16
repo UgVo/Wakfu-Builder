@@ -59,6 +59,7 @@ public slots:
     void slot_newVersion();
     void trigger_download_element();
     void trigger_download_images();
+    void savePassword(QString password);
 
 signals:
     void newVersion(QString);

@@ -241,6 +241,26 @@ void c_datamanager::trigger_download_images() {
     }
 }
 
+void c_datamanager::savePassword(QString _password) {
+    QFile file;
+    QJsonDocument doc;
+    QString val;
+    QJsonObject jObject_config;
+
+    file.setFileName("config.json");
+    file.open(QIODevice::ReadWrite | QIODevice::Text);
+    val = file.readAll();
+    doc = QJsonDocument::fromJson(val.toUtf8());
+    jObject_config = doc.object();
+    jObject_config["password"] = _password;
+    doc.setObject(jObject_config);
+    file.resize(0);
+    file.write(doc.toJson());
+    file.close();
+    password = _password;
+    return;
+}
+
 void c_datamanager::parseStates() {
     QFile file;
     QJsonDocument doc;

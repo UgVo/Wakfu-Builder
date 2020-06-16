@@ -27,6 +27,8 @@ public:
     c_dbmanager(c_datamanager *manager, QWidget *parent = nullptr);
     ~c_dbmanager();
 
+    bool connect(QString password = QString());
+
     bool add_effect(c_effect new_effect);
     c_effect get_effect(const int id);
 
