@@ -16,13 +16,15 @@
 #include <QList>
 #include <QStringList>
 #include <QElapsedTimer>
+#include <QWidget>
 
 class c_datamanager;
 
-class c_dbmanager
+class c_dbmanager : public QWidget
 {
+    Q_OBJECT
 public:
-    c_dbmanager(c_datamanager *manager);
+    c_dbmanager(c_datamanager *manager, QWidget *parent = nullptr);
     ~c_dbmanager();
 
     bool add_effect(c_effect new_effect);
@@ -86,6 +88,9 @@ public:
 private:
     QSqlDatabase m_db;
     QStringList PositionTypeList;
+
+signals:
+    void signal_connection_status(bool);
 };
 
 #endif // C_DBMANAGER_H
