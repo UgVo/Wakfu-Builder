@@ -97,7 +97,7 @@ c_aptitudes_display::c_aptitudes_display(QWidget *_parent) :
     ui->layout_chance->insertWidget(3,map_unites["chance"]->last());
     map_unites["chance"]->push_back(new c_aptitude_unite("Maîtrise Dos",-1,"big_dos_m","chance",this));
     ui->layout_chance->insertWidget(4,map_unites["chance"]->last());
-    map_unites["chance"]->push_back(new c_aptitude_unite("Maîtrise Berserk",20,"big_berserk","chance",this));
+    map_unites["chance"]->push_back(new c_aptitude_unite("Maîtrise Berserk",-1,"big_berserk","chance",this));
     ui->layout_chance->insertWidget(5,map_unites["chance"]->last());
     map_unites["chance"]->push_back(new c_aptitude_unite("Maîtrise Soin",-1,"big_soin_m","chance",this));
     ui->layout_chance->insertWidget(6,map_unites["chance"]->last());
