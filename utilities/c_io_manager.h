@@ -29,6 +29,7 @@ public slots:
     void jsonToBuilder(c_builder_view *builder, const QJsonObject &json);
     QMap<QString, int> jsonToAptitudeMap(const QJsonObject &json);
     bool load(c_builder_view *builder, const c_io_manager::jsonformat format, QString path = QString(), int id = 0);
+    bool loadFrom(c_builder_view *builder, const c_io_manager::jsonformat format, QString path_json);
     void update(c_builder_view *builder, const c_io_manager::jsonformat format = c_io_manager::jsonformat::database, const QString path = QString());
 
 

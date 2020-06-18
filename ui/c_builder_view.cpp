@@ -132,6 +132,11 @@ bool c_builder_view::slot_load(c_io_manager::jsonformat format, QString path) {
     return io_manager.load(this,format,path);
 }
 
+bool c_builder_view::slot_loadFrom(c_io_manager::jsonformat format, QString path_json) {
+    c_io_manager io_manager(manager)    ;
+    return io_manager.loadFrom(this,format,path_json);
+}
+
 void c_builder_view::slot_update(c_io_manager::jsonformat format) {
     c_io_manager io_manager(manager);
     io_manager.update(this,format,path);

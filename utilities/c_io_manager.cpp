@@ -151,6 +151,32 @@ bool c_io_manager::load(c_builder_view *builder, const c_io_manager::jsonformat 
     return false;
 }
 
+bool c_io_manager::loadFrom(c_builder_view *builder, const c_io_manager::jsonformat format, QString path_json) {
+    QFile file;
+    QJsonDocument doc;
+    QString val;
+    QJsonArray JsonArray;
+
+    if (format == c_io_manager::jsonformat::file) {
+        bool res;
+        file.setFileName(path_json);
+        res = file.open(QIODevice::ReadOnly | QIODevice::Text);
+        val = file.readAll();
+        file.close();
+        doc = QJsonDocument::fromJson(val.toUtf8());
+        jsonToBuilder(builder,doc.object());
+        builder->setId(-1);
+        builder->setPath(path_json);
+        return res;
+    } else if (format == c_io_manager::jsonformat::database) {
+        doc = QJsonDocument::fromJson(path_json.toUtf8());
+        jsonToBuilder(builder,doc.object());
+        builder->setId(load_builder_dialog->getCurrent_id());
+        return true;
+    }
+    return false;
+}
+
 void c_io_manager::update(c_builder_view *builder, const c_io_manager::jsonformat format, const QString path) {
     QJsonDocument doc;
     doc.setObject(builderToJson(builder));
