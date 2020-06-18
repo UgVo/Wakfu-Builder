@@ -15,7 +15,6 @@
 #include "utilities/c_state.h"
 #include "utilities/c_tokenizer.h"
 
-#include <QTest>
 #include <QObject>
 #include <QString>
 #include <QStringList>

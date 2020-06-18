@@ -191,6 +191,21 @@ c_item_lite *c_result_display::generate_item_lite(c_item item) {
     return item_lite;
 }
 
+void c_result_display::resizeEvent(QResizeEvent *event) {
+    if (this->rect().width() < 600) {
+        COLUMN_PER_PAGE = 2;
+        slot_new_search_result(id_list);
+    } else {
+        COLUMN_PER_PAGE = 3;
+        slot_new_search_result(id_list);
+    }
+}
+
+void c_result_display::refreshView() {
+    empty_page(current_page);
+    fill_page(current_page);
+}
+
 void c_result_display::slot_next() {
     if (current_page < used_page_number) {
         current_page++;

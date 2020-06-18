@@ -11,6 +11,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QTimer>
+#include <QMouseEvent>
 #include "utilities/c_item.h"
 #include "c_element_dialog.h"
 #include "c_elements_display.h"

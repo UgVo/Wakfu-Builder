@@ -198,7 +198,6 @@
         <file>divers/checked.png</file>
         <file>divers/down_arrow.png</file>
         <file>divers/eliacube.gif</file>
-        <file>divers/eliacubeHD.gif</file>
         <file>divers/enchantement.png</file>
         <file>divers/epique_high.png</file>
         <file>divers/epique_low.png</file>
@@ -270,6 +269,8 @@
         <file>portrait/190.png</file>
         <file>portrait/191.png</file>
         <file>portrait/aleat.png</file>
+        <file>divers/Network-Connected-icon.png</file>
+        <file>divers/Network-Disconnected-icon.png</file>
     </qresource>
     <qresource prefix="/font">
         <file>wci.ttf</file>

@@ -28,6 +28,9 @@ QJsonObject c_io_manager::builderToJson(const c_builder_view *builder) {
     res["elements"] = QJsonArray::fromStringList(build->getElements());
     res["name"] = status->getName();
     res["aptitudes"] = aptitudeToJson(build->getBonus_aptitudes());
+    res["bonus_hm"] = status->isActivated_HM();
+    res["bonus_nation"] = status->isActivated_Nation();
+    res["bonus_guilde"] = status->isActivated_Guilde();
 
     return res;
 }
@@ -93,6 +96,15 @@ void c_io_manager::jsonToBuilder(c_builder_view *builder, const QJsonObject &jso
     if (json.contains("aptitudes")) {
         apt_display->slot_set_aptitudes(jsonToAptitudeMap(json.value("aptitudes").toObject()));
     }
+    if (json.contains("bonus_hm")) {
+        status->Activated_HM(json.value("bonus_hm").toBool());
+    }
+    if (json.contains("bonus_nation")) {
+        status->Activated_Nation(json.value("bonus_nation").toBool());
+    }
+    if (json.contains("bonus_guilde")) {
+        status->Activated_Guilde(json.value("bonus_guilde").toBool());
+    }
 
 }
 
@@ -135,6 +147,32 @@ bool c_io_manager::load(c_builder_view *builder, const c_io_manager::jsonformat 
         } else {
             return false;
         }
+    }
+    return false;
+}
+
+bool c_io_manager::loadFrom(c_builder_view *builder, const c_io_manager::jsonformat format, QString path_json) {
+    QFile file;
+    QJsonDocument doc;
+    QString val;
+    QJsonArray JsonArray;
+
+    if (format == c_io_manager::jsonformat::file) {
+        bool res;
+        file.setFileName(path_json);
+        res = file.open(QIODevice::ReadOnly | QIODevice::Text);
+        val = file.readAll();
+        file.close();
+        doc = QJsonDocument::fromJson(val.toUtf8());
+        jsonToBuilder(builder,doc.object());
+        builder->setId(-1);
+        builder->setPath(path_json);
+        return res;
+    } else if (format == c_io_manager::jsonformat::database) {
+        doc = QJsonDocument::fromJson(path_json.toUtf8());
+        jsonToBuilder(builder,doc.object());
+        builder->setId(load_builder_dialog->getCurrent_id());
+        return true;
     }
     return false;
 }

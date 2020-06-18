@@ -81,7 +81,7 @@ c_aptitudes_display::c_aptitudes_display(QWidget *_parent) :
     ui->layout_agil->insertWidget(1,map_unites["agilite"]->last());
     map_unites["agilite"]->push_back(new c_aptitude_unite("Esquive",-1,"big_esquive","agilite",this));
     ui->layout_agil->insertWidget(2,map_unites["agilite"]->last());
-    map_unites["agilite"]->push_back(new c_aptitude_unite("Initiative",-1,"big_initiative","agilite",this));
+    map_unites["agilite"]->push_back(new c_aptitude_unite("Initiative",20,"big_initiative","agilite",this));
     ui->layout_agil->insertWidget(3,map_unites["agilite"]->last());
     map_unites["agilite"]->push_back(new c_aptitude_unite("Tacle et Esquive",-1,"big_tacle_esquive","agilite",this));
     ui->layout_agil->insertWidget(4,map_unites["agilite"]->last());
@@ -97,7 +97,7 @@ c_aptitudes_display::c_aptitudes_display(QWidget *_parent) :
     ui->layout_chance->insertWidget(3,map_unites["chance"]->last());
     map_unites["chance"]->push_back(new c_aptitude_unite("Maîtrise Dos",-1,"big_dos_m","chance",this));
     ui->layout_chance->insertWidget(4,map_unites["chance"]->last());
-    map_unites["chance"]->push_back(new c_aptitude_unite("Maîtrise Berserk",20,"big_berserk","chance",this));
+    map_unites["chance"]->push_back(new c_aptitude_unite("Maîtrise Berserk",-1,"big_berserk","chance",this));
     ui->layout_chance->insertWidget(5,map_unites["chance"]->last());
     map_unites["chance"]->push_back(new c_aptitude_unite("Maîtrise Soin",-1,"big_soin_m","chance",this));
     ui->layout_chance->insertWidget(6,map_unites["chance"]->last());
@@ -214,6 +214,7 @@ void c_aptitudes_display::compute_counts() {
 
 void c_aptitudes_display::setLvl(int _lvl) {
     lvl = _lvl;
+    reset();
     compute_counts();
 }
 

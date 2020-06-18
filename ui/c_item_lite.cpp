@@ -27,6 +27,10 @@ c_item_lite::c_item_lite(c_dbmanager * database_manager, c_item item, QWidget *p
 
 c_item_lite::~c_item_lite() {
     delete ui;
+    if (it_display != nullptr) {
+        it_display->deleteLater();
+        it_display = nullptr;
+    }
 }
 
 void c_item_lite::set_icon() {
@@ -110,6 +114,10 @@ void c_item_lite::mouseDoubleClickEvent(QMouseEvent* /*event*/) {
     it_display->completeData(_database_manager);
     _item = it_display->getItem();
     emit item_doubleCliked(_item);
+}
+
+void c_item_lite::mouseReleaseEvent(QMouseEvent *event) {
+    mouseDoubleClickEvent(event);
 }
 
 void c_item_lite::check_mouse_over() {
