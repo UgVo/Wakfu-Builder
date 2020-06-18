@@ -60,6 +60,7 @@ private:
 public slots:
     void slot_save(c_io_manager::jsonformat format, QString path = QString());
     bool slot_load(c_io_manager::jsonformat format, QString path = QString());
+    bool slot_loadFrom(c_io_manager::jsonformat format, QString path_json);
     void slot_update(c_io_manager::jsonformat format);
 //    virtual void keyPressEvent(QKeyEvent *event);
 //    virtual void keyReleaseEvent(QKeyEvent *event);
