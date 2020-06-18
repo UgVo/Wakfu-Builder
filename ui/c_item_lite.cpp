@@ -27,6 +27,10 @@ c_item_lite::c_item_lite(c_dbmanager * database_manager, c_item item, QWidget *p
 
 c_item_lite::~c_item_lite() {
     delete ui;
+    if (it_display != nullptr) {
+        it_display->deleteLater();
+        it_display = nullptr;
+    }
 }
 
 void c_item_lite::set_icon() {
