@@ -39,6 +39,8 @@ public:
 
     MainWindow *getParent() const;
 
+    virtual void resizeEvent(QResizeEvent *event);
+
 private:
     Ui::c_builder_view *ui;
     c_dbmanager *manager;
@@ -53,9 +55,12 @@ private:
     QString path;
     MainWindow *parent;
 
+    int state_column_number;
+
 public slots:
     void slot_save(c_io_manager::jsonformat format, QString path = QString());
     bool slot_load(c_io_manager::jsonformat format, QString path = QString());
+    bool slot_loadFrom(c_io_manager::jsonformat format, QString path_json);
     void slot_update(c_io_manager::jsonformat format);
 //    virtual void keyPressEvent(QKeyEvent *event);
 //    virtual void keyReleaseEvent(QKeyEvent *event);

@@ -73,6 +73,7 @@
     </property>
     <addaction name="actionCheck_new_version"/>
     <addaction name="actionContraintes"/>
+    <addaction name="actionConnexion_bdd"/>
    </widget>
    <widget class="QMenu" name="menuFichiers">
     <property name="title">
@@ -96,7 +97,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Check new version</string>
+    <string>Check nouvelle version</string>
    </property>
   </action>
   <action name="actionOuvrir_build">
@@ -147,6 +148,11 @@
   <action name="actionEnregistrer">
    <property name="text">
     <string>Enregistrer</string>
+   </property>
+  </action>
+  <action name="actionConnexion_bdd">
+   <property name="text">
+    <string>Connexion Base de données</string>
    </property>
   </action>
  </widget>

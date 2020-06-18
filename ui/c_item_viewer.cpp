@@ -73,6 +73,10 @@ void c_item_viewer::setItem(c_item *new_item) {
         item = new_item;
         own_item = false;
     }
+    if (it_display != nullptr) {
+        it_display->deleteLater();
+        it_display = nullptr;
+    }
     updateView();
 }
 void c_item_viewer::updateView() {
@@ -164,9 +168,11 @@ void c_item_viewer::disable(int gfxId) {
 }
 
 void c_item_viewer::enable() {
-    item->setGfxId(0);
-    disabled = false;
-    updateView();
+    if (item->isEmpty()) {
+        item->setGfxId(0);
+        disabled = false;
+        updateView();
+    }
 }
 
 c_item *c_item_viewer::get_item() {
@@ -213,13 +219,13 @@ bool c_item_viewer::event(QEvent *event) {
 
 void c_item_viewer::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton)  {
-        if (item->isEmpty()) {
+        //if (item->isEmpty()) {
             if (!block) {
                 emit clicked(position);
             } else {
                 block = false;
             }
-        }
+        //}
     } else {
         event->ignore();
     }
@@ -237,8 +243,10 @@ void c_item_viewer::check_mouse_over() {
         timer->start(100);
     } else {
         disconnect(timer,&QTimer::timeout,this,&c_item_viewer::check_mouse_over);
-        it_display->hide();
-        it_display->update();
+        if ( it_display != nullptr) {
+            it_display->hide();
+            it_display->update();
+        }
     }
 }
 

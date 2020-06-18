@@ -4,6 +4,7 @@
 #include <utilities/utilities.h>
 #include "c_dbmanager.h"
 #include "c_networkmanager.h"
+#include "ui/c_bdd_password_dialog.h"
 #include <QObject>
 #include <QStringList>
 #include <QFile>
@@ -18,6 +19,7 @@
 #include <QVariantMap>
 #include <QJsonArray>
 #include <QProgressDialog>
+#include <QCoreApplication>
 
 class c_datamanager : public QObject
 {
@@ -57,6 +59,7 @@ public slots:
     void slot_newVersion();
     void trigger_download_element();
     void trigger_download_images();
+    void savePassword(QString password);
 
 signals:
     void newVersion(QString);

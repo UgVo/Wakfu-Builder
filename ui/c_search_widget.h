@@ -9,6 +9,7 @@
 #include <QLineEdit>
 #include <QAbstractItemView>
 #include <QStandardItemModel>
+#include <QComboBox>
 #include "ui.h"
 #include "utilities/c_dbmanager.h"
 #include "utilities/utilities.h"

@@ -20,8 +20,33 @@ c_datamanager::c_datamanager()
     QJsonObject JObject_nameList;
 
     file.setFileName("config.json");
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    val = file.readAll();
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        file.open(QIODevice::WriteOnly | QIODevice::Text);
+        c_bdd_password_dialog dial;
+        QString password;
+        if (dial.exec() == QDialog::Accepted) {
+            password = dial.get_password();
+        }
+        val = QString("{"
+                  "\"version\" : \"1.68.0.179615\","
+                  "\"url_json\" : \"https://wakfu.cdn.ankama.com/gamedata/\","
+                  "\"url_image\" : \"https://static.ankama.com/wakfu/portal/game/item/64/\","
+                  "\"path_json\" : \"json\","
+                  "\"path_images\" : \"images/Items\","
+                  "\"filelist\" : { "
+                      "\"1\": \"items.json\","
+                      "\"2\": \"equipmentItemTypes.json\","
+                      "\"3\": \"itemProperties.json\","
+                      "\"4\": \"actions.json\","
+                      "\"5\": \"states.json\","
+                      "\"6\": \"jobsItems.json\""
+                  "},"
+                  "\"password\" : \"%1\""
+              "}").arg(password);
+        file.write(val.toUtf8());
+    } else {
+        val = file.readAll();
+    }
     file.close();
     doc = QJsonDocument::fromJson(val.toUtf8());
     jObject_config = doc.object();
@@ -214,6 +239,26 @@ void c_datamanager::trigger_download_images() {
         qWarning() << "All files have been downloaded";
         emit downloadImageFinished();
     }
+}
+
+void c_datamanager::savePassword(QString _password) {
+    QFile file;
+    QJsonDocument doc;
+    QString val;
+    QJsonObject jObject_config;
+
+    file.setFileName("config.json");
+    file.open(QIODevice::ReadWrite | QIODevice::Text);
+    val = file.readAll();
+    doc = QJsonDocument::fromJson(val.toUtf8());
+    jObject_config = doc.object();
+    jObject_config["password"] = _password;
+    doc.setObject(jObject_config);
+    file.resize(0);
+    file.write(doc.toJson());
+    file.close();
+    password = _password;
+    return;
 }
 
 void c_datamanager::parseStates() {

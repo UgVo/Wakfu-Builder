@@ -28,6 +28,7 @@
 #include "utilities/c_item_model.h"
 #include "ui/c_builder_view.h"
 #include "ui/c_entry_point.h"
+#include "ui/c_bdd_password_dialog.h"
 
 #include "utilities/c_io_manager.h"
 
@@ -62,6 +63,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    QString getApp_path() const;
+
 private:
     Ui::MainWindow *ui;
     QString app_path;
@@ -69,9 +72,9 @@ private:
     c_datamanager datamanager;
     DialogGestion *diag;
     QList<c_builder_view*> builder_list;
-
-
     c_entry_point* entry_point;
+    QLabel *connection_status;
+
 public slots:
     void slot_check_version_clicked();
     void slot_version_check(QString version);
@@ -86,14 +89,19 @@ public slots:
     void slot_action_save_Vers_la_base_de_donnee();
     void slot_action_open_Depuis_la_base_de_donn_e();
     void slot_actionEnregistrer();
+    void slot_action_connection_bdd();
 
     void slot_creation_builder();
+    void slot_open_builder(const c_io_manager::jsonformat, QString string);
     void slot_creation_finished();
 
     void set_save_enabled(bool flag);
 
     virtual void keyPressEvent(QKeyEvent *event);
     virtual void keyReleaseEvent(QKeyEvent *event);
+
+    void slot_connection_status(bool status);
+    virtual void resizeEvent(QResizeEvent *event);
 
 
 signals:

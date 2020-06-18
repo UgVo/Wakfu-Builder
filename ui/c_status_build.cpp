@@ -78,3 +78,30 @@ int c_status_build::getLvl() {
 void c_status_build::setName(QString name) {
     ui->build_name->setText(name);
 }
+
+bool c_status_build::isActivated_HM() {
+    return ui->guild_cb->isChecked();
+}
+
+bool c_status_build::isActivated_Nation() {
+    return ui->nation_cb->isChecked();
+}
+
+bool c_status_build::isActivated_Guilde() {
+    return ui->guild_cb->isChecked();
+}
+
+void c_status_build::Activated_HM(bool state) {
+    ui->hm_cb->setCheckState(state?Qt::CheckState::Checked:Qt::CheckState::Unchecked);
+    slot_bonus_changed();
+}
+
+void c_status_build::Activated_Nation(bool state) {
+    ui->nation_cb->setCheckState(state?Qt::CheckState::Checked:Qt::CheckState::Unchecked);
+    slot_bonus_changed();
+}
+
+void c_status_build::Activated_Guilde(bool state) {
+    ui->guild_cb->setCheckState(state?Qt::CheckState::Checked:Qt::CheckState::Unchecked);
+    slot_bonus_changed();
+}

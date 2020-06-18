@@ -14,12 +14,12 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *_parent) :
     parent = static_cast<MainWindow*>(_parent);
 
     //UI
-    result_display = new c_result_display(manager);
-    status_build = new c_status_build;
-    element_display = new c_elements_display;
-    build_display = new c_build_display(build);
+    result_display = new c_result_display(manager,this);
+    status_build = new c_status_build(this);
+    element_display = new c_elements_display(this);
+    build_display = new c_build_display(build,this);
     //build_display->set_item_viewers();
-    search_widget = new c_search_widget(manager);
+    search_widget = new c_search_widget(manager,this);
     aptitude_display = new c_aptitudes_display(this);
 
     ui->build_layout->insertWidget(0,status_build);
@@ -60,6 +60,8 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *_parent) :
     ui->horizontalLayout_5->addWidget(aptitude_display);
 
     this->setWindowState(Qt::WindowMaximized);
+
+    state_column_number = -1;
 }
 
 c_builder_view::~c_builder_view()
@@ -101,6 +103,20 @@ MainWindow *c_builder_view::getParent() const {
     return parent;
 }
 
+void c_builder_view::resizeEvent(QResizeEvent *event) {
+        if (( this->rect().width() < 1780 && state_column_number == -1) ||  (this->rect().width() < 1780 && state_column_number==3) ) {
+            result_display->setMinimumSize(506,755);
+            result_display->setMaximumSize(506,755);
+            result_display->refreshView();
+            state_column_number = 2;
+        } else if ((this->rect().width() >= 1780 && state_column_number == -1) ||  (this->rect().width() >= 1780 && state_column_number==2)) {
+            result_display->setMinimumSize(762,755);
+            result_display->setMaximumSize(762,755);
+            result_display->refreshView();
+            state_column_number = 3;
+        }
+}
+
 c_aptitudes_display *c_builder_view::getAptitude_display() const
 {
     return aptitude_display;
@@ -114,6 +130,11 @@ void c_builder_view::slot_save(c_io_manager::jsonformat format, QString path) {
 bool c_builder_view::slot_load(c_io_manager::jsonformat format, QString path) {
     c_io_manager io_manager(manager);
     return io_manager.load(this,format,path);
+}
+
+bool c_builder_view::slot_loadFrom(c_io_manager::jsonformat format, QString path_json) {
+    c_io_manager io_manager(manager)    ;
+    return io_manager.loadFrom(this,format,path_json);
 }
 
 void c_builder_view::slot_update(c_io_manager::jsonformat format) {

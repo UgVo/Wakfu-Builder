@@ -209,6 +209,7 @@ QMap<QString, QString> c_build::equip(const c_item &item) {
         equipment["FIRST_WEAPON"] = item2equip;
         emit disableSecondWeapon(true);
     } else {
+        unequip(type);
         equipment[type] = item2equip;
     }
     if (item2equip.getRarity() == 5) {
@@ -224,6 +225,9 @@ QMap<QString, QString> c_build::equip(const c_item &item) {
 void c_build::unequip(QString position) {
     if (!equipment[position].isEmpty()) {
         c_item item = equipment[position];
+        if (!mapItemToType[item.getType().getTitle()].compare("TWO_HAND_WEAPON")) {
+            emit disableSecondWeapon(false);
+        }
         equipment[position] = c_item();
         if (item.getRarity() == 5) {
             relique_free = true;
