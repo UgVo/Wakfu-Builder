@@ -80,7 +80,7 @@ void c_status_build::setName(QString name) {
 }
 
 bool c_status_build::isActivated_HM() {
-    return ui->guild_cb->isChecked();
+    return ui->hm_cb->isChecked();
 }
 
 bool c_status_build::isActivated_Nation() {
