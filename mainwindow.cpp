@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(entry_point,&c_entry_point::new_clicked,this,&MainWindow::slot_actionCr_er_nouveau_Build_clicked);
     QObject::connect(entry_point,&c_entry_point::first_animation_finished,this,&MainWindow::slot_creation_builder);
     QObject::connect(entry_point,&c_entry_point::second_animation_finished,this,&MainWindow::slot_creation_finished);
+    QObject::connect(entry_point,&c_entry_point::load_builder_from,this,&MainWindow::slot_open_builder);
     //QObject::connect(entry_point,&QPushButton::clicked,this,&MainWindow::slot_open_button);
 
     this->setWindowState(Qt::WindowMaximized);
@@ -227,7 +228,20 @@ void MainWindow::slot_creation_builder() {
     ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
     QThread::msleep(10);
+    builder_list.last()->update();
     entry_point->slot_creation_builder_anim();
+}
+
+void MainWindow::slot_open_builder(const c_io_manager::jsonformat format, QString path_json) {
+    QObject::disconnect(entry_point,&c_entry_point::load_builder_from,this,&MainWindow::slot_open_builder);
+    builder_list.push_back(new c_builder_view(database_manager,this));
+    builder_list.last()->slot_loadFrom(format,path_json);
+    ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+    QThread::msleep(10);
+    builder_list.last()->update();
+    entry_point->slot_creation_builder_anim();
+    set_save_enabled(true);
 }
 
 void MainWindow::slot_creation_finished() {
@@ -238,6 +252,7 @@ void MainWindow::slot_creation_finished() {
     QObject::connect(entry_point,&c_entry_point::new_clicked,this,&MainWindow::slot_actionCr_er_nouveau_Build_clicked);
     QObject::connect(entry_point,&c_entry_point::first_animation_finished,this,&MainWindow::slot_creation_builder);
     QObject::connect(entry_point,&c_entry_point::second_animation_finished,this,&MainWindow::slot_creation_finished);
+    QObject::connect(entry_point,&c_entry_point::load_builder_from,this,&MainWindow::slot_open_builder);
     ui->stackedWidget->setCurrentIndex(1);
 }
 
