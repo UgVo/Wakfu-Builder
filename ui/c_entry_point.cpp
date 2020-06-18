@@ -25,6 +25,9 @@ c_entry_point::c_entry_point(c_dbmanager *_manager, QWidget *_parent) :
     state = 0;
     QSize movie_size = movie->currentImage().size();
     movie_aspect = (1920.0)/1080.0;
+
+    file_dial = nullptr;
+    load_builder = nullptr;
 }
 
 c_entry_point::~c_entry_point()
