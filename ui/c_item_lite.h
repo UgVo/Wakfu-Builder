@@ -36,6 +36,7 @@ private:
 
 public slots:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
     void check_mouse_over();
     void setItem(const c_item &item);
     void updateView();

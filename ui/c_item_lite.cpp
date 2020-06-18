@@ -116,6 +116,10 @@ void c_item_lite::mouseDoubleClickEvent(QMouseEvent* /*event*/) {
     emit item_doubleCliked(_item);
 }
 
+void c_item_lite::mouseReleaseEvent(QMouseEvent *event) {
+    mouseDoubleClickEvent(event);
+}
+
 void c_item_lite::check_mouse_over() {
     if(underMouse()) {
         timer->start(100);
