@@ -13,6 +13,7 @@ c_load_builder_dialog::c_load_builder_dialog(c_dbmanager *manager, QWidget *pare
     ui->tableView->resizeColumnsToContents();
     ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->tableView->horizontalHeader()->setStretchLastSection(true);
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
     QObject::connect(ui->tableView,&QTableView::clicked,this,&c_load_builder_dialog::slot_table_cliked);
 }
 
@@ -30,6 +31,7 @@ int c_load_builder_dialog::getCurrent_id() const {
 }
 
 void c_load_builder_dialog::slot_table_cliked(const QModelIndex &index) {
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
     current_json = model->getJson(index);
     current_id = model->getId(index);
 

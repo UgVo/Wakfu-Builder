@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QSqlTableModel>
+#include <QPushButton>
 #include "utilities/c_dbmanager.h"
 #include "utilities/c_save_builder_model.h"
 
