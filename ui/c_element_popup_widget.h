@@ -27,6 +27,7 @@ public:
 public slots:
     void slot_accepted();
     void slot_add_element();
+    void slot_remove_element();
     void updateView();
 
 private:
@@ -36,6 +37,7 @@ private:
     QList<QString> list_element;
     QList<QString> chosen_elements;
     QMap<QString,QString> frToEn_elem;
+    bool nop;
 };
 
 #endif // C_ELEMENT_POPUP_WIDGET_H
