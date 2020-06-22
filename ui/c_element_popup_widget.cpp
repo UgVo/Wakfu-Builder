@@ -5,7 +5,7 @@ c_element_popup_widget::c_element_popup_widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::c_element_popup_widget) {
     ui->setupUi(this);
-    ui->main_widget->setStyleSheet(QString("QWidget#main_widget{background-color : %1}").arg(app_color::grey_blue));
+    ui->main_widget->setStyleSheet(QString("QWidget#main_widget{background-color : %1; border-radius :3px; border : 1px solid white;} QLabel{color : white;}").arg(app_color::grey_blue));
     ui->elem1->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/elements/fire_inked.png); height: 35px; width: auto;}"
                                 "QCheckBox::indicator:checked {image: url(:/images/elements/fire_big.png); height: 35px; width: auto;} ");
     ui->elem2->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/elements/water_inked.png); height: 35px; width: auto;}"
@@ -23,14 +23,21 @@ c_element_popup_widget::c_element_popup_widget(QWidget *parent) :
     QObject::connect(ui->elem2,&QCheckBox::stateChanged,this,&c_element_popup_widget::slot_add_element);
     QObject::connect(ui->elem3,&QCheckBox::stateChanged,this,&c_element_popup_widget::slot_add_element);
     QObject::connect(ui->elem4,&QCheckBox::stateChanged,this,&c_element_popup_widget::slot_add_element);
+
+    QObject::connect(ui->first_elem,&QCheckBox::stateChanged,this,&c_element_popup_widget::slot_remove_element);
+    QObject::connect(ui->second_elem,&QCheckBox::stateChanged,this,&c_element_popup_widget::slot_remove_element);
+    QObject::connect(ui->last_elem,&QCheckBox::stateChanged,this,&c_element_popup_widget::slot_remove_element);
+    ui->first_elem->setEnabled(false);
+    ui->second_elem->setEnabled(false);
+    ui->last_elem->setEnabled(false);
     number_checked = 0;
     checklist.push_back(ui->first_elem);
     checklist.push_back(ui->second_elem);
     checklist.push_back(ui->last_elem);
 
-    ui->first_elem->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/elements/all_big.png); height: 35px; width: auto;}");
-    ui->second_elem->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/elements/all_big.png); height: 35px; width: auto;}");
-    ui->last_elem->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/elements/all_big.png); height: 35px; width: auto;}");
+    ui->first_elem->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/elements/all_1_big.png); height: 35px; width: auto;}");
+    ui->second_elem->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/elements/all_2_big.png); height: 35px; width: auto;}");
+    ui->last_elem->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/elements/all_3_big.png); height: 35px; width: auto;}");
 
     list_element << "Feu" << "Eau" << "Terre" << "Air";
 
@@ -38,6 +45,8 @@ c_element_popup_widget::c_element_popup_widget(QWidget *parent) :
     frToEn_elem["Terre"] = "earth";
     frToEn_elem["Air"] = "wind";
     frToEn_elem["Eau"] = "water";
+
+    nop = false;
 }
 
 c_element_popup_widget::~c_element_popup_widget() {
@@ -57,6 +66,9 @@ void c_element_popup_widget::slot_accepted() {
 }
 
 void c_element_popup_widget::slot_add_element() {
+    if (nop) {
+        return;
+    }
     if (chosen_elements.size() < 3 || static_cast<QCheckBox*>(sender())->isChecked()) {
         if (static_cast<QCheckBox*>(sender()) == ui->elem1) {
             if (chosen_elements.contains("Feu")) {
@@ -88,6 +100,40 @@ void c_element_popup_widget::slot_add_element() {
     updateView();
 }
 
+void c_element_popup_widget::slot_remove_element() {
+    QString elem;
+    if (nop) {
+        return;
+    }
+    if (static_cast<QCheckBox*>(sender())->isChecked()) {
+        return;
+    }
+    if (static_cast<QCheckBox*>(sender()) == ui->first_elem) {
+        elem = chosen_elements.takeAt(0);
+    } else if (static_cast<QCheckBox*>(sender()) == ui->second_elem) {
+        elem = chosen_elements.takeAt(1);
+    } else if (static_cast<QCheckBox*>(sender()) == ui->last_elem) {
+        elem = chosen_elements.takeAt(2);
+    }
+    qDebug() << elem;
+    nop = true;
+    if (elem.contains("Feu")) {
+        ui->elem1->setCheckState(Qt::Checked);
+        ui->elem1->setEnabled(true);
+    } else if (elem.contains("Eau")) {
+        ui->elem2->setCheckState(Qt::Checked);
+        ui->elem2->setEnabled(true);
+    } else if (elem.contains("Terre")) {
+        ui->elem3->setCheckState(Qt::Checked);
+        ui->elem3->setEnabled(true);
+    } else if (elem.contains("Air")) {
+        ui->elem4->setCheckState(Qt::Checked);
+        ui->elem4->setEnabled(true);
+    }
+    nop = false;
+    updateView();
+}
+
 void c_element_popup_widget::updateView() {
     if (chosen_elements.size() == 3) {
         if (ui->elem1->isChecked()) { ui->elem1->setEnabled(false);}
@@ -100,14 +146,18 @@ void c_element_popup_widget::updateView() {
         ui->elem3->setEnabled(true);
         ui->elem4->setEnabled(true);
     }
+    nop = true;
     for (int i = 0; i < chosen_elements.size(); ++i) {
+        checklist[i]->setEnabled(true);
         checklist[i]->setCheckState(Qt::Checked);
         checklist[i]->setStyleSheet(QString("QCheckBox::indicator:checked {image: url(:/images/elements/%1_big.png); height: 35px; width: auto;}").arg(frToEn_elem[chosen_elements[i]]));
     }
     for (int i = chosen_elements.size(); i < 3; ++i) {
-        checklist[i]->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/elements/all_big.png); height: 35px; width: auto;}");
+        checklist[i]->setEnabled(false);
+        checklist[i]->setStyleSheet(QString("QCheckBox::indicator:unchecked {image: url(:/images/elements/all_%1_big.png); height: 35px; width: auto;}").arg(i+1));
         checklist[i]->setCheckState(Qt::Unchecked);
     }
+    nop = false;
 }
 
 
