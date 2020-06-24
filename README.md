@@ -76,3 +76,5 @@ To compile your own version :
 		For POSGRESQL :
 	PATH_TO_POSTGRESQL_DIR\bin;
 	PATH_TO_POSTGRESQL_DIR\lib;
+		For Windows kits :
+	C:\Program Files (x86)\Windows Kits\10\bin\10.0.17134.0\x64
