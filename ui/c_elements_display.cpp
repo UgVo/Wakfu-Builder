@@ -18,7 +18,12 @@ c_elements_display::c_elements_display(QWidget *parent) :
     shadow->setColor(QColor(91, 108, 142, 180));
     shadow->setOffset(2,2);
     ui->widget->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
-    elems_chosen << true << true << true << false;
+    chosen_elements << elems;
+    label_list.push_back(ui->elem1);
+    label_list.push_back(ui->elem2);
+    label_list.push_back(ui->elem3);
+    label_list.push_back(ui->elem4);
+
     update_view();
 }
 
@@ -46,51 +51,22 @@ QMap<QString,int> c_elements_display::set_frToId_elem() {
 }
 
 void c_elements_display::update_view() {
-    ui->elem1->setPixmap(QPixmap(QString(":/images/elements/%1_%2.png").arg(frToEn_elem[elems.at(0)]).arg(elems_chosen.at(0)?"big":"inked")));
-    ui->elem1->setBackgroundRole(QPalette::Base);
-    ui->elem1->setScaledContents(true);
-
-    ui->elem2->setPixmap(QPixmap(QString(":/images/elements/%1_%2.png").arg(frToEn_elem[elems.at(1)]).arg(elems_chosen.at(1)?"big":"inked")));
-    ui->elem2->setBackgroundRole(QPalette::Base);
-    ui->elem2->setScaledContents(true);
-
-    ui->elem3->setPixmap(QPixmap(QString(":/images/elements/%1_%2.png").arg(frToEn_elem[elems.at(2)]).arg(elems_chosen.at(2)?"big":"inked")));
-    ui->elem3->setBackgroundRole(QPalette::Base);
-    ui->elem3->setScaledContents(true);
-
-    ui->elem4->setPixmap(QPixmap(QString(":/images/elements/%1_%2.png").arg(frToEn_elem[elems.at(3)]).arg(elems_chosen.at(3)?"big":"inked")));
-    ui->elem4->setBackgroundRole(QPalette::Base);
-    ui->elem4->setScaledContents(true);
+    for (int i = 0; i < 3; ++i) {
+        label_list[i]->setPixmap(QPixmap(QString(":/images/elements/%1_big.png").arg(frToEn_elem[chosen_elements[i]])));
+        label_list[i]->setBackgroundRole(QPalette::Base);
+        label_list[i]->setScaledContents(true);
+    }
+    label_list[3]->setPixmap(QPixmap(QString(":/images/elements/%1_inked.png").arg(frToEn_elem[chosen_elements[3]])));
+    label_list[3]->setBackgroundRole(QPalette::Base);
+    label_list[3]->setScaledContents(true);
 }
 
 void c_elements_display::setElements(QList<QString> new_elems) {
-    for (int i = 0; i < elems_chosen.size(); ++i) {
-        elems_chosen.replace(i,false);
-    }
-    foreach (QString elem, new_elems) {
-        elems_chosen.replace(frToId_elem[elem],true);
-    }
-    if (!elems_chosen.isEmpty()) {
-        elems_chosen.replace(frToId_elem[new_elems.last()],false);
-    }
+    chosen_elements = new_elems;
     update_view();
     emit newElements(new_elems);
 }
 
 void c_elements_display::mouseDoubleClickEvent(QMouseEvent* /*event*/) {
-    c_element_dialog diag(3);
-    diag.setElems(elems_chosen);
-    if (diag.exec()==QDialog::Accepted) {
-        elems_chosen = diag.getElems();
-        update_view();
-        QList<QString> new_elems_list;
-        for (int i = 0; i < elems_chosen.size(); ++i) {
-            if (elems_chosen.at(i)) {
-                new_elems_list.push_front(elems.at(i));
-            } else {
-                new_elems_list.push_back(elems.at(i));
-            }
-        }
-        emit newElements(new_elems_list);
-    }
+    emit doubleCliked();
 }

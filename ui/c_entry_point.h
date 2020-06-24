@@ -12,7 +12,6 @@
 #include "c_load_builder_dialog.h"
 #include "ui/ui.h"
 #include "utilities/c_io_manager.h"
-#include "c_element_popup_widget.h"
 
 class MainWindow;
 
@@ -54,7 +53,6 @@ private:
     c_io_manager::jsonformat format;
     QString path_json;
 
-    c_element_popup_widget *element_popup;
 public slots:
     void slot_open_button();
     void slot_new_button();

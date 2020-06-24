@@ -28,9 +28,6 @@ c_entry_point::c_entry_point(c_dbmanager *_manager, QWidget *_parent) :
 
     file_dial = nullptr;
     load_builder = nullptr;
-
-    element_popup = new c_element_popup_widget();
-    element_popup->show();
 }
 
 c_entry_point::~c_entry_point()
