@@ -39,7 +39,8 @@ c_datamanager::c_datamanager()
                       "\"3\": \"itemProperties.json\","
                       "\"4\": \"actions.json\","
                       "\"5\": \"states.json\","
-                      "\"6\": \"jobsItems.json\""
+                      "\"6\": \"jobsItems.json\","
+                      "\"7\": \"recipes.json\""
                   "},"
                   "\"password\" : \"%1\""
               "}").arg(password);
@@ -139,7 +140,7 @@ void c_datamanager::parseActions() {
     JsonArray = doc.array();
     for (QJsonArray::iterator it = JsonArray.begin(); it != JsonArray.end(); ++it) {
         c_action value_action(it->toObject());
-        qWarning() << dbmanager->add_action(value_action);
+        dbmanager->add_action(value_action);
     }
 }
 
@@ -160,7 +161,7 @@ void c_datamanager::parseItemproperties() {
     JsonArray = doc.array();
     for (QJsonArray::iterator it = JsonArray.begin(); it != JsonArray.end(); ++it) {
         c_itemProperties itemProperty(it->toObject());
-        qWarning() << dbmanager->add_itemProperty(itemProperty);
+        dbmanager->add_itemProperty(itemProperty);
     }
 }
 
@@ -177,11 +178,12 @@ void c_datamanager::parseEquipementItemType() {
     JsonArray = doc.array();
     for (QJsonArray::iterator it = JsonArray.begin(); it != JsonArray.end(); ++it) {
         c_equipmentItemTypes itemType(it->toObject());
-        qWarning() << dbmanager->add_equipmentItemType(itemType);
+        dbmanager->add_equipmentItemType(itemType);
     }
 }
 
 void c_datamanager::parseItem() {
+    parseFinal();
     QFile file;
     QJsonDocument doc;
     QString val;
@@ -195,6 +197,11 @@ void c_datamanager::parseItem() {
     QList<int> idList = dbmanager->getItemListId();
     for (QJsonArray::iterator it = JsonArray.begin(); it != JsonArray.end(); ++it) {
         c_item item(it->toObject(),dbmanager);
+        item.setIsFinal(!(id_non_final_list.contains(item.getId()) && item.getRarity() != 5 && item.getRarity() != 7 && item.getRarity() != 4));
+        if (item.getId() == 24811) {
+            qDebug() << item.getId() << item.getIsFinal();
+            qDebug() << id_non_final_list.contains(item.getId()) << item.getRarity() << item.getRarity();
+        }
         emit newItem(item.getName(),it - JsonArray.begin(), JsonArray.size());
         if (!idList.contains(item.getId())) {
             dbmanager->add_item(item);
@@ -281,5 +288,29 @@ void c_datamanager::parseStates() {
 
 QString c_datamanager::getPassword() {
     return password;
+}
+
+void c_datamanager::parseFinal() {
+    QFile file;
+    QJsonDocument doc;
+    QString val;
+    QJsonArray JsonArray;
+    file.setFileName(pathJson + QString("/recipes.json"));
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    val = file.readAll();
+    file.close();
+    doc = QJsonDocument::fromJson(val.toUtf8());
+    JsonArray = doc.array();
+    QList<int> id_list;
+    for (QJsonArray::iterator it = JsonArray.begin(); it != JsonArray.end(); ++it) {
+        int id = it->toObject().value("upgradeItemId").toInt();
+        if (id != 0) {
+            if (id == 24811) {
+                qDebug() << id;
+            }
+            id_list.push_back(id);
+        }
+    }
+    id_non_final_list = id_list;
 }
 

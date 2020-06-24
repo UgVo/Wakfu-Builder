@@ -42,6 +42,7 @@ void DialogGestion::slot_update_file() {
     ui->pb_update_images->setEnabled(false);
     data_manager->updateVersion(version);
     data_manager->updateFiles();
+    ui->label_version->setText(version);
 }
 
 void DialogGestion::slot_new_file(int index,int size) {
@@ -85,8 +86,8 @@ void DialogGestion::slot_new_item(QString /**/, int index, int size) {
 }
 
 void DialogGestion::slot_endUpdateItems() {
-    connect(data_manager,&c_datamanager::newItem,this,&DialogGestion::slot_new_item);
-    connect(data_manager,&c_datamanager::updateItemFinished,this,&DialogGestion::slot_endUpdateItems);
+    disconnect(data_manager,&c_datamanager::newItem,this,&DialogGestion::slot_new_item);
+    disconnect(data_manager,&c_datamanager::updateItemFinished,this,&DialogGestion::slot_endUpdateItems);
     ui->pb_update_files->setEnabled(true);
     ui->pb_update_data_base->setEnabled(true);
     ui->pb_update_images->setEnabled(true);
