@@ -48,6 +48,7 @@ c_element_popup_widget::c_element_popup_widget(QWidget *parent) :
     frToEn_elem["Eau"] = "water";
 
     nop = false;
+    ui->buttonBox->setEnabled(false);
 
     QObject::connect(ui->buttonBox,&QDialogButtonBox::accepted,this,&c_element_popup_widget::slot_accepted);
 }
@@ -148,11 +149,13 @@ void c_element_popup_widget::slot_remove_element() {
 
 void c_element_popup_widget::updateView() {
     if (chosen_elements.size() == 3) {
+        ui->buttonBox->setEnabled(true);
         if (ui->elem1->isChecked()) { ui->elem1->setEnabled(false);}
         if (ui->elem2->isChecked()) { ui->elem2->setEnabled(false);}
         if (ui->elem3->isChecked()) { ui->elem3->setEnabled(false);}
         if (ui->elem4->isChecked()) { ui->elem4->setEnabled(false);}
     } else {
+        ui->buttonBox->setEnabled(false);
         ui->elem1->setEnabled(true);
         ui->elem2->setEnabled(true);
         ui->elem3->setEnabled(true);
