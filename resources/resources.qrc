@@ -271,6 +271,10 @@
         <file>portrait/aleat.png</file>
         <file>divers/Network-Connected-icon.png</file>
         <file>divers/Network-Disconnected-icon.png</file>
+        <file>elements/all_big.png</file>
+        <file>elements/all_1_big.png</file>
+        <file>elements/all_2_big.png</file>
+        <file>elements/all_3_big.png</file>
     </qresource>
     <qresource prefix="/font">
         <file>wci.ttf</file>
