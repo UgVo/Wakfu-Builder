@@ -170,6 +170,15 @@ void c_builder_view::slot_update(c_io_manager::jsonformat format) {
 }
 
 void c_builder_view::slot_show_element_popup() {
+    if (id != 0) {
+        status_build->setDisabled(false);
+        build_display->setDisabled(false);
+        element_display->setDisabled(false);
+        result_display->setDisabled(false);
+        search_widget->setDisabled(false);
+        ui->tabWidget->setDisabled(false);
+        return;
+    }
     if (element_popup != nullptr) {
         QObject::disconnect(element_popup,&c_element_popup_widget::accepted,this,&c_builder_view::slot_hide_element_popup);
         element_popup->deleteLater();
