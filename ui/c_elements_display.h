@@ -29,7 +29,9 @@ public:
 private:
     Ui::c_elements_display *ui;
     QList<QString> elems;
-    QList<bool> elems_chosen;
+    QList<QString> chosen_elements;
+    QList<QLabel*> label_list;
+
 
     void update_view();
 
@@ -39,6 +41,7 @@ public slots:
 
 signals:
     void newElements(QList<QString> new_elem);
+    void doubleCliked();
 
 };
 
