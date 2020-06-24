@@ -21,14 +21,17 @@ public:
     explicit c_element_popup_widget(QWidget *parent = nullptr);
     ~c_element_popup_widget();
 
-    void setElems(QList<bool> elems);
-    QList<bool> getElems();
+    void setElems(QList<QString> elems);
+    QList<QString> getElems();
 
 public slots:
     void slot_accepted();
     void slot_add_element();
     void slot_remove_element();
     void updateView();
+
+signals:
+    void accepted();
 
 private:
     Ui::c_element_popup_widget *ui;

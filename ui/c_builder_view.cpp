@@ -31,6 +31,13 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *_parent) :
     ui->horizontalLayout_2->insertWidget(3,search_widget);
     ui->horizontalLayout_2->setAlignment(search_widget,Qt::AlignTop);
 
+    status_build->setDisabled(true);
+    build_display->setDisabled(true);
+    element_display->setDisabled(true);
+    result_display->setDisabled(true);
+    search_widget->setDisabled(true);
+    ui->tabWidget->setDisabled(true);
+
     QObject::connect(search_widget,&c_search_widget::new_search_result,result_display,&c_result_display::slot_new_search_result);
     QObject::connect(search_widget,&c_search_widget::new_search_result_sorted,result_display,&c_result_display::slot_new_search_result_sorted);
     QObject::connect(result_display,&c_result_display::item_doubleCliked,build_display,&c_build_display::equip_new_item);
@@ -62,6 +69,12 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *_parent) :
     this->setWindowState(Qt::WindowMaximized);
 
     state_column_number = -1;
+    state_element = 0;
+
+    element_popup = nullptr;
+
+    QObject::connect(&timer,&QTimer::timeout,this,&c_builder_view::slot_show_element_popup);
+    QObject::connect(element_display,&c_elements_display::doubleCliked,this,&c_builder_view::slot_show_element_popup);
 }
 
 c_builder_view::~c_builder_view()
@@ -104,17 +117,31 @@ MainWindow *c_builder_view::getParent() const {
 }
 
 void c_builder_view::resizeEvent(QResizeEvent *event) {
-        if (( this->rect().width() < 1780 && state_column_number == -1) ||  (this->rect().width() < 1780 && state_column_number==3) ) {
-            result_display->setMinimumSize(506,755);
-            result_display->setMaximumSize(506,755);
-            result_display->refreshView();
-            state_column_number = 2;
-        } else if ((this->rect().width() >= 1780 && state_column_number == -1) ||  (this->rect().width() >= 1780 && state_column_number==2)) {
-            result_display->setMinimumSize(762,755);
-            result_display->setMaximumSize(762,755);
-            result_display->refreshView();
-            state_column_number = 3;
+    if (( this->rect().width() < 1780 && state_column_number == -1) ||  (this->rect().width() < 1780 && state_column_number==3) ) {
+        result_display->setMinimumSize(506,755);
+        result_display->setMaximumSize(506,755);
+        result_display->refreshView();
+        state_column_number = 2;
+    } else if ((this->rect().width() >= 1780 && state_column_number == -1) ||  (this->rect().width() >= 1780 && state_column_number==2)) {
+        result_display->setMinimumSize(762,755);
+        result_display->setMaximumSize(762,755);
+        result_display->refreshView();
+        state_column_number = 3;
+    }
+    if (state_element == 0) {
+        if (element_popup != nullptr) {
+            QPoint elem_popup_pos = QPoint((rect().width()-element_popup->width())/2,-element_popup->height());
+            element_popup->move(elem_popup_pos);
         }
+        if (timer.remainingTime()==-1) {
+            timer.start(2000);
+        }
+    } else if (state_element == 1) {
+        if (element_popup != nullptr) {
+            QPoint elem_popup_pos = QPoint((rect().width()-element_popup->width())/2,(rect().height() - element_popup->height())/3);
+            element_popup->move(elem_popup_pos);
+        }
+    }
 }
 
 c_aptitudes_display *c_builder_view::getAptitude_display() const
@@ -140,4 +167,57 @@ bool c_builder_view::slot_loadFrom(c_io_manager::jsonformat format, QString path
 void c_builder_view::slot_update(c_io_manager::jsonformat format) {
     c_io_manager io_manager(manager);
     io_manager.update(this,format,path);
+}
+
+void c_builder_view::slot_show_element_popup() {
+    if (element_popup != nullptr) {
+        QObject::disconnect(element_popup,&c_element_popup_widget::accepted,this,&c_builder_view::slot_hide_element_popup);
+        element_popup->deleteLater();
+        element_popup = nullptr;
+    }
+    element_popup = new c_element_popup_widget(this);
+    element_popup->show();
+    QObject::connect(element_popup,&c_element_popup_widget::accepted,this,&c_builder_view::slot_hide_element_popup);
+    status_build->setDisabled(true);
+    build_display->setDisabled(true);
+    element_display->setDisabled(true);
+    result_display->setDisabled(true);
+    search_widget->setDisabled(true);
+    ui->tabWidget->setDisabled(true);
+    timer.stop();
+    QPoint elem_popup_pos = QPoint((rect().width()-element_popup->width())/2,-element_popup->height());
+    QPoint elem_popup_pos_final = QPoint((rect().width()-element_popup->width())/2,(rect().height() - element_popup->height())/3);
+    animation1 = new QPropertyAnimation(element_popup,"geometry");
+    animation1->setDuration(1000);
+    QRect rect_button_new = element_popup->rect();
+    rect_button_new.setTopLeft(elem_popup_pos);
+    animation1->setKeyValueAt(0,rect_button_new);
+    rect_button_new.setTopLeft(elem_popup_pos_final);
+    animation1->setKeyValueAt(1,rect_button_new);
+    animation1->setEasingCurve(QEasingCurve::OutCubic);
+    animation1->start(QPropertyAnimation::DeleteWhenStopped);
+}
+
+void c_builder_view::slot_hide_element_popup() {
+    state_element = 2;
+    QPoint elem_popup_pos_final = QPoint((rect().width()-element_popup->width())/2,-element_popup->height());
+    QPoint elem_popup_pos = QPoint((rect().width()-element_popup->width())/2,(rect().height() - element_popup->height())/3);
+    animation1 = new QPropertyAnimation(element_popup,"geometry");
+    animation1->setDuration(1000);
+    QRect rect_button_new = element_popup->rect();
+    rect_button_new.setTopLeft(elem_popup_pos);
+    animation1->setKeyValueAt(0,rect_button_new);
+    rect_button_new.setTopLeft(elem_popup_pos_final);
+    animation1->setKeyValueAt(1,rect_button_new);
+    animation1->setEasingCurve(QEasingCurve::InCubic);
+    animation1->start(QPropertyAnimation::DeleteWhenStopped);
+
+    status_build->setDisabled(false);
+    build_display->setDisabled(false);
+    element_display->setDisabled(false);
+    result_display->setDisabled(false);
+    search_widget->setDisabled(false);
+    ui->tabWidget->setDisabled(false);
+
+    element_display->setElements(element_popup->getElems());
 }

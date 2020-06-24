@@ -6,6 +6,7 @@ c_element_popup_widget::c_element_popup_widget(QWidget *parent) :
     ui(new Ui::c_element_popup_widget) {
     ui->setupUi(this);
     ui->main_widget->setStyleSheet(QString("QWidget#main_widget{background-color : %1; border-radius :3px; border : 1px solid white;} QLabel{color : white;}").arg(app_color::grey_blue));
+    ui->widget_chosen->setStyleSheet(QString("QWidget#widget_chosen{background-color : %1; border-radius:3px; border:1px solid white;}").arg(app_color::dark_blue));
     ui->elem1->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/elements/fire_inked.png); height: 35px; width: auto;}"
                                 "QCheckBox::indicator:checked {image: url(:/images/elements/fire_big.png); height: 35px; width: auto;} ");
     ui->elem2->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/elements/water_inked.png); height: 35px; width: auto;}"
@@ -47,22 +48,33 @@ c_element_popup_widget::c_element_popup_widget(QWidget *parent) :
     frToEn_elem["Eau"] = "water";
 
     nop = false;
+
+    QObject::connect(ui->buttonBox,&QDialogButtonBox::accepted,this,&c_element_popup_widget::slot_accepted);
 }
 
 c_element_popup_widget::~c_element_popup_widget() {
     delete ui;
 }
 
-void c_element_popup_widget::setElems(QList<bool> elems) {
-
+void c_element_popup_widget::setElems(QList<QString> elems) {
+    chosen_elements = elems;
 }
 
-QList<bool> c_element_popup_widget::getElems() {
-
+QList<QString> c_element_popup_widget::getElems() {
+    if (!chosen_elements.contains("Feu")) {
+        chosen_elements.push_back("Feu");
+    } else if (!chosen_elements.contains("Terre")) {
+        chosen_elements.push_back("Terre");
+    } else if (!chosen_elements.contains("Air")) {
+        chosen_elements.push_back("Air");
+    } else if (!chosen_elements.contains("Eau")) {
+        chosen_elements.push_back("Eau");
+    }
+    return chosen_elements;
 }
 
 void c_element_popup_widget::slot_accepted() {
-
+    emit accepted();
 }
 
 void c_element_popup_widget::slot_add_element() {

@@ -2,6 +2,8 @@
 #define C_BUILDER_VIEW_H
 
 #include <QWidget>
+#include <QPropertyAnimation>
+#include <QTimer>
 #include "utilities/c_dbmanager.h"
 #include "utilities/c_build.h"
 #include "ui/c_result_display.h"
@@ -11,6 +13,7 @@
 #include "ui/c_search_widget.h"
 #include "utilities/c_io_manager.h"
 #include "ui/c_aptitudes_display.h"
+#include "c_element_popup_widget.h"
 
 namespace Ui {
 class c_builder_view;
@@ -56,12 +59,19 @@ private:
     MainWindow *parent;
 
     int state_column_number;
+    int state_element;
+    c_element_popup_widget *element_popup;
+    QPropertyAnimation* animation1;
+
+    QTimer timer;
 
 public slots:
     void slot_save(c_io_manager::jsonformat format, QString path = QString());
     bool slot_load(c_io_manager::jsonformat format, QString path = QString());
     bool slot_loadFrom(c_io_manager::jsonformat format, QString path_json);
     void slot_update(c_io_manager::jsonformat format);
+    void slot_show_element_popup();
+    void slot_hide_element_popup();
 //    virtual void keyPressEvent(QKeyEvent *event);
 //    virtual void keyReleaseEvent(QKeyEvent *event);
 
