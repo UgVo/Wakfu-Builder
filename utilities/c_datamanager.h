@@ -38,6 +38,7 @@ public:
     void getImages();
     void parseStates();
     QString getPassword();
+    void parseFinal();
 
 private:
     QStringList _filelist;
@@ -53,6 +54,8 @@ private:
     QList<int> _imageList;
     int index_imageList;
     QString imageDir;
+
+    QList<int> id_non_final_list;
 
 public slots:
     void slot_downloadVersionFinished(QString out);

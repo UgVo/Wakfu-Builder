@@ -86,6 +86,7 @@ public:
     QString prepareQuery_simple(QList<QString> action_ids, QList<int> rarities, QList<int> types, QList<int> bondaries = {1,200}, QString name = QString(), bool final = false);
     QString prepareQuery_condi(QList<QString> caract_name, QList<int> rarities, QList<int> types, QList<int> bondaries = {1,200}, QString name = QString(), bool final = false, QList<bool> condi = QList<bool>());
 
+    bool setFinal(QList<int> isFinalList);
 
 private:
     QSqlDatabase m_db;

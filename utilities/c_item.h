@@ -96,7 +96,8 @@ private:
     QList<c_carac> _list_bonuses;
     QMap<QString,QString> _constraints;
     QList<QString> _elements;
-    int _number_element;    
+    int _number_element;
+    bool _isFinal;
 
 public:
     static QMap<QString,int> mapTypeToId;
@@ -178,6 +179,8 @@ public:
     static QStringList position();
     QList<c_carac> getList_bonuses() const;
     void setList_bonuses(const QList<c_carac> &list_bonuses);
+    bool getIsFinal() const;
+    void setIsFinal(bool isFinal);
 };
 
 #endif // C_ITEM_H

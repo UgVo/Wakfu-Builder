@@ -310,8 +310,8 @@ bool c_dbmanager::add_relation_equipementType_PositionDisable(int equipementType
 
 bool c_dbmanager::add_item(c_item item) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.item (id,  lvl,  itemTypeId,  itemSetId,  rarity,  bindType,  minimumShardSlotNumber,  maximumShardSlotNumber,  useApCost,  useMpCost,  useWpCost,  useMinRange,  useMaxRange,  useTestFreeCell,  useTestLos,  useTestOnlyLine,  useTestNoBorderCell,  useWorldTarget,  gfxId,  title, description) "
-                  "VALUES          (:id, :lvl, :itemTypeId, :itemSetId, :rarity, :bindType, :minimumShardSlotNumber, :maximumShardSlotNumber, :useApCost, :useMpCost, :useWpCost, :useMinRange, :useMaxRange, :useTestFreeCell, :useTestLos, :useTestOnlyLine, :useTestNoBorderCell, :useWorldTarget, :gfxId, :title, :description)");
+    query.prepare("INSERT INTO wakfu_builder.item (id,  lvl,  itemTypeId,  itemSetId,  rarity,  bindType,  minimumShardSlotNumber,  maximumShardSlotNumber,  useApCost,  useMpCost,  useWpCost,  useMinRange,  useMaxRange,  useTestFreeCell,  useTestLos,  useTestOnlyLine,  useTestNoBorderCell,  useWorldTarget,  gfxId,  title, description,isFinal) "
+                  "VALUES          (:id, :lvl, :itemTypeId, :itemSetId, :rarity, :bindType, :minimumShardSlotNumber, :maximumShardSlotNumber, :useApCost, :useMpCost, :useWpCost, :useMinRange, :useMaxRange, :useTestFreeCell, :useTestLos, :useTestOnlyLine, :useTestNoBorderCell, :useWorldTarget, :gfxId, :title, :description, :isFinal)");
     query.bindValue(":id", item.getId());
     query.bindValue(":itemTypeId", item.getType().getId());
     query.bindValue(":itemSetId", item.getSetId());
@@ -332,6 +332,7 @@ bool c_dbmanager::add_item(c_item item) {
     query.bindValue(":gfxId", item.getGfxId());
     query.bindValue(":title", item.getName());
     query.bindValue(":description",item.getDescription());
+    query.bindValue(":isFinal",item.getIsFinal());
 
     if (item.getType().getId() == 582 || item.getType().getId() == 611) {
         query.bindValue(":lvl", -1);
@@ -895,19 +896,11 @@ bool c_dbmanager::add_relation_item_carac(int id_item, int id_carac) {
 
 QString c_dbmanager::prepareQuery_simple(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final) {
     QString query_string;
-    if (final) {
-        query_string = QString("SELECT item.id,item.lvl FROM (SELECT item1.* FROM (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) item1 LEFT OUTER JOIN (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) AS item2 ON item1.rarity < item2.rarity AND item1.title = item2.title WHERE item2.title IS NULL) item ").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"");
-    } else {
-        query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
-    }
+    query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
     for (int i = 0; i< carac_effect.size(); ++i) {
         query_string += QString(", wakfu_builder.carac as carac%1, wakfu_builder.relation_item_carac as relation%1").arg(i);
     }
-    if (!final) {
-        query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) AND").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"");
-    } else {
-        query_string+= " WHERE";
-    }
+    query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) %4 AND").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"").arg(final?"AND isFinal = true":"");
 
     if (!carac_effect.isEmpty()) {
         for (int i = 0; i < carac_effect.size(); ++i) {
@@ -954,19 +947,11 @@ QString c_dbmanager::prepareQuery_simple(QList<QString> carac_effect, QList<int>
 
 QString c_dbmanager::prepareQuery_condi(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final, QList<bool> condi) {
     QString query_string;
-    if (final) {
-        query_string = QString("SELECT item.id,item.lvl FROM (SELECT item1.* FROM (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) item1 LEFT OUTER JOIN (select * from wakfu_builder.item WHERE (item.lvl >= %1 AND item.lvl <= %2 %3)) AS item2 ON item1.rarity < item2.rarity AND item1.title = item2.title WHERE item2.title IS NULL) item ").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"");
-    } else {
-        query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
-    }
+    query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
     for (int i = 0; i< carac_effect.size(); ++i) {
         query_string += QString(", wakfu_builder.carac as carac%1, wakfu_builder.relation_item_carac as relation%1").arg(i);
     }
-    if (!final) {
-        query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) AND").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"");
-    } else {
-        query_string+= " WHERE";
-    }
+    query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) %4 AND").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"").arg(final?"AND isFinal = true":"");
 
     if (!carac_effect.isEmpty()) {
         for (int i = 0; i < carac_effect.size(); ++i) {
@@ -1006,6 +991,18 @@ QString c_dbmanager::prepareQuery_condi(QList<QString> carac_effect, QList<int> 
     query_string.remove(QRegExp("WHERE$"));
     query_string.push_back(" GROUP BY item.id,item.lvl ORDER BY item.lvl DESC");
     return query_string;
+}
+
+bool c_dbmanager::setFinal(QList<int> isFinalList) {
+    QSqlQuery query(m_db);
+    QString query_string("UPDATE wakfu_builder.item isFinal = false WHERE ");
+    foreach (int id, isFinalList) {
+        query_string.append(QString(" id = %1 OR").arg(id));
+    }
+    query_string.remove(QRegExp("OR$"));
+    query.prepare(query_string);
+    bool flag = query.exec();
+    return flag;
 }
 
 QString c_dbmanager::generateCombiQuery_carac(QList<bool> condi) {

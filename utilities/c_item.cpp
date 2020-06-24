@@ -57,6 +57,7 @@ c_item::c_item(int id, int lvl, QString name, QString description, c_equipmentIt
     _equipEffects = equipEffects;
     _gfxId = gfxId;
     _number_element = 0;
+    _isFinal = false;
 
     initBonuses();
 }
@@ -119,7 +120,16 @@ c_item::c_item(QJsonObject object, c_dbmanager *dbManager) {
     } else if (_itemType.getId() == 611) {
         _lvl = 50;
     }
+    _isFinal = false;
     initBonuses();
+}
+
+bool c_item::getIsFinal() const {
+    return _isFinal;
+}
+
+void c_item::setIsFinal(bool isFinal){
+    _isFinal = isFinal;
 }
 
 QList<c_carac> c_item::getList_bonuses() const {
