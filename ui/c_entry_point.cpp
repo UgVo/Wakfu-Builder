@@ -380,9 +380,11 @@ void c_entry_point::slot_open_from_source() {
     if (dynamic_cast<QFileDialog*>(sender_widget) != nullptr) {
         format = c_io_manager::jsonformat::file;
         path_json = file_dial->selectedFiles().at(0);
+        id = -1;
     } else {
         format = c_io_manager::jsonformat::database;
         path_json = load_builder->getCurrent_json();
+        id = load_builder->getCurrent_id();
     }
     load_builder->show();
     file_dial->show();
@@ -524,5 +526,5 @@ void c_entry_point::slot_cancel_open() {
 }
 
 void c_entry_point::slot_open_animation_finished() {
-    emit load_builder_from(format,path_json);
+    emit load_builder_from(format,path_json,id);
 }

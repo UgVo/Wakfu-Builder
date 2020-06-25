@@ -159,9 +159,9 @@ bool c_builder_view::slot_load(c_io_manager::jsonformat format, QString path) {
     return io_manager.load(this,format,path);
 }
 
-bool c_builder_view::slot_loadFrom(c_io_manager::jsonformat format, QString path_json) {
+bool c_builder_view::slot_loadFrom(c_io_manager::jsonformat format, QString path_json,int id) {
     c_io_manager io_manager(manager)    ;
-    return io_manager.loadFrom(this,format,path_json);
+    return io_manager.loadFrom(this,format,path_json,id);
 }
 
 void c_builder_view::slot_update(c_io_manager::jsonformat format) {

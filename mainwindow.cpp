@@ -232,10 +232,10 @@ void MainWindow::slot_creation_builder() {
     entry_point->slot_creation_builder_anim();
 }
 
-void MainWindow::slot_open_builder(const c_io_manager::jsonformat format, QString path_json) {
+void MainWindow::slot_open_builder(const c_io_manager::jsonformat format, QString path_json, int id) {
     QObject::disconnect(entry_point,&c_entry_point::load_builder_from,this,&MainWindow::slot_open_builder);
     builder_list.push_back(new c_builder_view(database_manager,this));
-    builder_list.last()->slot_loadFrom(format,path_json);
+    builder_list.last()->slot_loadFrom(format,path_json,id);
     ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
     QThread::msleep(10);

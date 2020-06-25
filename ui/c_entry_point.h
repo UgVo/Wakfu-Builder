@@ -52,6 +52,7 @@ private:
     qreal movie_aspect;
     c_io_manager::jsonformat format;
     QString path_json;
+    int id;
 
 public slots:
     void slot_open_button();
@@ -69,7 +70,7 @@ signals:
     void manage_movie(bool play);
     void first_animation_finished();
     void second_animation_finished();
-    void load_builder_from(const c_io_manager::jsonformat, QString);
+    void load_builder_from(const c_io_manager::jsonformat, QString,int);
 };
 
 #endif // C_ENTRY_POINT_H
