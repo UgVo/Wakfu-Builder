@@ -68,7 +68,7 @@ private:
 public slots:
     void slot_save(c_io_manager::jsonformat format, QString path = QString());
     bool slot_load(c_io_manager::jsonformat format, QString path = QString());
-    bool slot_loadFrom(c_io_manager::jsonformat format, QString path_json);
+    bool slot_loadFrom(c_io_manager::jsonformat format, QString path_json, int id);
     void slot_update(c_io_manager::jsonformat format);
     void slot_show_element_popup();
     void slot_hide_element_popup();

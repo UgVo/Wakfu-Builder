@@ -92,7 +92,7 @@ public slots:
     void slot_action_connection_bdd();
 
     void slot_creation_builder();
-    void slot_open_builder(const c_io_manager::jsonformat, QString string);
+    void slot_open_builder(const c_io_manager::jsonformat, QString string, int id);
     void slot_creation_finished();
 
     void set_save_enabled(bool flag);
