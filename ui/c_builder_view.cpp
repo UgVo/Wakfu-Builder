@@ -73,7 +73,6 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *_parent) :
 
     element_popup = nullptr;
 
-    QObject::connect(&timer,&QTimer::timeout,this,&c_builder_view::slot_show_element_popup);
     QObject::connect(element_display,&c_elements_display::doubleCliked,this,&c_builder_view::slot_show_element_popup);
 }
 
@@ -133,8 +132,17 @@ void c_builder_view::resizeEvent(QResizeEvent *event) {
             QPoint elem_popup_pos = QPoint((rect().width()-element_popup->width())/2,-element_popup->height());
             element_popup->move(elem_popup_pos);
         }
-        if (timer.remainingTime()==-1) {
+        if (id != 0) {
+            status_build->setDisabled(false);
+            build_display->setDisabled(false);
+            element_display->setDisabled(false);
+            result_display->setDisabled(false);
+            search_widget->setDisabled(false);
+            ui->tabWidget->setDisabled(false);
+            timer.stop();
+        } else if (timer.remainingTime()==-1) {
             timer.start(2000);
+            QObject::connect(&timer,&QTimer::timeout,this,&c_builder_view::slot_show_element_popup);
         }
     } else if (state_element == 1) {
         if (element_popup != nullptr) {
@@ -170,15 +178,6 @@ void c_builder_view::slot_update(c_io_manager::jsonformat format) {
 }
 
 void c_builder_view::slot_show_element_popup() {
-    if (id != 0) {
-        status_build->setDisabled(false);
-        build_display->setDisabled(false);
-        element_display->setDisabled(false);
-        result_display->setDisabled(false);
-        search_widget->setDisabled(false);
-        ui->tabWidget->setDisabled(false);
-        return;
-    }
     if (element_popup != nullptr) {
         QObject::disconnect(element_popup,&c_element_popup_widget::accepted,this,&c_builder_view::slot_hide_element_popup);
         element_popup->deleteLater();
