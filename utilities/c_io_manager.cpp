@@ -56,7 +56,7 @@ QByteArray c_io_manager::save(c_builder_view *builder, const c_io_manager::jsonf
         file.close();
         builder->setId(-1);
     } else if (format ==  c_io_manager::jsonformat::database) {
-        if (!builder->getId()) {
+        if (!builder->getId() || builder->getId()==-1) {
             int id = db_manager->add_save_builder(doc.toJson(QJsonDocument::Indented),builder->getStatus_build()->getName(),builder->getStatus_build()->getLvl());
             builder->setId(id);
         } else {
