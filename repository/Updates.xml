@@ -12,6 +12,6 @@
   <Script>installscript.qs</Script>
   <UpdateFile UncompressedSize="100186869" CompressedSize="37598467" OS="Any"/>
   <DownloadableArchives>bearer.7z,iconengines.7z,imageformats.7z,images.7z,json.7z,log.7z,platforminputcontexts.7z,platforms.7z,qmltooling.7z,QtGraphicalEffects.7z,QtQuick.7z,QtQuick.2.7z,resources.7z,save.7z,scenegraph.7z,sqldrivers.7z,styles.7z,translations.7z,virtualkeyboard.7z,content.7z</DownloadableArchives>
-  <SHA1>cbdb19c0c2730592875eddb401037de8fd0cf130</SHA1>
+  <SHA1>1334257c60f0ce604fa2d60ec9b9349887319e78</SHA1>
  </PackageUpdate>
 </Updates>
