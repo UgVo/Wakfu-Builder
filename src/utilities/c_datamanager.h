@@ -20,6 +20,7 @@
 #include <QJsonArray>
 #include <QProgressDialog>
 #include <QCoreApplication>
+#include <QXmlStreamReader>
 
 class c_datamanager : public QObject
 {
@@ -39,6 +40,7 @@ public:
     void parseStates();
     QString getPassword();
     void parseFinal();
+    bool isNewSoftVersion();
 
 private:
     QStringList _filelist;
@@ -46,6 +48,7 @@ private:
     c_dbmanager* dbmanager;
     QString url_json;
     QString url_image;
+    QString url_soft_vers;
     QString version_local;
     QString pathJson;
     QString pathImage;
@@ -54,8 +57,10 @@ private:
     QList<int> _imageList;
     int index_imageList;
     QString imageDir;
+    QString soft_version;
 
     QList<int> id_non_final_list;
+    bool new_soft_version;
 
 public slots:
     void slot_downloadVersionFinished(QString out);
@@ -63,6 +68,7 @@ public slots:
     void trigger_download_element();
     void trigger_download_images();
     void savePassword(QString password);
+    void slot_check_softVersion(QString);
 
 signals:
     void newVersion(QString);
@@ -72,6 +78,7 @@ signals:
     void downloadImageFinished();
     void newFile(int index, int size);
     void downloadFileFinished();
+    void update_soft_version();
 
 };
 
