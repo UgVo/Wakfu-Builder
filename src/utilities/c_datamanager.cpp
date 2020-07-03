@@ -112,6 +112,10 @@ void c_datamanager::slot_stop() {
     stop = true;
 }
 
+void c_datamanager::empty_db() {
+    dbmanager->empty_database();
+}
+
 void c_datamanager::updateVersion(QString newVersion) {
     QFile file;
     QJsonDocument doc;

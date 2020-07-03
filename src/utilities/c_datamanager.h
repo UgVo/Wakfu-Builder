@@ -72,6 +72,7 @@ public slots:
     void savePassword(QString password);
     void slot_check_softVersion(QString);
     void slot_stop();
+    void empty_db();
 
 signals:
     void newVersion(QString);
