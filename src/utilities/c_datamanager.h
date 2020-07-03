@@ -62,13 +62,16 @@ private:
     QList<int> id_non_final_list;
     bool new_soft_version;
 
+    bool stop;
+
 public slots:
     void slot_downloadVersionFinished(QString out);
     void slot_newVersion();
     void trigger_download_element();
-    void trigger_download_images();
+    void trigger_download_images(QString out =  QString());
     void savePassword(QString password);
     void slot_check_softVersion(QString);
+    void slot_stop();
 
 signals:
     void newVersion(QString);

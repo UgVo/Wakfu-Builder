@@ -81,6 +81,8 @@ c_datamanager::c_datamanager()
     networkManager =  new c_networkManager();
     networkManager->downloadFile(QUrl(url_soft_vers + "version.json"),pathJson);
     QObject::connect(networkManager,SIGNAL(downloadFinished(QString)),this,SLOT(slot_check_softVersion(QString)));
+
+    stop = false;
 }
 
 void c_datamanager::checkVersion() {
@@ -104,6 +106,10 @@ void c_datamanager::slot_check_softVersion(QString out) {
     new_soft_version = online_soft_version.compare(soft_version);
     qDebug() << new_soft_version << online_soft_version << soft_version;
     emit update_soft_version();
+}
+
+void c_datamanager::slot_stop() {
+    stop = true;
 }
 
 void c_datamanager::updateVersion(QString newVersion) {
@@ -170,9 +176,11 @@ void c_datamanager::parseActions() {
     doc = QJsonDocument::fromJson(val.toUtf8());
     JsonArray = doc.array();
     for (QJsonArray::iterator it = JsonArray.begin(); it != JsonArray.end(); ++it) {
+        if (stop) break;
         c_action value_action(it->toObject());
         dbmanager->add_action(value_action);
     }
+    stop = false;
 }
 
 void c_datamanager::setDBManager(c_dbmanager* _dbmanager) {
@@ -191,9 +199,11 @@ void c_datamanager::parseItemproperties() {
     doc = QJsonDocument::fromJson(val.toUtf8());
     JsonArray = doc.array();
     for (QJsonArray::iterator it = JsonArray.begin(); it != JsonArray.end(); ++it) {
+        if (stop) break;
         c_itemProperties itemProperty(it->toObject());
         dbmanager->add_itemProperty(itemProperty);
     }
+    stop = false;
 }
 
 void c_datamanager::parseEquipementItemType() {
@@ -208,9 +218,11 @@ void c_datamanager::parseEquipementItemType() {
     doc = QJsonDocument::fromJson(val.toUtf8());
     JsonArray = doc.array();
     for (QJsonArray::iterator it = JsonArray.begin(); it != JsonArray.end(); ++it) {
+        if (stop) break;
         c_equipmentItemTypes itemType(it->toObject());
         dbmanager->add_equipmentItemType(itemType);
     }
+    stop = false;
 }
 
 void c_datamanager::parseItem() {
@@ -227,6 +239,7 @@ void c_datamanager::parseItem() {
     JsonArray = doc.array();
     QList<int> idList = dbmanager->getItemListId();
     for (QJsonArray::iterator it = JsonArray.begin(); it != JsonArray.end(); ++it) {
+        if (stop) break;
         c_item item(it->toObject(),dbmanager);
         item.setIsFinal(!(id_non_final_list.contains(item.getId()) && item.getRarity() != 5 && item.getRarity() != 7 && item.getRarity() != 4));
         if (item.getId() == 24811) {
@@ -240,6 +253,7 @@ void c_datamanager::parseItem() {
             //qInfo() << item.getName() << " : Already in Database";
         }
     }
+    stop = false;
     emit updateItemFinished();
 }
 
@@ -258,18 +272,25 @@ void c_datamanager::getImages() {
     _imageList = dbmanager->getImagesList().toSet().subtract(images_id.toSet()).toList();
     index_imageList = 0;
 
-    trigger_download_images();
+    trigger_download_images("OK");
 }
 
-void c_datamanager::trigger_download_images() {
+void c_datamanager::trigger_download_images(QString out) {
+    if (out.isEmpty() || stop) {
+        qWarning() << "Error in downloading images";
+        emit newImage(_imageList.size(),  _imageList.size());
+        emit downloadImageFinished();
+        stop = false;
+        return;
+    }
     if (networkManager != nullptr) {
-        QObject::disconnect(networkManager,SIGNAL(downloadFinished(QString)),this,SLOT(trigger_download_images()));
+        QObject::disconnect(networkManager,SIGNAL(downloadFinished(QString)),this,SLOT(trigger_download_images(QString)));
         networkManager->deleteLater();
         networkManager = nullptr;
     }
     if (index_imageList < _imageList.size()) {
         networkManager = new c_networkManager();
-        QObject::connect(networkManager,SIGNAL(downloadFinished(QString)),this,SLOT(trigger_download_images()));
+        QObject::connect(networkManager,SIGNAL(downloadFinished(QString)),this,SLOT(trigger_download_images(QString)));
         QString url = url_image + QString("%1.png").arg(_imageList.at(index_imageList++));
         networkManager->downloadFile(url,pathImage);
         emit newImage(index_imageList,  _imageList.size());
