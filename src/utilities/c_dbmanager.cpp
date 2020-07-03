@@ -24,6 +24,7 @@ bool c_dbmanager::connect(QString password) {
     bool flag = m_db.open();
     qDebug() << "Openning database :" << flag;
     emit signal_connection_status(flag);
+    check_structure();
     return flag;
 }
 
@@ -1003,6 +1004,141 @@ bool c_dbmanager::setFinal(QList<int> isFinalList) {
     query.prepare(query_string);
     bool flag = query.exec();
     return flag;
+}
+
+void c_dbmanager::empty_database() {
+    QSqlQuery query(m_db);
+    QString query_string("delete from wakfu_builder.action;"
+                         "delete from wakfu_builder.itemproperties;"
+                         "delete from wakfu_builder.equipmentItemType;"
+                         "delete from wakfu_builder.equipmentPosition;"
+                         "delete from wakfu_builder.eqpType_Pos_relation;"
+                         "delete from wakfu_builder.eqpType_DisPos_relation;"
+
+                         "delete from wakfu_builder.effect;"
+                         "delete from wakfu_builder.item;"
+                         "delete from wakfu_builder.item_properties_relation;"
+                         "delete from wakfu_builder.item_useEffect_relation;"
+                         "delete from wakfu_builder.item_useCriticalEffect_relation;"
+                         "delete from wakfu_builder.item_useEquipEffect_relation;"
+                         "delete from wakfu_builder.carac");
+}
+
+void c_dbmanager::check_structure() {
+    QSqlQuery query(m_db);
+    qDebug() << m_db.tables();
+    if (!m_db.tables().contains("wakfu_builder.relation_item_carac") || (get_number_column("relation_item_carac") != 2)) {
+        debug_check_table_structure("relation_item_carac",3);
+        query.exec("DROP TABLE wakfu_builder.relation_item_carac");
+        query.exec("CREATE TABLE wakfu_builder.relation_item_carac( id_item integer, id_carac integer, PRIMARY KEY(id_item,id_carac));");
+        qDebug() << "relation_item_carac table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.eqptype_pos_relation") || (get_number_column("eqptype_pos_relation") != 2)) {
+        debug_check_table_structure("eqptype_pos_relation",2);
+        query.exec("DROP TABLE wakfu_builder.eqptype_pos_relation");
+        query.exec("CREATE TABLE wakfu_builder.eqptype_pos_relation(id_ET integer, id_Pos integer, CONSTRAINT relation_pos_pk PRIMARY KEY(id_ET,id_Pos))");
+        qDebug() << "eqptype_pos_relation table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.eqptype_dispos_relation") || (get_number_column("eqptype_dispos_relation") != 2)) {
+        debug_check_table_structure("eqptype_dispos_relation",2);
+        query.exec("DROP TABLE wakfu_builder.eqptype_dispos_relation");
+        query.exec("CREATE TABLE wakfu_builder.eqptype_dispos_relation (id_ET integer, id_Pos integer, CONSTRAINT relation_disPos_pk PRIMARY KEY(id_ET,id_Pos))");
+        qDebug() << "eqptype_dispos_relation table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.item_properties_relation") || (get_number_column("item_properties_relation") != 2)) {
+        debug_check_table_structure("item_properties_relation",2);
+        query.exec("DROP TABLE wakfu_builder.item_properties_relation");
+        query.exec("CREATE TABLE wakfu_builder.item_properties_relation(id_item integer, id_property integer, CONSTRAINT relation_prop_pk PRIMARY KEY(id_item,id_property));");
+        qDebug() << "item_properties_relation table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.item_useeffect_relation") || (get_number_column("item_useeffect_relation") != 2)) {
+        debug_check_table_structure("item_useeffect_relation",2);
+        query.exec("DROP TABLE wakfu_builder.item_useeffect_relation");
+        query.exec("CREATE TABLE wakfu_builder.item_useeffect_relation (id_item integer, id_E integer, PRIMARY KEY(id_item,id_E))");
+        qDebug() << "item_useeffect_relation table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.item_usecriticaleffect_relation") || (get_number_column("item_usecriticaleffect_relation") != 2)) {
+        debug_check_table_structure("item_usecriticaleffect_relation",2);
+        query.exec("DROP TABLE wakfu_builder.item_usecriticaleffect_relation");
+        query.exec("CREATE TABLE wakfu_builder.item_usecriticaleffect_relation (id_item integer, id_E integer, CONSTRAINT relation_uCE_pk PRIMARY KEY(id_item,id_E))");
+        qDebug() << "item_usecriticaleffect_relation table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.item_useequipeffect_relation") || (get_number_column("item_useequipeffect_relation") != 2)) {
+        debug_check_table_structure("item_useequipeffect_relation",2);
+        query.exec("DROP TABLE wakfu_builder.item_useequipeffect_relation");
+        query.exec("CREATE TABLE wakfu_builder.item_useequipeffect_relation (id_item integer, id_E integer, CONSTRAINT relation_uEE_pk PRIMARY KEY(id_item,id_E))");
+        qDebug() << "item_useequipeffect_relation table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.action") || (get_number_column("action") != 3)) {
+        debug_check_table_structure("action",2);
+        query.exec("DROP TABLE wakfu_builder.action");
+        query.exec("CREATE TABLE wakfu_builder.action (id integer PRIMARY KEY, description text, effect text)");
+        qDebug() << "action table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.effect") || (get_number_column("effect") != 6)) {
+        debug_check_table_structure("effect",6);
+        query.exec("DROP TABLE wakfu_builder.effect");
+        query.exec("CREATE TABLE wakfu_builder.effect (id integer PRIMARY KEY, actionId integer,areaShape integer, areaSize text, params text, description text)");
+        qDebug() << "effect table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.itemproperties") || (get_number_column("itemproperties") != 3)) {
+        debug_check_table_structure("itemproperties",3);
+        query.exec("DROP TABLE wakfu_builder.itemproperties");
+        query.exec("CREATE TABLE wakfu_builder.itemproperties (id integer PRIMARY KEY, name text, description text)");
+        qDebug() << "itemproperties table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.equipmentitemtype") || (get_number_column("equipmentitemtype") != 5)) {
+        debug_check_table_structure("equipmentitemtype",5);
+        query.exec("DROP TABLE wakfu_builder.equipmentitemtype");
+        query.exec("CREATE TABLE wakfu_builder.equipmentitemtype (id integer PRIMARY KEY, parentId integer, recyclable bool, visibleInAnimation bool, title text);");
+        qDebug() << "equipmentitemtype table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.equipmentposition") || (get_number_column("equipmentposition") != 2)) {
+        debug_check_table_structure("equipmentPosition",2);
+        query.exec("DROP TABLE wakfu_builder.equipmentposition");
+        query.exec("CREATE TABLE wakfu_builder.equipmentPosition (id integer PRIMARY KEY, name text)");
+        qDebug() << "equipmentPosition table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.item") || (get_number_column("item") != 22)) {
+        debug_check_table_structure("item",22);
+        query.exec("DROP TABLE wakfu_builder.item");
+        query.exec("CREATE TABLE wakfu_builder.item( id integer PRIMARY KEY, lvl integer, itemTypeId integer, itemSetId integer, rarity integer, bindType integer, minimumShardSlotNumber integer, maximumShardSlotNumber integer, useApCost integer, useMpCost integer, useWpCost integer, useMinRange integer, useMaxRange integer, useTestFreeCell bool, useTestLos bool, useTestOnlyLine bool, useTestNoBorderCell bool, useWorldTarget integer, gfxid integer, title text, description text, isFinal bool)");
+        qDebug() << "item table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.carac") || (get_number_column("carac") != 3)) {
+        debug_check_table_structure("carac",3);
+        query.exec("DROP TABLE wakfu_builder.carac");
+        query.exec("CREATE TABLE wakfu_builder.carac (id integer PRIMARY KEY, effect text, value integer)");
+        qDebug() << "carac table created";
+    }
+    if (!m_db.tables().contains("wakfu_builder.builder_save") || (get_number_column("builder_save") != 4)) {
+        debug_check_table_structure("builder_save",3);
+        query.exec("DROP TABLE wakfu_builder.builder_save");
+        query.exec(" CREATE TABLE wakfu_builder.builder_save (id SERIAL UNIQUE, json text, name text, niveau integer)");
+        qDebug() << "builder_save table created";
+    }
+}
+
+void c_dbmanager::debug_check_table_structure(QString name, int size) {
+    qDebug() << name << " :";
+    qDebug() << "Exists :" << m_db.tables().contains(QString("wakfu_builder.%1").arg(name)) << " Supposed size : " << size << "Size : " << get_number_column(name);
+}
+
+int c_dbmanager::get_number_column(QString table) {
+    QSqlQuery query(m_db);
+    int number = 0;
+    QString query_string(QString(" SELECT count(column_name) FROM information_schema.columns "
+                         " WHERE table_schema = 'wakfu_builder' and table_name = '%1'").arg(table));
+    //qDebug() << query_string;
+    query.prepare(query_string);
+    if(query.exec()) {
+        //qDebug() << query.record();
+        int id = query.record().indexOf("count");
+        while (query.next()) {
+            number = query.value(id).toInt();
+        }
+    }
+    return number;
 }
 
 QString c_dbmanager::generateCombiQuery_carac(QList<bool> condi) {

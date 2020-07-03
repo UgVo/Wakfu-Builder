@@ -88,6 +88,11 @@ public:
 
     bool setFinal(QList<int> isFinalList);
 
+    void empty_database();
+    void check_structure();
+    void debug_check_table_structure(QString name, int size);
+    int get_number_column(QString table);
+
 private:
     QSqlDatabase m_db;
     QStringList PositionTypeList;
