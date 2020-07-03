@@ -11,7 +11,7 @@ DialogGestion::DialogGestion(c_datamanager *data,QString ver, QWidget *parent) :
     connect(ui->pb_update_files,&QPushButton::clicked,this,&DialogGestion::slot_update_file);
     connect(ui->pb_update_data_base,&QPushButton::clicked,this,&DialogGestion::slot_update_database);
     connect(ui->pb_update_images,&QPushButton::clicked,this,&DialogGestion::slot_update_images);
-    connect(ui->buttonBox,SIGNAL(rejected()),this,SLOT(close()));
+    connect(ui->buttonBox,SIGNAL(rejected()),this,SLOT(slot_on_close()));
     QString version_file = data_manager->getVersion();
     if (version_file == version) {
         ui->textBrowser->append(QString("Actual version of files up to date %1 \nUpdate files button disabled").arg(version));
@@ -64,6 +64,7 @@ void DialogGestion::setText(QString txt) {
 }
 
 void DialogGestion::slot_update_database() {
+    data_manager->empty_db();
     data_manager->parseActions();
     data_manager->parseItemproperties();
     data_manager->parseEquipementItemType();
@@ -123,4 +124,10 @@ void DialogGestion::slot_endUpdateImages() {
 
 void DialogGestion::set_version(QString _version) {
     version = _version;
+}
+
+void DialogGestion::slot_on_close() {
+    if (parser != nullptr) parser->stop();
+    data_manager->slot_stop();
+    close();
 }

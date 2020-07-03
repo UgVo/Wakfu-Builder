@@ -27,6 +27,8 @@ void c_networkManager::downloadFile(QUrl url, QString path) {
                       .arg(fileName).arg(file->errorString()));
         delete file;
         file = nullptr;
+        progressDialog->deleteLater();
+        emit downloadFinished(QString());
         return;
     }
 

@@ -49,6 +49,7 @@ public slots:
     void slot_endUpdateItems();
 
     void set_version(QString version);
+    void slot_on_close();
 
 private:
     Ui::DialogGestion *ui;
