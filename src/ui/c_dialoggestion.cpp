@@ -53,6 +53,7 @@ void DialogGestion::slot_new_file(int index,int size) {
 void DialogGestion::slot_endUpdateFiles() {
     connect(data_manager,&c_datamanager::newFile,this,&DialogGestion::slot_new_file);
     connect(data_manager,&c_datamanager::downloadFileFinished,this,&DialogGestion::slot_endUpdateFiles);
+    ui->progressBar->setValue(ui->progressBar->maximum());
     ui->pb_update_files->setEnabled(true);
     ui->pb_update_data_base->setEnabled(true);
     ui->pb_update_images->setEnabled(true);
@@ -88,6 +89,7 @@ void DialogGestion::slot_new_item(QString /**/, int index, int size) {
 void DialogGestion::slot_endUpdateItems() {
     disconnect(data_manager,&c_datamanager::newItem,this,&DialogGestion::slot_new_item);
     disconnect(data_manager,&c_datamanager::updateItemFinished,this,&DialogGestion::slot_endUpdateItems);
+    ui->progressBar->setValue(ui->progressBar->maximum());
     ui->pb_update_files->setEnabled(true);
     ui->pb_update_data_base->setEnabled(true);
     ui->pb_update_images->setEnabled(true);
@@ -113,6 +115,7 @@ void DialogGestion::slot_new_image(int index, int size) {
 void DialogGestion::slot_endUpdateImages() {
     disconnect(data_manager,&c_datamanager::newImage,this,&DialogGestion::slot_new_image);
     disconnect(data_manager,&c_datamanager::downloadImageFinished,this,&DialogGestion::slot_endUpdateImages);
+    ui->progressBar->setValue(ui->progressBar->maximum());
     ui->pb_update_files->setEnabled(true);
     ui->pb_update_data_base->setEnabled(true);
     ui->pb_update_images->setEnabled(true);
