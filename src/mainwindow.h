@@ -103,6 +103,8 @@ public slots:
     void slot_connection_status(bool status);
     virtual void resizeEvent(QResizeEvent *event);
 
+    void asked_on_soft_new_version();
+
 
 signals:
     void init_done();

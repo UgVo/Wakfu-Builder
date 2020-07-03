@@ -46,8 +46,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label_licence_1->setStyleSheet("color:white");
     ui->label_licence_2->setStyleSheet("color:white");
 
-
-
     connection_status = new QLabel(this);
     connection_status->setMinimumSize(QSize(40,40));
     connection_status->setMaximumSize(QSize(40,40));
@@ -59,6 +57,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->actionConnexion_bdd->setIcon(QIcon(":/images/divers/Network-Connected-icon.png"));
 
     database_manager->connect();
+
+    QObject::connect(&datamanager,&c_datamanager::update_soft_version,this,&MainWindow::asked_on_soft_new_version);
 }
 
 MainWindow::~MainWindow() {
@@ -293,4 +293,13 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     connection_status->move(20,rect().height()-60);
     connection_status->show();
     connection_status->raise();
+}
+
+void MainWindow::asked_on_soft_new_version() {
+    if (datamanager.isNewSoftVersion()) {
+        if(QMessageBox::question(this,"Nouvelle version disponible","Une nouvelle version de Wakfu Builder est disponible,  \nVoulez vous la télécharger ?") == QMessageBox::Yes) {
+            QProcess::startDetached(qApp->applicationDirPath() + "/maintenancetool.exe");
+            qApp->quit();
+        }
+    }
 }

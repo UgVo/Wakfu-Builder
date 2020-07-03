@@ -19,6 +19,8 @@ c_datamanager::c_datamanager()
     QJsonObject jObject_version;
     QJsonObject JObject_nameList;
 
+    new_soft_version = false;
+
     file.setFileName("config.json");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         file.open(QIODevice::WriteOnly | QIODevice::Text);
@@ -31,6 +33,7 @@ c_datamanager::c_datamanager()
                   "\"version\" : \"1.68.0.179615\","
                   "\"url_json\" : \"https://wakfu.cdn.ankama.com/gamedata/\","
                   "\"url_image\" : \"https://static.ankama.com/wakfu/portal/game/item/64/\","
+                  "\"url_soft_vers\" : \"https://mankio.github.io/repository/\","
                   "\"path_json\" : \"json\","
                   "\"path_images\" : \"images/Items\","
                   "\"filelist\" : { "
@@ -57,11 +60,27 @@ c_datamanager::c_datamanager()
     url_image = jObject_config.value(QString("url_image")).toString();
     pathImage = jObject_config.value(QString("path_images")).toString();
     password = jObject_config.value(QString("password")).toString();
+    url_soft_vers = jObject_config.value(QString("url_soft_vers")).toString();
 
     JObject_nameList = jObject_config.value(QString("filelist")).toObject();
     for(int i = 0; i < JObject_nameList.size(); ++i) {
         _filelist.push_back(JObject_nameList.value(QString("%1").arg(i+1)).toString());
     }
+
+    file.setFileName("components.xml");
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    val = file.readAll();
+    file.close();
+    QXmlStreamReader reader(val);
+    while(!reader.atEnd() && !reader.hasError()) {
+        if(reader.readNext() == QXmlStreamReader::StartElement && reader.name() == "Version") {
+            soft_version = reader.readElementText();
+        }
+    }
+
+    networkManager =  new c_networkManager();
+    networkManager->downloadFile(QUrl(url_soft_vers + "version.json"),pathJson);
+    QObject::connect(networkManager,SIGNAL(downloadFinished(QString)),this,SLOT(slot_check_softVersion(QString)));
 }
 
 void c_datamanager::checkVersion() {
@@ -73,6 +92,18 @@ void c_datamanager::checkVersion() {
     networkManager =  new c_networkManager();
     networkManager->downloadFile(QUrl(url_json + "config.json"),pathJson);
     QObject::connect(networkManager,SIGNAL(downloadFinished(QString)),this,SLOT(slot_downloadVersionFinished(QString)));
+}
+
+void c_datamanager::slot_check_softVersion(QString out) {
+    QObject::disconnect(networkManager,SIGNAL(downloadFinished(QString)),this,SLOT(slot_check_softVersion(QString)));
+    QString online_soft_version;
+    QJsonDocument doc;
+
+    doc = QJsonDocument::fromJson(out.toUtf8());
+    online_soft_version = doc.object().value(QString("version")).toString();
+    new_soft_version = online_soft_version.compare(soft_version);
+    qDebug() << new_soft_version << online_soft_version << soft_version;
+    emit update_soft_version();
 }
 
 void c_datamanager::updateVersion(QString newVersion) {
@@ -312,5 +343,9 @@ void c_datamanager::parseFinal() {
         }
     }
     id_non_final_list = id_list;
+}
+
+bool c_datamanager::isNewSoftVersion() {
+    return new_soft_version;
 }
 
