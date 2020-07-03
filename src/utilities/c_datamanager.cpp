@@ -33,7 +33,7 @@ c_datamanager::c_datamanager()
                   "\"version\" : \"1.68.0.179615\","
                   "\"url_json\" : \"https://wakfu.cdn.ankama.com/gamedata/\","
                   "\"url_image\" : \"https://static.ankama.com/wakfu/portal/game/item/64/\","
-                  "\"url_soft_vers\" : \"https://mankio.github.io/repository/\","
+                  "\"url_soft_vers\" : \"https://mankio.github.io/Wakfu-Builder/repository/\","
                   "\"path_json\" : \"json\","
                   "\"path_images\" : \"images/Items\","
                   "\"filelist\" : { "
