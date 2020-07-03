@@ -1,1 +1,4 @@
+title: Wakfu builder
+description: C++ application integrating a builder and TheoryCraft tools 
 theme: jekyll-theme-cayman
+show_downloads: true
