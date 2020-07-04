@@ -8,7 +8,7 @@ c_search_widget::c_search_widget(c_dbmanager *manager, QWidget *parent) :
     dbmanager = manager;
     lvl = 100;
     paliers = QStringList({"0-20","21-35","36-50","51-65","66-80","81-95","96-110","111-125",
-               "126-140","141-155","156-170","171-185","186-200","200-215"});
+               "126-140","141-155","156-170","171-185","186-200","201-215"});
     final = false;
     ui->final_object_check->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/divers/unchecked.png);}"
                                           "QCheckBox::indicator:checked {image: url(:/images/divers/checked.png);}");
