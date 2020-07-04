@@ -285,6 +285,7 @@ void MainWindow::slot_connection_status(bool status) {
     connection_status->setBackgroundRole(QPalette::Base);
     connection_status->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     connection_status->setScaledContents(true);
+    connection_status->setToolTip(status?QString("Connecté à la base de donnée"):QString("Déconnecté de la base de donnée"));
     ui->actionConnexion_bdd->setIcon(QIcon(QString(":/images/divers/Network-%1onnected-icon.png").arg(status?"C":"Disc")));
     ui->actionConnexion_bdd->setText(QString("%1onnexion Base de données").arg(status?"Dec":"C"));
 }
