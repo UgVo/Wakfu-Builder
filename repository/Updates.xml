@@ -6,12 +6,12 @@
   <Name>com.vendor.product</Name>
   <DisplayName>Wakfu Builder</DisplayName>
   <Description>Wakfu Builder</Description>
-  <Version>1.0.3-4</Version>
+  <Version>1.0.5</Version>
   <ReleaseDate>2020-06-29</ReleaseDate>
   <Default>script</Default>
   <Script>installscript.qs</Script>
-  <UpdateFile CompressedSize="37508207" OS="Any" UncompressedSize="99874425"/>
+  <UpdateFile UncompressedSize="99878521" CompressedSize="37509108" OS="Any"/>
   <DownloadableArchives>bearer.7z,iconengines.7z,imageformats.7z,images.7z,json.7z,log.7z,platforminputcontexts.7z,platforms.7z,qmltooling.7z,QtGraphicalEffects.7z,QtQuick.7z,QtQuick.2.7z,resources.7z,save.7z,scenegraph.7z,sqldrivers.7z,styles.7z,translations.7z,virtualkeyboard.7z,content.7z</DownloadableArchives>
-  <SHA1>8f5af903fb2d6c252c6d706a0c721ad4538d4b0d</SHA1>
+  <SHA1>1e30b24f3de1459e22eae30bd8e95639bed9b2b7</SHA1>
  </PackageUpdate>
 </Updates>
