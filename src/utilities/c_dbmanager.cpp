@@ -1117,6 +1117,12 @@ void c_dbmanager::check_structure() {
         query.exec(" CREATE TABLE wakfu_builder.builder_save (id SERIAL UNIQUE, json text, name text, niveau integer)");
         qDebug() << "builder_save table created";
     }
+    if (!m_db.tables().contains("wakfu_builder.states") || (get_number_column("states") != 3)) {
+        debug_check_table_structure("states",3);
+        query.exec("DROP TABLE wakfu_builder.states");
+        query.exec(" CREATE TABLE wakfu_builder.states (id integer PRIMARY KEY, name text, description text)");
+        qDebug() << "states table created";
+    }
 }
 
 void c_dbmanager::debug_check_table_structure(QString name, int size) {
