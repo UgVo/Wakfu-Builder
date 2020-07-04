@@ -234,6 +234,10 @@ QMap<QString,QString> c_tokenizer::interpret_effect(const QString string) const 
                 res["effect"] = "Niv. aux sorts Terre";
             } else if (type_effect.contains("Niv. aux sorts Air")) {
                 res["effect"] = "Niv. aux sorts Air";
+            } else if (type_effect.contains("Armure reçue")) {
+                res["effect"] = "Armure reçue";
+            } else if (type_effect.contains("Armure donnée")) {
+                res["effect"] = "Armure donnée";
             } else {
                 res["effect"] = "Nothing";
             }

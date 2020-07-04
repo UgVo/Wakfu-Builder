@@ -201,9 +201,6 @@ void c_aptitudes_display::compute_counts() {
             counts["majeur"]++;
         }
     }
-    if (lvl == 200) {
-        counts["chance"]++;
-    }
 
     map_counts_labels["intelligence"]->setNum(counts["intelligence"]);
     map_counts_labels["force"]->setNum(counts["force"]);
