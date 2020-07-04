@@ -59,6 +59,8 @@ If ever needed, for reseting the database datas, run the following commands in S
 	delete from wakfu_builder.equipmentPosition;
 	delete from wakfu_builder.eqpType_Pos_relation;
 	delete from wakfu_builder.eqpType_DisPos_relation;
+	delete from wakfu_builder.relation_item_carac;
+	delete from wakfu_builder.states;
 
 	delete from wakfu_builder.effect;
 	delete from wakfu_builder.item;
