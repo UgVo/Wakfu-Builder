@@ -31,7 +31,7 @@ cd -
 echo "Création du fichier de version ..."
 touch repository/version.json
 echo "{ 
-	\"version\": \"${version}\"
+	\"version\": \"${new_version}\"
 }" >> repository/version.json
 
 if  [[ $1 = "--commit" ]]; then
