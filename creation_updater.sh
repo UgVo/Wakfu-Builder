@@ -26,7 +26,7 @@ echo "Suppression de l'ancien repository ..."
 rm -r repository
 echo "Création du nouveau repository ..."
 cd extern/installeur/
-repogen.exe --verbose --update -p packages -i com.vendor.product ../../repository 
+repogen.exe --verbose -p packages -i com.vendor.product ../../repository 
 cd -
 echo "Création du fichier de version ..."
 touch repository/version.json
@@ -46,3 +46,5 @@ if  [[ $1 = "--commit" ]]; then
 	git push
 	cd -
 fi
+echo 'Press a button to exit'
+read new_version
