@@ -69,7 +69,7 @@ Thumbs.db
 # Binaries
 # --------
 *.dll
-*.exe
+Builder_Wakfu.exe
 
 
 /build/
