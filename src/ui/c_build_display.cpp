@@ -134,6 +134,14 @@ c_build_display::c_build_display(c_build* build, QWidget *parent) :
     shadow->setColor(QColor(91, 108, 142, 180));
     shadow->setOffset(2,2);
     ui->widget_prospection->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
+    shadow = new QGraphicsDropShadowEffect(ui->widget_armor_d);
+    shadow->setColor(QColor(91, 108, 142, 180));
+    shadow->setOffset(2,2);
+    ui->widget_armor_d->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
+    shadow = new QGraphicsDropShadowEffect(ui->widget_armor_r);
+    shadow->setColor(QColor(91, 108, 142, 180));
+    shadow->setOffset(2,2);
+    ui->widget_armor_r->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     setStyleSheet("c_build_display {background-color: #6A8BA8;} .QWidget.QWidget{background-color: #305A7F; border: 1px solid #305A7F; border-radius: 4px;} .QSpinBox{background-color: #305A7F;color:white; } .QLabel{color:white}");
     QVBoxLayout* equipementLayout = static_cast<QVBoxLayout*>(ui->equipement_frame->layout());
     foreach (QString position, c_item::position()) {
@@ -199,6 +207,8 @@ void c_build_display::update_view() {
     ui->sp_zone->setValue(bonuses["Maîtrise Zone"]);
     ui->sp_m_soin->setValue(bonuses["Maîtrise Soin"]);
     ui->sp_berserk->setValue(bonuses["Maîtrise Berserk"]);
+    ui->sp_armor_r->setValue(bonuses["Armure reçue"]);
+    ui->sp_armor_d->setValue(bonuses["Armure donnée"]);
 
     ui->sp_r_air_100->setValue(c_calcul::compute_reduction(bonuses["Résistance Air"]));
     ui->sp_r_feu_100->setValue(c_calcul::compute_reduction(bonuses["Résistance Feu"]));

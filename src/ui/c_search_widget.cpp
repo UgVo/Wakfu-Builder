@@ -478,6 +478,8 @@ void c_search_widget::set_comboBox_model(QComboBox *cb) {
     cb->addItem(QIcon(":/images/Aptitudes/zone.png"),"Maîtrise Zone");
     cb->addItem(QIcon(":/images/Aptitudes/soin.png"),"Maîtrise Soin");
     cb->addItem(QIcon(":/images/Aptitudes/berserk.png"),"Maîtrise Berserk");
+    cb->addItem(QIcon(":/images/Aptitudes/armor_given.png"),"Armure donnée");
+    cb->addItem(QIcon(":/images/Aptitudes/armor_gotten.png"),"Armure reçue");
     cb->addItem("Résistances");
     cb->addItem(QIcon(":/images/Aptitudes/resi.png"),"Résistance Élémentaire");
     cb->addItem(QIcon(":/images/Aptitudes/resi.png"),"Résistance sur 1 éléments");
@@ -504,8 +506,8 @@ void c_search_widget::set_comboBox_model(QComboBox *cb) {
     static_cast<QStandardItemModel *>(cb->model())->item(6,0)->setEnabled(false);
     static_cast<QStandardItemModel *>(cb->model())->item(18,0)->setFont(font);
     static_cast<QStandardItemModel *>(cb->model())->item(18,0)->setEnabled(false);
-    static_cast<QStandardItemModel *>(cb->model())->item(35,0)->setFont(font);
-    static_cast<QStandardItemModel *>(cb->model())->item(35,0)->setEnabled(false);
-    static_cast<QStandardItemModel *>(cb->model())->item(42,0)->setFont(font);
-    static_cast<QStandardItemModel *>(cb->model())->item(42,0)->setEnabled(false);
+    static_cast<QStandardItemModel *>(cb->model())->item(37,0)->setFont(font);
+    static_cast<QStandardItemModel *>(cb->model())->item(37,0)->setEnabled(false);
+    static_cast<QStandardItemModel *>(cb->model())->item(44,0)->setFont(font);
+    static_cast<QStandardItemModel *>(cb->model())->item(44,0)->setEnabled(false);
 }
