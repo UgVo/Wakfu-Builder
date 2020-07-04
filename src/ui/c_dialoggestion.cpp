@@ -127,7 +127,6 @@ void DialogGestion::set_version(QString _version) {
 }
 
 void DialogGestion::slot_on_close() {
-    if (parser != nullptr) parser->stop();
     data_manager->slot_stop();
     close();
 }
