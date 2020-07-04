@@ -12,7 +12,7 @@ Log on with the master password chosen during installation
 
 Right click on 'Login/Group Roles' > Create > Login/Group Role...
 
-![create user image](images/create_user.PNG)
+![create user image](https://mankio.github.io/Wakfu-Builder/images/create_user.PNG)
 
 * In **General**: name it _wakfu_builder_
 * In **Privileges**: set '_Can login?_', '_Inherits rigths from the parent roles_' and '_can initiate streaming replication and backup_' to '**Yes**'
@@ -26,7 +26,7 @@ Then Save
   * Set the Owner to '_postgres_' (default choice)
 * In **Security**: add '_postgres_' and '_wakfu_builder_' as Grantee with all the privileges
 
-![](images/add_priviliges_1.PNG)
+![](https://mankio.github.io/Wakfu-Builder/images/add_priviliges_1.PNG)
 
 Then save
 
@@ -34,7 +34,7 @@ Then save
 
 Click on the _Query Tool_ button on top of the browser
 
-![](images/query_tool.png)
+![](https://mankio.github.io/Wakfu-Builder/images/query_tool.png)
 	
 In the query editor copy and paste the following command: 
 
