@@ -103,7 +103,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../images/images.qrc">
+        <iconset>
          <normaloff>:/divers/moins.png</normaloff>:/divers/moins.png</iconset>
        </property>
       </widget>
@@ -142,7 +142,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="../images/images.qrc">
+        <iconset>
          <normaloff>:/divers/plus.png</normaloff>:/divers/plus.png</iconset>
        </property>
       </widget>
@@ -151,8 +151,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../images/images.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
