@@ -92,7 +92,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/elements/water_2.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/elements/water_2.png</pixmap>
            </property>
           </widget>
          </item>
@@ -102,7 +102,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/dommages.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/dommages.png</pixmap>
            </property>
           </widget>
          </item>
@@ -156,7 +156,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/resi.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/resi.png</pixmap>
            </property>
           </widget>
          </item>
@@ -258,7 +258,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/maitrise_critique.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/maitrise_critique.png</pixmap>
            </property>
           </widget>
          </item>
@@ -346,7 +346,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/soin.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/soin.png</pixmap>
            </property>
           </widget>
          </item>
@@ -434,7 +434,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/armor.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/armor.png</pixmap>
            </property>
           </widget>
          </item>
@@ -516,7 +516,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/pm.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/pm.png</pixmap>
            </property>
           </widget>
          </item>
@@ -595,7 +595,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/prospection.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/prospection.png</pixmap>
            </property>
           </widget>
          </item>
@@ -683,7 +683,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/controle.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/controle.png</pixmap>
            </property>
           </widget>
          </item>
@@ -771,7 +771,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/mono.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/mono.png</pixmap>
            </property>
           </widget>
          </item>
@@ -859,7 +859,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/elements/wind_2.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/elements/wind_2.png</pixmap>
            </property>
           </widget>
          </item>
@@ -869,7 +869,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/dommages.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/dommages.png</pixmap>
            </property>
           </widget>
          </item>
@@ -923,7 +923,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/resi.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/resi.png</pixmap>
            </property>
           </widget>
          </item>
@@ -1025,7 +1025,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/vie.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/vie.png</pixmap>
            </property>
           </widget>
          </item>
@@ -1113,7 +1113,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/dommages.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/dommages.png</pixmap>
            </property>
           </widget>
          </item>
@@ -1201,7 +1201,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/resistance_critique.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/resistance_critique.png</pixmap>
            </property>
           </widget>
          </item>
@@ -1302,7 +1302,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/init.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/init.png</pixmap>
            </property>
           </widget>
          </item>
@@ -1390,7 +1390,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/critique.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/critique.png</pixmap>
            </property>
           </widget>
          </item>
@@ -1478,7 +1478,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/tacle.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/tacle.png</pixmap>
            </property>
           </widget>
          </item>
@@ -1566,7 +1566,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/barda.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/barda.png</pixmap>
            </property>
           </widget>
          </item>
@@ -1651,7 +1651,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/melee.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/melee.png</pixmap>
            </property>
           </widget>
          </item>
@@ -1739,7 +1739,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/resi.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/resi.png</pixmap>
            </property>
           </widget>
          </item>
@@ -1840,7 +1840,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/pa.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/pa.png</pixmap>
            </property>
           </widget>
          </item>
@@ -1919,7 +1919,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/porte.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/porte.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2007,7 +2007,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/distance.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/distance.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2095,7 +2095,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/wakfu.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/wakfu.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2187,7 +2187,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/soin.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/soin.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2275,7 +2275,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/resistance_dos.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/resistance_dos.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2363,7 +2363,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/berserk.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/berserk.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2451,7 +2451,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/elements/fire_2.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/elements/fire_2.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2461,7 +2461,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/dommages.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/dommages.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2515,7 +2515,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/resi.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/resi.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2617,7 +2617,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/zone.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/zone.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2705,7 +2705,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/esquive.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/esquive.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2793,7 +2793,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/maitrise_dos.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/maitrise_dos.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2881,7 +2881,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/volonte.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/volonte.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2969,7 +2969,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/elements/earth_2.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/elements/earth_2.png</pixmap>
            </property>
           </widget>
          </item>
@@ -2979,7 +2979,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/dommages.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/dommages.png</pixmap>
            </property>
           </widget>
          </item>
@@ -3033,7 +3033,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/resi.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/resi.png</pixmap>
            </property>
           </widget>
          </item>
@@ -3141,7 +3141,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/sagesse.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/sagesse.png</pixmap>
            </property>
           </widget>
          </item>
@@ -3200,7 +3200,7 @@
        </widget>
       </item>
       <item row="20" column="0">
-       <widget class="QWidget" name="widget_armor_r" native="true">
+       <widget class="QWidget" name="widget_armor_d" native="true">
         <property name="minimumSize">
          <size>
           <width>200</width>
@@ -3229,12 +3229,12 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/armor_given.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/armor_given.png</pixmap>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_m_armor_r">
+          <widget class="QLabel" name="label_m_armor_d">
            <property name="text">
             <string>Armure donnée</string>
            </property>
@@ -3254,7 +3254,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QSpinBox" name="sp_armor_r">
+          <widget class="QSpinBox" name="sp_armor_d">
            <property name="focusPolicy">
             <enum>Qt::NoFocus</enum>
            </property>
@@ -3288,7 +3288,7 @@
        </widget>
       </item>
       <item row="20" column="1">
-       <widget class="QWidget" name="widget_armor_g" native="true">
+       <widget class="QWidget" name="widget_armor_r" native="true">
         <property name="minimumSize">
          <size>
           <width>200</width>
@@ -3317,12 +3317,12 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../resources/resources.qrc">:/images/Aptitudes/armor_gotten.png</pixmap>
+            <pixmap resource="../../resources/resources.qrc">:/images/Aptitudes/armor_gotten.png</pixmap>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_armor_g">
+          <widget class="QLabel" name="label_armor_r">
            <property name="text">
             <string>Armure reçu</string>
            </property>
@@ -3342,7 +3342,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QSpinBox" name="sp_armor_g">
+          <widget class="QSpinBox" name="sp_armor_r">
            <property name="focusPolicy">
             <enum>Qt::NoFocus</enum>
            </property>
@@ -3440,7 +3440,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../resources/resources.qrc"/>
+  <include location="../../resources/resources.qrc"/>
  </resources>
  <connections/>
 </ui>
