@@ -1112,7 +1112,7 @@ void c_dbmanager::check_structure() {
         qDebug() << "carac table created";
     }
     if (!m_db.tables().contains("wakfu_builder.builder_save") || (get_number_column("builder_save") != 4)) {
-        debug_check_table_structure("builder_save",3);
+        debug_check_table_structure("builder_save",4);
         query.exec("DROP TABLE wakfu_builder.builder_save");
         query.exec(" CREATE TABLE wakfu_builder.builder_save (id SERIAL UNIQUE, json text, name text, niveau integer)");
         qDebug() << "builder_save table created";
