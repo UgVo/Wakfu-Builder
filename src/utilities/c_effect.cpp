@@ -96,7 +96,7 @@ void c_effect::setParams(const QVector<float> Params) {
 QMap<QString,QString> c_effect::getEffectString(const int lvl) const {
     QMap<QString,QString> res;
     QString text = tokenizer.formatString(_action.getDescription(),_params.toList(),lvl,_action.getDescription().size());
-    if (!text.isEmpty()) {
+    if (_description.isEmpty()) {
         if (text.toInt()) {
             c_state state = _database->get_state(text.toInt());
             res.insert("text",QString("%1 (Niv. %2)").arg(state.get_name()).arg(double(_params.at(2))));
