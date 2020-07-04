@@ -1008,20 +1008,22 @@ bool c_dbmanager::setFinal(QList<int> isFinalList) {
 
 void c_dbmanager::empty_database() {
     QSqlQuery query(m_db);
-    QString query_string("delete from wakfu_builder.action;"
-                         "delete from wakfu_builder.itemproperties;"
-                         "delete from wakfu_builder.equipmentItemType;"
-                         "delete from wakfu_builder.equipmentPosition;"
-                         "delete from wakfu_builder.eqpType_Pos_relation;"
-                         "delete from wakfu_builder.eqpType_DisPos_relation;"
+    query.exec("delete from wakfu_builder.eqpType_Pos_relation");
+    query.exec("delete from wakfu_builder.eqpType_DisPos_relation");
+    query.exec("delete from wakfu_builder.relation_item_carac");
+    query.exec("delete from wakfu_builder.action");
+    query.exec("delete from wakfu_builder.item_properties_relation");
+    query.exec("delete from wakfu_builder.item_useEffect_relation");
+    query.exec("delete from wakfu_builder.item_useCriticalEffect_relation");
+    query.exec("delete from wakfu_builder.item_useEquipEffect_relation");
 
-                         "delete from wakfu_builder.effect;"
-                         "delete from wakfu_builder.item;"
-                         "delete from wakfu_builder.item_properties_relation;"
-                         "delete from wakfu_builder.item_useEffect_relation;"
-                         "delete from wakfu_builder.item_useCriticalEffect_relation;"
-                         "delete from wakfu_builder.item_useEquipEffect_relation;"
-                         "delete from wakfu_builder.carac");
+    query.exec("delete from wakfu_builder.itemproperties");
+    query.exec("delete from wakfu_builder.equipmentItemType");
+    query.exec("delete from wakfu_builder.equipmentPosition");
+    query.exec("delete from wakfu_builder.states");
+    query.exec("delete from wakfu_builder.effect");
+    query.exec("delete from wakfu_builder.item");
+    query.exec("delete from wakfu_builder.carac");
 }
 
 void c_dbmanager::check_structure() {
