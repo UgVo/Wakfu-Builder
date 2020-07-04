@@ -1,0 +1,14 @@
+<Packages>
+    <ApplicationName>Wakfu Builder</ApplicationName>
+    <ApplicationVersion>1.0.0</ApplicationVersion>
+    <Package>
+        <Name>com.vendor.product</Name>
+        <Title>Wakfu Builder</Title>
+        <Description>Wakfu Builder</Description>
+        <Version>1.0.3-4</Version>
+        <LastUpdateDate></LastUpdateDate>
+        <InstallDate>2020-07-02</InstallDate>
+        <Size>100184629</Size>
+        <Checkable>true</Checkable>
+    </Package>
+</Packages>
