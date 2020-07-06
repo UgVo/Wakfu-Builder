@@ -1103,6 +1103,9 @@ void c_dbmanager::check_structure() {
     }
     if (!m_db.tables().contains("wakfu_builder.item") || (get_number_column("item") != 22)) {
         debug_check_table_structure("item",22);
+        query.exec("DROP TABLE wakfu_builder.relation_item_carac");
+        query.exec("CREATE TABLE wakfu_builder.relation_item_carac( id_item integer, id_carac integer, PRIMARY KEY(id_item,id_carac));");
+        qDebug() << "relation_item_carac table created";
         query.exec("DROP TABLE wakfu_builder.item");
         query.exec("CREATE TABLE wakfu_builder.item( id integer PRIMARY KEY, lvl integer, itemTypeId integer, itemSetId integer, rarity integer, bindType integer, minimumShardSlotNumber integer, maximumShardSlotNumber integer, useApCost integer, useMpCost integer, useWpCost integer, useMinRange integer, useMaxRange integer, useTestFreeCell bool, useTestLos bool, useTestOnlyLine bool, useTestNoBorderCell bool, useWorldTarget integer, gfxid integer, title text, description text, isFinal bool)");
         qDebug() << "item table created";
