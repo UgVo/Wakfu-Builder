@@ -275,6 +275,46 @@
         <file>elements/all_1_big.png</file>
         <file>elements/all_2_big.png</file>
         <file>elements/all_3_big.png</file>
+        <file>portrait/120.png</file>
+        <file>divers/genre_fem.png</file>
+        <file>divers/genre_masc.png</file>
+        <file>portrait/small_10.png</file>
+        <file>portrait/small_11.png</file>
+        <file>portrait/small_20.png</file>
+        <file>portrait/small_21.png</file>
+        <file>portrait/small_30.png</file>
+        <file>portrait/small_31.png</file>
+        <file>portrait/small_40.png</file>
+        <file>portrait/small_41.png</file>
+        <file>portrait/small_50.png</file>
+        <file>portrait/small_51.png</file>
+        <file>portrait/small_60.png</file>
+        <file>portrait/small_61.png</file>
+        <file>portrait/small_70.png</file>
+        <file>portrait/small_71.png</file>
+        <file>portrait/small_80.png</file>
+        <file>portrait/small_81.png</file>
+        <file>portrait/small_90.png</file>
+        <file>portrait/small_91.png</file>
+        <file>portrait/small_100.png</file>
+        <file>portrait/small_101.png</file>
+        <file>portrait/small_110.png</file>
+        <file>portrait/small_111.png</file>
+        <file>portrait/small_120.png</file>
+        <file>portrait/small_121.png</file>
+        <file>portrait/small_130.png</file>
+        <file>portrait/small_131.png</file>
+        <file>portrait/small_140.png</file>
+        <file>portrait/small_141.png</file>
+        <file>portrait/small_150.png</file>
+        <file>portrait/small_151.png</file>
+        <file>portrait/small_160.png</file>
+        <file>portrait/small_161.png</file>
+        <file>portrait/small_180.png</file>
+        <file>portrait/small_181.png</file>
+        <file>portrait/small_190.png</file>
+        <file>portrait/small_191.png</file>
+        <file>portrait/small_aleat.png</file>
     </qresource>
     <qresource prefix="/font">
         <file>wci.ttf</file>

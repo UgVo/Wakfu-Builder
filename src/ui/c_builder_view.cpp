@@ -51,6 +51,7 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *_parent) :
 
     ui->widget->setStyleSheet(QString("QWidget#widget{background-color:%1}").arg(app_color::grey_blue));
     status_build->setLvl(200);
+    QObject::connect(status_build,&c_status_build::show_class_popup,this,&c_builder_view::slot_show_class_popup);
 
     QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->tabWidget);
     shadow->setColor(QColor(91, 108, 142, 180));
@@ -74,6 +75,9 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *_parent) :
     element_popup = nullptr;
 
     QObject::connect(element_display,&c_elements_display::doubleCliked,this,&c_builder_view::slot_show_element_popup);
+
+    class_selection_popup = nullptr;
+
 }
 
 c_builder_view::~c_builder_view()
@@ -228,4 +232,55 @@ void c_builder_view::slot_hide_element_popup() {
     ui->tabWidget->setDisabled(false);
 
     element_display->setElements(element_popup->getElems());
+}
+
+void c_builder_view::slot_show_class_popup() {
+    if (class_selection_popup != nullptr) {
+        QObject::disconnect(class_selection_popup,&c_class_selection::class_chosen,this,&c_builder_view::slot_hide_class_popup);
+        class_selection_popup->deleteLater();
+        class_selection_popup = nullptr;
+    }
+    class_selection_popup = new c_class_selection(this);
+    class_selection_popup->show();
+    QObject::connect(class_selection_popup,&c_class_selection::class_chosen,status_build,&c_status_build::slot_class_changed);
+    QObject::connect(class_selection_popup,&c_class_selection::class_chosen,this,&c_builder_view::slot_hide_class_popup);
+    QObject::connect(class_selection_popup,&c_class_selection::rejected,this,&c_builder_view::slot_hide_class_popup);
+    status_build->setDisabled(true);
+    build_display->setDisabled(true);
+    element_display->setDisabled(true);
+    result_display->setDisabled(true);
+    search_widget->setDisabled(true);
+    ui->tabWidget->setDisabled(true);
+    QPoint class_popup_pos = QPoint((rect().width()-class_selection_popup->width())/2,-class_selection_popup->height());
+    QPoint class_popup_pos_final = QPoint((rect().width()-class_selection_popup->width())/2,(rect().height() - class_selection_popup->height())/3);
+    animation1 = new QPropertyAnimation(class_selection_popup,"geometry");
+    animation1->setDuration(1000);
+    QRect rect_button_new = class_selection_popup->rect();
+    rect_button_new.setTopLeft(class_popup_pos);
+    animation1->setKeyValueAt(0,rect_button_new);
+    rect_button_new.setTopLeft(class_popup_pos_final);
+    animation1->setKeyValueAt(1,rect_button_new);
+    animation1->setEasingCurve(QEasingCurve::OutCubic);
+    animation1->start(QPropertyAnimation::DeleteWhenStopped);
+}
+
+void c_builder_view::slot_hide_class_popup() {
+    QPoint class_popup_pos_final = QPoint((rect().width()-class_selection_popup->width())/2,-class_selection_popup->height());
+    QPoint class_popup_pos = QPoint((rect().width()-class_selection_popup->width())/2,(rect().height() - class_selection_popup->height())/3);
+    animation1 = new QPropertyAnimation(class_selection_popup,"geometry");
+    animation1->setDuration(1000);
+    QRect rect_button_new = class_selection_popup->rect();
+    rect_button_new.setTopLeft(class_popup_pos);
+    animation1->setKeyValueAt(0,rect_button_new);
+    rect_button_new.setTopLeft(class_popup_pos_final);
+    animation1->setKeyValueAt(1,rect_button_new);
+    animation1->setEasingCurve(QEasingCurve::InCubic);
+    animation1->start(QPropertyAnimation::DeleteWhenStopped);
+
+    status_build->setDisabled(false);
+    build_display->setDisabled(false);
+    element_display->setDisabled(false);
+    result_display->setDisabled(false);
+    search_widget->setDisabled(false);
+    ui->tabWidget->setDisabled(false);
 }
