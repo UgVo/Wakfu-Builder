@@ -74,6 +74,7 @@ public:
 
     int add_save_builder(QString json, QString name, int lvl);
     int update_save_builder(QString json, int id, QString name, int lvl);
+    int remove_builder(int id);
 
     QSqlDatabase getDb() const;
 
