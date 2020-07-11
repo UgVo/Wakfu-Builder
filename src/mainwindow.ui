@@ -49,7 +49,7 @@
     <item>
      <widget class="QLabel" name="label_licence_2">
       <property name="text">
-       <string>&quot;Builder_wakfu&quot; et ses services dérivés sont des applications non-officiels sans aucun lien avec Ankama.</string>
+       <string>&quot;Wakfu Builder&quot; et ses services dérivés sont des applications non-officiels sans aucun lien avec Ankama.</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
