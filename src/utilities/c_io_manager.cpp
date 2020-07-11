@@ -61,7 +61,10 @@ QByteArray c_io_manager::save(c_builder_view *builder, const c_io_manager::jsonf
             int id = db_manager->add_save_builder(doc.toJson(QJsonDocument::Indented),builder->getStatus_build()->getName(),builder->getStatus_build()->getLvl());
             builder->setId(id);
         } else {
-            db_manager->update_save_builder(doc.toJson(QJsonDocument::Indented),builder->getId(),builder->getStatus_build()->getName(),builder->getStatus_build()->getLvl());
+            if (!db_manager->update_save_builder(doc.toJson(QJsonDocument::Indented),builder->getId(),builder->getStatus_build()->getName(),builder->getStatus_build()->getLvl())) {
+                int id = db_manager->add_save_builder(doc.toJson(QJsonDocument::Indented),builder->getStatus_build()->getName(),builder->getStatus_build()->getLvl());
+                builder->setId(id);
+            }
         }
     }
 
