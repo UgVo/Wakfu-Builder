@@ -11,6 +11,7 @@ else
 	echo "Nouvelle version :"	
 	read new_version
 	sed -i "s/${version}/${new_version}/g" extern/installeur/packages/com.vendor.product/meta/package.xml
+	sed -i "s/${version}/${new_version}/g" components.xml
 	echo "Version changed to ${new_version}"
 fi
 # echo "Création du fichier de version"
