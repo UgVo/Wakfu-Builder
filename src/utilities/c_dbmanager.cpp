@@ -837,12 +837,19 @@ int c_dbmanager::add_save_builder(QString json, QString name, int lvl) {
 
 int c_dbmanager::update_save_builder(QString json, int id, QString name, int lvl) {
     QSqlQuery query(m_db);
-    query.prepare("UPDATE wakfu_builder.builder_save SET json = :json, name = :name, niveau = :lvl  WHERE id = :id");
+    query.prepare("WITH rows AS ( UPDATE wakfu_builder.builder_save SET json = :json, name = :name, niveau = :lvl  "
+                  "WHERE id = :id RETURNING 1) "
+                  "SELECT count(*) FROM rows;");
     query.bindValue(":json",json);
     query.bindValue(":id",id);
     query.bindValue(":lvl",lvl);
     query.bindValue(":name",name);
     if (query.exec()) {
+        int id = query.record().indexOf("count");
+        while (query.next()) {
+            qDebug() << query.record();
+            return query.value(id).toInt();
+        }
         return 1;
     }
     return 0;
