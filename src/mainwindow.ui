@@ -100,42 +100,47 @@
     <string>Check nouvelle version</string>
    </property>
   </action>
-  <action name="actionOuvrir_build">
-   <property name="text">
-    <string>Ouvrir Build</string>
-   </property>
-  </action>
-  <action name="actionImporter_Build">
-   <property name="text">
-    <string>Importer Build</string>
-   </property>
-  </action>
   <action name="actionCr_er_nouveau_Build">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/images/divers/icon_AddScreen.png</normaloff>:/images/divers/icon_AddScreen.png</iconset>
+   </property>
    <property name="text">
     <string>Nouveau builder</string>
    </property>
   </action>
-  <action name="actionImporte_Build">
-   <property name="text">
-    <string>Importer Build</string>
-   </property>
-  </action>
   <action name="actionSauvegarder_Build">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/images/divers/icon_FileDestination.png</normaloff>:/images/divers/icon_FileDestination.png</iconset>
+   </property>
    <property name="text">
     <string>Enregistrer vers un fichier</string>
    </property>
   </action>
   <action name="action_open_Depuis_un_fichier">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/images/divers/icon_UploadFile.png</normaloff>:/images/divers/icon_UploadFile.png</iconset>
+   </property>
    <property name="text">
     <string>Ouvrir depuis un fichier</string>
    </property>
   </action>
   <action name="action_open_Depuis_la_base_de_donn_e">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/images/divers/icon_UploadDatabase.png</normaloff>:/images/divers/icon_UploadDatabase.png</iconset>
+   </property>
    <property name="text">
     <string>Ouvrir depuis la base de donnée</string>
    </property>
   </action>
   <action name="action_save_Vers_la_base_de_donnee">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/images/divers/icon_Database.png</normaloff>:/images/divers/icon_Database.png</iconset>
+   </property>
    <property name="text">
     <string>Enregistrer vers la base de donnée</string>
    </property>
@@ -146,6 +151,10 @@
    </property>
   </action>
   <action name="actionEnregistrer">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/images/divers/icon_SaveStatusBar.png</normaloff>:/images/divers/icon_SaveStatusBar.png</iconset>
+   </property>
    <property name="text">
     <string>Enregistrer</string>
    </property>
@@ -156,6 +165,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

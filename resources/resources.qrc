@@ -315,6 +315,13 @@
         <file>portrait/small_190.png</file>
         <file>portrait/small_191.png</file>
         <file>portrait/small_aleat.png</file>
+        <file>divers/delete_icon.png</file>
+        <file>divers/icon_AddScreen.png</file>
+        <file>divers/icon_Database.png</file>
+        <file>divers/icon_FileDestination.png</file>
+        <file>divers/icon_SaveStatusBar.png</file>
+        <file>divers/icon_UploadDatabase.png</file>
+        <file>divers/icon_UploadFile.png</file>
     </qresource>
     <qresource prefix="/font">
         <file>wci.ttf</file>
