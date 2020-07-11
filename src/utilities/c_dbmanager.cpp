@@ -827,6 +827,7 @@ int c_dbmanager::add_save_builder(QString json, QString name, int lvl) {
         if (s_query.exec()) {
             int id = s_query.record().indexOf("lastval");
             while (s_query.next()) {
+                emit signal_new_save();
                 return s_query.value(id).toInt();
             }
         }

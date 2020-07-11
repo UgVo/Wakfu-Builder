@@ -99,6 +99,7 @@ private:
 
 signals:
     void signal_connection_status(bool);
+    void signal_new_save();
 };
 
 #endif // C_DBMANAGER_H
