@@ -31,6 +31,7 @@ QJsonObject c_io_manager::builderToJson(const c_builder_view *builder) {
     res["bonus_hm"] = status->isActivated_HM();
     res["bonus_nation"] = status->isActivated_Nation();
     res["bonus_guilde"] = status->isActivated_Guilde();
+    res["classe"] = status->getClasse();
 
     return res;
 }
@@ -104,6 +105,9 @@ void c_io_manager::jsonToBuilder(c_builder_view *builder, const QJsonObject &jso
     }
     if (json.contains("bonus_guilde")) {
         status->Activated_Guilde(json.value("bonus_guilde").toBool());
+    }
+    if (json.contains("classe")) {
+        status->slot_class_changed(json.value("classe").toInt());
     }
 
 }

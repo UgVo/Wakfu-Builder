@@ -14,6 +14,7 @@
 #include "utilities/c_io_manager.h"
 #include "ui/c_aptitudes_display.h"
 #include "c_element_popup_widget.h"
+#include "ui/c_class_selection.h"
 
 namespace Ui {
 class c_builder_view;
@@ -64,6 +65,7 @@ private:
     QPropertyAnimation* animation1;
 
     QTimer timer;
+    c_class_selection *class_selection_popup;
 
 public slots:
     void slot_save(c_io_manager::jsonformat format, QString path = QString());
@@ -72,6 +74,8 @@ public slots:
     void slot_update(c_io_manager::jsonformat format);
     void slot_show_element_popup();
     void slot_hide_element_popup();
+    void slot_show_class_popup();
+    void slot_hide_class_popup();
 //    virtual void keyPressEvent(QKeyEvent *event);
 //    virtual void keyReleaseEvent(QKeyEvent *event);
 

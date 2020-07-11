@@ -33,6 +33,7 @@ VPATH += \
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    src/ui/c_class_selection.cpp \
     ui/c_aptitude_unite.cpp \
     ui/c_aptitudes_display.cpp \
     ui/c_bdd_password_dialog.cpp \
@@ -68,6 +69,7 @@ SOURCES += \
 
 HEADERS += \
     mainwindow.h \
+    src/ui/c_class_selection.h \
     ui/c_aptitude_unite.h \
     ui/c_aptitudes_display.h \
     ui/c_bdd_password_dialog.h \
@@ -105,6 +107,7 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui \
+    src/ui/c_class_selection.ui \
     ui/c_aptitude_unite.ui \
     ui/c_aptitudes_display.ui \
     ui/c_bdd_password_dialog.ui \

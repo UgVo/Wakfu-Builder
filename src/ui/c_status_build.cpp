@@ -5,17 +5,12 @@ c_status_build::c_status_build(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::c_status_build) {
     ui->setupUi(this);
-    QPixmap image = QPixmap(":/images/portrait/aleat.png");
-    ui->image_label->setPixmap(image);
-    ui->image_label->setBackgroundRole(QPalette::Base);
-    ui->image_label->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    ui->image_label->setScaledContents(true);
 
     setStyleSheet(QString("c_status_build{background-color: %1; color:white} QLabel{color:white;} QLineEdit{color : %2;} QSpinBox{color : %2;}").arg(app_color::grey_blue).arg(app_color::green_blue));
-    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->image_label);
+    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->button_class);
     shadow->setColor(QColor(91, 108, 142, 180));
     shadow->setOffset(2,2);
-    ui->image_label->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
+    ui->button_class->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
 
     ui->guild_cb->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/divers/65_inked.png);}"
                                 "QCheckBox::indicator:checked {image: url(:/images/divers/65.png);} ");
@@ -42,6 +37,14 @@ c_status_build::c_status_build(QWidget *parent) :
     QObject::connect(ui->guild_cb,&QCheckBox::clicked,this,&c_status_build::slot_bonus_changed);
     QObject::connect(ui->hm_cb,&QCheckBox::clicked,this,&c_status_build::slot_bonus_changed);
 
+    classe = 0;
+
+    ui->button_class->setIcon(QIcon(":/images/portrait/aleat.png"));
+    ui->button_class->setAutoFillBackground(true);
+    ui->button_class->setIconSize(QSize(76,75));
+    ui->button_class->setAutoRaise(true);
+    ui->button_class->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
+    QObject::connect(ui->button_class,&QToolButton::clicked,this,&c_status_build::slot_class_clicked);
 }
 
 c_status_build::~c_status_build()
@@ -49,8 +52,12 @@ c_status_build::~c_status_build()
     delete ui;
 }
 
+int c_status_build::getClasse() const {
+    return classe;
+}
+
 void c_status_build::slot_enter_pressed() {
-    ui->image_label->setFocus();
+    ui->button_class->setFocus();
     emit lvl_changed(ui->build_lvl->value());
 }
 
@@ -104,4 +111,22 @@ void c_status_build::Activated_Nation(bool state) {
 void c_status_build::Activated_Guilde(bool state) {
     ui->guild_cb->setCheckState(state?Qt::CheckState::Checked:Qt::CheckState::Unchecked);
     slot_bonus_changed();
+}
+
+void c_status_build::updateClass() {
+    if (classe == 0) {
+        ui->button_class->setIcon(QIcon(":/images/portrait/aleat.png"));
+    } else {
+        ui->button_class->setIcon(QIcon(QString(":/images/portrait/%1.png").arg(classe)));
+    }
+}
+
+void c_status_build::slot_class_clicked() {
+    emit show_class_popup();
+}
+
+void c_status_build::slot_class_changed(int id) {
+    qDebug() << id;
+    classe = id;
+    updateClass();
 }
