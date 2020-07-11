@@ -3,6 +3,7 @@
 
 #include <QAbstractTableModel>
 #include <QSqlDatabase>
+#include <QJsonDocument>
 #include "c_dbmanager.h"
 
 class struct_save{
@@ -11,6 +12,7 @@ public:
     QString name;
     int lvl;
     QString json;
+    QString image_url;
 };
 
 class c_save_builder_model : public QAbstractTableModel
@@ -30,13 +32,19 @@ public:
 
     // Add data:
     bool insertRow(struct_save save);
+    bool removeRow(const QModelIndex);
 
-    bool populate();
     QString getJson(const QModelIndex index);
     int getId(const QModelIndex index);
+    int getLvl(const QModelIndex index);
+    QString getUrlImage(const QModelIndex index);
+    QString getName(const QModelIndex index);
+
+public slots:
+    bool populate();
 
 private:
-     QSqlDatabase m_db;
+     c_dbmanager *db_manager;
      QList<struct_save> data_list;
 
 };
