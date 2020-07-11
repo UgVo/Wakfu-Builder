@@ -848,6 +848,13 @@ int c_dbmanager::update_save_builder(QString json, int id, QString name, int lvl
     return 0;
 }
 
+int c_dbmanager::remove_builder(int id) {
+    QSqlQuery query(m_db);
+    query.prepare("DELETE FROM wakfu_builder.builder_save WHERE id = :id");
+    query.bindValue(":id",id);
+    return query.exec();
+}
+
 QSqlDatabase c_dbmanager::getDb() const
 {
     return m_db;
