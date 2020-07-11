@@ -33,6 +33,7 @@ VPATH += \
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    src/ui/c_button_delegate.cpp \
     src/ui/c_class_selection.cpp \
     ui/c_aptitude_unite.cpp \
     ui/c_aptitudes_display.cpp \
@@ -69,6 +70,7 @@ SOURCES += \
 
 HEADERS += \
     mainwindow.h \
+    src/ui/c_button_delegate.h \
     src/ui/c_class_selection.h \
     ui/c_aptitude_unite.h \
     ui/c_aptitudes_display.h \
