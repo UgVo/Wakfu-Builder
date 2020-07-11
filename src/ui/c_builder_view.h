@@ -14,6 +14,7 @@
 #include "utilities/c_io_manager.h"
 #include "ui/c_aptitudes_display.h"
 #include "c_element_popup_widget.h"
+#include "utilities/c_calcul.h"
 #include "ui/c_class_selection.h"
 
 namespace Ui {
@@ -65,6 +66,7 @@ private:
     QPropertyAnimation* animation1;
 
     QTimer timer;
+    c_calcul *calcul;
     c_class_selection *class_selection_popup;
 
 public slots:

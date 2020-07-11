@@ -74,6 +74,10 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *_parent) :
 
     element_popup = nullptr;
 
+    calcul = new c_calcul;
+    calcul->setBuild(build);
+    QObject::connect(build,&c_build::updated,calcul,&c_calcul::computeMainMastery);
+
     QObject::connect(element_display,&c_elements_display::doubleCliked,this,&c_builder_view::slot_show_element_popup);
 
     class_selection_popup = nullptr;
