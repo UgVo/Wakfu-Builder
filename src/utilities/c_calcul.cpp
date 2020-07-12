@@ -3,6 +3,7 @@
 
 c_calcul::c_calcul() {
     _build = nullptr;
+    _tc_resume = nullptr;
     _mainMastery << "Maîtrise Élémentaire Feu" << "Maîtrise Mêlée" << "Maîtrise Monocible";
     _healingElementMastery = "Maîtrise Élémentaire Eau";
 }
@@ -103,5 +104,18 @@ void c_calcul::computeDamage(int attaqueValue) {
     _damages.insert("Heal Critique", (1.0 + healMastery + critiqueMatery) * healBonus * attaqueValue * 1.25);
     _damages.insert("Heal Mean", _damages["Heal"] * (1-critiqueRate) +  _damages["Heal Critique"] * critiqueRate);
 
+    _damages.insert("Berserk Heal", (1.0 + healMastery + berserkerMastery) * healBonus * attaqueValue);
+    _damages.insert("Berserk Heal Critique", (1.0 + healMastery + critiqueMatery + berserkerMastery) * healBonus * attaqueValue * 1.25);
+    _damages.insert("Berserk Heal Mean", _damages["Berserk Heal"] * (1-critiqueRate) +  _damages["Berserk Heal Critique"] * critiqueRate);
+
     qDebug() << _damages;
+
+    if(_tc_resume != nullptr) {
+        _tc_resume->setValues(_damages);
+    }
+}
+
+void c_calcul::setTc_resume(c_theory_craft_resume *value)
+{
+    _tc_resume = value;
 }

@@ -16,6 +16,7 @@
 #include "c_element_popup_widget.h"
 #include "utilities/c_calcul.h"
 #include "ui/c_class_selection.h"
+#include "ui/c_theory_craft_resume.h"
 
 namespace Ui {
 class c_builder_view;
@@ -68,6 +69,8 @@ private:
     QTimer timer;
     c_calcul *calcul;
     c_class_selection *class_selection_popup;
+
+    c_theory_craft_resume *tc_resume;
 
 public slots:
     void slot_save(c_io_manager::jsonformat format, QString path = QString());

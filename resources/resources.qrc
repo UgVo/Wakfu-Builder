@@ -322,6 +322,17 @@
         <file>divers/icon_SaveStatusBar.png</file>
         <file>divers/icon_UploadDatabase.png</file>
         <file>divers/icon_UploadFile.png</file>
+        <file>divers/dos.png</file>
+        <file>divers/face.png</file>
+        <file>divers/coup_critique.png</file>
+        <file>divers/coup_normal.png</file>
+        <file>divers/soin.png</file>
+        <file>divers/coup_moyen.png</file>
+        <file>divers/coup_critique_berserk.png</file>
+        <file>divers/coup_moyen_berserk.png</file>
+        <file>divers/coup_normal_berserk.png</file>
+        <file>divers/pb_berserk.png</file>
+        <file>divers/pb_berserk_inked.png</file>
     </qresource>
     <qresource prefix="/font">
         <file>wci.ttf</file>

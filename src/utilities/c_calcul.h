@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QtMath>
 #include <QDebug>
+#include "ui/c_theory_craft_resume.h"
 
 class c_build;
 
@@ -17,6 +18,8 @@ public:
     static int compute_life(const int niveau);
     void setBuild(c_build* build);
 
+    void setTc_resume(c_theory_craft_resume *value);
+
 public slots:
     void computeMainMastery();
     void computeDamage(int attaqueValue);
@@ -26,6 +29,8 @@ private:
     QList<QString> _mainMastery;
     QMap<QString,qreal> _damages;
     QString _healingElementMastery;
+
+    c_theory_craft_resume *_tc_resume;
 };
 
 #endif // C_CALCUL_H
