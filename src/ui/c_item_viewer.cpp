@@ -111,6 +111,11 @@ void c_item_viewer::setBackgroundImage() {
     }
 }
 
+bool c_item_viewer::getDisabled() const
+{
+    return disabled;
+}
+
 void c_item_viewer::slot_context_menu(const QPoint &pos) {
     if (item->isEmpty()) return;
     QMenu contextMenu(tr("Context menu"), this);
@@ -247,6 +252,32 @@ void c_item_viewer::check_mouse_over() {
             it_display->hide();
             it_display->update();
         }
+    }
+}
+
+void c_item_viewer::show_item_at_pos(QPoint pos) {
+    if (item->isEmpty()) {
+        return;
+    }
+    QPoint p = pos;
+    p.setY(p.y());
+    p.setX(p.x()+255);
+    if (it_display == nullptr) {
+        it_display = new c_item_display(*item);
+        it_display->setWindowFlags(Qt::ToolTip | Qt::Popup);
+        it_display->setFocusPolicy(Qt::NoFocus);
+    }
+    it_display->setCmp_equip(true);
+    it_display->move(p);
+    it_display->show();
+}
+
+
+void c_item_viewer::hide_item() {
+    if ( it_display != nullptr) {
+        it_display->hide();
+        it_display->update();
+        it_display->setCmp_equip(false);
     }
 }
 

@@ -68,9 +68,13 @@ public slots:
     void slot_next();
     void slot_preview();
     void slot_item_doubleCliked(c_item item);
+    void slot_item_hovered(QString type, QPoint pos);
+    void slot_item_hide(QString type);
 
 signals:
     void item_doubleCliked(c_item item);
+    void item_hovered(QString type, QPoint pos);
+    void item_hide(QString type);
 };
 
 #endif // C_RESULT_DISPLAY_H

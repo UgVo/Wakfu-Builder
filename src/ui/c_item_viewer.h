@@ -32,6 +32,8 @@ public:
     void setItem(c_item *item =  nullptr);
     void updateView();
 
+    bool getDisabled() const;
+
 private:
     void setBackgroundImage();
 
@@ -69,6 +71,8 @@ public slots:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     void check_mouse_over();
+    void show_item_at_pos(QPoint pos);
+    void hide_item();
 
 signals:
     void unequip(QString position);

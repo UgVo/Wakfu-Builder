@@ -109,17 +109,27 @@ void c_result_display::fill_page(int page) {
         timer2.restart();
         item_lite_list.push_back(new c_item_lite(data_base,item_list.at(n*i),this));
         QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_hovered,this,&c_result_display::slot_item_hovered);
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_hide,this,&c_result_display::slot_item_hide);
         item_lite_list.push_back(new c_item_lite(data_base,item_list.at(n*i+1),this));
         QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_hovered,this,&c_result_display::slot_item_hovered);
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_hide,this,&c_result_display::slot_item_hide);
         item_lite_list.push_back(new c_item_lite(data_base,item_list.at(n*i+2),this));
         QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_hovered,this,&c_result_display::slot_item_hovered);
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_hide,this,&c_result_display::slot_item_hide);
         item_lite_list.push_back(new c_item_lite(data_base,item_list.at(n*i+3),this));
         QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_hovered,this,&c_result_display::slot_item_hovered);
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_hide,this,&c_result_display::slot_item_hide);
         QThread::msleep(1);
     }
     for (int i = done; i < size; ++i ) {
         item_lite_list.push_back(new c_item_lite(data_base,item_list.at(i),this));
         QObject::connect(item_lite_list.last(),&c_item_lite::item_doubleCliked,this,&c_result_display::slot_item_doubleCliked);
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_hovered,this,&c_result_display::slot_item_hovered);
+        QObject::connect(item_lite_list.last(),&c_item_lite::item_hide,this,&c_result_display::slot_item_hide);
         QThread::msleep(1);
     }
     qDebug() << "Creation of item_lite :" << timer.elapsed() << "ms";
@@ -230,4 +240,12 @@ void c_result_display::slot_preview() {
 
 void c_result_display::slot_item_doubleCliked(c_item item) {
     emit item_doubleCliked(item);
+}
+
+void c_result_display::slot_item_hovered(QString type, QPoint pos) {
+    emit item_hovered(type,pos);
+}
+
+void c_result_display::slot_item_hide(QString type) {
+    emit item_hide(type);
 }

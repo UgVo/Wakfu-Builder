@@ -26,6 +26,8 @@ public slots:
     void equip_new_item(c_item item);
     void slot_second_hand_disabled(bool state);
     void slot_item_view_cliked(QString position);
+    void slot_item_hovered(QString type, QPoint pos);
+    void slot_item_hide(QString type);
 
 signals:
     void load_search_position(QString position);

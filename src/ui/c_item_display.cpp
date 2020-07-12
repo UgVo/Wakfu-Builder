@@ -22,6 +22,9 @@ c_item_display::c_item_display(c_item item, QWidget *parent) :
 
     updateView();
     data_complete = false;
+    cmp_equip = false;
+    ui->label_equiped_cmp->hide();
+    ui->label_equiped_cmp->setStyleSheet("color : white");
 }
 
 QString c_item_display::replace_image(QString text) {
@@ -171,4 +174,11 @@ c_item c_item_display::getItem() {
 void c_item_display::setItem(c_item item) {
     _item = item;
     updateView();
+}
+
+void c_item_display::setCmp_equip(bool value) {
+    cmp_equip = value;
+    if (cmp_equip) {
+        ui->label_equiped_cmp->show();
+    }
 }
