@@ -238,3 +238,43 @@ void c_build_display::slot_second_hand_disabled(bool state) {
 void c_build_display::slot_item_view_cliked(QString position) {
     emit load_search_position(position);
 }
+
+void c_build_display::slot_item_hovered(QString type, QPoint pos) {
+    if (!type.compare("TWO_HAND_WEAPON")) {
+        if (item_position_map["SECOND_WEAPON"]->getDisabled()) {
+            item_position_map["FIRST_WEAPON"]->show_item_at_pos(pos);
+        }
+    } else if (!type.compare("ONE_HAND_WEAPON")) {
+        if (!item_position_map["SECOND_WEAPON"]->getDisabled()) {
+            item_position_map["FIRST_WEAPON"]->show_item_at_pos(pos);
+        }
+    } else if (!type.compare("SECOND_HAND")) {
+        if (!item_position_map["SECOND_WEAPON"]->getDisabled()) {
+            item_position_map["SECOND_WEAPON"]->show_item_at_pos(pos);
+        }
+    } else if (!type.compare("RING")) {
+        item_position_map["LEFT_HAND"]->show_item_at_pos(pos);
+    } else {
+        item_position_map[type]->show_item_at_pos(pos);
+    }
+}
+
+void c_build_display::slot_item_hide(QString type) {
+    if (!type.compare("TWO_HAND_WEAPON")) {
+        if (item_position_map["SECOND_WEAPON"]->getDisabled()) {
+            item_position_map["FIRST_WEAPON"]->hide_item();
+        }
+    } else if (!type.compare("ONE_HAND_WEAPON")) {
+        if (!item_position_map["SECOND_WEAPON"]->getDisabled()) {
+            item_position_map["FIRST_WEAPON"]->hide_item();
+        }
+    } else if (!type.compare("SECOND_HAND")) {
+        if (!item_position_map["SECOND_WEAPON"]->getDisabled()) {
+            item_position_map["SECOND_WEAPON"]->hide_item();
+        }
+    } else if (!type.compare("RING")) {
+        item_position_map["LEFT_HAND"]->hide_item();
+    } else {
+        item_position_map[type]->hide_item();
+    }
+}

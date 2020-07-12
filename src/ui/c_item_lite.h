@@ -43,6 +43,8 @@ public slots:
 
 signals:
     void item_doubleCliked(c_item item);
+    void item_hovered(QString type, QPoint pos);
+    void item_hide(QString type);
 };
 
 #endif // C_ITEM_LITE_H

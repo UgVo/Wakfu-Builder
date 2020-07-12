@@ -94,9 +94,11 @@ bool c_item_lite::event(QEvent *event) {
         timer = new QTimer(this);
         connect(timer,&QTimer::timeout,this,&c_item_lite::check_mouse_over);
         timer->start(100);
+        emit item_hovered(mapItemToType[_item.getType().getTitle()], res);
 
     } else if ( event->type() == QEvent::HoverLeave ) {
         it_display->hide();
+        emit item_hide(mapItemToType[_item.getType().getTitle()]);
 
     }
     return QWidget::event(event);
@@ -125,8 +127,11 @@ void c_item_lite::check_mouse_over() {
         timer->start(100);
     } else {
         disconnect(timer,&QTimer::timeout,this,&c_item_lite::check_mouse_over);
-        it_display->hide();
-        it_display->update();
+        if (!it_display->isHidden()) {
+            it_display->hide();
+            it_display->update();
+            emit item_hide(mapItemToType[_item.getType().getTitle()]);
+        }
     }
 }
 

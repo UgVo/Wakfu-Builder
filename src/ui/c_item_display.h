@@ -38,6 +38,8 @@ public:
 
     const static QList<QString> color_rarity;
 
+    void setCmp_equip(bool value);
+
 private:
     Ui::c_item_display *ui;
     c_item _item;
@@ -47,6 +49,7 @@ private:
     QList<QLabel*> label_equip_list;
     bool data_complete;
     QString imageDir;
+    bool cmp_equip;
 };
 
 
