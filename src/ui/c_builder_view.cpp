@@ -21,15 +21,18 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *_parent) :
     //build_display->set_item_viewers();
     search_widget = new c_search_widget(manager,this);
     aptitude_display = new c_aptitudes_display(this);
+    tc_resume = new c_theory_craft_resume(this);
 
     ui->build_layout->insertWidget(0,status_build);
     ui->build_layout->insertWidget(1,build_display);
     ui->build_layout->insertWidget(2,element_display);
 
-    ui->horizontalLayout_2->insertWidget(2,result_display);
+    ui->horizontalLayout_2->insertWidget(0,result_display);
     ui->horizontalLayout_2->setAlignment(result_display,Qt::AlignTop);
-    ui->horizontalLayout_2->insertWidget(3,search_widget);
-    ui->horizontalLayout_2->setAlignment(search_widget,Qt::AlignTop);
+    ui->verticalLayout->insertWidget(0,search_widget);
+    ui->verticalLayout->setAlignment(search_widget,Qt::AlignTop);
+    ui->verticalLayout->insertWidget(2,tc_resume);
+    ui->verticalLayout->setAlignment(tc_resume,Qt::AlignTop);
 
     status_build->setDisabled(true);
     build_display->setDisabled(true);
@@ -60,8 +63,9 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *_parent) :
     shadow->setOffset(2,2);
     ui->tabWidget->setGraphicsEffect(shadow);
     //ui->tabWidget->setStyleSheet(QString("QTabWidget::pane {border: 0px solid black; border-radius: 3px; background: %1;} QTabWidget::tab-bar:top {top: 1px;}QTabWidget::tab-bar:bottom {bottom: 1px;}QTabWidget::tab-bar:left {right: 1px;}QTabWidget::tab-bar:right {left: 1px;}QTabBar::tab {border: 1px solid black;}QTabBar::tab:selected {background: white;}QTabBar::tab:!selected {background: silver;}QTabBar::tab:!selected:hover {background: #999;}QTabBar::tab:top:!selected {margin-top: 3px;}QTabBar::tab:bottom:!selected {margin-bottom: 3px;}QTabBar::tab:top, QTabBar::tab:bottom {min-width: 8ex;margin-right: -1px;padding: 5px 10px 5px 10px;}QTabBar::tab:top:selected {border-bottom-color: none;}QTabBar::tab:bottom:selected {border-top-color: none;}QTabBar::tab:top:last, QTabBar::tab:bottom:last,QTabBar::tab:top:only-one, QTabBar::tab:bottom:only-one {margin-right: 0;}QTabBar::tab:left:!selected {margin-right: 3px;}QTabBar::tab:right:!selected {margin-left: 3px;}QTabBar::tab:left, QTabBar::tab:right {min-height: 8ex;margin-bottom: -1px;padding: 10px 5px 10px 5px;}QTabBar::tab:left:selected {border-left-color: none;}QTabBar::tab:right:selected {border-right-color: none;}QTabBar::tab:left:last, QTabBar::tab:right:last,QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {margin-bottom: 0;}").arg(app_color::gery_blue_2));
-    ui->tabWidget->setStyleSheet(QString("QTabWidget::pane {border: 0px solid black; border-radius: 3px; border-bottom-left-radius: 0px; background: %1;} "
-                                         "QTabBar::tab {border: 0px solid black; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; background: %1; margin-right: 10px; width: 150px; padding-right:-55px; padding-left:55px;} QTabBar::tab:!selected {background: %2;}").arg(app_color::grey_blue_2).arg(app_color::grey_blue_3));
+    ui->tabWidget->setStyleSheet(QString("QTabWidget#tabWidget::pane {border: 0px solid black; border-radius: 3px; border-bottom-left-radius: 0px; background: %1;} "
+                                         "#tabWidget > QTabBar::tab {border: 0px solid black; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; background: %1; margin-right: 10px; width: 150px; padding-right:-55px; padding-left:55px;} "
+                                         "#tabWidget > QTabBar::tab:!selected {background: %2;}").arg(app_color::grey_blue_2).arg(app_color::grey_blue_3));
     ui->tabWidget->setTabIcon(0,QIcon(":/images/divers/equipments.png"));
     ui->tabWidget->setTabIcon(1,QIcon(":/images/divers/aptitude.png"));
     ui->tabWidget->setTabIcon(2,QIcon(":/images/divers/spell.png"));
@@ -78,6 +82,7 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *_parent) :
 
     calcul = new c_calcul;
     calcul->setBuild(build);
+    calcul->setTc_resume(tc_resume);
     QObject::connect(build,&c_build::updated,calcul,&c_calcul::computeMainMastery);
 
     QObject::connect(element_display,&c_elements_display::doubleCliked,this,&c_builder_view::slot_show_element_popup);
