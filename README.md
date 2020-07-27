@@ -1,3 +1,78 @@
+[English](#English) below ⬇️ 
+# Français
+## Installation de PosgreSQL
+Télécharger la dernière version de PosgreSQL(12.3) à l'url suivante : 
+	[https://www.enterprisedb.com/downloads/postgres-postgresql-downloads](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
+	
+Une fois l'installation finie, exécuter le programme pgAdmin (cela ouvrira une page internet pour accéder à l'interface administrateur de posgresql)
+	
+Se connection en utilisant le mot de passe renseigné durant l'installation (Le "Master password" et le mot de passe pour accéder à la base de donnée PostgreSQL 12 sont les mêmes)
+
+## Réglages de la base de donnée
+### Création d'un nouvel utilisateur wakfu_builder
+
+Click droit sur 'Login/Group Roles' > Create > Login/Group Role...
+
+![create user image](images/create_user.PNG)
+
+* Dans **General**: nommez le _wakfu_builder_
+* Dans **Privileges**: reglez'_Can login?_', '_Inherits rigths from the parent roles_' et '_can initiate streaming replication and backup_' à '**Yes**'
+* Dans **Membership**: Ajouter 'postgres' dans la liste des rôles
+
+Sauvegarder
+			
+### Ajouter un nouveau schéma et l'appeler wakfu_builder
+* Dans **General**: 
+  * appelez le _wakfu_builder_
+  * sélectionner '_postgres_' dans le champ 'propriétaire' (Owner en anglais, choix par défaut)
+* Dans **Security**: Ajouter '_postgres_' et '_wakfu_builder_' en tant bénéficiaire (Grantee) avec tous les privilèges.
+
+![](images/add_priviliges_1.PNG)
+
+Sauvegarder
+
+### Régler le mot de passe de l'utilisateur wakfu_builder
+
+Cliquez sur le bouton _outils de requêtes_ (Query Tool) en haut à gauche
+
+![](images/query_tool.png)
+	
+Dans l'éditeur de requête, copiez et collez la ligne de commande suivante :
+
+⚠️ Remplacez _'your_password'_ par ce que vous voulez, cependant ce mot de passe sera nécessaire pour permettre au programme de se connecter à la base de donnée lors de la première exécution ⚠️ 
+
+	 ALTER USER wakfu_builder password 'your_password';
+
+Appuyez sur la touche **_F5_** pour exécuter la commande
+
+Le programme devrait être utilisable entièrement une fois installé à son tour. Il faudra cependant remplir avec les données fournies par Ankama, pour cela il faudra passer par le menu _Gestion_ > _check new version_, puis 'Update files', 'Update Database' et finalement 'Update images', cela peut prendre un certain temps suivant la qualité de votre connexion et du PC
+
+Le programme est maintenant prêt à être utilisé ! 🎉
+
+### Faire un reset de la base de donnée
+
+Si il est nécessaire de faire un reset de la base de donnée pour quelque raison que ce soit, se connecter directement à l'outil de requête de pgAdmin comme présenté [précédemment](#r%C3%A9gler-le-mot-de-passe-de-lutilisateur-wakfu_builder) ou passer par le petit programme _psql_ qui a été installé avec (valider tout jusqu'à ce que le mot de passe soit demandé) Et exécuter les commandes suivantes :
+If ever needed, for reseting the database datas, run the following commands in Sql Shell (psql):
+
+	delete from wakfu_builder.action;
+	delete from wakfu_builder.itemproperties;
+	delete from wakfu_builder.equipmentItemType;
+	delete from wakfu_builder.equipmentPosition;
+	delete from wakfu_builder.eqpType_Pos_relation;
+	delete from wakfu_builder.eqpType_DisPos_relation;
+  delete from wakfu_builder.relation_item_carac;
+	delete from wakfu_builder.states;
+
+	delete from wakfu_builder.effect;
+	delete from wakfu_builder.item;
+	delete from wakfu_builder.item_properties_relation;
+	delete from wakfu_builder.item_useEffect_relation;
+	delete from wakfu_builder.item_useCriticalEffect_relation;
+	delete from wakfu_builder.item_useEquipEffect_relation;
+	delete from wakfu_builder.carac;
+        delete from wakfu_builder.enchant_effect;
+
+# English
 ## Install PosgreSQL
 Download from the lastest version of PosgreSQL(12.3) at: 
 	[https://www.enterprisedb.com/downloads/postgres-postgresql-downloads](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
