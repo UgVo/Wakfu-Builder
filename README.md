@@ -1,5 +1,8 @@
 [English](#English) below ⬇️ 
 # Français
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0858c50752a14935b7825c10495d0100)](https://app.codacy.com/manual/Mankio/Wakfu-Builder?utm_source=github.com&utm_medium=referral&utm_content=Mankio/Wakfu-Builder&utm_campaign=Badge_Grade_Dashboard)
+
 ## Installation de PosgreSQL
 Télécharger la dernière version de PosgreSQL(12.3) à l'url suivante : 
 	[https://www.enterprisedb.com/downloads/postgres-postgresql-downloads](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
