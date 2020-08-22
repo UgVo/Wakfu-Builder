@@ -654,9 +654,9 @@ QList<int> c_dbmanager::getid_item_from_actions(QList<QString> carac_effect, QLi
     QSqlQuery query(m_db);
     QString query_string;
     if (!condi.isEmpty()) {
-        query_string = prepareQuery_condi(carac_effect,rarities,types,bondaries,name,final,condi);
+        query_string = prepareQuery_condi(carac_effect,rarities,types,bondaries,name.replace("'","''"),final,condi);
     } else {
-        query_string = prepareQuery_simple(carac_effect,rarities,types,bondaries,name,final);
+        query_string = prepareQuery_simple(carac_effect,rarities,types,bondaries,name.replace("'","''"),final);
     }
     query.prepare(query_string);
     for (int i = 0; i < rarities.size(); ++i) {
