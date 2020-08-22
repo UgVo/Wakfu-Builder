@@ -225,13 +225,14 @@ void MainWindow::slot_action_connection_bdd() {
 }
 
 void MainWindow::slot_creation_builder() {
-    QObject::disconnect(entry_point,&c_entry_point::first_animation_finished,this,&MainWindow::slot_creation_builder);set_save_enabled(true);
+    QObject::disconnect(entry_point,&c_entry_point::first_animation_finished,this,&MainWindow::slot_creation_builder);
     builder_list.push_back(new c_builder_view(database_manager,search_completer,this));
     ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
     QThread::msleep(10);
     builder_list.last()->update();
     entry_point->slot_creation_builder_anim();
+    set_save_enabled(true);
 }
 
 void MainWindow::slot_open_builder(const c_io_manager::jsonformat format, QString path_json, int id) {
