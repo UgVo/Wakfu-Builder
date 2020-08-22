@@ -74,8 +74,7 @@ c_builder_view::c_builder_view(c_dbmanager *_manager,  QCompleter* search_comple
                                          "#tabWidget > QTabBar::tab:!selected {background: %2;}").arg(app_color::grey_blue_2).arg(app_color::grey_blue_3));
     ui->tabWidget->setTabIcon(0,QIcon(":/images/divers/equipments.png"));
     ui->tabWidget->setTabIcon(1,QIcon(":/images/divers/aptitude.png"));
-    ui->tabWidget->setTabIcon(2,QIcon(":/images/divers/spell.png"));
-    ui->tabWidget->setTabIcon(3,QIcon(":/images/divers/enchantement.png"));
+    ui->tabWidget->setTabIcon(2,QIcon(":/images/divers/enchantement.png"));
 
     ui->horizontalLayout_5->addWidget(aptitude_display);
     ui->verticalLayout_3->addWidget(enchantement_display);

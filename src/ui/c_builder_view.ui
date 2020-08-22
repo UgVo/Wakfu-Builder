@@ -228,15 +228,11 @@
             </attribute>
             <layout class="QHBoxLayout" name="horizontalLayout_5"/>
            </widget>
-           <widget class="QWidget" name="tab_sorts">
-            <attribute name="title">
-             <string/>
-            </attribute>
-           </widget>
            <widget class="QWidget" name="tab_sublimations">
             <attribute name="title">
              <string/>
             </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_3"/>
            </widget>
           </widget>
          </item>
