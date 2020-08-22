@@ -684,7 +684,7 @@ QList<int> c_dbmanager::getid_item_from_actions(QList<QString> carac_effect, QLi
 QList<int> c_dbmanager::getid_item_from_actions_sorted(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final, QList<bool> condi) {
     QList<int> res;
     QSqlQuery query(m_db);
-    QString query_string = prepareQuery_condi(carac_effect,rarities,types,bondaries,name,final,condi);
+    QString query_string = prepareQuery_condi(carac_effect,rarities,types,bondaries,QString(),final,condi);
     QString query_string_sorted = QString("SELECT item.id,sum(carac.value) FROM ( %1 ) as item INNER JOIN wakfu_builder.relation_item_carac as r_item_carac ON item.id = r_item_carac.id_item INNER JOIN wakfu_builder.carac as carac ON r_item_carac.id_carac = carac.id WHERE ").arg(query_string);
     if (carac_effect.size() != 0) {
         query_string_sorted += "( carac.effect = :carac_effect0 OR";
