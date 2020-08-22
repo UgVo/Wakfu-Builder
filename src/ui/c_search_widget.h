@@ -10,6 +10,7 @@
 #include <QAbstractItemView>
 #include <QStandardItemModel>
 #include <QComboBox>
+#include <QCompleter>
 #include "ui.h"
 #include "utilities/c_dbmanager.h"
 #include "utilities/utilities.h"
@@ -23,7 +24,7 @@ class c_search_widget : public QWidget
     Q_OBJECT
 
 public:
-    explicit c_search_widget(c_dbmanager* manager,QWidget *parent = nullptr);
+    explicit c_search_widget(c_dbmanager* manager, QCompleter* search_completer, QWidget *parent = nullptr);
     ~c_search_widget();
 
 private:
@@ -36,6 +37,7 @@ private:
     c_dbmanager *dbmanager;
     QList<QComboBox*> cb_carac_list;
     QList<QComboBox*> cb_carac_condi;
+    QCompleter* completer;
 
     int numberShown;
 

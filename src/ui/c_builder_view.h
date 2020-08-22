@@ -29,7 +29,7 @@ class c_builder_view : public QWidget
     Q_OBJECT
 
 public:
-    explicit c_builder_view(c_dbmanager *_manager,QWidget *parent = nullptr);
+    explicit c_builder_view(c_dbmanager *_manager, QCompleter* search_completer, QWidget *parent = nullptr);
     ~c_builder_view();
 
     c_status_build *getStatus_build() const;

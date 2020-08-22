@@ -3,7 +3,7 @@
 
 #include "../mainwindow.h"
 
-c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *_parent) :
+c_builder_view::c_builder_view(c_dbmanager *_manager,  QCompleter* search_completer, QWidget *_parent) :
     QWidget(_parent),
     ui(new Ui::c_builder_view)
 {
@@ -19,7 +19,7 @@ c_builder_view::c_builder_view(c_dbmanager *_manager, QWidget *_parent) :
     element_display = new c_elements_display(this);
     build_display = new c_build_display(build,this);
     //build_display->set_item_viewers();
-    search_widget = new c_search_widget(manager,this);
+    search_widget = new c_search_widget(manager,search_completer,this);
     aptitude_display = new c_aptitudes_display(this);
     tc_resume = new c_theory_craft_resume(this);
 

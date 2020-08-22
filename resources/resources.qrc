@@ -333,6 +333,7 @@
         <file>divers/coup_normal_berserk.png</file>
         <file>divers/pb_berserk.png</file>
         <file>divers/pb_berserk_inked.png</file>
+        <file>divers/splash.png</file>
     </qresource>
     <qresource prefix="/font">
         <file>wci.ttf</file>

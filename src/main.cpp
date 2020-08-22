@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QFile>
 #include <QDateTime>
+#include <QSplashScreen>
 
 static QString file_path = "";
 
@@ -47,8 +48,18 @@ int main(int argc, char *argv[])
         QApplication a(argc, argv);
         file_path = QString(qApp->applicationDirPath() + "/log/log%1.txt").arg(QDateTime::currentDateTime().toString("yyyyMMdd-hhmmss"));
         qInstallMessageHandler(myMessageOutput);
+        QPixmap pixmap(":/images/divers/splash.png");
+        QSplashScreen splash(pixmap);
+        splash.setMaximumSize(QSize(500,500));
+        splash.show();
+        a.processEvents();
         MainWindow w;
+        splash.showMessage("Loading items 1/2",Qt::AlignLeft,Qt::white);
+        w.load_item_model();
+        splash.showMessage("Loading items 2/2",Qt::AlignLeft,Qt::white);
+        w.load_completer();
         w.show();
+        splash.finish(&w);
         return a.exec();
     } catch (const std::exception & e) {
         qFatal(e.what());

@@ -19,6 +19,7 @@
 #include <QMessageBox>
 #include <QFontDatabase>
 #include <QPropertyAnimation>
+#include <QCompleter>
 #include "utilities/c_dbmanager.h"
 #include "utilities/c_effect.h"
 #include "utilities/c_networkmanager.h"
@@ -29,6 +30,7 @@
 #include "ui/c_builder_view.h"
 #include "ui/c_entry_point.h"
 #include "ui/c_bdd_password_dialog.h"
+#include "utilities/c_item_model.h"
 
 #include "utilities/c_io_manager.h"
 
@@ -74,6 +76,9 @@ private:
     QList<c_builder_view*> builder_list;
     c_entry_point* entry_point;
     QLabel *connection_status;
+    c_item_model *item_model;
+    QCompleter *search_completer;
+
 
 public slots:
     void slot_check_version_clicked();
@@ -105,6 +110,8 @@ public slots:
 
     void asked_on_soft_new_version();
 
+    void load_item_model();
+    void load_completer();
 
 signals:
     void init_done();

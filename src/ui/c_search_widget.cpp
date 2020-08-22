@@ -1,7 +1,7 @@
 #include "c_search_widget.h"
 #include "ui_c_search_widget.h"
 
-c_search_widget::c_search_widget(c_dbmanager *manager, QWidget *parent) :
+c_search_widget::c_search_widget(c_dbmanager *manager, QCompleter* search_completer, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::c_search_widget) {
     ui->setupUi(this);
@@ -85,7 +85,8 @@ c_search_widget::c_search_widget(c_dbmanager *manager, QWidget *parent) :
                                 "QCheckBox::indicator:checked {image: url(:/images/divers/smallmount.png);} ");
 
     ui->name_search->setPlaceholderText("Recherche par nom");
-    ui->name_search->setStyleSheet(QString(" background-color: %1;  border: 1px solid %1; color:white;   border-radius: 3px; ").arg(app_color::grey_blue));
+    ui->name_search->setStyleSheet(QString(" QLineEdit{background-color: %1;  border: 1px solid %1; color: white;   border-radius: 3px;}"
+                                           "name_search::placeholder {color : white;} ").arg(app_color::grey_blue));
 
     set_comboBox_model(ui->carac_search);
 
@@ -151,6 +152,9 @@ c_search_widget::c_search_widget(c_dbmanager *manager, QWidget *parent) :
     }
 
     QObject::connect(ui->pb_add_condition,&QPushButton::clicked,this,&c_search_widget::slot_new_condi_row);
+
+    completer = search_completer;
+    ui->name_search->setCompleter(completer);
 
 }
 
@@ -335,11 +339,6 @@ bool c_search_widget::compare_pair_id_lvl(QPair<int,int> p1, QPair<int,int> p2) 
 void c_search_widget::init_comboBox(QComboBox* cb) {
     cb->setStyleSheet(QString("QComboBox { background-color: %1;  border: 1px solid %1; color:white;   border-radius: 3px;} QComboBox::drop-down { width: 16px;    border: %1 solid %1; border-bottom-right-radius: 3px;} QComboBox::down-arrow {image: url(:/images/divers/down_arrow.png);} QComboBox::down-arrow:on {image: url(:/images/divers/up_arrow.png);} QComboBox::item{ border: 0px solid black } ").arg(app_color::grey_blue));
     cb->view()->setStyleSheet(QString("QAbstractItemView {background-color : %1; selection-background-color: %2; outline: 0px; border: 1px solid %1; border-radius: 3px;}").arg(app_color::grey_blue).arg(app_color::green_blue));
-    QString sheet = QString("QScrollBar:vertical {border: 0px solid #999999; background:white; width:16px; margin: 0px 0px 0px 0px; }"
-                            "QScrollBar::handle:vertical { background: qlineargradient(x1:0, y1:0, x2:1, y2:0,stop: 0 rgb(32, 47, 130), stop: 0.5 rgb(32, 47, 130), stop:1 rgb(32, 47, 130));background:%1;min-height: 0px;border: 0px solid #999999;}"
-                            "QScrollBar::add-line:vertical {background: qlineargradient(x1:0, y1:0, x2:1, y2:0,stop: 0 rgb(32, 47, 130), stop: 0.5 rgb(32, 47, 130),  stop:1 rgb(32, 47, 130));height: 0px;subcontrol-position: bottom;subcontrol-origin: margin;}"
-                            "QScrollBar::sub-line:vertical {background: qlineargradient(x1:0, y1:0, x2:1, y2:0,stop: 0  rgb(32, 47, 130), stop: 0.5 rgb(32, 47, 130),  stop:1 rgb(32, 47, 130));height: 0 px;subcontrol-position: top;subcontrol-origin: margin;}").arg(app_color::grey_blue);
-    cb->view()->findChild<QWidget*>("qt_scrollarea_vcontainer")->setStyleSheet(sheet);
     for (int i = 0; i < cb->count(); ++i) {
        cb->setItemData(i, QBrush(QColor("white")), Qt::TextColorRole);
     }

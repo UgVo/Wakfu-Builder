@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     app_path = qApp->applicationDirPath();
     ui->setupUi(this);
     database_manager = new c_dbmanager(&datamanager);
+    item_model = new c_item_model(database_manager,this);
     datamanager.setDBManager(database_manager);
     ui->actionCheck_new_version->setIcon(QIcon(":/images/divers/update32.png"));
     set_save_enabled(false);
@@ -106,7 +107,7 @@ void MainWindow::test_interpret_effect() {
 
 void MainWindow::slot_actionCr_er_nouveau_Build_clicked() {
     set_save_enabled(true);
-    builder_list.push_back(new c_builder_view(database_manager,this));
+    builder_list.push_back(new c_builder_view(database_manager,search_completer,this));
     ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
     ui->stackedWidget->setCurrentIndex(1);
@@ -166,7 +167,7 @@ void MainWindow::slot_action_open_Depuis_un_fichier() {
     QString fileName = QFileDialog::getOpenFileName(this,
         tr("Save Build"), app_path + "/save", tr("Json files (*.json)"));
     if (!fileName.isEmpty()) {
-        c_builder_view *builder = new c_builder_view(database_manager,this);
+        c_builder_view *builder = new c_builder_view(database_manager,search_completer,this);
         if (builder->slot_load(c_io_manager::jsonformat::file,fileName)) {
             set_save_enabled(true);
             builder_list.push_back(builder);
@@ -188,7 +189,7 @@ void MainWindow::slot_action_save_Vers_la_base_de_donnee() {
 }
 
 void MainWindow::slot_action_open_Depuis_la_base_de_donn_e() {
-    c_builder_view *builder = new c_builder_view(database_manager,this);
+    c_builder_view *builder = new c_builder_view(database_manager,search_completer,this);
     if (builder->slot_load(c_io_manager::jsonformat::database)) {
         set_save_enabled(true);
         builder_list.push_back(builder);
@@ -224,7 +225,7 @@ void MainWindow::slot_action_connection_bdd() {
 
 void MainWindow::slot_creation_builder() {
     QObject::disconnect(entry_point,&c_entry_point::first_animation_finished,this,&MainWindow::slot_creation_builder);set_save_enabled(true);
-    builder_list.push_back(new c_builder_view(database_manager,this));
+    builder_list.push_back(new c_builder_view(database_manager,search_completer,this));
     ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
     QThread::msleep(10);
@@ -234,7 +235,7 @@ void MainWindow::slot_creation_builder() {
 
 void MainWindow::slot_open_builder(const c_io_manager::jsonformat format, QString path_json, int id) {
     QObject::disconnect(entry_point,&c_entry_point::load_builder_from,this,&MainWindow::slot_open_builder);
-    builder_list.push_back(new c_builder_view(database_manager,this));
+    builder_list.push_back(new c_builder_view(database_manager,search_completer,this));
     builder_list.last()->slot_loadFrom(format,path_json,id);
     ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
@@ -303,4 +304,25 @@ void MainWindow::asked_on_soft_new_version() {
             qApp->quit();
         }
     }
+}
+
+void MainWindow::load_item_model() {
+    item_model->init();
+}
+
+void MainWindow::load_completer() {
+    QList<c_item> item_list = database_manager->getAllItem();
+    QList<QString> item_name_list;
+    foreach (c_item item,item_list) {
+        if (!item_name_list.contains(item.getName())) {
+            item_name_list.push_back(item.getName());
+        }
+    }
+    search_completer = new QCompleter(item_name_list,this);
+    search_completer->setCaseSensitivity(Qt::CaseInsensitive);
+    search_completer->setFilterMode(Qt::MatchContains);
+
+    QAbstractItemView *popup = search_completer->popup();
+    QString sheet = QString("QAbstractItemView { background-color: %1;  border: 1px solid %1; color:white;   border-radius: 3px;}").arg(app_color::grey_blue);
+    popup->setStyleSheet(sheet);
 }
