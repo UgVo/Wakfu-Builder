@@ -3,12 +3,10 @@
 #include "ui_c_enchantement_lite.h"
 
 c_enchantement_lite::c_enchantement_lite(QWidget *parent, c_enchantement_effect effect) :
-    QWidget(parent),
-    ui(new Ui::c_enchantement_lite)
+    QWidget(parent), ui(new Ui::c_enchantement_lite), _effect(effect)
 {
     ui->setupUi(this);
     _id = effect.id();
-    _effect = effect;
     QPixmap pixmap;
     QIcon icon;
     switch (effect.color()) {

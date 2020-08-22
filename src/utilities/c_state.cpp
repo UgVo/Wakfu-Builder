@@ -1,10 +1,6 @@
 #include "c_state.h"
 
-c_state::c_state(int id, QString name, QString description) {
-    _id = id;
-    _name = name;
-    _description = description;
-}
+c_state::c_state(int id, QString name, QString description) : _id(id), _name(name), _description(description) {}
 
 c_state::c_state(QJsonObject state) {
     _id = state.value("definition").toObject().value("id").toInt();

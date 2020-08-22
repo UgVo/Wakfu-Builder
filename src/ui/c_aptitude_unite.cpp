@@ -3,16 +3,10 @@
 #include "c_aptitudes_display.h"
 
 c_aptitude_unite::c_aptitude_unite(QString _text, int _max, QString image_name, QString _section, QWidget *_parent) :
-    QWidget(_parent),
-    ui(new Ui::c_aptitude_unite) {
+    QWidget(_parent), ui(new Ui::c_aptitude_unite), parent(static_cast<c_aptitudes_display*>(_parent)),
+    type(_text), section(_section), value(0), max(_max), pack_increase(false) {
     ui->setupUi(this);
-    max = _max;
-    type = _text;
-    section = _section;
     ui->texte->setText(_text);
-    value = 0;
-    parent = static_cast<c_aptitudes_display*>(_parent);
-    pack_increase = false;
 
     ui->value->setNum(value);
     ui->icon->setPixmap(QPixmap(QString(":/images/Aptitudes/%1.png").arg(image_name)));

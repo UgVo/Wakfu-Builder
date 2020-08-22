@@ -2,19 +2,14 @@
 #include "ui_c_enchantement_display.h"
 
 c_enchantement_display::c_enchantement_display(QWidget *parent, c_dbmanager* manager, c_build* build)  :
-    QWidget(parent),
-    ui(new Ui::c_enchantement_display)
+    QWidget(parent), ui(new Ui::c_enchantement_display), _manager(manager), _build(build)
 {
     ui->setupUi(this);
-    _manager = manager;
-    _build = build;
-    int id;
     QList<c_enchantement_effect> res = _manager->get_enchantement_effects();
     foreach(c_enchantement_effect effect, res) {
-        id = effect.id();
         qDebug() << "---------------------------" << effect.effect() << "---------------------";
         qDebug() << effect.valuePerLvl();
-        effect_map.insert(id,new c_enchantement_lite(this,effect));
+        effect_map.insert(effect.id(),new c_enchantement_lite(this,effect));
         QObject::connect(effect_map.last(),&c_enchantement_lite::clicked,this,&c_enchantement_display::slot_effectClicked);
         switch (effect.color()) {
             case 1:

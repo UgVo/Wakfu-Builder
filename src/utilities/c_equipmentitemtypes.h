@@ -26,21 +26,21 @@ private:
     QString title;
 
 public:
-    int getId();
-    int getParentId();
-    QStringList getEquipementPositions();
-    QStringList getEquipementDisablePositions();
-    bool isRecyclable();
-    bool isVisibleInAnimation();
-    QString getTitle();
+    int getId() const;
+    int getParentId() const;
+    QStringList getEquipementPositions() const;
+    QStringList getEquipementDisablePositions() const;
+    bool isRecyclable() const;
+    bool isVisibleInAnimation() const;
+    QString getTitle() const;
 
-    void setId(int);
-    void setParentId(int);
-    void setEquipementPositions(QStringList);
-    void setEquipementDisablePositions(QStringList);
-    void setRecyclable(bool);
-    void setVisibleInAnimation(bool);
-    void setTitle(QString);
+    void setId(const int);
+    void setParentId(const int);
+    void setEquipementPositions(const QStringList);
+    void setEquipementDisablePositions(const QStringList);
+    void setRecyclable(const bool);
+    void setVisibleInAnimation(const bool);
+    void setTitle(const QString);
 
 };
 

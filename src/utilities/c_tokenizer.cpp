@@ -8,7 +8,6 @@ c_tokenizer::c_tokenizer() {
     rx_state = QRegExp(".*\\[(\\d*)\\].*");
     rx_value = QRegExp("(^[0-9\\-]+)%? (.*)");
     rx_sentence = QRegExp("([a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\\. ]+)([0-9]*)([a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\\. ]*)");
-
 }
 
 QMap<QString,QString> c_tokenizer::tokenize(const QString string) const {

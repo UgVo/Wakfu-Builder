@@ -28,58 +28,58 @@ c_equipmentItemTypes::c_equipmentItemTypes(QJsonObject object) {
     }
 }
 
-int c_equipmentItemTypes::getId() {
+int c_equipmentItemTypes::getId() const {
     return id;
 }
 
-int c_equipmentItemTypes::getParentId() {
+int c_equipmentItemTypes::getParentId() const {
     return parentId;
 }
 
-QStringList c_equipmentItemTypes::getEquipementPositions() {
+QStringList c_equipmentItemTypes::getEquipementPositions() const {
     return equipementPositions;
 }
 
-QStringList c_equipmentItemTypes::getEquipementDisablePositions() {
+QStringList c_equipmentItemTypes::getEquipementDisablePositions() const {
     return equipmentDisabledPositions;
 }
 
-bool c_equipmentItemTypes::isRecyclable() {
+bool c_equipmentItemTypes::isRecyclable() const {
     return recyclable;
 }
 
-bool c_equipmentItemTypes::isVisibleInAnimation() {
+bool c_equipmentItemTypes::isVisibleInAnimation() const {
     return visibleInAnimation;
 }
 
-QString c_equipmentItemTypes::getTitle() {
+QString c_equipmentItemTypes::getTitle() const {
     return  title;
 }
 
-void c_equipmentItemTypes::setId(int _id) {
+void c_equipmentItemTypes::setId(const int _id) {
     id = _id;
 }
 
-void c_equipmentItemTypes::setParentId(int _parentId) {
+void c_equipmentItemTypes::setParentId(const int _parentId) {
     parentId = _parentId;
 }
 
-void c_equipmentItemTypes::setEquipementPositions(QStringList _equipementPositions) {
+void c_equipmentItemTypes::setEquipementPositions(const QStringList _equipementPositions) {
     equipementPositions = _equipementPositions;
 }
 
-void c_equipmentItemTypes::setEquipementDisablePositions(QStringList _equipementDisablePositions) {
+void c_equipmentItemTypes::setEquipementDisablePositions(const QStringList _equipementDisablePositions) {
     equipmentDisabledPositions = _equipementDisablePositions;
 }
 
-void c_equipmentItemTypes::setRecyclable(bool _recyclable) {
+void c_equipmentItemTypes::setRecyclable(const bool _recyclable) {
     recyclable = _recyclable;
 }
 
-void c_equipmentItemTypes::setVisibleInAnimation(bool _visibleInAnimation) {
+void c_equipmentItemTypes::setVisibleInAnimation(const bool _visibleInAnimation) {
     visibleInAnimation = _visibleInAnimation;
 }
 
-void c_equipmentItemTypes::setTitle(QString _title) {
+void c_equipmentItemTypes::setTitle(const QString _title) {
     title = _title;
 }

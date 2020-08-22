@@ -1,17 +1,10 @@
 #include "c_item_display.h"
 #include "ui_c_item_display.h"
 
-//const QString c_item_display::color_background = "#6A8BA8";
-//const QString c_item_display::color_foreground = "#305A7F";
-const QString c_item_display::color_foreground = "#6A8BA8";
-const QString c_item_display::color_background = "#305A7F";
-const QList<QString> c_item_display::color_rarity = {"ffffff","ffffff","28f18b","fd8e39","fede71","fd87ba","8fc7e2","fd87ba"};
-
 c_item_display::c_item_display(c_item item, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::c_item_display),
-    _item(item)
-{
+    _item(item) {
     ui->setupUi(this);
 
 #ifdef Q_OS_MACX
@@ -130,7 +123,7 @@ void c_item_display::updateView() {
         ui->equip_label->setText(QString("A l'équipement :"));
         ui->equip_label->setFont(font_bold);
         ui->equip_label->setPalette(palette);
-        ui->equip_label->setStyleSheet(QString("QLabel#equip_label { background-color : %1; color : white}").arg(color_foreground));
+        ui->equip_label->setStyleSheet(QString("QLabel#equip_label { background-color : %1; color : white}").arg(app_color::grey_blue));
         ui->equip_label->setMinimumSize(0,heigth_label);
         ui->equip_label->setIndent(indent_title);
         ui->equip_label->show();
@@ -157,7 +150,7 @@ void c_item_display::updateView() {
                 label->setToolTip(map.value("description"));
             }
             if (label_equip_list.size()%2) {
-                label->setStyleSheet(QString("QLabel { background-color : %1}").arg(color_foreground));
+                label->setStyleSheet(QString("QLabel { background-color : %1}").arg(app_color::grey_blue));
             }
             if (!description.isEmpty()) {
                 ui->equip_layout->addWidget(label);

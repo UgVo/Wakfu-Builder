@@ -13,7 +13,7 @@ class c_dbmanager;
 class c_effect
 {
 public:
-    c_effect(c_dbmanager *dbmanager, int id = 0, c_action action = c_action(),
+    c_effect(const c_dbmanager *dbmanager, int id = 0, c_action action = c_action(),
              int areaShape = 0, QVector<int> areaSize = QVector<int>(),
              QVector<float> params = QVector<float>(), QString description = QString());
     c_effect(QJsonObject object, c_dbmanager *dbmanager);
@@ -44,7 +44,7 @@ private:
     QVector<int> _areaSize;
     QVector<float> _params;
     QString _description;
-    c_dbmanager* _database;
+    const c_dbmanager* _database;
     c_tokenizer tokenizer;
 };
 

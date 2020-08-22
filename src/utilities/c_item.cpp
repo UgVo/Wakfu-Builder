@@ -30,34 +30,13 @@ c_item::c_item(int id, int lvl, QString name, QString description, c_equipmentIt
                int minRange, int maxRange, bool testFreeCell, bool testLos,
                bool testOnlyLine, bool testNoBorderCell, int worldTarget, int gfxId,
                QVector<c_itemProperties> properties, QVector<c_effect> useEffects,
-               QVector<c_effect> useCriticalEffects, QVector<c_effect> equipEffects) {
-    _id = id;
-    _lvl = lvl;
-    _name = name;
-    _description = description;
-    _itemType = itemType;
-    _itemSetId = itemSetId;
-    _rarity = rarity;
-    _bindType = bindType;
-    _minimumShardSlotNumber = minShNum;
-    _maximumShardSlotNumber = maxShNum;
-    _useApCost = ApCost;
-    _useMpCost = MpCost;
-    _useWpCost = WpCost;
-    _useMinRange = minRange;
-    _useMaxRange = maxRange;
-    _useTestFreeCell = testFreeCell;
-    _useTestLos = testLos;
-    _useTestOnlyLine = testOnlyLine;
-    _useTestNoBorderCell = testNoBorderCell;
-    _useWorldTarget = worldTarget;
-    _properties = properties;
-    _useEffects = useEffects;
-    _useCriticalEffects = useCriticalEffects;
-    _equipEffects = equipEffects;
-    _gfxId = gfxId;
-    _number_element = 0;
-    _isFinal = false;
+               QVector<c_effect> useCriticalEffects, QVector<c_effect> equipEffects) :
+    _id(id), _lvl(lvl), _name(name), _description(description), _itemType(itemType), _itemSetId(itemSetId),
+    _rarity(rarity), _bindType(bindType), _minimumShardSlotNumber(minShNum), _maximumShardSlotNumber(maxShNum),
+    _useApCost(ApCost), _useMpCost(MpCost), _useWpCost(WpCost), _useMinRange(minRange), _useMaxRange(maxRange),
+    _useTestFreeCell(testFreeCell), _useTestLos(testLos), _useTestOnlyLine(testOnlyLine),_useTestNoBorderCell(testNoBorderCell) ,
+    _useWorldTarget(worldTarget), _gfxId(gfxId), _properties(properties), _useEffects(useEffects), _useCriticalEffects(useCriticalEffects),
+    _equipEffects(equipEffects), _number_element(0), _isFinal(false) {
 
     initBonuses();
 }

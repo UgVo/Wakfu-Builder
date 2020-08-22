@@ -1,13 +1,10 @@
 #include "c_dialoggestion.h"
 #include "ui_c_dialoggestion.h"
 
-DialogGestion::DialogGestion(c_datamanager *data,QString ver, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::DialogGestion)
+DialogGestion::DialogGestion(c_datamanager *data, QString ver, QWidget *parent) :
+    QDialog(parent), ui(new Ui::DialogGestion), data_manager(data), version(ver)
 {
     ui->setupUi(this);
-    data_manager = data;
-    version = ver;
     connect(ui->pb_update_files,&QPushButton::clicked,this,&DialogGestion::slot_update_file);
     connect(ui->pb_update_data_base,&QPushButton::clicked,this,&DialogGestion::slot_update_database);
     connect(ui->pb_update_images,&QPushButton::clicked,this,&DialogGestion::slot_update_images);

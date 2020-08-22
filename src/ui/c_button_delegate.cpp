@@ -2,9 +2,7 @@
 
 const int column_delete = 3;
 
-c_button_delegate::c_button_delegate(QObject *parent) :
-    QStyledItemDelegate(parent)
-{
+c_button_delegate::c_button_delegate(QObject *parent) : QStyledItemDelegate(parent) {
     if(QTableView *tableView = qobject_cast<QTableView *>(parent))
     {
         qDebug() << "creation button delegate";
@@ -16,8 +14,6 @@ c_button_delegate::c_button_delegate(QObject *parent) :
         btn->setAutoRaise(true);
         btn->setStyleSheet("border-top:1px solid #BBBBBB; border-bottom:1px solid #BBBBBB; background-color: rgba(255, 255, 255, 0);");
         btn->setIcon(QIcon(":/images/divers/delete_icon.png"));
-//        btn->setMaximumSize(QSize(30,30));
-//        btn->setMinimumSize(QSize(30,30));
         btn->hide();
         myWidget->setMouseTracking(true);
         connect(myWidget, SIGNAL(entered(QModelIndex)),
@@ -30,22 +26,16 @@ c_button_delegate::~c_button_delegate()
 {
 
 }
-//createEditor
 QWidget * c_button_delegate::createEditor(QWidget *parent,
         const QStyleOptionViewItem &option,
         const QModelIndex &index) const
 {
     if (index.column() == column_delete) {
-    //if (index.model()->headerData(index.column(), Qt::Horizontal, Qt::UserRole).toInt() == 3) {
         QToolButton * btn = new QToolButton(parent);
         btn->setAutoFillBackground(true);
         btn->setIconSize(QSize(30,30));
         btn->setAutoRaise(true);
         btn->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
-//        btn->setIcon(QIcon(":/images/divers/delete_icon.png"));
-//        btn->setMaximumSize(QSize(30,30));
-//        btn->setMinimumSize(QSize(30,30));
-        //btn->setText(index.data().toString());
         return btn;
     } else {
         return QStyledItemDelegate::createEditor(parent, option, index);
@@ -73,11 +63,9 @@ void c_button_delegate::setEditorData(QWidget *editor,
 void c_button_delegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (index.column() == column_delete)
-    //if( index.model()->headerData(index.column(), Qt::Horizontal, Qt::UserRole).toInt() == 3 )
     {
         QStyleOptionViewItem option2 = option;
         QRect rect = option.rect;
-//        rect.setSize(QSize(30,30));
         option2.rect = rect;
         btn->setGeometry(rect);
         btn->setText(index.data().toString());
@@ -93,7 +81,6 @@ void c_button_delegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 void c_button_delegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QRect rect = option.rect;
-    //rect.setSize(QSize(30,30));
     editor->setGeometry(rect);
 }
 
@@ -102,7 +89,6 @@ void c_button_delegate::cellEntered(const QModelIndex &index)
 {
     qDebug() << "Cell entered  : " << index;
     if (index.column() == column_delete)
-    //if(index.model()->headerData(index.column(), Qt::Horizontal, Qt::UserRole) == 3)
     {
         qDebug() << "coucou";
         if(isOneCellInEditMode)

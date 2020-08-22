@@ -2,10 +2,8 @@
 #include "ui_c_build_display.h"
 
 c_build_display::c_build_display(c_build* build, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::c_build_display) {
+    QWidget(parent), ui(new Ui::c_build_display), _build(build) {
     ui->setupUi(this);
-    _build = build;
     QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->widget_vie);
     shadow->setColor(QColor(91, 108, 142, 180));
     shadow->setOffset(2,2);

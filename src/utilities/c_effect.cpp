@@ -1,15 +1,8 @@
 #include "c_effect.h"
 #include <utilities/c_dbmanager.h>
 
-c_effect::c_effect(c_dbmanager *dbmanager, int id, c_action action, int areaShape, QVector<int> areaSize, QVector<float> params, QString description) {
-    _id = id;
-    _action = action;
-    _areaShape = areaShape;
-    _areaSize = areaSize;
-    _params = params;
-    _description = description;
-    _database = dbmanager;
-}
+c_effect::c_effect(const c_dbmanager *dbmanager, int id, c_action action, int areaShape, QVector<int> areaSize, QVector<float> params, QString description) :
+    _id(id), _action(action), _areaShape(areaShape), _areaSize(areaSize), _params(params), _description(description), _database(dbmanager) {}
 
 c_effect::c_effect(QJsonObject object, c_dbmanager *dbmanager) {
     _database = dbmanager;

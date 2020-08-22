@@ -3,14 +3,9 @@
 #include "c_enchantement_display.h"
 
 c_enchantement_item::c_enchantement_item(QWidget *parent,  QString emplacement) :
-    QWidget(parent),
-    ui(new Ui::c_enchantement_item)
+    QWidget(parent), ui(new Ui::c_enchantement_item), _parent(parent), _emplacement(emplacement), _level(0), _block(false)
 {
     ui->setupUi(this);
-    _level = 0;
-    _block = false;
-    _emplacement = emplacement;
-    _parent = parent;
     setButtonStyle(ui->toolButton);
     ui->widget_4->setStyleSheet(QString("#widget_4 {background-color : %1; border : 1px solid %2; border-radius : 3px;}").arg(app_color::dark_blue).arg(app_color::grey_blue_3));
     QObject::connect(ui->toolButton,&QToolButton::clicked,this,&c_enchantement_item::slot_positionClicked);
@@ -27,8 +22,6 @@ c_enchantement_item::c_enchantement_item(QWidget *parent,  QString emplacement) 
     ui->horizontalLayout->insertWidget(3,_tool_buttons.last());
     _tool_buttons.push_back(new c_tool_button(this));
     ui->horizontalLayout->insertWidget(4,_tool_buttons.last());
-
-
 
     foreach (c_tool_button* button, _tool_buttons) {
         QObject::connect(button,&QToolButton::clicked,this,&c_enchantement_item::slot_slotClicked);

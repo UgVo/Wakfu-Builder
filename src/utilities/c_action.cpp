@@ -1,11 +1,6 @@
 #include "c_action.h"
 
-c_action::c_action(int id, QString effect, QString description)
-{
-    _id = id;
-    _effect = effect;
-    _description = description;
-}
+c_action::c_action(int id, QString effect, QString description) : _id(id), _effect(effect), _description(description){}
 
 c_action::c_action(QJsonObject actionObject) {
     _description = actionObject.value(QString("description")).toObject().value(QString("fr")).toString();

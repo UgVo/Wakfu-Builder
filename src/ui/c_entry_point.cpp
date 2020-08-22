@@ -3,12 +3,9 @@
 #include "mainwindow.h"
 
 c_entry_point::c_entry_point(c_dbmanager *_manager, QWidget *_parent) :
-    QWidget(_parent),
-    ui(new Ui::c_entry_point)
+    QWidget(_parent), ui(new Ui::c_entry_point), parent(static_cast<MainWindow*>(_parent)), manager(_manager)
 {
     ui->setupUi(this);
-    parent = static_cast<MainWindow*>(_parent);
-    manager = _manager;
     anim_duration_ms = 1500;
     QObject::connect(ui->pushButton_new_build,&QPushButton::clicked,this,&c_entry_point::slot_new_button);
     QObject::connect(ui->pushButton_open_build,&QPushButton::clicked,this,&c_entry_point::slot_open_button);
@@ -23,7 +20,6 @@ c_entry_point::c_entry_point(c_dbmanager *_manager, QWidget *_parent) :
     ui->stackedWidget_entry_point->setCurrentIndex(0);
 
     state = 0;
-    QSize movie_size = movie->currentImage().size();
     movie_aspect = (1920.0)/1080.0;
 
     file_dial = nullptr;
@@ -345,7 +341,6 @@ void c_entry_point::slot_creation_builder_anim() {
 
     animation1 = new QPropertyAnimation(ui->pushButton_open_build,"geometry");
     animation1->setDuration(anim_duration_ms);
-    QRect rect_button_open = ui->pushButton_open_build->rect();
     rect_button_new.setTopLeft(p_pb_new_build);
     animation1->setKeyValueAt(0,rect_button_new);
     rect_button_new.setTopLeft(p_pb_new_build_final);

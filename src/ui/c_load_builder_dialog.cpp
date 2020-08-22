@@ -10,15 +10,12 @@ c_load_builder_dialog::c_load_builder_dialog(c_dbmanager *manager, QWidget *pare
     ui->setupUi(this);
     ui->widget->setStyleSheet(QString("QWidget#widget{background-color : %1;} QLabel{color : white;}").arg(app_color::grey_blue_2));
     this->setWindowTitle("Ouvrir un build");
-    QSqlDatabase sql_db = manager->getDb();
     if (model == nullptr) {
         model = new c_save_builder_model(manager);
     }
     ui->tableView->setModel(model);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableView->resizeColumnsToContents();
-    //ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    //ui->tableView->horizontalHeader()->setStretchLastSection(true);
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
     QObject::connect(ui->tableView,&QTableView::clicked,this,&c_load_builder_dialog::slot_table_cliked);
     ui->label_2->setStyleSheet("color:white;");

@@ -26,7 +26,7 @@ public:
     void setEquipment(const QMap<QString, c_item> &value);
 
     void computeBonuses();
-    QMap<QString,QString> check_constraints(c_item);
+    QMap<QString,QString> check_constraints(const c_item);
     QString getBonusesString();
 
     bool getEpique_free() const;

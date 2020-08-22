@@ -10,12 +10,12 @@ public:
     c_itemProperties(int id = 0, QString name = QString(), QString description = QString());
     c_itemProperties(QJsonObject actionObject);
 
-    int getId();
-    QString getName();
-    QString getDescription();
-    void setId(int id);
-    void setName(QString name);
-    void setDescription(QString description);
+    int getId() const;
+    QString getName() const;
+    QString getDescription() const;
+    void setId(const int id);
+    void setName(const QString name);
+    void setDescription(const QString description);
 
 private:
     int id;

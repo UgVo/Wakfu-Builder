@@ -1,8 +1,8 @@
 #include "c_dbmanager.h"
 #include "c_datamanager.h"
 
-c_dbmanager::c_dbmanager(c_datamanager *manager, QWidget *parent) : QWidget(parent){
-    m_db = QSqlDatabase::addDatabase("QPSQL");
+c_dbmanager::c_dbmanager(c_datamanager *manager, QWidget *parent) :
+    QWidget(parent), m_db(QSqlDatabase::addDatabase("QPSQL")) {
     m_db.setHostName("localhost");
     m_db.setPort(5432);
     m_db.setUserName("postgres");
@@ -17,7 +17,7 @@ c_dbmanager::~c_dbmanager() {
     QSqlDatabase::removeDatabase(database_name);
 }
 
-bool c_dbmanager::connect(QString password) {
+bool c_dbmanager::connect(const QString password) {
     if (!password.isEmpty()) {
         m_db.setPassword(password);
     }
@@ -28,7 +28,7 @@ bool c_dbmanager::connect(QString password) {
     return flag;
 }
 
-bool c_dbmanager::add_effect(c_effect new_effect) {
+bool c_dbmanager::add_effect(const c_effect new_effect) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.effect (id,actionId,areaShape,areaSize,params,description) "
                   "VALUES (:id, :actionId, :areaShape, :areaSize, :params, :description)");
@@ -42,7 +42,7 @@ bool c_dbmanager::add_effect(c_effect new_effect) {
     return flag;
 }
 
-c_effect c_dbmanager::get_effect(const int id) {
+c_effect c_dbmanager::get_effect(const int id) const{
     QSqlQuery query(m_db);
     c_effect new_effect(this);
     query.prepare("SELECT * FROM wakfu_builder.effect "
@@ -86,7 +86,7 @@ c_effect c_dbmanager::get_effect(const int id) {
     return new_effect;
 }
 
-bool c_dbmanager::add_action(c_action new_action) {
+bool c_dbmanager::add_action(const c_action new_action) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.action (id,description,effect)"
                   "VALUES (:id, :description, :effect)");
@@ -97,10 +97,10 @@ bool c_dbmanager::add_action(c_action new_action) {
     return query.exec();
 }
 
-c_action c_dbmanager::get_action(const int id) {
+c_action c_dbmanager::get_action(const int id) const{
     QSqlQuery query(m_db);
     c_action action;
-    query.prepare("SELECT *  FROM wakfu_builder.action "
+    query.prepare("SELECT * FROM wakfu_builder.action "
                   "WHERE id = :id");
     query.bindValue(":id",id);
     if (query.exec()) {
@@ -118,7 +118,7 @@ c_action c_dbmanager::get_action(const int id) {
     return action;
 }
 
-bool c_dbmanager::add_itemProperty(c_itemProperties new_property) {
+bool c_dbmanager::add_itemProperty(const c_itemProperties new_property) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.itemproperties (id,name,description)"
                   "VALUES (:id, :name, :description)");
@@ -129,10 +129,10 @@ bool c_dbmanager::add_itemProperty(c_itemProperties new_property) {
     return query.exec();
 }
 
-c_itemProperties c_dbmanager::get_itemProperty(const int id) {
+c_itemProperties c_dbmanager::get_itemProperty(const int id) const{
     QSqlQuery query(m_db);
     c_itemProperties itemProperties;
-    query.prepare("SELECT *  FROM wakfu_builder.itemproperties "
+    query.prepare("SELECT * FROM wakfu_builder.itemproperties "
                   "WHERE id = :id");
     query.bindValue(":id",id);
     if (query.exec()) {
@@ -150,7 +150,7 @@ c_itemProperties c_dbmanager::get_itemProperty(const int id) {
     return  itemProperties;
 }
 
-bool c_dbmanager::add_equipmentItemType(c_equipmentItemTypes new_type) {
+bool c_dbmanager::add_equipmentItemType(const c_equipmentItemTypes new_type) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.equipmentItemType (id,parentId,recyclable,visibleInAnimation,title)"
                   "VALUES (:id, :parentId, :recyclable, :visibleInAnimation, :title)");
@@ -198,7 +198,7 @@ bool c_dbmanager::add_equipmentItemType(c_equipmentItemTypes new_type) {
     return true;
 }
 
-c_equipmentItemTypes c_dbmanager::get_equipmentItemType(const int id) {
+c_equipmentItemTypes c_dbmanager::get_equipmentItemType(const int id) const {
     c_equipmentItemTypes eqpType;
     QSqlQuery query(m_db);
     query.prepare("SELECT * FROM wakfu_builder.equipmentItemType "
@@ -250,7 +250,7 @@ c_equipmentItemTypes c_dbmanager::get_equipmentItemType(const int id) {
     return eqpType;
 }
 
-bool c_dbmanager::add_equipmentPosition(QString name, int id) {
+bool c_dbmanager::add_equipmentPosition(const QString name, const int id) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.equipmentPosition (id,name) "
                   "VALUES (:id, :name)");
@@ -259,7 +259,7 @@ bool c_dbmanager::add_equipmentPosition(QString name, int id) {
     return query.exec();
 }
 
-QString c_dbmanager::get_equipmentPosition(int id) {
+QString c_dbmanager::get_equipmentPosition(const int id) const{
     QSqlQuery query(m_db);
     query.prepare("SELECT * FROM wakfu_builder.equipmentPosition "
                   "WHERE id = :id");
@@ -273,9 +273,8 @@ QString c_dbmanager::get_equipmentPosition(int id) {
     }
     return QString();
 }
-int get_equipmentPositionId(QString name);
 
-QStringList c_dbmanager::get_AllEquipementPosition() {
+QStringList c_dbmanager::get_AllEquipementPosition() const {
     QStringList list;
     QSqlQuery query(m_db);
     query.prepare("SELECT * FROM wakfu_builder.equipmentPosition "
@@ -289,7 +288,7 @@ QStringList c_dbmanager::get_AllEquipementPosition() {
     return list;
 }
 
-bool c_dbmanager::add_relation_equipementType_Position(int equipementTypeId, int positionId) {
+bool c_dbmanager::add_relation_equipementType_Position(const int equipementTypeId, const int positionId) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.eqpType_Pos_relation (id_ET,id_Pos)"
                   "VALUES (:id_ET, :id_Pos)");
@@ -299,7 +298,7 @@ bool c_dbmanager::add_relation_equipementType_Position(int equipementTypeId, int
     return query.exec();
 }
 
-bool c_dbmanager::add_relation_equipementType_PositionDisable(int equipementTypeId, int positionId) {
+bool c_dbmanager::add_relation_equipementType_PositionDisable(const int equipementTypeId, const int positionId) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.eqpType_DisPos_relation (id_ET,id_Pos)"
                   "VALUES (:id_ET, :id_Pos)");
@@ -309,10 +308,14 @@ bool c_dbmanager::add_relation_equipementType_PositionDisable(int equipementType
     return query.exec();
 }
 
-bool c_dbmanager::add_item(c_item item) {
+bool c_dbmanager::add_item(const c_item item) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.item (id,  lvl,  itemTypeId,  itemSetId,  rarity,  bindType,  minimumShardSlotNumber,  maximumShardSlotNumber,  useApCost,  useMpCost,  useWpCost,  useMinRange,  useMaxRange,  useTestFreeCell,  useTestLos,  useTestOnlyLine,  useTestNoBorderCell,  useWorldTarget,  gfxId,  title, description,isFinal) "
-                  "VALUES          (:id, :lvl, :itemTypeId, :itemSetId, :rarity, :bindType, :minimumShardSlotNumber, :maximumShardSlotNumber, :useApCost, :useMpCost, :useWpCost, :useMinRange, :useMaxRange, :useTestFreeCell, :useTestLos, :useTestOnlyLine, :useTestNoBorderCell, :useWorldTarget, :gfxId, :title, :description, :isFinal)");
+    query.prepare("INSERT INTO wakfu_builder.item (id, lvl, itemTypeId, itemSetId, rarity, bindType, minimumShardSlotNumber, maximumShardSlotNumber, "
+                  "useApCost, useMpCost, useWpCost, useMinRange, useMaxRange, useTestFreeCell, useTestLos, useTestOnlyLine, useTestNoBorderCell, useWorldTarget, "
+                  "gfxId, title, description, isFinal) "
+                  "VALUES (:id, :lvl, :itemTypeId, :itemSetId, :rarity, :bindType, :minimumShardSlotNumber, :maximumShardSlotNumber, :useApCost, :useMpCost, "
+                  ":useWpCost, :useMinRange, :useMaxRange, :useTestFreeCell, :useTestLos, :useTestOnlyLine, :useTestNoBorderCell, :useWorldTarget, :gfxId, :title, "
+                  ":description, :isFinal)");
     query.bindValue(":id", item.getId());
     query.bindValue(":itemTypeId", item.getType().getId());
     query.bindValue(":itemSetId", item.getSetId());
@@ -379,7 +382,7 @@ bool c_dbmanager::add_item(c_item item) {
     return true;
 }
 
-c_item c_dbmanager::get_item(int id) {
+c_item c_dbmanager::get_item(const int id) const{
     c_item asked_item;
     QSqlQuery query(m_db);
     query.prepare("SELECT * FROM wakfu_builder.item "
@@ -490,7 +493,7 @@ c_item c_dbmanager::get_item(int id) {
     return asked_item;
 }
 
-bool c_dbmanager::add_relation_item_property(int id_Item, int id_propertie) {
+bool c_dbmanager::add_relation_item_property(const int id_Item, const int id_propertie) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.item_properties_relation (id_item,id_property)"
                   "VALUES (:id_ET, :id_property)");
@@ -501,7 +504,7 @@ bool c_dbmanager::add_relation_item_property(int id_Item, int id_propertie) {
     return flag;
 }
 
-bool c_dbmanager::add_relation_item_useEffect(int id_Item, int id_effect) {
+bool c_dbmanager::add_relation_item_useEffect(const int id_Item, const int id_effect) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.item_useEffect_relation (id_item,id_E)"
                   "VALUES (:id_ET, :id_E)");
@@ -512,7 +515,7 @@ bool c_dbmanager::add_relation_item_useEffect(int id_Item, int id_effect) {
     return flag;
 }
 
-bool c_dbmanager::add_relation_item_useCriEffect(int id_Item, int id_effect) {
+bool c_dbmanager::add_relation_item_useCriEffect(const int id_Item, const int id_effect) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.item_useCriticalEffect_relation (id_item,id_E)"
                   "VALUES (:id_ET, :id_E)");
@@ -523,7 +526,7 @@ bool c_dbmanager::add_relation_item_useCriEffect(int id_Item, int id_effect) {
     return flag;
 }
 
-bool c_dbmanager::add_relation_item_equipeEffect(int id_Item, int id_effect) {
+bool c_dbmanager::add_relation_item_equipeEffect(const int id_Item, const int id_effect)  {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.item_useEquipEffect_relation (id_item,id_E)"
                   "VALUES (:id_ET, :id_E)");
@@ -534,7 +537,7 @@ bool c_dbmanager::add_relation_item_equipeEffect(int id_Item, int id_effect) {
     return flag;
 }
 
-QList<int> c_dbmanager::getImagesList() {
+QList<int> c_dbmanager::getImagesList() const {
     QSqlQuery query(m_db);
     QList<int> image_name;
     query.prepare("SELECT gfxid from wakfu_builder.item");
@@ -548,7 +551,7 @@ QList<int> c_dbmanager::getImagesList() {
 
 }
 
-QList<int> c_dbmanager::getItemListId() {
+QList<int> c_dbmanager::getItemListId() const {
     QSqlQuery query(m_db);
     QList<int> id_item;
     query.prepare("SELECT id from wakfu_builder.item");
@@ -561,7 +564,7 @@ QList<int> c_dbmanager::getItemListId() {
     return id_item;
 }
 
-QList<c_item> c_dbmanager::getAllItem() {
+QList<c_item> c_dbmanager::getAllItem() const {
     QList<c_item> item_list;
     QSqlQuery query(m_db);
     QElapsedTimer timer;
@@ -590,7 +593,6 @@ QList<c_item> c_dbmanager::getAllItem() {
         int id_equip_title = query.record().indexOf("equipmentItemType.title");
 
         timer.restart();
-        qint64 time = 0;
         while (query.next()) {
             asked_item.setId(query.value(id_item).toInt());
             asked_item.setLvl(query.value(idlvl).toInt());
@@ -608,7 +610,6 @@ QList<c_item> c_dbmanager::getAllItem() {
             asked_item.setDescription(query.value(idDescription).toString());
             timer_2.start();
             item_list.append(asked_item);
-            time += timer_2.nsecsElapsed();
             timer_2.restart();
 
             equipmentType.setId(query.value(id_equip).toInt());
@@ -631,7 +632,7 @@ bool c_dbmanager::add_state(c_state state) {
     return flag;
 }
 
-c_state c_dbmanager::get_state(int id) {
+c_state c_dbmanager::get_state(const int id) const {
     QSqlQuery query(m_db);
     query.prepare("SELECT * FROM wakfu_builder.states "
                   "WHERE id = :id");
@@ -649,14 +650,17 @@ c_state c_dbmanager::get_state(int id) {
     return state;
 }
 
-QList<int> c_dbmanager::getid_item_from_actions(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final, QList<bool> condi) {
+QList<int> c_dbmanager::getid_item_from_actions(const QList<QString> carac_effect, const QList<int> rarities,
+                                                const QList<int> types, const QList<int> bondaries, const QString name,
+                                                const bool final, const QList<bool> condi) const {
     QList<int> res;
     QSqlQuery query(m_db);
     QString query_string;
+    QString _name = name;
     if (!condi.isEmpty()) {
-        query_string = prepareQuery_condi(carac_effect,rarities,types,bondaries,name.replace("'","''"),final,condi);
+        query_string = prepareQuery_condi(carac_effect,rarities,types,bondaries,_name.replace("'","''"),final,condi);
     } else {
-        query_string = prepareQuery_simple(carac_effect,rarities,types,bondaries,name.replace("'","''"),final);
+        query_string = prepareQuery_simple(carac_effect,rarities,types,bondaries,_name.replace("'","''"),final);
     }
     query.prepare(query_string);
     for (int i = 0; i < rarities.size(); ++i) {
@@ -681,11 +685,19 @@ QList<int> c_dbmanager::getid_item_from_actions(QList<QString> carac_effect, QLi
     return res;
 }
 
-QList<int> c_dbmanager::getid_item_from_actions_sorted(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final, QList<bool> condi) {
+QList<int> c_dbmanager::getid_item_from_actions_sorted(const QList<QString> carac_effect,
+                                                       const QList<int> rarities, const QList<int> types,
+                                                       const QList<int> bondaries, const QString name,
+                                                       const bool final, const QList<bool> condi) const {
     QList<int> res;
     QSqlQuery query(m_db);
     QString query_string = prepareQuery_condi(carac_effect,rarities,types,bondaries,QString(),final,condi);
-    QString query_string_sorted = QString("SELECT item.id,sum(carac.value) FROM ( %1 ) as item INNER JOIN wakfu_builder.relation_item_carac as r_item_carac ON item.id = r_item_carac.id_item INNER JOIN wakfu_builder.carac as carac ON r_item_carac.id_carac = carac.id WHERE ").arg(query_string);
+    QString query_string_sorted = QString("SELECT item.id,sum(carac.value) "
+                                          "FROM ( %1 ) as item INNER JOIN "
+                                          "     wakfu_builder.relation_item_carac as r_item_carac "
+                                          "ON item.id = r_item_carac.id_item "
+                                          "INNER JOIN wakfu_builder.carac as carac "
+                                          "ON r_item_carac.id_carac = carac.id WHERE ").arg(query_string);
     if (carac_effect.size() != 0) {
         query_string_sorted += "( carac.effect = :carac_effect0 OR";
         for (int i = 1; i < carac_effect.size(); ++i) {
@@ -720,7 +732,7 @@ QList<int> c_dbmanager::getid_item_from_actions_sorted(QList<QString> carac_effe
     return res;
 }
 
-QList<c_item> c_dbmanager::getItems(QList<int> ids) {
+QList<c_item> c_dbmanager::getItems(const QList<int> ids) const {
     QList<c_item> res;
     QSqlQuery query(m_db);
     QString query_string;
@@ -740,7 +752,7 @@ QList<c_item> c_dbmanager::getItems(QList<int> ids) {
     return res;
 }
 
-c_item c_dbmanager::getItemFromQueryLite(QSqlQuery query) {
+c_item c_dbmanager::getItemFromQueryLite(const QSqlQuery query) const {
     c_item asked_item;
     int id_item = query.record().indexOf("item.id");
     int idlvl = query.record().indexOf("lvl");
@@ -783,7 +795,7 @@ c_item c_dbmanager::getItemFromQueryLite(QSqlQuery query) {
     return asked_item;
 }
 
-QVector<c_effect> c_dbmanager::getUseEffectFromItemId(int id) {
+QVector<c_effect> c_dbmanager::getUseEffectFromItemId(const int id) const {
     QVector<c_effect> useEffect;
     QSqlQuery s_query(m_db);
     s_query.clear();
@@ -799,7 +811,7 @@ QVector<c_effect> c_dbmanager::getUseEffectFromItemId(int id) {
     return useEffect;
 }
 
-QVector<c_effect> c_dbmanager::getEquipEffectFromItemId(int id) {
+QVector<c_effect> c_dbmanager::getEquipEffectFromItemId(const int id) const {
     QVector<c_effect> equipEffect;
     QSqlQuery s_query(m_db);
     s_query.clear();
@@ -815,7 +827,7 @@ QVector<c_effect> c_dbmanager::getEquipEffectFromItemId(int id) {
     return equipEffect;
 }
 
-int c_dbmanager::add_save_builder(QString json, QString name, int lvl) {
+int c_dbmanager::add_save_builder(const QString json, const QString name, const int lvl) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.builder_save (json,name,niveau) VALUES (:json,:name,:lvl)");
     query.bindValue(":json",json);
@@ -835,9 +847,9 @@ int c_dbmanager::add_save_builder(QString json, QString name, int lvl) {
     return 0;
 }
 
-int c_dbmanager::update_save_builder(QString json, int id, QString name, int lvl) {
+int c_dbmanager::update_save_builder(const QString json, const int id, const QString name, const int lvl) {
     QSqlQuery query(m_db);
-    query.prepare("WITH rows AS ( UPDATE wakfu_builder.builder_save SET json = :json, name = :name, niveau = :lvl  "
+    query.prepare("WITH rows AS ( UPDATE wakfu_builder.builder_save SET json = :json, name = :name, niveau = :lvl "
                   "WHERE id = :id RETURNING 1) "
                   "SELECT count(*) FROM rows;");
     query.bindValue(":json",json);
@@ -855,7 +867,7 @@ int c_dbmanager::update_save_builder(QString json, int id, QString name, int lvl
     return 0;
 }
 
-int c_dbmanager::remove_builder(int id) {
+int c_dbmanager::remove_builder(const int id) {
     QSqlQuery query(m_db);
     query.prepare("DELETE FROM wakfu_builder.builder_save WHERE id = :id");
     query.bindValue(":id",id);
@@ -867,7 +879,7 @@ QSqlDatabase c_dbmanager::getDb() const
     return m_db;
 }
 
-bool c_dbmanager::add_carac(c_carac carac) {
+bool c_dbmanager::add_carac(const c_carac carac) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.carac (id,effect,value) "
                   "VALUES (:id, :effect, :value)");
@@ -879,9 +891,9 @@ bool c_dbmanager::add_carac(c_carac carac) {
     return flag;
 }
 
-c_carac c_dbmanager::get_carac(int id) {
+c_carac c_dbmanager::get_carac(const int id) const {
     QSqlQuery query(m_db);
-    query.prepare("SELECT *  FROM wakfu_builder.carac "
+    query.prepare("SELECT * FROM wakfu_builder.carac "
                   "WHERE id = :id");
     query.bindValue(":id",id);
     c_carac carac;
@@ -900,7 +912,7 @@ c_carac c_dbmanager::get_carac(int id) {
     return carac;
 }
 
-bool c_dbmanager::add_relation_item_carac(int id_item, int id_carac) {
+bool c_dbmanager::add_relation_item_carac(const int id_item, const int id_carac) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.relation_item_carac (id_item,id_carac) "
                   "VALUES (:id_item, :id_carac)");
@@ -910,13 +922,17 @@ bool c_dbmanager::add_relation_item_carac(int id_item, int id_carac) {
     return flag;
 }
 
-QString c_dbmanager::prepareQuery_simple(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final) {
+QString c_dbmanager::prepareQuery_simple(const QList<QString> carac_effect, const QList<int> rarities,
+                                         const QList<int> types, const QList<int> bondaries, const QString name,
+                                         const bool final) const {
     QString query_string;
     query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
     for (int i = 0; i< carac_effect.size(); ++i) {
         query_string += QString(", wakfu_builder.carac as carac%1, wakfu_builder.relation_item_carac as relation%1").arg(i);
     }
-    query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) %4 AND").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"").arg(final?"AND isFinal = true":"");
+    query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) %4 AND").arg(bondaries.at(0)).arg(bondaries.at(1))
+            .arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"")
+            .arg(final?"AND isFinal = true":"");
 
     if (!carac_effect.isEmpty()) {
         for (int i = 0; i < carac_effect.size(); ++i) {
@@ -961,13 +977,16 @@ QString c_dbmanager::prepareQuery_simple(QList<QString> carac_effect, QList<int>
     return query_string;
 }
 
-QString c_dbmanager::prepareQuery_condi(QList<QString> carac_effect, QList<int> rarities, QList<int> types, QList<int> bondaries, QString name, bool final, QList<bool> condi) {
+QString c_dbmanager::prepareQuery_condi(const QList<QString> carac_effect, const QList<int> rarities, const QList<int> types,
+                                        const QList<int> bondaries, const QString name, const bool final, const QList<bool> condi) const {
     QString query_string;
     query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
     for (int i = 0; i< carac_effect.size(); ++i) {
         query_string += QString(", wakfu_builder.carac as carac%1, wakfu_builder.relation_item_carac as relation%1").arg(i);
     }
-    query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) %4 AND").arg(bondaries.at(0)).arg(bondaries.at(1)).arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"").arg(final?"AND isFinal = true":"");
+    query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) %4 AND").arg(bondaries.at(0)).arg(bondaries.at(1))
+            .arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"")
+            .arg(final?"AND isFinal = true":"");
 
     if (!carac_effect.isEmpty()) {
         for (int i = 0; i < carac_effect.size(); ++i) {
@@ -1009,7 +1028,7 @@ QString c_dbmanager::prepareQuery_condi(QList<QString> carac_effect, QList<int> 
     return query_string;
 }
 
-bool c_dbmanager::setFinal(QList<int> isFinalList) {
+bool c_dbmanager::setFinal(const QList<int> isFinalList) {
     QSqlQuery query(m_db);
     QString query_string("UPDATE wakfu_builder.item isFinal = false WHERE ");
     foreach (int id, isFinalList) {
@@ -1123,7 +1142,10 @@ void c_dbmanager::check_structure() {
         query.exec("CREATE TABLE wakfu_builder.relation_item_carac( id_item integer, id_carac integer, PRIMARY KEY(id_item,id_carac));");
         qDebug() << "relation_item_carac table created";
         query.exec("DROP TABLE wakfu_builder.item");
-        query.exec("CREATE TABLE wakfu_builder.item( id integer PRIMARY KEY, lvl integer, itemTypeId integer, itemSetId integer, rarity integer, bindType integer, minimumShardSlotNumber integer, maximumShardSlotNumber integer, useApCost integer, useMpCost integer, useWpCost integer, useMinRange integer, useMaxRange integer, useTestFreeCell bool, useTestLos bool, useTestOnlyLine bool, useTestNoBorderCell bool, useWorldTarget integer, gfxid integer, title text, description text, isFinal bool)");
+        query.exec("CREATE TABLE wakfu_builder.item( id integer PRIMARY KEY, lvl integer, itemTypeId integer, itemSetId integer, rarity integer, "
+                   "bindType integer, minimumShardSlotNumber integer, maximumShardSlotNumber integer, useApCost integer, useMpCost integer, useWpCost integer, "
+                   "useMinRange integer, useMaxRange integer, useTestFreeCell bool, useTestLos bool, useTestOnlyLine bool, useTestNoBorderCell bool, "
+                   "useWorldTarget integer, gfxid integer, title text, description text, isFinal bool)");
         qDebug() << "item table created";
     }
     if (!m_db.tables().contains("wakfu_builder.carac") || (get_number_column("carac") != 3)) {
@@ -1147,17 +1169,18 @@ void c_dbmanager::check_structure() {
     if (!m_db.tables().contains("wakfu_builder.enchant_effect") || (get_number_column("enchant_effect") != 7)) {
         debug_check_table_structure("states",3);
         query.exec("DROP TABLE wakfu_builder.enchant_effect");
-        query.exec(" CREATE TABLE wakfu_builder.enchant_effect (id integer PRIMARY KEY, color integer, effect text, valueperlvl text, bonus text, levelingcruve text, levelrequirement text)");
+        query.exec(" CREATE TABLE wakfu_builder.enchant_effect (id integer PRIMARY KEY, color integer, effect text, valueperlvl text, bonus text, "
+                   "levelingcruve text, levelrequirement text)");
         qDebug() << "enchant_effect table created";
     }
 }
 
-void c_dbmanager::debug_check_table_structure(QString name, int size) {
+void c_dbmanager::debug_check_table_structure(const QString name, const int size) {
     qDebug() << name << " :";
     qDebug() << "Exists :" << m_db.tables().contains(QString("wakfu_builder.%1").arg(name)) << " Supposed size : " << size << "Size : " << get_number_column(name);
 }
 
-int c_dbmanager::get_number_column(QString table) {
+int c_dbmanager::get_number_column(const QString table) const {
     QSqlQuery query(m_db);
     int number = 0;
     QString query_string(QString(" SELECT count(column_name) FROM information_schema.columns "
@@ -1174,7 +1197,7 @@ int c_dbmanager::get_number_column(QString table) {
     return number;
 }
 
-bool c_dbmanager::add_enchantement_effect(c_enchantement_effect effect) {
+bool c_dbmanager::add_enchantement_effect(const c_enchantement_effect effect) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.enchant_effect (id, color, effect, valueperlvl, bonus, levelingcruve, levelrequirement)"
                   "VALUES (:id, :color, :effect, :valueperlvl, :bonus, :levelingcruve, :levelrequirement)");
@@ -1193,7 +1216,7 @@ bool c_dbmanager::add_enchantement_effect(c_enchantement_effect effect) {
     return flag;
 }
 
-QList<c_enchantement_effect> c_dbmanager::get_enchantement_effects() {
+QList<c_enchantement_effect> c_dbmanager::get_enchantement_effects() const {
     QList<c_enchantement_effect> res;
     QSqlQuery query(m_db);
     query.prepare("SELECT * FROM wakfu_builder.enchant_effect");
@@ -1220,7 +1243,7 @@ QList<c_enchantement_effect> c_dbmanager::get_enchantement_effects() {
     return res;
 }
 
-c_enchantement_effect c_dbmanager::get_enchantement_effect(QString effect) {
+c_enchantement_effect c_dbmanager::get_enchantement_effect(const QString effect) const {
     c_enchantement_effect res;
     QSqlQuery query(m_db);
     query.prepare("SELECT * FROM wakfu_builder.enchant_effect WHERE effect = :effect");
@@ -1246,7 +1269,7 @@ c_enchantement_effect c_dbmanager::get_enchantement_effect(QString effect) {
     return res;
 }
 
-QString c_dbmanager::generateCombiQuery_carac(QList<bool> condi) {
+QString c_dbmanager::generateCombiQuery_carac(const QList<bool> condi) const {
     QString action;
     if (condi.isEmpty()) {
         action = QString(" carac0.effect = :carac_effect0 ");

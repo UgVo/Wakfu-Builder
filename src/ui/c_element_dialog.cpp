@@ -2,11 +2,9 @@
 #include "ui_c_element_dialog.h"
 
 c_element_dialog::c_element_dialog(int number, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::c_element_dialog)
+    QDialog(parent), ui(new Ui::c_element_dialog), _number(number)
 {
     ui->setupUi(this);
-    _number = number;
     this->setStyleSheet(QString("QDialog#c_element_dialog{background-color : %1}").arg(app_color::grey_blue));
     ui->elem1->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/elements/fire_inked.png); height: 35px; width: auto;}"
                                 "QCheckBox::indicator:checked {image: url(:/images/elements/fire_big.png); height: 35px; width: auto;} ");
