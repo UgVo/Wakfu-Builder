@@ -1039,6 +1039,7 @@ void c_dbmanager::empty_database() {
     query.exec("delete from wakfu_builder.effect");
     query.exec("delete from wakfu_builder.item");
     query.exec("delete from wakfu_builder.carac");
+    query.exec("delete from wakfu_builder.enchant_effect");
 }
 
 void c_dbmanager::check_structure() {
@@ -1143,6 +1144,12 @@ void c_dbmanager::check_structure() {
         query.exec(" CREATE TABLE wakfu_builder.states (id integer PRIMARY KEY, name text, description text)");
         qDebug() << "states table created";
     }
+    if (!m_db.tables().contains("wakfu_builder.enchant_effect") || (get_number_column("enchant_effect") != 7)) {
+        debug_check_table_structure("states",3);
+        query.exec("DROP TABLE wakfu_builder.enchant_effect");
+        query.exec(" CREATE TABLE wakfu_builder.enchant_effect (id integer PRIMARY KEY, color integer, effect text, valueperlvl text, bonus text, levelingcruve text, levelrequirement text)");
+        qDebug() << "enchant_effect table created";
+    }
 }
 
 void c_dbmanager::debug_check_table_structure(QString name, int size) {
@@ -1165,6 +1172,78 @@ int c_dbmanager::get_number_column(QString table) {
         }
     }
     return number;
+}
+
+bool c_dbmanager::add_enchantement_effect(c_enchantement_effect effect) {
+    QSqlQuery query(m_db);
+    query.prepare("INSERT INTO wakfu_builder.enchant_effect (id, color, effect, valueperlvl, bonus, levelingcruve, levelrequirement)"
+                  "VALUES (:id, :color, :effect, :valueperlvl, :bonus, :levelingcruve, :levelrequirement)");
+    query.bindValue(":id", effect.id());
+    query.bindValue(":color", effect.color());
+    query.bindValue(":effect", effect.effect());
+    query.bindValue(":valueperlvl", effect.valuePerLvl_string());
+    query.bindValue(":bonus", effect.bonus_string());
+    query.bindValue(":levelingcruve", effect.levelingCurve_string());
+    query.bindValue(":levelrequirement", effect.levelRequirement_string());
+
+    bool flag = query.exec();
+    if (!flag) {
+        qDebug() << query.lastError();
+    }
+    return flag;
+}
+
+QList<c_enchantement_effect> c_dbmanager::get_enchantement_effects() {
+    QList<c_enchantement_effect> res;
+    QSqlQuery query(m_db);
+    query.prepare("SELECT * FROM wakfu_builder.enchant_effect");
+    if (query.exec()) {
+        int id = query.record().indexOf("id");
+        int idColor = query.record().indexOf("color");
+        int idEffect = query.record().indexOf("effect");
+        int idvalue = query.record().indexOf("valueperlvl");
+        int idBonus = query.record().indexOf("bonus");
+        int idCurve = query.record().indexOf("levelingcruve");
+        int idReq = query.record().indexOf("levelrequirement");
+        while (query.next()) {
+            c_enchantement_effect effect;
+            effect.setId(query.value(id).toInt());
+            effect.setBonus_string(query.value(idBonus).toString());
+            effect.setColor(query.value(idColor).toInt());
+            effect.setEffect(query.value(idEffect).toString());
+            effect.setValuePerLvl_string(query.value(idvalue).toString());
+            effect.setLevelingCurve_string(query.value(idCurve).toString());
+            effect.setLevelRequirement_string(query.value(idReq).toString());
+            res.push_back(effect);
+        }
+    }
+    return res;
+}
+
+c_enchantement_effect c_dbmanager::get_enchantement_effect(QString effect) {
+    c_enchantement_effect res;
+    QSqlQuery query(m_db);
+    query.prepare("SELECT * FROM wakfu_builder.enchant_effect WHERE effect = :effect");
+    query.bindValue(":effect",effect);
+    if (query.exec()) {
+        int id = query.record().indexOf("id");
+        int idColor = query.record().indexOf("color");
+        int idEffect = query.record().indexOf("effect");
+        int idvalue = query.record().indexOf("valueperlvl");
+        int idBonus = query.record().indexOf("bonus");
+        int idCurve = query.record().indexOf("levelingcruve");
+        int idReq = query.record().indexOf("levelrequirement");
+        while (query.next()) {
+            res.setId(query.value(id).toInt());
+            res.setBonus_string(query.value(idBonus).toString());
+            res.setColor(query.value(idColor).toInt());
+            res.setEffect(query.value(idEffect).toString());
+            res.setValuePerLvl_string(query.value(idvalue).toString());
+            res.setLevelingCurve_string(query.value(idCurve).toString());
+            res.setLevelRequirement_string(query.value(idReq).toString());
+        }
+    }
+    return res;
 }
 
 QString c_dbmanager::generateCombiQuery_carac(QList<bool> condi) {

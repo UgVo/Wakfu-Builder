@@ -22,6 +22,7 @@ c_builder_view::c_builder_view(c_dbmanager *_manager,  QCompleter* search_comple
     search_widget = new c_search_widget(manager,search_completer,this);
     aptitude_display = new c_aptitudes_display(this);
     tc_resume = new c_theory_craft_resume(this);
+    enchantement_display = new c_enchantement_display(this,manager,build);
 
     ui->build_layout->insertWidget(0,status_build);
     ui->build_layout->insertWidget(1,build_display);
@@ -47,6 +48,7 @@ c_builder_view::c_builder_view(c_dbmanager *_manager,  QCompleter* search_comple
     QObject::connect(status_build,&c_status_build::lvl_changed,search_widget,&c_search_widget::setLvl);
     QObject::connect(status_build,&c_status_build::lvl_changed,build,&c_build::setLvl);
     QObject::connect(status_build,&c_status_build::lvl_changed,aptitude_display,&c_aptitudes_display::setLvl);
+    QObject::connect(status_build,&c_status_build::lvl_changed,enchantement_display,&c_enchantement_display::slot_setLevel);
     QObject::connect(status_build,&c_status_build::bonus_changed,build,&c_build::slot_bonus_changed);
     QObject::connect(element_display,&c_elements_display::newElements,build,&c_build::setElements);
     QObject::connect(build_display,&c_build_display::load_search_position,search_widget,&c_search_widget::slot_load_search_position);
@@ -62,6 +64,11 @@ c_builder_view::c_builder_view(c_dbmanager *_manager,  QCompleter* search_comple
     shadow->setColor(QColor(91, 108, 142, 180));
     shadow->setOffset(2,2);
     ui->tabWidget->setGraphicsEffect(shadow);
+
+    shadow = new QGraphicsDropShadowEffect(enchantement_display);
+    shadow->setColor(QColor(91, 108, 142, 180));
+    shadow->setOffset(2,2);
+    enchantement_display->setGraphicsEffect(shadow);
     //ui->tabWidget->setStyleSheet(QString("QTabWidget::pane {border: 0px solid black; border-radius: 3px; background: %1;} QTabWidget::tab-bar:top {top: 1px;}QTabWidget::tab-bar:bottom {bottom: 1px;}QTabWidget::tab-bar:left {right: 1px;}QTabWidget::tab-bar:right {left: 1px;}QTabBar::tab {border: 1px solid black;}QTabBar::tab:selected {background: white;}QTabBar::tab:!selected {background: silver;}QTabBar::tab:!selected:hover {background: #999;}QTabBar::tab:top:!selected {margin-top: 3px;}QTabBar::tab:bottom:!selected {margin-bottom: 3px;}QTabBar::tab:top, QTabBar::tab:bottom {min-width: 8ex;margin-right: -1px;padding: 5px 10px 5px 10px;}QTabBar::tab:top:selected {border-bottom-color: none;}QTabBar::tab:bottom:selected {border-top-color: none;}QTabBar::tab:top:last, QTabBar::tab:bottom:last,QTabBar::tab:top:only-one, QTabBar::tab:bottom:only-one {margin-right: 0;}QTabBar::tab:left:!selected {margin-right: 3px;}QTabBar::tab:right:!selected {margin-left: 3px;}QTabBar::tab:left, QTabBar::tab:right {min-height: 8ex;margin-bottom: -1px;padding: 10px 5px 10px 5px;}QTabBar::tab:left:selected {border-left-color: none;}QTabBar::tab:right:selected {border-right-color: none;}QTabBar::tab:left:last, QTabBar::tab:right:last,QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {margin-bottom: 0;}").arg(app_color::gery_blue_2));
     ui->tabWidget->setStyleSheet(QString("QTabWidget#tabWidget::pane {border: 0px solid black; border-radius: 3px; border-bottom-left-radius: 0px; background: %1;} "
                                          "#tabWidget > QTabBar::tab {border: 0px solid black; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; background: %1; margin-right: 10px; width: 150px; padding-right:-55px; padding-left:55px;} "
@@ -72,7 +79,7 @@ c_builder_view::c_builder_view(c_dbmanager *_manager,  QCompleter* search_comple
     ui->tabWidget->setTabIcon(3,QIcon(":/images/divers/enchantement.png"));
 
     ui->horizontalLayout_5->addWidget(aptitude_display);
-
+    ui->verticalLayout_3->addWidget(enchantement_display);
     this->setWindowState(Qt::WindowMaximized);
 
     state_column_number = -1;
@@ -165,6 +172,10 @@ void c_builder_view::resizeEvent(QResizeEvent *event) {
             element_popup->move(elem_popup_pos);
         }
     }
+
+c_enchantement_display *c_builder_view::getEnchantement_display() const
+{
+    return enchantement_display;
 }
 
 c_aptitudes_display *c_builder_view::getAptitude_display() const

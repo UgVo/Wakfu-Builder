@@ -333,6 +333,20 @@
         <file>divers/coup_normal_berserk.png</file>
         <file>divers/pb_berserk.png</file>
         <file>divers/pb_berserk_inked.png</file>
+        <file>shard/shardBlueEmpty.png</file>
+        <file>shard/shardBlueFull.png</file>
+        <file>shard/shardGreenEmpty.png</file>
+        <file>shard/shardGreenFull.png</file>
+        <file>shard/shardRedEmpty.png</file>
+        <file>shard/shardRedFull.png</file>
+        <file>shard/shardWhiteEmpty.png</file>
+        <file>shard/shardWhiteFull.png</file>
+        <file>divers/smallfirst_weapon.png</file>
+        <file>shard/shard1.png</file>
+        <file>shard/shard2.png</file>
+        <file>shard/shard3.png</file>
+        <file>shard/shard4.png</file>
+        <file>divers/eliacubeHD.png</file>
         <file>divers/splash.png</file>
     </qresource>
     <qresource prefix="/font">

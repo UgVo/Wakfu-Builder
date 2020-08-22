@@ -35,7 +35,13 @@ SOURCES += \
     mainwindow.cpp \
     src/ui/c_button_delegate.cpp \
     src/ui/c_class_selection.cpp \
+    src/ui/c_enchantement_display.cpp \
+    src/ui/c_enchantement_item.cpp \
+    src/ui/c_enchantement_lite.cpp \
     src/ui/c_theory_craft_resume.cpp \
+    src/ui/c_tool_button.cpp \
+    src/utilities/c_enchantement_chasse.cpp \
+    src/utilities/c_enchantement_effect.cpp \
     ui/c_aptitude_unite.cpp \
     ui/c_aptitudes_display.cpp \
     ui/c_bdd_password_dialog.cpp \
@@ -73,7 +79,13 @@ HEADERS += \
     mainwindow.h \
     src/ui/c_button_delegate.h \
     src/ui/c_class_selection.h \
+    src/ui/c_enchantement_display.h \
+    src/ui/c_enchantement_item.h \
+    src/ui/c_enchantement_lite.h \
     src/ui/c_theory_craft_resume.h \
+    src/ui/c_tool_button.h \
+    src/utilities/c_enchantement_chasse.h \
+    src/utilities/c_enchantement_effect.h \
     ui/c_aptitude_unite.h \
     ui/c_aptitudes_display.h \
     ui/c_bdd_password_dialog.h \
@@ -112,6 +124,9 @@ HEADERS += \
 FORMS += \
     mainwindow.ui \
     src/ui/c_class_selection.ui \
+    src/ui/c_enchantement_display.ui \
+    src/ui/c_enchantement_item.ui \
+    src/ui/c_enchantement_lite.ui \
     src/ui/c_theory_craft_resume.ui \
     ui/c_aptitude_unite.ui \
     ui/c_aptitudes_display.ui \

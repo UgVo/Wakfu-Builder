@@ -7,6 +7,7 @@
 #include "c_equipmentitemtypes.h"
 #include "c_item.h"
 #include "c_state.h"
+#include "c_enchantement_effect.h"
 #include <QSqlRecord>
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -93,6 +94,11 @@ public:
     void check_structure();
     void debug_check_table_structure(QString name, int size);
     int get_number_column(QString table);
+
+    bool add_enchantement_effect(c_enchantement_effect effect);
+    QList<c_enchantement_effect> get_enchantement_effects();
+
+    c_enchantement_effect get_enchantement_effect(QString effect);
 
 private:
     QSqlDatabase m_db;

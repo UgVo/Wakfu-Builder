@@ -89,6 +89,10 @@ QMap<QString, int> c_build::getBonuses() const {
     bonus_global["Armure donnée"] = bonuses["Armure donnée"];
     bonus_global["Armure reçue"] = bonuses["Armure reçue"];
     bonus_global["Armure"] = int(qreal(bonuses["Vie"]) * qreal(bonus_aptitudes["% Point de Vie en Armure"]*4)/100.0);
+
+    foreach (QString key, bonus_enchant.keys()) {
+        bonus_global[key] += bonus_enchant[key];
+    }
     return bonus_global;
 }
 
@@ -407,6 +411,12 @@ int c_build::getLvl() const {
 
 QMap<QString, int> c_build::getBonus_aptitudes() const {
     return bonus_aptitudes;
+}
+
+void c_build::setBonus_enchant(const QMap<QString, int> &value) {
+    bonus_enchant = value;
+    computeBonuses();
+    emit updated();
 }
 
 void c_build::setLvl(int new_lvl) {

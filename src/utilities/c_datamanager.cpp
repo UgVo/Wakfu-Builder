@@ -244,17 +244,21 @@ void c_datamanager::parseItem() {
     QList<int> idList = dbmanager->getItemListId();
     for (QJsonArray::iterator it = JsonArray.begin(); it != JsonArray.end(); ++it) {
         if (stop) break;
-        c_item item(it->toObject(),dbmanager);
-        item.setIsFinal(!(id_non_final_list.contains(item.getId()) && item.getRarity() != 5 && item.getRarity() != 7 && item.getRarity() != 4));
-        if (item.getId() == 24811) {
-            qDebug() << item.getId() << item.getIsFinal();
-            qDebug() << id_non_final_list.contains(item.getId()) << item.getRarity() << item.getRarity();
-        }
-        emit newItem(item.getName(),it - JsonArray.begin(), JsonArray.size());
-        if (!idList.contains(item.getId())) {
-            dbmanager->add_item(item);
+        if (it->toObject().value("definition").toObject().value("item").toObject().contains("shardsParameters")) {
+            dbmanager->add_enchantement_effect(c_enchantement_effect(it->toObject()));
         } else {
-            //qInfo() << item.getName() << " : Already in Database";
+            c_item item(it->toObject(),dbmanager);
+            item.setIsFinal(!(id_non_final_list.contains(item.getId()) && item.getRarity() != 5 && item.getRarity() != 7 && item.getRarity() != 4));
+            if (item.getId() == 24811) {
+                qDebug() << item.getId() << item.getIsFinal();
+                qDebug() << id_non_final_list.contains(item.getId()) << item.getRarity() << item.getRarity();
+            }
+            emit newItem(item.getName(),it - JsonArray.begin(), JsonArray.size());
+            if (!idList.contains(item.getId())) {
+                dbmanager->add_item(item);
+            } else {
+                //qInfo() << item.getName() << " : Already in Database";
+            }
         }
     }
     stop = false;

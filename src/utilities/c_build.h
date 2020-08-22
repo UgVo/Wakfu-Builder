@@ -43,12 +43,15 @@ public:
 
     QMap<QString, int> getBonus_aptitudes() const;
 
+    void setBonus_enchant(const QMap<QString, int> &value);
+
 private:
     bool epique_free;
     bool relique_free;
     QList<QString> elements;
     QMap<QString,int> bonuses;
     QMap<QString,int> bonus_aptitudes;
+    QMap<QString,int> bonus_enchant;
     QMap<QString,c_item> equipment;
     int lvl;
     bool nation_bonus;

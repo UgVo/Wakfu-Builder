@@ -14,6 +14,7 @@
 #include "utilities/c_networkmanager.h"
 #include "utilities/c_state.h"
 #include "utilities/c_tokenizer.h"
+#include "utilities/c_enchantement_effect.h"
 
 #include <QObject>
 #include <QString>

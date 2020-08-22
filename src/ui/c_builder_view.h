@@ -17,6 +17,7 @@
 #include "utilities/c_calcul.h"
 #include "ui/c_class_selection.h"
 #include "ui/c_theory_craft_resume.h"
+#include "ui/c_enchantement_display.h"
 
 namespace Ui {
 class c_builder_view;
@@ -36,6 +37,7 @@ public:
     c_build_display *getBuild_display() const;
     c_elements_display *getElement_display() const;
     c_aptitudes_display *getAptitude_display() const;
+    c_enchantement_display *getEnchantement_display() const;
 
     int getId() const;
     void setId(int value);
@@ -57,6 +59,7 @@ private:
     c_build_display *build_display;
     c_search_widget *search_widget;
     c_aptitudes_display *aptitude_display;
+    c_enchantement_display *enchantement_display;
     int id; // -1 if comes or saved as a file, >0 if comes from or saved in the database, else 0
     QString path;
     MainWindow *parent;
