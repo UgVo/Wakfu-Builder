@@ -107,6 +107,11 @@ QVariant c_item_model::data(const QModelIndex &index, int role) const
                 default:
                     break;
             }
+            break;
+        case Qt::ForegroundRole:
+            return QColor("white");
+        case Qt::BackgroundRole:
+            return QColor(QString("%1").arg(app_color::grey_blue));
     }
     return QVariant();
 }

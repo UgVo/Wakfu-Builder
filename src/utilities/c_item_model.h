@@ -3,6 +3,7 @@
 
 #include "c_dbmanager.h"
 #include "c_item.h"
+#include "ui/ui.h"
 #include <QAbstractTableModel>
 #include <QList>
 #include <QEventLoop>
