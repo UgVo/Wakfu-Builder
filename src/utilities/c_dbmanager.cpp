@@ -888,7 +888,7 @@ c_carac c_dbmanager::get_carac(int id) {
     if (query.exec()) {
         int id = query.record().indexOf("id");
         int idEffect = query.record().indexOf("effect");
-        int idValue = query.record().indexOf("effect");
+        int idValue = query.record().indexOf("value");
         while (query.next()) {
             carac.id = query.value(id).toInt();
             carac.effect = query.value(idEffect).toString();
