@@ -4,25 +4,28 @@
 #include "../mainwindow.h"
 
 c_builder_view::c_builder_view(c_dbmanager *_manager,  QCompleter* search_completer, QWidget *_parent) :
-    QWidget(_parent),
-    ui(new Ui::c_builder_view)
+    QWidget(_parent), ui(new Ui::c_builder_view), manager(_manager), id(0), parent(static_cast<MainWindow*>(_parent)), state_column_number(-1),
+    state_element(0)
 {
     ui->setupUi(this);
-    manager = _manager;
     build = new c_build;
-    id = 0;
-    parent = static_cast<MainWindow*>(_parent);
 
     //UI
     result_display = new c_result_display(manager,this);
     status_build = new c_status_build(this);
     element_display = new c_elements_display(this);
     build_display = new c_build_display(build,this);
-    //build_display->set_item_viewers();
     search_widget = new c_search_widget(manager,search_completer,this);
     aptitude_display = new c_aptitudes_display(this);
     tc_resume = new c_theory_craft_resume(this);
     enchantement_display = new c_enchantement_display(this,manager,build);
+    calcul = new c_calcul;
+    element_popup = nullptr;
+    class_selection_popup = nullptr;
+
+    calcul->setBuild(build);
+    calcul->setTc_resume(tc_resume);
+    status_build->setLvl(200);
 
     ui->build_layout->insertWidget(0,status_build);
     ui->build_layout->insertWidget(1,build_display);
@@ -33,6 +36,8 @@ c_builder_view::c_builder_view(c_dbmanager *_manager,  QCompleter* search_comple
     ui->verticalLayout->insertWidget(0,search_widget);
     ui->verticalLayout->setAlignment(search_widget,Qt::AlignTop);
     ui->verticalLayout->setAlignment(tc_resume,Qt::AlignTop);
+    ui->horizontalLayout_5->addWidget(aptitude_display);
+    ui->verticalLayout_3->addWidget(enchantement_display);
 
     status_build->setDisabled(true);
     build_display->setDisabled(true);
@@ -54,10 +59,9 @@ c_builder_view::c_builder_view(c_dbmanager *_manager,  QCompleter* search_comple
     QObject::connect(aptitude_display,&c_aptitudes_display::value_changed,build,&c_build::slot_aptitude_value_changed);
     QObject::connect(result_display,&c_result_display::item_hovered,build_display,&c_build_display::slot_item_hovered);
     QObject::connect(result_display,&c_result_display::item_hide,build_display,&c_build_display::slot_item_hide);
-
-    ui->widget->setStyleSheet(QString("QWidget#widget{background-color:%1}").arg(app_color::grey_blue));
-    status_build->setLvl(200);
     QObject::connect(status_build,&c_status_build::show_class_popup,this,&c_builder_view::slot_show_class_popup);
+    QObject::connect(build,&c_build::updated,calcul,&c_calcul::computeMainMastery);
+    QObject::connect(element_display,&c_elements_display::doubleCliked,this,&c_builder_view::slot_show_element_popup);
 
     QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->tabWidget);
     shadow->setColor(QColor(91, 108, 142, 180));
@@ -68,36 +72,34 @@ c_builder_view::c_builder_view(c_dbmanager *_manager,  QCompleter* search_comple
     shadow->setColor(QColor(91, 108, 142, 180));
     shadow->setOffset(2,2);
     enchantement_display->setGraphicsEffect(shadow);
-    //ui->tabWidget->setStyleSheet(QString("QTabWidget::pane {border: 0px solid black; border-radius: 3px; background: %1;} QTabWidget::tab-bar:top {top: 1px;}QTabWidget::tab-bar:bottom {bottom: 1px;}QTabWidget::tab-bar:left {right: 1px;}QTabWidget::tab-bar:right {left: 1px;}QTabBar::tab {border: 1px solid black;}QTabBar::tab:selected {background: white;}QTabBar::tab:!selected {background: silver;}QTabBar::tab:!selected:hover {background: #999;}QTabBar::tab:top:!selected {margin-top: 3px;}QTabBar::tab:bottom:!selected {margin-bottom: 3px;}QTabBar::tab:top, QTabBar::tab:bottom {min-width: 8ex;margin-right: -1px;padding: 5px 10px 5px 10px;}QTabBar::tab:top:selected {border-bottom-color: none;}QTabBar::tab:bottom:selected {border-top-color: none;}QTabBar::tab:top:last, QTabBar::tab:bottom:last,QTabBar::tab:top:only-one, QTabBar::tab:bottom:only-one {margin-right: 0;}QTabBar::tab:left:!selected {margin-right: 3px;}QTabBar::tab:right:!selected {margin-left: 3px;}QTabBar::tab:left, QTabBar::tab:right {min-height: 8ex;margin-bottom: -1px;padding: 10px 5px 10px 5px;}QTabBar::tab:left:selected {border-left-color: none;}QTabBar::tab:right:selected {border-right-color: none;}QTabBar::tab:left:last, QTabBar::tab:right:last,QTabBar::tab:left:only-one, QTabBar::tab:right:only-one {margin-bottom: 0;}").arg(app_color::gery_blue_2));
-    ui->tabWidget->setStyleSheet(QString("QTabWidget#tabWidget::pane {border: 0px solid black; border-radius: 3px; border-bottom-left-radius: 0px; background: %1;} "
-                                         "#tabWidget > QTabBar::tab {border: 0px solid black; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; background: %1; margin-right: 10px; width: 150px; padding-right:-55px; padding-left:55px;} "
-                                         "#tabWidget > QTabBar::tab:!selected {background: %2;}").arg(app_color::grey_blue_2).arg(app_color::grey_blue_3));
+
+    ui->widget->setStyleSheet(QString("QWidget#widget{background-color:%1}").arg(app_color::grey_blue));
+    ui->tabWidget->setStyleSheet(QString("QTabWidget#tabWidget::pane {"
+                                         "  border: 0px solid black; "
+                                         "  border-radius: 3px; "
+                                         "  border-bottom-left-radius: 0px; "
+                                         "  background: %1;"
+                                         "} "
+                                         "#tabWidget > QTabBar::tab {"
+                                         "  border: 0px solid black; "
+                                         "  border-bottom-right-radius: 3px; "
+                                         "  border-bottom-left-radius: 3px; "
+                                         "  background: %1; "
+                                         "  margin-right: 10px; "
+                                         "  width: 150px; "
+                                         "  padding-right:-55px; "
+                                         "  padding-left:55px;} "
+                                         "#tabWidget > QTabBar::tab:!selected {"
+                                         "  background: %2;"
+                                         "}").arg(app_color::grey_blue_2).arg(app_color::grey_blue_3));
     ui->tabWidget->setTabIcon(0,QIcon(":/images/divers/equipments.png"));
     ui->tabWidget->setTabIcon(1,QIcon(":/images/divers/aptitude.png"));
     ui->tabWidget->setTabIcon(2,QIcon(":/images/divers/enchantement.png"));
 
-    ui->horizontalLayout_5->addWidget(aptitude_display);
-    ui->verticalLayout_3->addWidget(enchantement_display);
     this->setWindowState(Qt::WindowMaximized);
-
-    state_column_number = -1;
-    state_element = 0;
-
-    element_popup = nullptr;
-
-    calcul = new c_calcul;
-    calcul->setBuild(build);
-    calcul->setTc_resume(tc_resume);
-    QObject::connect(build,&c_build::updated,calcul,&c_calcul::computeMainMastery);
-
-    QObject::connect(element_display,&c_elements_display::doubleCliked,this,&c_builder_view::slot_show_element_popup);
-
-    class_selection_popup = nullptr;
-
 }
 
-c_builder_view::~c_builder_view()
-{
+c_builder_view::~c_builder_view() {
     delete ui;
 }
 
@@ -135,7 +137,8 @@ MainWindow *c_builder_view::getParent() const {
     return parent;
 }
 
-void c_builder_view::resizeEvent(QResizeEvent *event) {
+void c_builder_view::resizeEvent(QResizeEvent* /*event*/) {
+    // Screen size handling
     if (( this->rect().width() < 1780 && state_column_number == -1) ||  (this->rect().width() < 1780 && state_column_number==3) ) {
         result_display->setMinimumSize(506,755);
         result_display->setMaximumSize(506,755);
@@ -147,40 +150,47 @@ void c_builder_view::resizeEvent(QResizeEvent *event) {
         result_display->refreshView();
         state_column_number = 3;
     }
-    if (state_element == 0) {
-        if (element_popup != nullptr) {
-            QPoint elem_popup_pos = QPoint((rect().width()-element_popup->width())/2,-element_popup->height());
-            element_popup->move(elem_popup_pos);
-        }
-        if (id != 0) {
-            status_build->setDisabled(false);
-            build_display->setDisabled(false);
-            element_display->setDisabled(false);
-            result_display->setDisabled(false);
-            search_widget->setDisabled(false);
-            ui->tabWidget->setDisabled(false);
-            timer.stop();
-        } else if (timer.remainingTime()==-1) {
-            timer.start(2000);
-            QObject::connect(&timer,&QTimer::timeout,this,&c_builder_view::slot_show_element_popup);
-        }
-    } else if (state_element == 1) {
-        if (element_popup != nullptr) {
-            QPoint elem_popup_pos = QPoint((rect().width()-element_popup->width())/2,(rect().height() - element_popup->height())/3);
-            element_popup->move(elem_popup_pos);
-        }
+
+    // "State machine"
+    switch (state_element) {
+        case 0:
+            if (element_popup != nullptr) {
+                QPoint elem_popup_pos = QPoint((rect().width()-element_popup->width())/2,-element_popup->height());
+                element_popup->move(elem_popup_pos);
+            }
+            if (id != 0) {
+                status_build->setDisabled(false);
+                build_display->setDisabled(false);
+                element_display->setDisabled(false);
+                result_display->setDisabled(false);
+                search_widget->setDisabled(false);
+                ui->tabWidget->setDisabled(false);
+                timer.stop();
+            } else if (timer.remainingTime()==-1) {
+                timer.start(2000);
+                QObject::connect(&timer,&QTimer::timeout,this,&c_builder_view::slot_show_element_popup);
+            }
+            break;
+        case 1:
+            if (element_popup != nullptr) {
+                QPoint elem_popup_pos = QPoint((rect().width()-element_popup->width())/2,(rect().height() - element_popup->height())/3);
+                element_popup->move(elem_popup_pos);
+            }
+            break;
+        default:
+            break;
     }
+
+    // Theorycraft lite module position handling
     QPoint tc_pos = QPoint(rect().width() - tc_resume->width() - 20,rect().height() - tc_resume->height() - 20 );
     tc_resume->move(tc_pos);
 }
 
-c_enchantement_display *c_builder_view::getEnchantement_display() const
-{
+c_enchantement_display *c_builder_view::getEnchantement_display() const {
     return enchantement_display;
 }
 
-c_aptitudes_display *c_builder_view::getAptitude_display() const
-{
+c_aptitudes_display *c_builder_view::getAptitude_display() const {
     return aptitude_display;
 }
 
