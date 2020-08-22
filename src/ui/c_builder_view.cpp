@@ -32,7 +32,6 @@ c_builder_view::c_builder_view(c_dbmanager *_manager,  QCompleter* search_comple
     ui->horizontalLayout_2->setAlignment(result_display,Qt::AlignTop);
     ui->verticalLayout->insertWidget(0,search_widget);
     ui->verticalLayout->setAlignment(search_widget,Qt::AlignTop);
-    ui->verticalLayout->insertWidget(2,tc_resume);
     ui->verticalLayout->setAlignment(tc_resume,Qt::AlignTop);
 
     status_build->setDisabled(true);
@@ -172,6 +171,9 @@ void c_builder_view::resizeEvent(QResizeEvent *event) {
             element_popup->move(elem_popup_pos);
         }
     }
+    QPoint tc_pos = QPoint(rect().width() - tc_resume->width() - 20,rect().height() - tc_resume->height() - 20 );
+    tc_resume->move(tc_pos);
+}
 
 c_enchantement_display *c_builder_view::getEnchantement_display() const
 {
