@@ -111,6 +111,7 @@ void MainWindow::slot_actionCr_er_nouveau_Build_clicked() {
     ui->tabWidget->addTab(builder_list.last(),QString("Builder %1").arg(builder_list.size()));
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
     ui->stackedWidget->setCurrentIndex(1);
+    builder_list.last()->slot_show_element_popup();
 }
 
 void MainWindow::slot_check_version_clicked() {
@@ -255,6 +256,7 @@ void MainWindow::slot_creation_finished() {
     QObject::connect(entry_point,&c_entry_point::second_animation_finished,this,&MainWindow::slot_creation_finished);
     QObject::connect(entry_point,&c_entry_point::load_builder_from,this,&MainWindow::slot_open_builder);
     ui->stackedWidget->setCurrentIndex(1);
+    builder_list.last()->slot_show_element_popup();
 }
 
 void MainWindow::set_save_enabled(bool flag) {

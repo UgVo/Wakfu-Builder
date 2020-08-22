@@ -166,9 +166,6 @@ void c_builder_view::resizeEvent(QResizeEvent* /*event*/) {
                 search_widget->setDisabled(false);
                 ui->tabWidget->setDisabled(false);
                 timer.stop();
-            } else if (timer.remainingTime()==-1) {
-                timer.start(2000);
-                QObject::connect(&timer,&QTimer::timeout,this,&c_builder_view::slot_show_element_popup);
             }
             break;
         case 1:
