@@ -256,7 +256,9 @@ void MainWindow::slot_creation_finished() {
     QObject::connect(entry_point,&c_entry_point::second_animation_finished,this,&MainWindow::slot_creation_finished);
     QObject::connect(entry_point,&c_entry_point::load_builder_from,this,&MainWindow::slot_open_builder);
     ui->stackedWidget->setCurrentIndex(1);
-    builder_list.last()->slot_show_element_popup();
+    if(!builder_list.last()->getId()) {
+        builder_list.last()->slot_show_element_popup();
+    }
 }
 
 void MainWindow::set_save_enabled(bool flag) {
