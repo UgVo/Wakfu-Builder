@@ -87,6 +87,9 @@ c_search_widget::c_search_widget(c_dbmanager *manager, QCompleter* search_comple
     ui->name_search->setPlaceholderText("Recherche par nom");
     ui->name_search->setStyleSheet(QString(" QLineEdit{background-color: %1;  border: 1px solid %1; color: white;   border-radius: 3px;}"
                                            "name_search::placeholder {color : white;} ").arg(app_color::grey_blue));
+    QPalette name_search_palette = ui->name_search->palette();
+    name_search_palette.setColor(QPalette::PlaceholderText,Qt::white);
+    ui->name_search->setPalette(name_search_palette);
 
     set_comboBox_model(ui->carac_search);
 
