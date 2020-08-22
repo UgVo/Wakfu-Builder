@@ -94,9 +94,11 @@ bool c_save_builder_model::populate() {
     QSqlQuery query(db_manager->getDb());
     struct_save save;
     QJsonDocument doc;
-    beginInsertRows(QModelIndex(),0,data_list.size()-1);
-    data_list.clear();
-    endInsertRows();
+    if (!data_list.isEmpty()) {
+        beginInsertRows(QModelIndex(),0,data_list.size()-1);
+        data_list.clear();
+        endInsertRows();
+    }
 //    for (int i = 0; i < data_list.size(); ++i) {
 //        removeRow(index(0,0));
 //    }
