@@ -243,7 +243,7 @@ void c_build::unequip(QString position) {
     emit updated();
 }
 
-QMap<QString,QString> c_build::check_constraints(const c_item item) {
+QMap<QString,QString> c_build::check_constraints(const c_item &item) {
     QMap<QString,QString> res;
     if (lvl + bonuses["Art du barda"] < item.getLvl()) {
         res["status"] = "error";

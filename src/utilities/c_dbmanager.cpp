@@ -28,7 +28,7 @@ bool c_dbmanager::connect(const QString password) {
     return flag;
 }
 
-bool c_dbmanager::add_effect(const c_effect new_effect) {
+bool c_dbmanager::add_effect(const c_effect &new_effect) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.effect (id,actionId,areaShape,areaSize,params,description) "
                   "VALUES (:id, :actionId, :areaShape, :areaSize, :params, :description)");
@@ -86,7 +86,7 @@ c_effect c_dbmanager::get_effect(const int id) const{
     return new_effect;
 }
 
-bool c_dbmanager::add_action(const c_action new_action) {
+bool c_dbmanager::add_action(const c_action &new_action) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.action (id,description,effect)"
                   "VALUES (:id, :description, :effect)");
@@ -118,7 +118,7 @@ c_action c_dbmanager::get_action(const int id) const{
     return action;
 }
 
-bool c_dbmanager::add_itemProperty(const c_itemProperties new_property) {
+bool c_dbmanager::add_itemProperty(const c_itemProperties &new_property) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.itemproperties (id,name,description)"
                   "VALUES (:id, :name, :description)");
@@ -150,7 +150,7 @@ c_itemProperties c_dbmanager::get_itemProperty(const int id) const{
     return  itemProperties;
 }
 
-bool c_dbmanager::add_equipmentItemType(const c_equipmentItemTypes new_type) {
+bool c_dbmanager::add_equipmentItemType(const c_equipmentItemTypes &new_type) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.equipmentItemType (id,parentId,recyclable,visibleInAnimation,title)"
                   "VALUES (:id, :parentId, :recyclable, :visibleInAnimation, :title)");
@@ -308,7 +308,7 @@ bool c_dbmanager::add_relation_equipementType_PositionDisable(const int equipeme
     return query.exec();
 }
 
-bool c_dbmanager::add_item(const c_item item) {
+bool c_dbmanager::add_item(const c_item &item) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.item (id, lvl, itemTypeId, itemSetId, rarity, bindType, minimumShardSlotNumber, maximumShardSlotNumber, "
                   "useApCost, useMpCost, useWpCost, useMinRange, useMaxRange, useTestFreeCell, useTestLos, useTestOnlyLine, useTestNoBorderCell, useWorldTarget, "
@@ -620,7 +620,7 @@ QList<c_item> c_dbmanager::getAllItem() const {
     return item_list;
 }
 
-bool c_dbmanager::add_state(c_state state) {
+bool c_dbmanager::add_state(const c_state &state) {
     QSqlQuery query(m_db);
     query.prepare("INSERT INTO wakfu_builder.states (id,name,description)"
                   "VALUES (:id, :name, :description)");

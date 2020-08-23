@@ -10,9 +10,9 @@ public:
     c_state(int id = -1, QString name = QString(), QString description = QString());
     c_state(QJsonObject state);
 
-    int get_id();
-    QString get_name();
-    QString get_description();
+    int get_id() const;
+    QString get_name() const;
+    QString get_description()const;
 
     void set_id(int id);
     void set_name(QString name);

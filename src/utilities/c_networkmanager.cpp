@@ -1,6 +1,6 @@
 #include "c_networkmanager.h"
 
-c_networkManager::c_networkManager(QObject *parent) : QObject(parent), file(nullptr), progressDialog(nullptr)  {}
+c_networkManager::c_networkManager(QObject *parent) : QObject(parent), file(nullptr), manager(nullptr), progressDialog(nullptr)  {}
 
 void c_networkManager::downloadFile(QUrl url, QString path) {
     progressDialog = new QProgressDialog(nullptr);

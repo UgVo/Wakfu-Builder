@@ -30,16 +30,16 @@ public:
 
     bool connect(QString password = QString());
 
-    bool add_effect(const c_effect new_effect);
+    bool add_effect(const c_effect& new_effect);
     c_effect get_effect(const int id) const;
 
-    bool add_action(const c_action new_action);
+    bool add_action(const c_action& new_action);
     c_action get_action(const int id) const;  // TODO !
 
-    bool add_itemProperty(const c_itemProperties new_property);
+    bool add_itemProperty(const c_itemProperties& new_property);
     c_itemProperties get_itemProperty(const int id) const;
 
-    bool add_equipmentItemType(const c_equipmentItemTypes new_type);
+    bool add_equipmentItemType(const c_equipmentItemTypes& new_type);
     c_equipmentItemTypes get_equipmentItemType(const int id) const;
 
     bool add_equipmentPosition(const QString name, int id);
@@ -50,7 +50,7 @@ public:
     bool add_relation_equipementType_Position(const int equipementTypeId,const int positionId);
     bool add_relation_equipementType_PositionDisable(const int equipementTypeId, const int positionId);
 
-    bool add_item(const c_item item);
+    bool add_item(const c_item& item);
     c_item get_item(const int id) const;
     bool add_relation_item_property(const int id_Item, const int id_propertie);
     bool add_relation_item_useEffect(const int id_Item, const int id_effect);
@@ -62,7 +62,7 @@ public:
 
     QList<c_item> getAllItem() const;
 
-    bool add_state(const c_state state);
+    bool add_state(const c_state& state);
     c_state get_state(const int id) const;
 
     QList<int> getid_item_from_actions(const QList<QString> caract_name, const QList<int> rarities, const QList<int> types, const QList<int> bondaries = {1,200}, const QString name = QString(), const bool final = false, const QList<bool> condi = QList<bool>()) const;
