@@ -1,15 +1,14 @@
 #ifndef C_ENCHANTEMENT_EFFECT_H
 #define C_ENCHANTEMENT_EFFECT_H
 
-#include <QString>
-#include <QList>
-#include <QJsonObject>
-#include <QJsonArray>
 #include <QDebug>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QList>
+#include <QString>
 
-class c_enchantement_effect
-{
-public:
+class c_enchantement_effect {
+   public:
     c_enchantement_effect();
     c_enchantement_effect(QJsonObject object);
 
@@ -42,7 +41,7 @@ public:
     void setLevelRequirement(const QList<int> &levelRequirement);
     void setLevelRequirement_string(const QString &levelRequirement);
 
-private:
+   private:
     int _id;
     int _color;
     QString _effect;
@@ -52,4 +51,4 @@ private:
     QList<int> _levelRequirement;
 };
 
-#endif // C_ENCHANTEMENT_EFFECT_H
+#endif  // C_ENCHANTEMENT_EFFECT_H

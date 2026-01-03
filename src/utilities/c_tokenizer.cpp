@@ -2,62 +2,66 @@
 
 c_tokenizer::c_tokenizer() {
     rx_assig = QRegExp("(^\\[#(\\d)\\](.*))");
-    rx_word = QRegExp("(^[a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ%:\\(\\)0-9 ]+)(.*)");
+    rx_word = QRegExp(
+        "(^[a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ%:\\(\\)0-9 ]+)(.*)");
     rx_condi = QRegExp("(^\\{\\[(\\d?)(\\D)(\\d)\\]\\?([^\\:]*)\\:([^\\{]*|.*\\{.+\\}.*)\\})(.*)");
     rx_elem = QRegExp("^\\[([a-zA-Z0-9]+)\\](.*)");
     rx_state = QRegExp(".*\\[(\\d*)\\].*");
     rx_value = QRegExp("(^[0-9\\-]+)%? (.*)");
-    rx_sentence = QRegExp("([a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\\. ]+)([0-9]*)([a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\\. ]*)");
+    rx_sentence = QRegExp(
+        "([a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\\. "
+        "]+)([0-9]*)([a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\\. ]*)");
 }
 
-QMap<QString,QString> c_tokenizer::tokenize(const QString string) const {
-    QMap<QString,QString> elem;
+QMap<QString, QString> c_tokenizer::tokenize(const QString string) const {
+    QMap<QString, QString> elem;
     QStringList capturedText;
     if (!rx_assig.indexIn(string)) {
         capturedText = rx_assig.capturedTexts();
-        elem.insert("type","assignment");
-        elem.insert("value",capturedText.at(2));
-        elem.insert("rest",capturedText.at(3));
+        elem.insert("type", "assignment");
+        elem.insert("value", capturedText.at(2));
+        elem.insert("rest", capturedText.at(3));
     } else if (!rx_word.indexIn(string)) {
         capturedText = rx_word.capturedTexts();
-        elem.insert("type","texte");
-        elem.insert("text",capturedText.at(1));
-        elem.insert("rest",capturedText.at(2));
+        elem.insert("type", "texte");
+        elem.insert("text", capturedText.at(1));
+        elem.insert("rest", capturedText.at(2));
     } else if (!rx_condi.indexIn(string)) {
         capturedText = rx_condi.capturedTexts();
-        elem.insert("type","condition");
-        elem.insert("expression",capturedText.at(1));
-        elem.insert("rest",capturedText.at(7));
-        elem.insert("operator",capturedText.at(3));
-        elem.insert("value",capturedText.at(4));
-        elem.insert("true",capturedText.at(5));
-        elem.insert("false",capturedText.at(6));
-        elem.insert("l_value",capturedText.at(2));
-    } else if(!rx_elem.indexIn(string)) {
+        elem.insert("type", "condition");
+        elem.insert("expression", capturedText.at(1));
+        elem.insert("rest", capturedText.at(7));
+        elem.insert("operator", capturedText.at(3));
+        elem.insert("value", capturedText.at(4));
+        elem.insert("true", capturedText.at(5));
+        elem.insert("false", capturedText.at(6));
+        elem.insert("l_value", capturedText.at(2));
+    } else if (!rx_elem.indexIn(string)) {
         capturedText = rx_elem.capturedTexts();
-        elem.insert("type","element");
-        elem.insert("elem",capturedText.at(1));
-        elem.insert("rest",capturedText.at(2));
+        elem.insert("type", "element");
+        elem.insert("elem", capturedText.at(1));
+        elem.insert("rest", capturedText.at(2));
 
     } else {
-        elem.insert("type","nothing");
+        elem.insert("type", "nothing");
     }
     return elem;
 }
 
-QString c_tokenizer::formatString(const QString string, const QList<float> params, const int lvl, const int stack) const {
+QString c_tokenizer::formatString(const QString string, const QList<float> params, const int lvl,
+                                  const int stack) const {
     QString res;
-    QMap<QString,QString> token = tokenize(string);
+    QMap<QString, QString> token = tokenize(string);
     if (!token.value(QString("type")).compare(QString("nothing"))) {
         return res;
     } else if (!token.value(QString("type")).compare(QString("assignment"))) {
         int index = token.value("value").toInt();
-        int value = int(params.at(index*2-1)*lvl + params.at(index*2-2));
+        int value = int(params.at(index * 2 - 1) * lvl + params.at(index * 2 - 2));
         res = QString("%1").arg(value);
-        return res + formatString(token.value("rest"),params,lvl,value);
+        return res + formatString(token.value("rest"), params, lvl, value);
     } else if (!token.value(QString("type")).compare(QString("texte"))) {
         res = token.value("text");
-        return res + formatString(token.value("rest"),params,lvl,stack);
+        return res + formatString(token.value("rest"), params, lvl, stack);
     } else if (!token.value(QString("type")).compare(QString("condition"))) {
         QString operator_str = token.value(QString("operator"));
         QString value_str = token.value(QString("value"));
@@ -68,35 +72,43 @@ QString c_tokenizer::formatString(const QString string, const QList<float> param
         QString l_value_str = token.value(QString("l_value"));
         int l_value = stack;
         if (!l_value_str.isEmpty()) {
-            l_value = int(params.at(l_value_str.toInt())); //FIX that later if there is an issue
+            l_value = int(params.at(l_value_str.toInt()));  // FIX that later if there is an issue
         }
         switch (operator_str.at(0).toLatin1()) {
             case '>':
                 if (stack >= value_str.toInt()) {
-                    res = formatString(true_str,params,lvl,stack) + formatString(rest,params,lvl,stack);
+                    res = formatString(true_str, params, lvl, stack) +
+                          formatString(rest, params, lvl, stack);
                 } else {
-                    res = formatString(false_str,params,lvl,stack) + formatString(rest,params,lvl,stack);
+                    res = formatString(false_str, params, lvl, stack) +
+                          formatString(rest, params, lvl, stack);
                 }
                 break;
             case '<':
                 if (stack < value_str.toInt()) {
-                    res = formatString(true_str,params,lvl,stack) + formatString(rest,params,lvl,stack);
+                    res = formatString(true_str, params, lvl, stack) +
+                          formatString(rest, params, lvl, stack);
                 } else {
-                    res = formatString(false_str,params,lvl,stack) + formatString(rest,params,lvl,stack);
+                    res = formatString(false_str, params, lvl, stack) +
+                          formatString(rest, params, lvl, stack);
                 }
-            break;
+                break;
             case '=':
                 if (l_value == value_str.toInt()) {
-                    res = formatString(true_str,params,lvl,stack) + formatString(rest,params,lvl,stack);
+                    res = formatString(true_str, params, lvl, stack) +
+                          formatString(rest, params, lvl, stack);
                 } else {
-                    res = formatString(false_str,params,lvl,stack) + formatString(rest,params,lvl,stack);
+                    res = formatString(false_str, params, lvl, stack) +
+                          formatString(rest, params, lvl, stack);
                 }
                 break;
             case '~':
-                if (params.size()/2 == value_str.toInt()) {
-                    res = formatString(true_str,params,lvl,stack) + formatString(rest,params,lvl,stack);
+                if (params.size() / 2 == value_str.toInt()) {
+                    res = formatString(true_str, params, lvl, stack) +
+                          formatString(rest, params, lvl, stack);
                 } else {
-                    res = formatString(false_str,params,lvl,stack) + formatString(rest,params,lvl,stack);
+                    res = formatString(false_str, params, lvl, stack) +
+                          formatString(rest, params, lvl, stack);
                 }
                 break;
             default:
@@ -105,22 +117,23 @@ QString c_tokenizer::formatString(const QString string, const QList<float> param
     } else if (!token.value(QString("type")).compare(QString("element"))) {
         QString rest = token.value(QString("rest"));
         if (!token.value(QString("elem")).compare(QString("el1"))) {
-            res = "Feu" + formatString(rest,params,lvl,stack);
+            res = "Feu" + formatString(rest, params, lvl, stack);
         } else if (!token.value(QString("elem")).compare(QString("el2"))) {
-            res = "Eau" + formatString(rest,params,lvl,stack);
+            res = "Eau" + formatString(rest, params, lvl, stack);
         } else if (!token.value(QString("elem")).compare(QString("el3"))) {
-            res = "Terre" + formatString(rest,params,lvl,stack);
+            res = "Terre" + formatString(rest, params, lvl, stack);
         } else if (!token.value(QString("elem")).compare(QString("el4"))) {
-            res = "Air" + formatString(rest,params,lvl,stack);
+            res = "Air" + formatString(rest, params, lvl, stack);
         } else if (!token.value(QString("elem")).compare(QString("el5"))) {
-            res = "Stasis" + formatString(rest,params,lvl,stack);
+            res = "Stasis" + formatString(rest, params, lvl, stack);
         } else if (!token.value(QString("elem")).compare(QString("el6"))) {
-            res = "Lumière" + formatString(rest,params,lvl,stack);
+            res = "Lumière" + formatString(rest, params, lvl, stack);
         } else if (!token.value(QString("elem")).compare(QString("ally"))) {
-            res = "ally" + formatString(rest,params,lvl,stack);
+            res = "ally" + formatString(rest, params, lvl, stack);
         } else if (token.value(QString("elem")).contains(QString("st"))) {
             QString id_state = token.value(QString("elem"));
-            res = QString("[%1]").arg(id_state.replace("st","")) + formatString(rest,params,lvl,stack);
+            res = QString("[%1]").arg(id_state.replace("st", "")) +
+                  formatString(rest, params, lvl, stack);
         }
     }
     return res;
@@ -135,9 +148,9 @@ int c_tokenizer::get_id_state(const QString string) const {
     return 0;
 }
 
-QMap<QString,QString> c_tokenizer::interpret_effect(const QString string) const {
+QMap<QString, QString> c_tokenizer::interpret_effect(const QString string) const {
     QStringList capturedText;
-    QMap<QString,QString> res;
+    QMap<QString, QString> res;
     if (!rx_value.indexIn(string)) {
         capturedText = rx_value.capturedTexts();
         res["value"] = capturedText.at(1);
@@ -147,7 +160,8 @@ QMap<QString,QString> c_tokenizer::interpret_effect(const QString string) const 
             if (rx_sentence.capturedTexts().size() > 2) {
                 opt_number = rx_sentence.capturedTexts().at(2);
             }
-            if ((type_effect.contains("PV") || type_effect.contains("Vie")) && !type_effect.contains("Vol")) {
+            if ((type_effect.contains("PV") || type_effect.contains("Vie")) &&
+                !type_effect.contains("Vol")) {
                 res["effect"] = "Vie";
             } else if (type_effect.contains("PA")) {
                 res["effect"] = "PA";
@@ -244,5 +258,3 @@ QMap<QString,QString> c_tokenizer::interpret_effect(const QString string) const 
     }
     return res;
 }
-
-

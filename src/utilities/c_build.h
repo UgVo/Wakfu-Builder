@@ -2,16 +2,15 @@
 #define C_BUILD_H
 
 #include <QObject>
+
+#include "c_calcul.h"
 #include "c_item.h"
 #include "utilities.h"
-#include "c_calcul.h"
 
-
-class c_build : public QObject
-{
+class c_build : public QObject {
     Q_OBJECT
 
-public:
+   public:
     c_build();
     c_build(const c_build &build);
     ~c_build();
@@ -21,12 +20,12 @@ public:
 
     QList<QString> getElements() const;
 
-    QMap<QString, c_item*> getEquipment_pt();
+    QMap<QString, c_item *> getEquipment_pt();
     QMap<QString, c_item> getEquipment() const;
     void setEquipment(const QMap<QString, c_item> &value);
 
     void computeBonuses();
-    QMap<QString,QString> check_constraints(const c_item);
+    QMap<QString, QString> check_constraints(const c_item &item);
     QString getBonusesString();
 
     bool getEpique_free() const;
@@ -35,8 +34,8 @@ public:
     bool getRelique_free() const;
     void setRelique_free(bool value);
 
-    c_build& operator=(const c_build& build);
-    QMap<QString,int> resetMap();
+    c_build &operator=(const c_build &build);
+    QMap<QString, int> resetMap();
     void init_bonus_aptitudes();
 
     int getLvl() const;
@@ -45,25 +44,25 @@ public:
 
     void setBonus_enchant(const QMap<QString, int> &value);
 
-private:
+   private:
     bool epique_free;
     bool relique_free;
     QList<QString> elements;
-    QMap<QString,int> bonuses;
-    QMap<QString,int> bonus_aptitudes;
-    QMap<QString,int> bonus_enchant;
-    QMap<QString,c_item> equipment;
+    QMap<QString, int> bonuses;
+    QMap<QString, int> bonus_aptitudes;
+    QMap<QString, int> bonus_enchant;
+    QMap<QString, c_item> equipment;
     int lvl;
     bool nation_bonus;
     bool guilde_bonus;
     bool hm_bonus;
 
-signals:
+   signals:
     void disableSecondWeapon(bool);
     void updated();
 
-public slots:
-    QMap<QString,QString> equip(const c_item &item);
+   public slots:
+    QMap<QString, QString> equip(const c_item &item);
     void unequip(QString position);
     void setLvl(int new_lvl);
     void slot_bonus_changed(QList<bool> bonus);
@@ -71,7 +70,6 @@ public slots:
     void slot_item_element_changed();
 
     void slot_aptitude_value_changed(QString type, int value);
-
 };
 
-#endif // C_BUILD_H
+#endif  // C_BUILD_H

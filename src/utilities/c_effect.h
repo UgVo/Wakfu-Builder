@@ -1,30 +1,29 @@
 #ifndef C_EFFECT_H
 #define C_EFFECT_H
 
-#include "c_action.h"
-
+#include <QDebug>
 #include <QMap>
 #include <QString>
 #include <QVector>
-#include <QDebug>
+
+#include "c_action.h"
 
 class c_dbmanager;
 
-class c_effect
-{
-public:
+class c_effect {
+   public:
     c_effect(const c_dbmanager *dbmanager, int id = 0, c_action action = c_action(),
              int areaShape = 0, QVector<int> areaSize = QVector<int>(),
              QVector<float> params = QVector<float>(), QString description = QString());
     c_effect(QJsonObject object, c_dbmanager *dbmanager);
     int getId() const;
-    c_action getAction()const;
-    int getAreaShape()const;
-    QVector<int> getAreaSize()const;
-    QVector<float> getParams()const;
-    QString getAreaSize_string()const;
-    QString getParams_string()const;
-    QString getDescription()const;
+    c_action getAction() const;
+    int getAreaShape() const;
+    QVector<int> getAreaSize() const;
+    QVector<float> getParams() const;
+    QString getAreaSize_string() const;
+    QString getParams_string() const;
+    QString getDescription() const;
     void setId(const int id);
     void setAction(const c_action Actionid);
     void setAreaShape(const int AreaShape);
@@ -32,20 +31,19 @@ public:
     void setParams(const QVector<float> Params);
     void setDescrition(const QString descri);
 
+    QMap<QString, QString> getEffectString(const int lvl) const;
+    QMap<QString, QString> interpretState(int state_id) const;
+    QMap<QString, QString> getEffectMap(const int lvl) const;
 
-    QMap<QString,QString> getEffectString(const int lvl) const;
-    QMap<QString,QString> interpretState(int state_id) const;
-    QMap<QString,QString> getEffectMap(const int lvl) const;
-private:
-
+   private:
     int _id;
     c_action _action;
     int _areaShape;
     QVector<int> _areaSize;
     QVector<float> _params;
     QString _description;
-    const c_dbmanager* _database;
+    const c_dbmanager *_database;
     c_tokenizer tokenizer;
 };
 
-#endif // C_EFFECT_H
+#endif  // C_EFFECT_H

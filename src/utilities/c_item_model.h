@@ -1,24 +1,25 @@
 #ifndef C_ITEM_MODEL_H
 #define C_ITEM_MODEL_H
 
+#include <QAbstractTableModel>
+#include <QEventLoop>
+#include <QList>
+#include <QThread>
+
 #include "c_dbmanager.h"
 #include "c_item.h"
 #include "ui/ui.h"
-#include <QAbstractTableModel>
-#include <QList>
-#include <QEventLoop>
-#include <QThread>
 
-class c_item_model : public QAbstractTableModel
-{
+class c_item_model : public QAbstractTableModel {
     Q_OBJECT
 
-public:
-    explicit c_item_model(c_dbmanager *_manager,QObject *parent = nullptr);
+   public:
+    explicit c_item_model(c_dbmanager *_manager, QObject *parent = nullptr);
     void init();
 
     // Header:
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
 
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -28,13 +29,13 @@ public:
     bool insert_row(c_item &item);
     c_item itemFromId(int id);
 
-signals:
+   signals:
     void new_row(int index, int size);
 
-private:
+   private:
     c_dbmanager *manager;
     QList<c_item> data_list;
-    QMap<int,c_item> data_map;
+    QMap<int, c_item> data_map;
 };
 
-#endif // C_ITEM_MODEL_H
+#endif  // C_ITEM_MODEL_H

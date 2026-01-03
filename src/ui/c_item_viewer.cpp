@@ -1,15 +1,15 @@
 #include "c_item_viewer.h"
 #include "ui_c_item_viewer.h"
 
-c_item_viewer::c_item_viewer(const QString item_position, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::c_item_viewer) {
+c_item_viewer::c_item_viewer(const QString item_position, QWidget *parent)
+    : QWidget(parent), ui(new Ui::c_item_viewer) {
     ui->setupUi(this);
 
     _parent = parent;
     this->setAttribute(Qt::WA_Hover);
     this->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this,&c_item_viewer::customContextMenuRequested,this,&c_item_viewer::slot_context_menu);
+    connect(this, &c_item_viewer::customContextMenuRequested, this,
+            &c_item_viewer::slot_context_menu);
 
     int size_widget = 40;
 
@@ -19,8 +19,11 @@ c_item_viewer::c_item_viewer(const QString item_position, QWidget *parent) :
     imageDir = QCoreApplication::applicationDirPath();
 #endif
 
-    this->setStyleSheet(QString("QWidget#c_item_viewer{background-color: %1;} img {vertical-align:middle;}").arg(app_color::dark_blue));
-    //ui->widget_elements->setStyleSheet(QString("QWidget{background-color: %1;} img {vertical-align:middle;}").arg(app_color::dark_blue));
+    this->setStyleSheet(
+        QString("QWidget#c_item_viewer{background-color: %1;} img {vertical-align:middle;}")
+            .arg(app_color::dark_blue));
+    // ui->widget_elements->setStyleSheet(QString("QWidget{background-color: %1;} img
+    // {vertical-align:middle;}").arg(app_color::dark_blue));
     image_layout = new QStackedLayout();
     ui->image_widget->setLayout(image_layout);
     background = new QLabel();
@@ -28,8 +31,8 @@ c_item_viewer::c_item_viewer(const QString item_position, QWidget *parent) :
     item = new c_item();
     position = item_position;
 
-    ui->image_widget->setMaximumSize(QSize(size_widget,size_widget));
-    ui->image_widget->setMinimumSize(QSize(size_widget,size_widget));
+    ui->image_widget->setMaximumSize(QSize(size_widget, size_widget));
+    ui->image_widget->setMinimumSize(QSize(size_widget, size_widget));
     QPixmap pixmap_background;
     background->setPixmap(pixmap_background);
     background->setBackgroundRole(QPalette::Base);
@@ -39,14 +42,14 @@ c_item_viewer::c_item_viewer(const QString item_position, QWidget *parent) :
     image_layout->addWidget(image);
     image_layout->addWidget(background);
     image_layout->setStackingMode(QStackedLayout::StackAll);
-    image_layout->setContentsMargins(0,0,0,0);
+    image_layout->setContentsMargins(0, 0, 0, 0);
 
     images_elements["Feu"] = QPixmap(":/images/elements/smallFIRE.png");
     images_elements["Eau"] = QPixmap(":/images/elements/smallWATER.png");
     images_elements["Air"] = QPixmap(":/images/elements/smallAIR.png");
     images_elements["Terre"] = QPixmap(":/images/elements/smallEARTH.png");
 
-    elements_layout = static_cast<QVBoxLayout*>(ui->widget_elements->layout());
+    elements_layout = static_cast<QVBoxLayout *>(ui->widget_elements->layout());
 
     updateView();
     own_item = true;
@@ -57,7 +60,7 @@ c_item_viewer::c_item_viewer(const QString item_position, QWidget *parent) :
 }
 
 c_item_viewer::~c_item_viewer() {
-    foreach (QLabel* pt, elements) {
+    foreach (QLabel *pt, elements) {
         pt->deleteLater();
     }
     if (own_item) {
@@ -85,53 +88,49 @@ void c_item_viewer::updateView() {
     image->setBackgroundRole(QPalette::Base);
     image->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     image->setScaledContents(true);
-    foreach(QLabel* label,elements) {
+    foreach (QLabel *label, elements) {
         elements_layout->removeWidget(label);
         elements.removeAll(label);
         label->deleteLater();
     }
-    foreach(QString elem, item->getElements(item->getNumber_element())) {
+    foreach (QString elem, item->getElements(item->getNumber_element())) {
         elements.push_back(new QLabel());
         elements.last()->setPixmap(images_elements[elem]);
-        elements_layout->insertWidget(elements.size(),elements.last());
+        elements_layout->insertWidget(elements.size(), elements.last());
     }
     setBackgroundImage();
     this->update();
 }
 
 void c_item_viewer::setBackgroundImage() {
-    if (!disabled){
+    if (!disabled) {
         if (item->isEmpty()) {
             background->setPixmap(QPixmap(QString(":/images/divers/%1.png").arg(position)));
         } else {
-            background->setPixmap(QPixmap(QString(":/images/rarityborder/%1.png").arg(item->getRarity())));
+            background->setPixmap(
+                QPixmap(QString(":/images/rarityborder/%1.png").arg(item->getRarity())));
         }
     } else {
         background->setPixmap(QPixmap());
     }
 }
 
-bool c_item_viewer::getDisabled() const
-{
-    return disabled;
-}
+bool c_item_viewer::getDisabled() const { return disabled; }
 
 void c_item_viewer::slot_context_menu(const QPoint &pos) {
     if (item->isEmpty()) return;
     QMenu contextMenu(tr("Context menu"), this);
     QAction action1("Déséquiper item", this);
     QAction action2("Réassigner les éléments", this);
-    connect(&action1,&QAction::triggered, this,&c_item_viewer::slot_unequip);
-    connect(&action2,&QAction::triggered, this,&c_item_viewer::slot_refresh_elements);
+    connect(&action1, &QAction::triggered, this, &c_item_viewer::slot_unequip);
+    connect(&action2, &QAction::triggered, this, &c_item_viewer::slot_refresh_elements);
     contextMenu.addAction(&action1);
     contextMenu.addAction(&action2);
 
     contextMenu.exec(mapToGlobal(pos));
 }
 
-void c_item_viewer::slot_unequip() {
-    emit unequip(position);
-}
+void c_item_viewer::slot_unequip() { emit unequip(position); }
 
 void c_item_viewer::slot_refresh_elements() {
     int number_elements = item->getNumber_element();
@@ -144,11 +143,11 @@ void c_item_viewer::slot_refresh_elements() {
         item_chosen_elem.push_back(false);
     }
     for (int i = 0; i < number_elements; ++i) {
-        item_chosen_elem.replace(c_elements_display::frToId_elem[item_elem.at(i)],true);
+        item_chosen_elem.replace(c_elements_display::frToId_elem[item_elem.at(i)], true);
     }
     diag.setElems(item_chosen_elem);
     QList<QString> new_elems_list;
-    if (diag.exec()==QDialog::Accepted) {
+    if (diag.exec() == QDialog::Accepted) {
         item_chosen_elem = diag.getElems();
         for (int i = 0; i < item_chosen_elem.size(); ++i) {
             if (item_chosen_elem.at(i)) {
@@ -166,7 +165,6 @@ void c_item_viewer::slot_refresh_elements() {
 }
 
 void c_item_viewer::disable(int gfxId) {
-
     item->setGfxId(gfxId);
     disabled = true;
     updateView();
@@ -180,26 +178,20 @@ void c_item_viewer::enable() {
     }
 }
 
-c_item *c_item_viewer::get_item() {
-    return item;
-}
+c_item *c_item_viewer::get_item() { return item; }
 
-c_item c_item_viewer::get_item_const() const {
-    return *item;
-}
+c_item c_item_viewer::get_item_const() const { return *item; }
 
-QString c_item_viewer::getPosition() const {
-    return position;
-}
+QString c_item_viewer::getPosition() const { return position; }
 
 bool c_item_viewer::event(QEvent *event) {
-    if ( event->type() == QEvent::HoverEnter ) {
+    if (event->type() == QEvent::HoverEnter) {
         if (item->isEmpty()) {
             return QWidget::event(event);
         }
         QPoint p = this->pos();
         p.setY(p.y());
-        p.setX(p.x()+150);
+        p.setX(p.x() + 150);
         QPoint res = _parent->mapToGlobal(p);
         if (it_display == nullptr) {
             it_display = new c_item_display(*item);
@@ -209,27 +201,26 @@ bool c_item_viewer::event(QEvent *event) {
         it_display->move(res);
         it_display->show();
         timer = new QTimer(this);
-        connect(timer,&QTimer::timeout,this,&c_item_viewer::check_mouse_over);
+        connect(timer, &QTimer::timeout, this, &c_item_viewer::check_mouse_over);
         timer->start(100);
 
-    } else if ( event->type() == QEvent::HoverLeave ) {
+    } else if (event->type() == QEvent::HoverLeave) {
         if (item->isEmpty()) {
             return QWidget::event(event);
         }
         it_display->hide();
-
     }
     return QWidget::event(event);
 }
 
 void c_item_viewer::mouseReleaseEvent(QMouseEvent *event) {
-    if (event->button() == Qt::LeftButton)  {
-        //if (item->isEmpty()) {
-            if (!block) {
-                emit clicked(position);
-            } else {
-                block = false;
-            }
+    if (event->button() == Qt::LeftButton) {
+        // if (item->isEmpty()) {
+        if (!block) {
+            emit clicked(position);
+        } else {
+            block = false;
+        }
         //}
     } else {
         event->ignore();
@@ -244,11 +235,11 @@ void c_item_viewer::mouseDoubleClickEvent(QMouseEvent * /*event*/) {
 }
 
 void c_item_viewer::check_mouse_over() {
-    if(underMouse()) {
+    if (underMouse()) {
         timer->start(100);
     } else {
-        disconnect(timer,&QTimer::timeout,this,&c_item_viewer::check_mouse_over);
-        if ( it_display != nullptr) {
+        disconnect(timer, &QTimer::timeout, this, &c_item_viewer::check_mouse_over);
+        if (it_display != nullptr) {
             it_display->hide();
             it_display->update();
         }
@@ -261,7 +252,7 @@ void c_item_viewer::show_item_at_pos(QPoint pos) {
     }
     QPoint p = pos;
     p.setY(p.y());
-    p.setX(p.x()+255);
+    p.setX(p.x() + 255);
     if (it_display == nullptr) {
         it_display = new c_item_display(*item);
         it_display->setWindowFlags(Qt::ToolTip | Qt::Popup);
@@ -272,12 +263,10 @@ void c_item_viewer::show_item_at_pos(QPoint pos) {
     it_display->show();
 }
 
-
 void c_item_viewer::hide_item() {
-    if ( it_display != nullptr) {
+    if (it_display != nullptr) {
         it_display->hide();
         it_display->update();
         it_display->setCmp_equip(false);
     }
 }
-

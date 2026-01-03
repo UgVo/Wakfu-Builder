@@ -1,14 +1,13 @@
 #ifndef C_EQUIPMENTITEMTYPES_H
 #define C_EQUIPMENTITEMTYPES_H
 
-#include <QStringList>
-#include <QJsonObject>
 #include <QDebug>
 #include <QJsonArray>
+#include <QJsonObject>
+#include <QStringList>
 
-class c_equipmentItemTypes
-{
-public:
+class c_equipmentItemTypes {
+   public:
     c_equipmentItemTypes(int id = 0, int parentId = 0,
                          QStringList equipementPositions = QStringList(),
                          QStringList equipementDisablePositions = QStringList(),
@@ -16,7 +15,7 @@ public:
                          QString title = QString());
     c_equipmentItemTypes(QJsonObject object);
 
-private:
+   private:
     int id;
     int parentId;
     QStringList equipementPositions;
@@ -25,7 +24,7 @@ private:
     bool visibleInAnimation;
     QString title;
 
-public:
+   public:
     int getId() const;
     int getParentId() const;
     QStringList getEquipementPositions() const;
@@ -41,7 +40,6 @@ public:
     void setRecyclable(const bool);
     void setVisibleInAnimation(const bool);
     void setTitle(const QString);
-
 };
 
-#endif // C_EQUIPMENTITEMTYPES_H
+#endif  // C_EQUIPMENTITEMTYPES_H

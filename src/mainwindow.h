@@ -1,86 +1,80 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QProgressDialog>
-#include <QProgressBar>
-#include <QThread>
 #include <QColor>
-#include <QSortFilterProxyModel>
-#include <QTableView>
-#include <QStackedLayout>
-#include <QMovie>
+#include <QCompleter>
+#include <QElapsedTimer>
+#include <QEventLoop>
+#include <QFileDialog>
+#include <QFontDatabase>
 #include <QFuture>
 #include <QFutureWatcher>
-#include <QtConcurrent>
-#include <QEventLoop>
-#include <QElapsedTimer>
-#include <QFileDialog>
+#include <QMainWindow>
 #include <QMessageBox>
-#include <QFontDatabase>
+#include <QMovie>
+#include <QProgressBar>
+#include <QProgressDialog>
 #include <QPropertyAnimation>
-#include <QCompleter>
+#include <QSortFilterProxyModel>
+#include <QStackedLayout>
+#include <QTableView>
+#include <QThread>
+#include <QtConcurrent>
+
+#include "ui/c_bdd_password_dialog.h"
+#include "ui/c_builder_view.h"
+#include "ui/c_dialoggestion.h"
+#include "ui/c_entry_point.h"
+#include "utilities/c_datamanager.h"
 #include "utilities/c_dbmanager.h"
 #include "utilities/c_effect.h"
-#include "utilities/c_networkmanager.h"
-#include "utilities/c_datamanager.h"
-#include "ui/c_dialoggestion.h"
-#include "utilities/c_tokenizer.h"
-#include "utilities/c_item_model.h"
-#include "ui/c_builder_view.h"
-#include "ui/c_entry_point.h"
-#include "ui/c_bdd_password_dialog.h"
-#include "utilities/c_item_model.h"
-
 #include "utilities/c_io_manager.h"
+#include "utilities/c_item_model.h"
+#include "utilities/c_networkmanager.h"
+#include "utilities/c_tokenizer.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 QT_END_NAMESPACE
 
-class InitModelThread : public QThread
-{
+class InitModelThread : public QThread {
     Q_OBJECT
     void run() override {
         model->init();
         emit resultReady();
     }
     c_item_model *model;
-signals:
+   signals:
     void resultReady();
 
-public:
-    void setModel(c_item_model *_model) {
-        model = _model;
-    }
+   public:
+    void setModel(c_item_model *_model) { model = _model; }
 };
 
-
-
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
-public:
+   public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
     QString getApp_path() const;
 
-private:
+   private:
     Ui::MainWindow *ui;
     QString app_path;
     c_dbmanager *database_manager;
     c_datamanager datamanager;
     DialogGestion *diag;
-    QList<c_builder_view*> builder_list;
-    c_entry_point* entry_point;
+    QList<c_builder_view *> builder_list;
+    c_entry_point *entry_point;
     QLabel *connection_status;
     c_item_model *item_model;
     QCompleter *search_completer;
 
-
-public slots:
+   public slots:
     void slot_check_version_clicked();
     void slot_version_check(QString version);
 
@@ -113,10 +107,9 @@ public slots:
     void load_item_model();
     void load_completer();
 
-signals:
+   signals:
     void init_done();
     void shift_pressed(bool state);
 };
 
-
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H

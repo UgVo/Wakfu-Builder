@@ -1,12 +1,11 @@
 #ifndef C_ITEMPROPERTIES_H
 #define C_ITEMPROPERTIES_H
 
-#include <QString>
 #include <QJsonObject>
+#include <QString>
 
-class c_itemProperties
-{
-public:
+class c_itemProperties {
+   public:
     c_itemProperties(int id = 0, QString name = QString(), QString description = QString());
     c_itemProperties(QJsonObject actionObject);
 
@@ -17,10 +16,10 @@ public:
     void setName(const QString name);
     void setDescription(const QString description);
 
-private:
+   private:
     int id;
     QString name;
     QString description;
 };
 
-#endif // C_ITEMPROPERTIES_H
+#endif  // C_ITEMPROPERTIES_H

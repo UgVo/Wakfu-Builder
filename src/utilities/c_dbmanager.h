@@ -1,31 +1,31 @@
 #ifndef C_DBMANAGER_H
 #define C_DBMANAGER_H
 
-#include "c_effect.h"
+#include <QDebug>
+#include <QElapsedTimer>
+#include <QList>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QSqlRecord>
+#include <QString>
+#include <QStringList>
+#include <QWidget>
+
 #include "c_action.h"
-#include "c_itemproperties.h"
+#include "c_effect.h"
+#include "c_enchantement_effect.h"
 #include "c_equipmentitemtypes.h"
 #include "c_item.h"
+#include "c_itemproperties.h"
 #include "c_state.h"
-#include "c_enchantement_effect.h"
-#include <QSqlRecord>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QDebug>
-#include <QString>
-#include <QList>
-#include <QStringList>
-#include <QElapsedTimer>
-#include <QWidget>
 
 class c_datamanager;
 
-class c_dbmanager : public QWidget
-{
+class c_dbmanager : public QWidget {
     Q_OBJECT
-public:
-    c_dbmanager(c_datamanager *manager, QWidget *parent = nullptr);
+   public:
+    c_dbmanager(c_datamanager* manager, QWidget* parent = nullptr);
     ~c_dbmanager();
 
     bool connect(QString password = QString());
@@ -47,8 +47,9 @@ public:
     QStringList get_AllEquipementPosition() const;
     int get_equipmentPositionId(const QString name) const;
 
-    bool add_relation_equipementType_Position(const int equipementTypeId,const int positionId);
-    bool add_relation_equipementType_PositionDisable(const int equipementTypeId, const int positionId);
+    bool add_relation_equipementType_Position(const int equipementTypeId, const int positionId);
+    bool add_relation_equipementType_PositionDisable(const int equipementTypeId,
+                                                     const int positionId);
 
     bool add_item(const c_item& item);
     c_item get_item(const int id) const;
@@ -65,10 +66,19 @@ public:
     bool add_state(const c_state& state);
     c_state get_state(const int id) const;
 
-    QList<int> getid_item_from_actions(const QList<QString> caract_name, const QList<int> rarities, const QList<int> types, const QList<int> bondaries = {1,200}, const QString name = QString(), const bool final = false, const QList<bool> condi = QList<bool>()) const;
-    QList<int> getid_item_from_actions_sorted(const QList<QString> carac_effect, const QList<int> rarities, const QList<int> types, const QList<int> bondaries = {1,200}, const QString name = QString(), const bool final = false, const QList<bool> condi = QList<bool>()) const;
+    QList<int> getid_item_from_actions(const QList<QString> caract_name, const QList<int> rarities,
+                                       const QList<int> types,
+                                       const QList<int> bondaries = {1, 200},
+                                       const QString name = QString(), const bool final = false,
+                                       const QList<bool> condi = QList<bool>()) const;
+    QList<int> getid_item_from_actions_sorted(const QList<QString> carac_effect,
+                                              const QList<int> rarities, const QList<int> types,
+                                              const QList<int> bondaries = {1, 200},
+                                              const QString name = QString(),
+                                              const bool final = false,
+                                              const QList<bool> condi = QList<bool>()) const;
     QList<c_item> getItems(const QList<int> ids) const;
-    c_item getItemFromQueryLite(const QSqlQuery record) const;
+    c_item getItemFromQueryLite(const QSqlQuery& record) const;
 
     QVector<c_effect> getUseEffectFromItemId(const int id) const;
     QVector<c_effect> getEquipEffectFromItemId(const int id) const;
@@ -85,8 +95,13 @@ public:
 
     QString generateCombiQuery_action(const QList<bool> condi) const;
     QString generateCombiQuery_carac(const QList<bool> condi) const;
-    QString prepareQuery_simple(const QList<QString> action_ids, const QList<int> rarities, const QList<int> types, const QList<int> bondaries = {1,200}, const QString name = QString(), const bool final = false) const;
-    QString prepareQuery_condi(const QList<QString> caract_name, const QList<int> rarities, const QList<int> types, const QList<int> bondaries = {1,200}, const QString name = QString(), const bool final = false, const QList<bool> condi = QList<bool>()) const;
+    QString prepareQuery_simple(const QList<QString> action_ids, const QList<int> rarities,
+                                const QList<int> types, const QList<int> bondaries = {1, 200},
+                                const QString name = QString(), const bool final = false) const;
+    QString prepareQuery_condi(const QList<QString> caract_name, const QList<int> rarities,
+                               const QList<int> types, const QList<int> bondaries = {1, 200},
+                               const QString name = QString(), const bool final = false,
+                               const QList<bool> condi = QList<bool>()) const;
 
     bool setFinal(const QList<int> isFinalList);
 
@@ -100,13 +115,13 @@ public:
 
     c_enchantement_effect get_enchantement_effect(const QString effect) const;
 
-private:
+   private:
     QSqlDatabase m_db;
     QStringList PositionTypeList;
 
-signals:
+   signals:
     void signal_connection_status(bool);
     void signal_new_save();
 };
 
-#endif // C_DBMANAGER_H
+#endif  // C_DBMANAGER_H

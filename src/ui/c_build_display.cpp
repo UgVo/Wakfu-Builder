@@ -1,167 +1,170 @@
 #include "c_build_display.h"
 #include "ui_c_build_display.h"
 
-c_build_display::c_build_display(c_build* build, QWidget *parent) :
-    QWidget(parent), ui(new Ui::c_build_display), _build(build) {
+c_build_display::c_build_display(c_build* build, QWidget* parent)
+    : QWidget(parent), ui(new Ui::c_build_display), _build(build) {
     ui->setupUi(this);
-    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(ui->widget_vie);
+    QGraphicsDropShadowEffect* shadow = new QGraphicsDropShadowEffect(ui->widget_vie);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_vie->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_cc);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_cc->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_armure);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_armure->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_pa);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_pa->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_pm);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_pm->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_pw);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_pw->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_air);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_air->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_ini);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_ini->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_m_cc);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_m_cc->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_mono);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_mono->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_r_cc);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_r_cc->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_soin);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_soin->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_zone);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_zone->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_feu);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_feu->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_barda);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_barda->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_eau);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_eau->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_terre);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_terre->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_m_dos);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_m_dos->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_melee);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_melee->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_porte);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_porte->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_r_dos);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_r_dos->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_tacle);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_tacle->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_m_soin);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_m_soin->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_parade);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_parade->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_berserk);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_berserk->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_dommage);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_dommage->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_esquive);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_esquive->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_sagesse);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_sagesse->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_volonte);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_volonte->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_controle);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_controle->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_distance);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_distance->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_prospection);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_prospection->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_armor_d);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_armor_d->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
     shadow = new QGraphicsDropShadowEffect(ui->widget_armor_r);
     shadow->setColor(QColor(91, 108, 142, 180));
-    shadow->setOffset(2,2);
+    shadow->setOffset(2, 2);
     ui->widget_armor_r->setGraphicsEffect(static_cast<QGraphicsEffect*>(shadow));
-    setStyleSheet("c_build_display {background-color: #6A8BA8;} .QWidget.QWidget{background-color: #305A7F; border: 1px solid #305A7F; border-radius: 4px;} .QSpinBox{background-color: #305A7F;color:white; } .QLabel{color:white}");
+    setStyleSheet(
+        "c_build_display {background-color: #6A8BA8;} .QWidget.QWidget{background-color: #305A7F; "
+        "border: 1px solid #305A7F; border-radius: 4px;} .QSpinBox{background-color: "
+        "#305A7F;color:white; } .QLabel{color:white}");
     QVBoxLayout* equipementLayout = static_cast<QVBoxLayout*>(ui->equipement_frame->layout());
     foreach (QString position, c_item::position()) {
-        item_position_map[position] = new c_item_viewer(position,this);
-        item_position_map[position]->setStyleSheet(".QWidget{background-color: #6A8BA8; border: 1px solid #6A8BA8;}");
-        connect(item_position_map[position],&c_item_viewer::unequip,_build,&c_build::unequip);
-        connect(item_position_map[position],&c_item_viewer::elementsChanged,_build,&c_build::slot_item_element_changed);
-        connect(item_position_map[position],&c_item_viewer::clicked,this,&c_build_display::slot_item_view_cliked);
-        equipementLayout->insertWidget(item_position_map.size(),item_position_map[position]);
+        item_position_map[position] = new c_item_viewer(position, this);
+        item_position_map[position]->setStyleSheet(
+            ".QWidget{background-color: #6A8BA8; border: 1px solid #6A8BA8;}");
+        connect(item_position_map[position], &c_item_viewer::unequip, _build, &c_build::unequip);
+        connect(item_position_map[position], &c_item_viewer::elementsChanged, _build,
+                &c_build::slot_item_element_changed);
+        connect(item_position_map[position], &c_item_viewer::clicked, this,
+                &c_build_display::slot_item_view_cliked);
+        equipementLayout->insertWidget(item_position_map.size(), item_position_map[position]);
     }
-    connect(_build,&c_build::updated,this,&c_build_display::update_view);
-    connect(_build,&c_build::disableSecondWeapon,this,&c_build_display::slot_second_hand_disabled);
+    connect(_build, &c_build::updated, this, &c_build_display::update_view);
+    connect(_build, &c_build::disableSecondWeapon, this,
+            &c_build_display::slot_second_hand_disabled);
     update_view();
 }
 
-c_build_display::~c_build_display() {
-    delete ui;
-}
+c_build_display::~c_build_display() { delete ui; }
 
-c_build* c_build_display::build() const {
-    return _build;
-}
+c_build* c_build_display::build() const { return _build; }
 
 void c_build_display::setBuild(c_build* build) {
     _build = build;
@@ -169,7 +172,7 @@ void c_build_display::setBuild(c_build* build) {
 }
 
 void c_build_display::update_view() {
-    QMap<QString,int> bonuses = _build->getBonuses();
+    QMap<QString, int> bonuses = _build->getBonuses();
     ui->sp_pv->setValue(bonuses["Vie"]);
     ui->sp_pa->setValue(bonuses["PA"]);
     ui->sp_pm->setValue(bonuses["PM"]);
@@ -212,7 +215,7 @@ void c_build_display::update_view() {
     ui->sp_r_feu_100->setValue(c_calcul::compute_reduction(bonuses["Résistance Feu"]));
     ui->sp_r_eau_100->setValue(c_calcul::compute_reduction(bonuses["Résistance Eau"]));
     ui->sp_r_terre_100->setValue(c_calcul::compute_reduction(bonuses["Résistance Terre"]));
-    QMap<QString,c_item*> equipement = _build->getEquipment_pt();
+    QMap<QString, c_item*> equipement = _build->getEquipment_pt();
     equipement.remove("");
 
     foreach (QString position, equipement.keys()) {
@@ -220,17 +223,15 @@ void c_build_display::update_view() {
     }
 }
 
-void c_build_display::equip_new_item(c_item item) {
-    _build->equip(item);
-}
+void c_build_display::equip_new_item(c_item item) { _build->equip(item); }
 
 void c_build_display::slot_second_hand_disabled(bool state) {
     if (state) {
-        item_position_map["SECOND_WEAPON"]->disable(item_position_map["FIRST_WEAPON"]->get_item()->getGfxId());
+        item_position_map["SECOND_WEAPON"]->disable(
+            item_position_map["FIRST_WEAPON"]->get_item()->getGfxId());
     } else {
         item_position_map["SECOND_WEAPON"]->enable();
     }
-
 }
 
 void c_build_display::slot_item_view_cliked(QString position) {

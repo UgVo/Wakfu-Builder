@@ -1,24 +1,24 @@
 #ifndef C_ITEM_DISPLAY_H
 #define C_ITEM_DISPLAY_H
 
-#include <QWidget>
-#include <QPixmap>
-#include <QDebug>
 #include <QColor>
-#include <QList>
+#include <QDebug>
 #include <QLabel>
-#include <QVBoxLayout>
+#include <QList>
+#include <QPixmap>
 #include <QRegularExpression>
-#include "utilities/c_item.h"
-#include "utilities/c_dbmanager.h"
+#include <QVBoxLayout>
+#include <QWidget>
+
 #include "ui.h"
+#include "utilities/c_dbmanager.h"
+#include "utilities/c_item.h"
 
 namespace Ui {
 class c_item_display;
 }
 
-class c_item_display : public QWidget
-{
+class c_item_display : public QWidget {
     Q_OBJECT
 
     static const int heigth_label = 18;
@@ -27,7 +27,7 @@ class c_item_display : public QWidget
     static const QString color_background;
     static const QString color_foreground;
 
-public:
+   public:
     explicit c_item_display(c_item item, QWidget *parent = nullptr);
     ~c_item_display();
     QString replace_image(QString text);
@@ -40,17 +40,16 @@ public:
 
     void setCmp_equip(bool value);
 
-private:
+   private:
     Ui::c_item_display *ui;
     c_item _item;
     int size_layout;
-    QList<QLabel*> label_header_list;
-    QList<QLabel*> label_use_list;
-    QList<QLabel*> label_equip_list;
+    QList<QLabel *> label_header_list;
+    QList<QLabel *> label_use_list;
+    QList<QLabel *> label_equip_list;
     bool data_complete;
     QString imageDir;
     bool cmp_equip;
 };
 
-
-#endif // C_ITEM_DISPLAY_H
+#endif  // C_ITEM_DISPLAY_H

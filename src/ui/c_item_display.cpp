@@ -1,10 +1,9 @@
 #include "c_item_display.h"
+
 #include "ui_c_item_display.h"
 
-c_item_display::c_item_display(c_item item, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::c_item_display),
-    _item(item) {
+c_item_display::c_item_display(c_item item, QWidget *parent)
+    : QWidget(parent), ui(new Ui::c_item_display), _item(item) {
     ui->setupUi(this);
 
 #ifdef Q_OS_MACX
@@ -21,18 +20,16 @@ c_item_display::c_item_display(c_item item, QWidget *parent) :
 }
 
 QString c_item_display::replace_image(QString text) {
-    text.replace("Lumière","<img src=':/images/elements/smallLIGHT.png'>");
-    text.replace("Feu","<img src=':/images/elements/smallFIRE.png'>");
-    text.replace("Terre","<img src=':/images/elements/smallEARTH.png'>");
-    text.replace("Eau","<img src=':/images/elements/smallWATER.png'>");
-    text.replace("Air","<img src=':/images/elements/smallAIR.png'>");
-    text.replace("ally","<img src=':/images/divers/ally.png'>");
+    text.replace("Lumière", "<img src=':/images/elements/smallLIGHT.png'>");
+    text.replace("Feu", "<img src=':/images/elements/smallFIRE.png'>");
+    text.replace("Terre", "<img src=':/images/elements/smallEARTH.png'>");
+    text.replace("Eau", "<img src=':/images/elements/smallWATER.png'>");
+    text.replace("Air", "<img src=':/images/elements/smallAIR.png'>");
+    text.replace("ally", "<img src=':/images/divers/ally.png'>");
     return text;
 }
 
-c_item_display::~c_item_display() {
-    delete ui;
-}
+c_item_display::~c_item_display() { delete ui; }
 
 void c_item_display::completeData(c_dbmanager *manager) {
     if (!data_complete) {
@@ -46,18 +43,22 @@ void c_item_display::completeData(c_dbmanager *manager) {
 void c_item_display::updateView() {
     size_layout = 0;
 
-    QList<QString> color_rarity = {"ffffff","ffffff","28f18b","fd8e39","fede71","fd87ba","8fc7e2","fd87ba"};
+    QList<QString> color_rarity = {"ffffff", "ffffff", "28f18b", "fd8e39",
+                                   "fede71", "fd87ba", "8fc7e2", "fd87ba"};
 
-    ui->widget->setStyleSheet(QString("QWidget#widget {background-color: %1; border: solid 20px %2;} img {vertical-align:middle;}").arg(app_color::dark_blue).arg(app_color::green_blue));
+    ui->widget->setStyleSheet(QString("QWidget#widget {background-color: %1; border: solid 20px "
+                                      "%2;} img {vertical-align:middle;}")
+                                  .arg(app_color::dark_blue)
+                                  .arg(app_color::green_blue));
     QFont font = ui->item_name->font();
     QFont font_bold = font;
     font_bold.setBold(true);
 
-
     QPalette palette = ui->item_name->palette();
     ui->item_name->setFont(font);
     ui->item_name->setText(_item.getName());
-    ui->item_name->setStyleSheet(QString("color:%1;").arg(app_color::color_rarity.at(_item.getRarity())));
+    ui->item_name->setStyleSheet(
+        QString("color:%1;").arg(app_color::color_rarity.at(_item.getRarity())));
 
     palette = ui->item_lvl->palette();
     palette.setColor(ui->item_lvl->foregroundRole(), Qt::white);
@@ -79,15 +80,17 @@ void c_item_display::updateView() {
     ui->item_image->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     ui->item_image->setScaledContents(true);
 
-    ui->background_item->setStyleSheet(QString("QWidget#background_item {background-image: url(:/images/divers/NONE.png) ;}"));
+    ui->background_item->setStyleSheet(
+        QString("QWidget#background_item {background-image: url(:/images/divers/NONE.png) ;}"));
 
     QLabel *label;
     if (_item.getUseEffects().size()) {
         ui->use_label->setText(QString("A l'utilisation :"));
         ui->use_label->setFont(font_bold);
         ui->use_label->setPalette(palette);
-        ui->use_label->setStyleSheet(QString("QLabel { background-color : %1; color : white}").arg(app_color::grey_blue));
-        ui->use_label->setMinimumSize(0,heigth_label);
+        ui->use_label->setStyleSheet(
+            QString("QLabel { background-color : %1; color : white}").arg(app_color::grey_blue));
+        ui->use_label->setMinimumSize(0, heigth_label);
         ui->use_label->setIndent(indent_title);
         ui->use_label->show();
         QVector<c_effect> vect_effect = _item.getUseEffects();
@@ -96,17 +99,18 @@ void c_item_display::updateView() {
             label->setFont(font);
             label->setPalette(palette);
             label->setIndent(indent_effect);
-            label->setMinimumSize(0,heigth_label);
+            label->setMinimumSize(0, heigth_label);
             label->setWordWrap(true);
             QString text_label;
             QString description = replace_image(it->getEffectString(_item.getLvl()).value("text"));
             if (description.isEmpty()) {
                 label->setText(replace_image(it->getDescription()));
             } else {
-                text_label = QString("%1").arg(replace_image(it->getEffectString(_item.getLvl()).value("text")));
+                text_label = QString("%1").arg(
+                    replace_image(it->getEffectString(_item.getLvl()).value("text")));
                 label->setText(text_label);
                 if (text_label.toInt()) {
-                    QMap<QString,QString> map = it->interpretState(text_label.toInt());
+                    QMap<QString, QString> map = it->interpretState(text_label.toInt());
                     text_label = map.value("text");
                     label->setText(text_label);
                     label->setToolTip(map.value("description"));
@@ -123,8 +127,10 @@ void c_item_display::updateView() {
         ui->equip_label->setText(QString("A l'équipement :"));
         ui->equip_label->setFont(font_bold);
         ui->equip_label->setPalette(palette);
-        ui->equip_label->setStyleSheet(QString("QLabel#equip_label { background-color : %1; color : white}").arg(app_color::grey_blue));
-        ui->equip_label->setMinimumSize(0,heigth_label);
+        ui->equip_label->setStyleSheet(
+            QString("QLabel#equip_label { background-color : %1; color : white}")
+                .arg(app_color::grey_blue));
+        ui->equip_label->setMinimumSize(0, heigth_label);
         ui->equip_label->setIndent(indent_title);
         ui->equip_label->show();
         QVector<c_effect> vect_effect = _item.getEquipEffects();
@@ -134,23 +140,24 @@ void c_item_display::updateView() {
             label->setPalette(palette);
             label->setWordWrap(true);
             label->setIndent(indent_effect);
-            label->setMinimumSize(0,heigth_label);
+            label->setMinimumSize(0, heigth_label);
             QString text_label;
             QString description = replace_image(it->getEffectString(_item.getLvl()).value("text"));
             if (description.isEmpty()) {
                 text_label = replace_image(it->getDescription());
             } else {
-                text_label= QString("%1").arg(description);
+                text_label = QString("%1").arg(description);
                 label->setText(text_label);
             }
             if (text_label.toInt()) {
-                QMap<QString,QString> map = it->interpretState(text_label.toInt());
+                QMap<QString, QString> map = it->interpretState(text_label.toInt());
                 text_label = map.value("text");
                 label->setText(text_label);
                 label->setToolTip(map.value("description"));
             }
-            if (label_equip_list.size()%2) {
-                label->setStyleSheet(QString("QLabel { background-color : %1}").arg(app_color::grey_blue));
+            if (label_equip_list.size() % 2) {
+                label->setStyleSheet(
+                    QString("QLabel { background-color : %1}").arg(app_color::grey_blue));
             }
             if (!description.isEmpty()) {
                 ui->equip_layout->addWidget(label);
@@ -160,9 +167,7 @@ void c_item_display::updateView() {
     }
 }
 
-c_item c_item_display::getItem() {
-    return _item;
-}
+c_item c_item_display::getItem() { return _item; }
 
 void c_item_display::setItem(c_item item) {
     _item = item;

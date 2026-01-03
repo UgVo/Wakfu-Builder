@@ -1,6 +1,7 @@
 #include "c_networkmanager.h"
 
-c_networkManager::c_networkManager(QObject *parent) : QObject(parent), file(nullptr), manager(nullptr), progressDialog(nullptr)  {}
+c_networkManager::c_networkManager(QObject *parent)
+    : QObject(parent), file(nullptr), manager(nullptr), progressDialog(nullptr) {}
 
 void c_networkManager::downloadFile(QUrl url, QString path) {
     progressDialog = new QProgressDialog(nullptr);
@@ -9,6 +10,8 @@ void c_networkManager::downloadFile(QUrl url, QString path) {
 
     QFileInfo fileInfo(url.path());
     QString fileName = path + "/" + fileInfo.fileName();
+
+    QDir().mkpath(path);
 
     if (fileName.isEmpty()) {
         return;
@@ -20,9 +23,9 @@ void c_networkManager::downloadFile(QUrl url, QString path) {
 
     file = new QFile(fileName);
     if (!file->open(QIODevice::ReadWrite)) {
-        QMessageBox::information(nullptr, tr("HTTP"),
-                      tr("Unable to save the file %1: %2.")
-                      .arg(fileName).arg(file->errorString()));
+        QMessageBox::information(
+            nullptr, tr("HTTP"),
+            tr("Unable to save the file %1: %2.").arg(fileName).arg(file->errorString()));
         delete file;
         file = nullptr;
         progressDialog->deleteLater();
@@ -38,36 +41,30 @@ void c_networkManager::downloadFile(QUrl url, QString path) {
     startRequest(url);
 }
 
-void c_networkManager::startRequest(QUrl url)
-{
+void c_networkManager::startRequest(QUrl url) {
     qDebug() << "Trying to download file at url: " << url;
     reply = manager->get(QNetworkRequest(url));
-    connect(reply, SIGNAL(readyRead()),
-            this, SLOT(httpDataReceived()));
-    connect(reply, SIGNAL(downloadProgress(qint64,qint64)),
-            this, SLOT(updateDownloadProgress(qint64,qint64)));
-    connect(reply, SIGNAL(finished()),
-            this, SLOT(httpDownloadFinished()));
+    connect(reply, SIGNAL(readyRead()), this, SLOT(httpDataReceived()));
+    connect(reply, SIGNAL(downloadProgress(qint64, qint64)), this,
+            SLOT(updateDownloadProgress(qint64, qint64)));
+    connect(reply, SIGNAL(finished()), this, SLOT(httpDownloadFinished()));
 }
 
 void c_networkManager::httpDataReceived() {
     if (file) {
-        QByteArray received =  reply->readAll();
+        QByteArray received = reply->readAll();
         file->write(received);
         content.append(received);
     }
 }
 
-void c_networkManager::cancelDownload()
-{
+void c_networkManager::cancelDownload() {
     httpRequestAborted = true;
     reply->abort();
 }
 
-void c_networkManager::updateDownloadProgress(qint64 bytesRead, qint64 totalBytes)
-{
-    if (httpRequestAborted)
-        return;
+void c_networkManager::updateDownloadProgress(qint64 bytesRead, qint64 totalBytes) {
+    if (httpRequestAborted) return;
     progressDialog->setMaximum(int(totalBytes));
     progressDialog->setValue(int(bytesRead));
 }

@@ -1,34 +1,34 @@
 #ifndef C_CLASS_SELECTION_H
 #define C_CLASS_SELECTION_H
 
-#include <QWidget>
 #include <QToolButton>
+#include <QWidget>
+
 #include "ui.h"
 
 namespace Ui {
 class c_class_selection;
 }
 
-class c_class_selection : public QWidget
-{
+class c_class_selection : public QWidget {
     Q_OBJECT
 
-public:
+   public:
     explicit c_class_selection(QWidget *parent = nullptr);
     ~c_class_selection();
 
-private:
+   private:
     Ui::c_class_selection *ui;
     void setButtonStyle(QToolButton *pb);
 
-public slots:
+   public slots:
     void slot_update_genre();
     void slot_class_chosen();
     void slot_canceled();
 
-signals:
+   signals:
     void class_chosen(int id);
     void rejected();
 };
 
-#endif // C_CLASS_SELECTION_H
+#endif  // C_CLASS_SELECTION_H

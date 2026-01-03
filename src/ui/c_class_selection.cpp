@@ -1,30 +1,31 @@
 #include "c_class_selection.h"
+
 #include "ui_c_class_selection.h"
 
-c_class_selection::c_class_selection(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::c_class_selection)
-{
+c_class_selection::c_class_selection(QWidget *parent)
+    : QWidget(parent), ui(new Ui::c_class_selection) {
     ui->setupUi(this);
-    ui->widget->setStyleSheet(QString("QWidget#widget{background-color : %1; border-radius :3px; border : 1px solid white;} QLabel{color : white;}").arg(app_color::grey_blue));
+    ui->widget->setStyleSheet(QString("QWidget#widget{background-color : %1; border-radius :3px; "
+                                      "border : 1px solid white;} QLabel{color : white;}")
+                                  .arg(app_color::grey_blue));
     slot_update_genre();
-    ui->checkBox->setStyleSheet("QCheckBox::indicator:unchecked {image: url(:/images/divers/genre_fem.png);}"
-                                "QCheckBox::indicator:checked {image: url(:/images/divers/genre_masc.png);}");
-    QObject::connect(ui->checkBox,&QCheckBox::stateChanged,this,&c_class_selection::slot_update_genre);
-    QObject::connect(ui->buttonBox,&QDialogButtonBox::rejected,this,&c_class_selection::slot_canceled);
+    ui->checkBox->setStyleSheet(
+        "QCheckBox::indicator:unchecked {image: url(:/images/divers/genre_fem.png);}"
+        "QCheckBox::indicator:checked {image: url(:/images/divers/genre_masc.png);}");
+    QObject::connect(ui->checkBox, &QCheckBox::stateChanged, this,
+                     &c_class_selection::slot_update_genre);
+    QObject::connect(ui->buttonBox, &QDialogButtonBox::rejected, this,
+                     &c_class_selection::slot_canceled);
 }
 
-c_class_selection::~c_class_selection()
-{
-    delete ui;
-}
+c_class_selection::~c_class_selection() { delete ui; }
 
 void c_class_selection::setButtonStyle(QToolButton *pb) {
     pb->setAutoFillBackground(true);
-    pb->setIconSize(QSize(76,75));
+    pb->setIconSize(QSize(76, 75));
     pb->setAutoRaise(true);
     pb->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
-    QObject::connect(pb,&QToolButton::clicked,this,&c_class_selection::slot_class_chosen);
+    QObject::connect(pb, &QToolButton::clicked, this, &c_class_selection::slot_class_chosen);
 }
 
 void c_class_selection::slot_update_genre() {
@@ -88,7 +89,7 @@ void c_class_selection::slot_update_genre() {
 }
 
 void c_class_selection::slot_class_chosen() {
-    QToolButton *sender = static_cast<QToolButton*>(this->sender());
+    QToolButton *sender = static_cast<QToolButton *>(this->sender());
     int id = 0;
     if (sender == ui->pb_10) {
         id = 10;
@@ -114,7 +115,7 @@ void c_class_selection::slot_class_chosen() {
         id = 110;
     } else if (sender == ui->pb_120) {
         id = 120;
-    }else if (sender == ui->pb_130) {
+    } else if (sender == ui->pb_130) {
         id = 130;
     } else if (sender == ui->pb_140) {
         id = 140;
@@ -133,6 +134,4 @@ void c_class_selection::slot_class_chosen() {
     emit class_chosen(id);
 }
 
-void c_class_selection::slot_canceled() {
-    emit rejected();
-}
+void c_class_selection::slot_canceled() { emit rejected(); }

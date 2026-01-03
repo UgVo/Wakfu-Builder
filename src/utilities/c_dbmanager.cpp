@@ -1,8 +1,9 @@
 #include "c_dbmanager.h"
+
 #include "c_datamanager.h"
 
-c_dbmanager::c_dbmanager(c_datamanager *manager, QWidget *parent) :
-    QWidget(parent), m_db(QSqlDatabase::addDatabase("QPSQL")) {
+c_dbmanager::c_dbmanager(c_datamanager *manager, QWidget *parent)
+    : QWidget(parent), m_db(QSqlDatabase::addDatabase("QPSQL")) {
     m_db.setHostName("localhost");
     m_db.setPort(5432);
     m_db.setUserName("postgres");
@@ -30,24 +31,26 @@ bool c_dbmanager::connect(const QString password) {
 
 bool c_dbmanager::add_effect(const c_effect &new_effect) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.effect (id,actionId,areaShape,areaSize,params,description) "
-                  "VALUES (:id, :actionId, :areaShape, :areaSize, :params, :description)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.effect (id,actionId,areaShape,areaSize,params,description) "
+        "VALUES (:id, :actionId, :areaShape, :areaSize, :params, :description)");
     query.bindValue(":id", new_effect.getId());
     query.bindValue(":actionId", new_effect.getAction().getId());
     query.bindValue(":areaShape", new_effect.getAreaShape());
     query.bindValue(":areaSize", new_effect.getAreaSize_string());
     query.bindValue(":params", new_effect.getParams_string());
-    query.bindValue(":description",new_effect.getDescription());
+    query.bindValue(":description", new_effect.getDescription());
     bool flag = query.exec();
     return flag;
 }
 
-c_effect c_dbmanager::get_effect(const int id) const{
+c_effect c_dbmanager::get_effect(const int id) const {
     QSqlQuery query(m_db);
     c_effect new_effect(this);
-    query.prepare("SELECT * FROM wakfu_builder.effect "
-                  "WHERE id = :id");
-    query.bindValue(":id",id);
+    query.prepare(
+        "SELECT * FROM wakfu_builder.effect "
+        "WHERE id = :id");
+    query.bindValue(":id", id);
     if (query.exec()) {
         int id = query.record().indexOf("id");
         int idAction = query.record().indexOf("actionId");
@@ -63,7 +66,7 @@ c_effect c_dbmanager::get_effect(const int id) const{
             QStringList List_Params = string_Params.split(',');
             QVector<float> params;
             for (QStringList::iterator it = List_Params.begin(); it != List_Params.end(); ++it) {
-                if(*it != ",") {
+                if (*it != ",") {
                     params.push_back(it->toFloat());
                 }
             }
@@ -72,8 +75,9 @@ c_effect c_dbmanager::get_effect(const int id) const{
             QString string_areaSize = query.value(idSize).toString();
             QStringList List_areaSize = string_Params.split(',');
             QVector<int> areaSize;
-            for (QStringList::iterator it = List_areaSize.begin(); it != List_areaSize.end(); ++it) {
-                if(*it != ",") {
+            for (QStringList::iterator it = List_areaSize.begin(); it != List_areaSize.end();
+                 ++it) {
+                if (*it != ",") {
                     areaSize.push_back(int(it->toFloat()));
                 }
             }
@@ -88,8 +92,9 @@ c_effect c_dbmanager::get_effect(const int id) const{
 
 bool c_dbmanager::add_action(const c_action &new_action) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.action (id,description,effect)"
-                  "VALUES (:id, :description, :effect)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.action (id,description,effect)"
+        "VALUES (:id, :description, :effect)");
     query.bindValue(":id", new_action.getId());
     query.bindValue(":description", new_action.getDescription());
     query.bindValue(":effect", new_action.getEffect());
@@ -97,12 +102,13 @@ bool c_dbmanager::add_action(const c_action &new_action) {
     return query.exec();
 }
 
-c_action c_dbmanager::get_action(const int id) const{
+c_action c_dbmanager::get_action(const int id) const {
     QSqlQuery query(m_db);
     c_action action;
-    query.prepare("SELECT * FROM wakfu_builder.action "
-                  "WHERE id = :id");
-    query.bindValue(":id",id);
+    query.prepare(
+        "SELECT * FROM wakfu_builder.action "
+        "WHERE id = :id");
+    query.bindValue(":id", id);
     if (query.exec()) {
         int id = query.record().indexOf("id");
         int idDescription = query.record().indexOf("description");
@@ -120,8 +126,9 @@ c_action c_dbmanager::get_action(const int id) const{
 
 bool c_dbmanager::add_itemProperty(const c_itemProperties &new_property) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.itemproperties (id,name,description)"
-                  "VALUES (:id, :name, :description)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.itemproperties (id,name,description)"
+        "VALUES (:id, :name, :description)");
     query.bindValue(":id", new_property.getId());
     query.bindValue(":name", new_property.getName());
     query.bindValue(":description", new_property.getDescription());
@@ -129,12 +136,13 @@ bool c_dbmanager::add_itemProperty(const c_itemProperties &new_property) {
     return query.exec();
 }
 
-c_itemProperties c_dbmanager::get_itemProperty(const int id) const{
+c_itemProperties c_dbmanager::get_itemProperty(const int id) const {
     QSqlQuery query(m_db);
     c_itemProperties itemProperties;
-    query.prepare("SELECT * FROM wakfu_builder.itemproperties "
-                  "WHERE id = :id");
-    query.bindValue(":id",id);
+    query.prepare(
+        "SELECT * FROM wakfu_builder.itemproperties "
+        "WHERE id = :id");
+    query.bindValue(":id", id);
     if (query.exec()) {
         int id = query.record().indexOf("id");
         int idDescription = query.record().indexOf("description");
@@ -147,19 +155,21 @@ c_itemProperties c_dbmanager::get_itemProperty(const int id) const{
     } else {
         qWarning() << "echec";
     }
-    return  itemProperties;
+    return itemProperties;
 }
 
 bool c_dbmanager::add_equipmentItemType(const c_equipmentItemTypes &new_type) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.equipmentItemType (id,parentId,recyclable,visibleInAnimation,title)"
-                  "VALUES (:id, :parentId, :recyclable, :visibleInAnimation, :title)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.equipmentItemType "
+        "(id,parentId,recyclable,visibleInAnimation,title)"
+        "VALUES (:id, :parentId, :recyclable, :visibleInAnimation, :title)");
     query.bindValue(":id", new_type.getId());
     query.bindValue(":parentId", new_type.getParentId());
     query.bindValue(":recyclable", new_type.isRecyclable());
     query.bindValue(":visibleInAnimation", new_type.isVisibleInAnimation());
     query.bindValue(":title", new_type.getTitle());
-    if(!query.exec()) {
+    if (!query.exec()) {
         return false;
     }
     query.clear();
@@ -169,21 +179,22 @@ bool c_dbmanager::add_equipmentItemType(const c_equipmentItemTypes &new_type) {
     QStringList eqpDisablePosition = new_type.getEquipementDisablePositions();
     for (QStringList::iterator it = eqpPosition.begin(); it != eqpPosition.end(); ++it) {
         if (!PositionTypeList.contains(*it)) {
-            if (add_equipmentPosition(*it,int(PositionTypeList.size()+1))) {
+            if (add_equipmentPosition(*it, int(PositionTypeList.size() + 1))) {
                 PositionTypeList.append(*it);
                 positionId = PositionTypeList.size();
             } else {
                 return false;
             }
         } else {
-          positionId = PositionTypeList.indexOf(*it) + 1;
+            positionId = PositionTypeList.indexOf(*it) + 1;
         }
-        add_relation_equipementType_Position(new_type.getId(),positionId);
+        add_relation_equipementType_Position(new_type.getId(), positionId);
     }
 
-    for (QStringList::iterator it = eqpDisablePosition.begin(); it != eqpDisablePosition.end(); ++it) {
+    for (QStringList::iterator it = eqpDisablePosition.begin(); it != eqpDisablePosition.end();
+         ++it) {
         if (!PositionTypeList.contains(*it)) {
-            if (add_equipmentPosition(*it,int(PositionTypeList.size()+1))) {
+            if (add_equipmentPosition(*it, int(PositionTypeList.size() + 1))) {
                 PositionTypeList.append(*it);
                 positionId = PositionTypeList.size();
             } else {
@@ -191,9 +202,9 @@ bool c_dbmanager::add_equipmentItemType(const c_equipmentItemTypes &new_type) {
                 return false;
             }
         } else {
-          positionId = PositionTypeList.indexOf(*it) + 1 ;
+            positionId = PositionTypeList.indexOf(*it) + 1;
         }
-        add_relation_equipementType_PositionDisable(new_type.getId(),positionId);
+        add_relation_equipementType_PositionDisable(new_type.getId(), positionId);
     }
     return true;
 }
@@ -201,8 +212,9 @@ bool c_dbmanager::add_equipmentItemType(const c_equipmentItemTypes &new_type) {
 c_equipmentItemTypes c_dbmanager::get_equipmentItemType(const int id) const {
     c_equipmentItemTypes eqpType;
     QSqlQuery query(m_db);
-    query.prepare("SELECT * FROM wakfu_builder.equipmentItemType "
-                  "WHERE id = :id");
+    query.prepare(
+        "SELECT * FROM wakfu_builder.equipmentItemType "
+        "WHERE id = :id");
     query.bindValue(":id", id);
     if (query.exec()) {
         int idParent = query.record().indexOf("parentId");
@@ -217,14 +229,15 @@ c_equipmentItemTypes c_dbmanager::get_equipmentItemType(const int id) const {
             eqpType.setTitle(query.value(idTitle).toString());
         }
         query.clear();
-        query.prepare("SELECT * FROM "
-                        "wakfu_builder.equipmentPosition as equi, "
-                        "wakfu_builder.eqpType_Pos_relation as rel "
-                      "WHERE equi.id = rel.id_Pos "
-                        "AND rel.id_ET = :id");
-        query.bindValue(":id",id);
+        query.prepare(
+            "SELECT * FROM "
+            "wakfu_builder.equipmentPosition as equi, "
+            "wakfu_builder.eqpType_Pos_relation as rel "
+            "WHERE equi.id = rel.id_Pos "
+            "AND rel.id_ET = :id");
+        query.bindValue(":id", id);
         QStringList equipementPosition;
-        if(query.exec()) {
+        if (query.exec()) {
             int id_name = query.record().indexOf("equipmentposition.name");
             while (query.next()) {
                 equipementPosition << query.record().value(id_name).toString();
@@ -232,14 +245,15 @@ c_equipmentItemTypes c_dbmanager::get_equipmentItemType(const int id) const {
         }
         eqpType.setEquipementPositions(equipementPosition);
         query.clear();
-        query.prepare("SELECT * FROM "
-                        "wakfu_builder.equipmentPosition as equi, "
-                        "wakfu_builder.eqpType_DisPos_relation as rel "
-                      "WHERE equi.id = rel.id_Pos "
-                        "AND rel.id_ET = :id");
-        query.bindValue(":id",id);
+        query.prepare(
+            "SELECT * FROM "
+            "wakfu_builder.equipmentPosition as equi, "
+            "wakfu_builder.eqpType_DisPos_relation as rel "
+            "WHERE equi.id = rel.id_Pos "
+            "AND rel.id_ET = :id");
+        query.bindValue(":id", id);
         QStringList equipementPositionDisable;
-        if(query.exec()) {
+        if (query.exec()) {
             int id_name = query.record().indexOf("equipmentPosition.name");
             while (query.next()) {
                 equipementPositionDisable << query.record().value(id_name).toString();
@@ -252,17 +266,19 @@ c_equipmentItemTypes c_dbmanager::get_equipmentItemType(const int id) const {
 
 bool c_dbmanager::add_equipmentPosition(const QString name, const int id) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.equipmentPosition (id,name) "
-                  "VALUES (:id, :name)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.equipmentPosition (id,name) "
+        "VALUES (:id, :name)");
     query.bindValue(":id", id);
     query.bindValue(":name", name);
     return query.exec();
 }
 
-QString c_dbmanager::get_equipmentPosition(const int id) const{
+QString c_dbmanager::get_equipmentPosition(const int id) const {
     QSqlQuery query(m_db);
-    query.prepare("SELECT * FROM wakfu_builder.equipmentPosition "
-                  "WHERE id = :id");
+    query.prepare(
+        "SELECT * FROM wakfu_builder.equipmentPosition "
+        "WHERE id = :id");
     query.bindValue(":id", id);
 
     if (query.exec()) {
@@ -277,31 +293,36 @@ QString c_dbmanager::get_equipmentPosition(const int id) const{
 QStringList c_dbmanager::get_AllEquipementPosition() const {
     QStringList list;
     QSqlQuery query(m_db);
-    query.prepare("SELECT * FROM wakfu_builder.equipmentPosition "
-                  "ORDER BY id ASC");
+    query.prepare(
+        "SELECT * FROM wakfu_builder.equipmentPosition "
+        "ORDER BY id ASC");
     if (query.exec()) {
         int idName = query.record().indexOf("name");
         while (query.next()) {
-              list.append(query.value(idName).toString());
+            list.append(query.value(idName).toString());
         }
     }
     return list;
 }
 
-bool c_dbmanager::add_relation_equipementType_Position(const int equipementTypeId, const int positionId) {
+bool c_dbmanager::add_relation_equipementType_Position(const int equipementTypeId,
+                                                       const int positionId) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.eqpType_Pos_relation (id_ET,id_Pos)"
-                  "VALUES (:id_ET, :id_Pos)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.eqpType_Pos_relation (id_ET,id_Pos)"
+        "VALUES (:id_ET, :id_Pos)");
     query.bindValue(":id_ET", equipementTypeId);
     query.bindValue(":id_Pos", positionId);
 
     return query.exec();
 }
 
-bool c_dbmanager::add_relation_equipementType_PositionDisable(const int equipementTypeId, const int positionId) {
+bool c_dbmanager::add_relation_equipementType_PositionDisable(const int equipementTypeId,
+                                                              const int positionId) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.eqpType_DisPos_relation (id_ET,id_Pos)"
-                  "VALUES (:id_ET, :id_Pos)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.eqpType_DisPos_relation (id_ET,id_Pos)"
+        "VALUES (:id_ET, :id_Pos)");
     query.bindValue(":id_ET", equipementTypeId);
     query.bindValue(":id_Pos", positionId);
 
@@ -310,12 +331,17 @@ bool c_dbmanager::add_relation_equipementType_PositionDisable(const int equipeme
 
 bool c_dbmanager::add_item(const c_item &item) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.item (id, lvl, itemTypeId, itemSetId, rarity, bindType, minimumShardSlotNumber, maximumShardSlotNumber, "
-                  "useApCost, useMpCost, useWpCost, useMinRange, useMaxRange, useTestFreeCell, useTestLos, useTestOnlyLine, useTestNoBorderCell, useWorldTarget, "
-                  "gfxId, title, description, isFinal) "
-                  "VALUES (:id, :lvl, :itemTypeId, :itemSetId, :rarity, :bindType, :minimumShardSlotNumber, :maximumShardSlotNumber, :useApCost, :useMpCost, "
-                  ":useWpCost, :useMinRange, :useMaxRange, :useTestFreeCell, :useTestLos, :useTestOnlyLine, :useTestNoBorderCell, :useWorldTarget, :gfxId, :title, "
-                  ":description, :isFinal)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.item (id, lvl, itemTypeId, itemSetId, rarity, bindType, "
+        "minimumShardSlotNumber, maximumShardSlotNumber, "
+        "useApCost, useMpCost, useWpCost, useMinRange, useMaxRange, useTestFreeCell, useTestLos, "
+        "useTestOnlyLine, useTestNoBorderCell, useWorldTarget, "
+        "gfxId, title, description, isFinal) "
+        "VALUES (:id, :lvl, :itemTypeId, :itemSetId, :rarity, :bindType, :minimumShardSlotNumber, "
+        ":maximumShardSlotNumber, :useApCost, :useMpCost, "
+        ":useWpCost, :useMinRange, :useMaxRange, :useTestFreeCell, :useTestLos, :useTestOnlyLine, "
+        ":useTestNoBorderCell, :useWorldTarget, :gfxId, :title, "
+        ":description, :isFinal)");
     query.bindValue(":id", item.getId());
     query.bindValue(":itemTypeId", item.getType().getId());
     query.bindValue(":itemSetId", item.getSetId());
@@ -335,8 +361,8 @@ bool c_dbmanager::add_item(const c_item &item) {
     query.bindValue(":useWorldTarget", item.useWorldTarget());
     query.bindValue(":gfxId", item.getGfxId());
     query.bindValue(":title", item.getName());
-    query.bindValue(":description",item.getDescription());
-    query.bindValue(":isFinal",item.getIsFinal());
+    query.bindValue(":description", item.getDescription());
+    query.bindValue(":isFinal", item.getIsFinal());
 
     if (item.getType().getId() == 582 || item.getType().getId() == 611) {
         query.bindValue(":lvl", -1);
@@ -344,13 +370,13 @@ bool c_dbmanager::add_item(const c_item &item) {
         query.bindValue(":lvl", item.getLvl());
     }
 
-    if(!query.exec()) {
+    if (!query.exec()) {
         return false;
     }
 
-
     QVector<c_itemProperties> properties = item.getProperties();
-    for (QVector<c_itemProperties>::iterator it = properties.begin(); it != properties.end(); ++it) {
+    for (QVector<c_itemProperties>::iterator it = properties.begin(); it != properties.end();
+         ++it) {
         add_relation_item_property(item.getId(), it->getId());
     }
 
@@ -361,7 +387,8 @@ bool c_dbmanager::add_item(const c_item &item) {
     }
 
     QVector<c_effect> useCriticalEffects = item.getUseCriticalEffects();
-    for (QVector<c_effect>::iterator it = useCriticalEffects.begin(); it != useCriticalEffects.end(); ++it) {
+    for (QVector<c_effect>::iterator it = useCriticalEffects.begin();
+         it != useCriticalEffects.end(); ++it) {
         add_effect(*it);
         add_relation_item_useCriEffect(item.getId(), it->getId());
     }
@@ -376,17 +403,18 @@ bool c_dbmanager::add_item(const c_item &item) {
 
     foreach (c_carac carac, carac_list) {
         add_carac(carac);
-        add_relation_item_carac(item.getId(),carac.id);
+        add_relation_item_carac(item.getId(), carac.id);
     }
 
     return true;
 }
 
-c_item c_dbmanager::get_item(const int id) const{
+c_item c_dbmanager::get_item(const int id) const {
     c_item asked_item;
     QSqlQuery query(m_db);
-    query.prepare("SELECT * FROM wakfu_builder.item "
-                  "WHERE id = :id");
+    query.prepare(
+        "SELECT * FROM wakfu_builder.item "
+        "WHERE id = :id");
     query.bindValue(":id", id);
     if (query.exec()) {
         int idlvl = query.record().indexOf("lvl");
@@ -410,32 +438,34 @@ c_item c_dbmanager::get_item(const int id) const{
         int idName = query.record().indexOf("title");
         int idDescription = query.record().indexOf("description");
         while (query.next()) {
-             asked_item.setId(id);
-             asked_item.setLvl(query.value(idlvl).toInt());
-             asked_item.setType(get_equipmentItemType(query.value(iditemTypeId).toInt()));
-             asked_item.setSetId(query.value(iditemSetId).toInt());
-             asked_item.setRarity(query.value(idrarity).toInt());
-             asked_item.setBindType(query.value(idbindType).toInt());
-             asked_item.setMinShardeNumber(query.value(idMinShard).toInt());
-             asked_item.setMaxShardNumber(query.value(idMaxShard).toInt());
-             asked_item.setApUseCost(query.value(idAp).toInt());
-             asked_item.setMpUseCost(query.value(idMp).toInt());
-             asked_item.setWpUseCost(query.value(idWp).toInt());
-             asked_item.setMinRange(query.value(idMinR).toInt());
-             asked_item.setMaxRange(query.value(idMaxR).toInt());
-             asked_item.setFreeCell(query.value(idFreeCell).toBool());
-             asked_item.setLos(query.value(idLos).toBool());
-             asked_item.setOnlyLine(query.value(idOLine).toBool());
-             asked_item.setNoBorderCell(query.value(idNBCell).toBool());
-             asked_item.setUseWorldTarget(query.value(idWT).toInt());
-             asked_item.setGfxId(query.value(idgfxId).toInt());
-             asked_item.setName(query.value(idName).toString());
-             asked_item.setDescription(query.value(idDescription).toString());
+            asked_item.setId(id);
+            asked_item.setLvl(query.value(idlvl).toInt());
+            asked_item.setType(get_equipmentItemType(query.value(iditemTypeId).toInt()));
+            asked_item.setSetId(query.value(iditemSetId).toInt());
+            asked_item.setRarity(query.value(idrarity).toInt());
+            asked_item.setBindType(query.value(idbindType).toInt());
+            asked_item.setMinShardeNumber(query.value(idMinShard).toInt());
+            asked_item.setMaxShardNumber(query.value(idMaxShard).toInt());
+            asked_item.setApUseCost(query.value(idAp).toInt());
+            asked_item.setMpUseCost(query.value(idMp).toInt());
+            asked_item.setWpUseCost(query.value(idWp).toInt());
+            asked_item.setMinRange(query.value(idMinR).toInt());
+            asked_item.setMaxRange(query.value(idMaxR).toInt());
+            asked_item.setFreeCell(query.value(idFreeCell).toBool());
+            asked_item.setLos(query.value(idLos).toBool());
+            asked_item.setOnlyLine(query.value(idOLine).toBool());
+            asked_item.setNoBorderCell(query.value(idNBCell).toBool());
+            asked_item.setUseWorldTarget(query.value(idWT).toInt());
+            asked_item.setGfxId(query.value(idgfxId).toInt());
+            asked_item.setName(query.value(idName).toString());
+            asked_item.setDescription(query.value(idDescription).toString());
         }
         QVector<c_itemProperties> properties;
         QSqlQuery s_query(m_db);
-        s_query.prepare("SELECT ip.id,ip.name,ip.description FROM wakfu_builder.item AS it, wakfu_builder.item_properties_relation AS pr, wakfu_builder.itemproperties as ip "
-                        "WHERE it.id = :id AND pr.id_item = it.id AND pr.id_property = ip.id");
+        s_query.prepare(
+            "SELECT ip.id,ip.name,ip.description FROM wakfu_builder.item AS it, "
+            "wakfu_builder.item_properties_relation AS pr, wakfu_builder.itemproperties as ip "
+            "WHERE it.id = :id AND pr.id_item = it.id AND pr.id_property = ip.id");
         s_query.bindValue(":id", id);
         bool flag = s_query.exec();
         if (flag) {
@@ -446,15 +476,17 @@ c_item c_dbmanager::get_item(const int id) const{
                 int id = s_query.value(idid).toInt();
                 QString name = s_query.value(idName).toString();
                 QString desc = s_query.value(iddescri).toString();
-                properties.push_back(c_itemProperties(id,name,desc));
+                properties.push_back(c_itemProperties(id, name, desc));
             }
         }
         asked_item.setProperties(properties);
 
         QVector<c_effect> useEffect;
         s_query.clear();
-        s_query.prepare("SELECT er.id_E FROM wakfu_builder.item AS it, wakfu_builder.item_useEffect_relation AS er "
-                        "WHERE it.id = :id AND er.id_item = it.id");
+        s_query.prepare(
+            "SELECT er.id_E FROM wakfu_builder.item AS it, wakfu_builder.item_useEffect_relation "
+            "AS er "
+            "WHERE it.id = :id AND er.id_item = it.id");
         s_query.bindValue(":id", id);
         if (s_query.exec()) {
             int id = s_query.record().indexOf("id_E");
@@ -466,8 +498,10 @@ c_item c_dbmanager::get_item(const int id) const{
 
         QVector<c_effect> useCriticalEffect;
         s_query.clear();
-        s_query.prepare("SELECT er.id_E FROM wakfu_builder.item AS it, wakfu_builder.item_useCriticalEffect_relation AS er "
-                        "WHERE it.id = :id AND er.id_item = it.id");
+        s_query.prepare(
+            "SELECT er.id_E FROM wakfu_builder.item AS it, "
+            "wakfu_builder.item_useCriticalEffect_relation AS er "
+            "WHERE it.id = :id AND er.id_item = it.id");
         s_query.bindValue(":id", id);
         if (s_query.exec()) {
             int id = s_query.record().indexOf("id_E");
@@ -479,8 +513,10 @@ c_item c_dbmanager::get_item(const int id) const{
 
         QVector<c_effect> equipEffect;
         s_query.clear();
-        s_query.prepare("SELECT er.id_E FROM wakfu_builder.item AS it, wakfu_builder.item_useEquipEffect_relation AS er "
-                        "WHERE it.id = :id AND er.id_item = it.id");
+        s_query.prepare(
+            "SELECT er.id_E FROM wakfu_builder.item AS it, "
+            "wakfu_builder.item_useEquipEffect_relation AS er "
+            "WHERE it.id = :id AND er.id_item = it.id");
         s_query.bindValue(":id", id);
         if (s_query.exec()) {
             int id = s_query.record().indexOf("id_E");
@@ -495,8 +531,9 @@ c_item c_dbmanager::get_item(const int id) const{
 
 bool c_dbmanager::add_relation_item_property(const int id_Item, const int id_propertie) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.item_properties_relation (id_item,id_property)"
-                  "VALUES (:id_ET, :id_property)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.item_properties_relation (id_item,id_property)"
+        "VALUES (:id_ET, :id_property)");
     query.bindValue(":id_ET", id_Item);
     query.bindValue(":id_property", id_propertie);
 
@@ -506,8 +543,9 @@ bool c_dbmanager::add_relation_item_property(const int id_Item, const int id_pro
 
 bool c_dbmanager::add_relation_item_useEffect(const int id_Item, const int id_effect) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.item_useEffect_relation (id_item,id_E)"
-                  "VALUES (:id_ET, :id_E)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.item_useEffect_relation (id_item,id_E)"
+        "VALUES (:id_ET, :id_E)");
     query.bindValue(":id_ET", id_Item);
     query.bindValue(":id_E", id_effect);
 
@@ -517,8 +555,9 @@ bool c_dbmanager::add_relation_item_useEffect(const int id_Item, const int id_ef
 
 bool c_dbmanager::add_relation_item_useCriEffect(const int id_Item, const int id_effect) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.item_useCriticalEffect_relation (id_item,id_E)"
-                  "VALUES (:id_ET, :id_E)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.item_useCriticalEffect_relation (id_item,id_E)"
+        "VALUES (:id_ET, :id_E)");
     query.bindValue(":id_ET", id_Item);
     query.bindValue(":id_E", id_effect);
 
@@ -526,10 +565,11 @@ bool c_dbmanager::add_relation_item_useCriEffect(const int id_Item, const int id
     return flag;
 }
 
-bool c_dbmanager::add_relation_item_equipeEffect(const int id_Item, const int id_effect)  {
+bool c_dbmanager::add_relation_item_equipeEffect(const int id_Item, const int id_effect) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.item_useEquipEffect_relation (id_item,id_E)"
-                  "VALUES (:id_ET, :id_E)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.item_useEquipEffect_relation (id_item,id_E)"
+        "VALUES (:id_ET, :id_E)");
     query.bindValue(":id_ET", id_Item);
     query.bindValue(":id_E", id_effect);
 
@@ -548,7 +588,6 @@ QList<int> c_dbmanager::getImagesList() const {
         }
     }
     return image_name;
-
 }
 
 QList<int> c_dbmanager::getItemListId() const {
@@ -572,7 +611,9 @@ QList<c_item> c_dbmanager::getAllItem() const {
     c_item asked_item;
     c_equipmentItemTypes equipmentType;
     timer.start();
-    query.prepare("SELECT * FROM wakfu_builder.equipmentItemType as et, wakfu_builder.item as it WHERE it.itemTypeId = et.id");
+    query.prepare(
+        "SELECT * FROM wakfu_builder.equipmentItemType as et, wakfu_builder.item as it WHERE "
+        "it.itemTypeId = et.id");
     if (query.exec()) {
         int id_item = query.record().indexOf("item.id");
         int idlvl = query.record().indexOf("lvl");
@@ -622,11 +663,12 @@ QList<c_item> c_dbmanager::getAllItem() const {
 
 bool c_dbmanager::add_state(const c_state &state) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.states (id,name,description)"
-                  "VALUES (:id, :name, :description)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.states (id,name,description)"
+        "VALUES (:id, :name, :description)");
     query.bindValue(":id", state.get_id());
     query.bindValue(":name", state.get_name());
-    query.bindValue(":description",state.get_description());
+    query.bindValue(":description", state.get_description());
 
     bool flag = query.exec();
     return flag;
@@ -634,8 +676,9 @@ bool c_dbmanager::add_state(const c_state &state) {
 
 c_state c_dbmanager::get_state(const int id) const {
     QSqlQuery query(m_db);
-    query.prepare("SELECT * FROM wakfu_builder.states "
-                  "WHERE id = :id");
+    query.prepare(
+        "SELECT * FROM wakfu_builder.states "
+        "WHERE id = :id");
     query.bindValue(":id", id);
     c_state state;
     if (query.exec()) {
@@ -650,27 +693,30 @@ c_state c_dbmanager::get_state(const int id) const {
     return state;
 }
 
-QList<int> c_dbmanager::getid_item_from_actions(const QList<QString> carac_effect, const QList<int> rarities,
-                                                const QList<int> types, const QList<int> bondaries, const QString name,
+QList<int> c_dbmanager::getid_item_from_actions(const QList<QString> carac_effect,
+                                                const QList<int> rarities, const QList<int> types,
+                                                const QList<int> bondaries, const QString name,
                                                 const bool final, const QList<bool> condi) const {
     QList<int> res;
     QSqlQuery query(m_db);
     QString query_string;
     QString _name = name;
     if (!condi.isEmpty()) {
-        query_string = prepareQuery_condi(carac_effect,rarities,types,bondaries,_name.replace("'","''"),final,condi);
+        query_string = prepareQuery_condi(carac_effect, rarities, types, bondaries,
+                                          _name.replace("'", "''"), final, condi);
     } else {
-        query_string = prepareQuery_simple(carac_effect,rarities,types,bondaries,_name.replace("'","''"),final);
+        query_string = prepareQuery_simple(carac_effect, rarities, types, bondaries,
+                                           _name.replace("'", "''"), final);
     }
     query.prepare(query_string);
     for (int i = 0; i < rarities.size(); ++i) {
-        query.bindValue(QString(":rarity%1").arg(i),rarities.at(i));
+        query.bindValue(QString(":rarity%1").arg(i), rarities.at(i));
     }
     for (int i = 0; i < types.size(); ++i) {
-        query.bindValue(QString(":types%1").arg(i),types.at(i));
+        query.bindValue(QString(":types%1").arg(i), types.at(i));
     }
     for (int i = 0; i < carac_effect.size(); ++i) {
-        query.bindValue(QString(":carac_effect%1").arg(i),carac_effect.at(i));
+        query.bindValue(QString(":carac_effect%1").arg(i), carac_effect.at(i));
     }
     if (query.exec()) {
         int id = query.record().indexOf("id");
@@ -686,37 +732,42 @@ QList<int> c_dbmanager::getid_item_from_actions(const QList<QString> carac_effec
 }
 
 QList<int> c_dbmanager::getid_item_from_actions_sorted(const QList<QString> carac_effect,
-                                                       const QList<int> rarities, const QList<int> types,
-                                                       const QList<int> bondaries, const QString name,
-                                                       const bool final, const QList<bool> condi) const {
+                                                       const QList<int> rarities,
+                                                       const QList<int> types,
+                                                       const QList<int> bondaries,
+                                                       const QString name, const bool final,
+                                                       const QList<bool> condi) const {
     QList<int> res;
     QSqlQuery query(m_db);
-    QString query_string = prepareQuery_condi(carac_effect,rarities,types,bondaries,QString(),final,condi);
-    QString query_string_sorted = QString("SELECT item.id,sum(carac.value) "
-                                          "FROM ( %1 ) as item INNER JOIN "
-                                          "     wakfu_builder.relation_item_carac as r_item_carac "
-                                          "ON item.id = r_item_carac.id_item "
-                                          "INNER JOIN wakfu_builder.carac as carac "
-                                          "ON r_item_carac.id_carac = carac.id WHERE ").arg(query_string);
+    QString query_string =
+        prepareQuery_condi(carac_effect, rarities, types, bondaries, QString(), final, condi);
+    QString query_string_sorted = QString(
+                                      "SELECT item.id,sum(carac.value) "
+                                      "FROM ( %1 ) as item INNER JOIN "
+                                      "     wakfu_builder.relation_item_carac as r_item_carac "
+                                      "ON item.id = r_item_carac.id_item "
+                                      "INNER JOIN wakfu_builder.carac as carac "
+                                      "ON r_item_carac.id_carac = carac.id WHERE ")
+                                      .arg(query_string);
     if (carac_effect.size() != 0) {
         query_string_sorted += "( carac.effect = :carac_effect0 OR";
         for (int i = 1; i < carac_effect.size(); ++i) {
             query_string_sorted += QString(" carac.effect = :carac_effect%1 OR").arg(i);
         }
-        query_string_sorted.remove(QRegExp("OR$"));
+        query_string_sorted.remove(QRegularExpression("OR$"));
         query_string_sorted += ")";
     }
     query_string_sorted += "GROUP BY item.id ORDER BY sum(carac.value) DESC";
 
     query.prepare(query_string_sorted);
     for (int i = 0; i < rarities.size(); ++i) {
-        query.bindValue(QString(":rarity%1").arg(i),rarities.at(i));
+        query.bindValue(QString(":rarity%1").arg(i), rarities.at(i));
     }
     for (int i = 0; i < types.size(); ++i) {
-        query.bindValue(QString(":types%1").arg(i),types.at(i));
+        query.bindValue(QString(":types%1").arg(i), types.at(i));
     }
     for (int i = 0; i < carac_effect.size(); ++i) {
-        query.bindValue(QString(":carac_effect%1").arg(i),carac_effect.at(i));
+        query.bindValue(QString(":carac_effect%1").arg(i), carac_effect.at(i));
     }
 
     if (query.exec()) {
@@ -734,13 +785,19 @@ QList<int> c_dbmanager::getid_item_from_actions_sorted(const QList<QString> cara
 
 QList<c_item> c_dbmanager::getItems(const QList<int> ids) const {
     QList<c_item> res;
+    if (ids.empty()) {
+        return res;
+    }
+
     QSqlQuery query(m_db);
     QString query_string;
-    query_string = "SELECT * FROM wakfu_builder.equipmentItemType as et, wakfu_builder.item as item WHERE item.itemTypeId = et.id AND (";
+    query_string =
+        "SELECT * FROM wakfu_builder.equipmentItemType as et, wakfu_builder.item as item WHERE "
+        "item.itemTypeId = et.id AND (";
     for (int i = 0; i < ids.size(); ++i) {
-       query_string.push_back(QString(" item.id = %1 OR").arg(ids.at(i)));
+        query_string.push_back(QString(" item.id = %1 OR").arg(ids.at(i)));
     }
-    query_string.remove(QRegExp("OR$"));
+    query_string.remove(QRegularExpression("OR$"));
     query_string.push_back(")");
     query_string.push_back("ORDER BY item.lvl DESC");
     if (query.exec(query_string)) {
@@ -749,10 +806,11 @@ QList<c_item> c_dbmanager::getItems(const QList<int> ids) const {
             res.push_back(item);
         }
     }
+
     return res;
 }
 
-c_item c_dbmanager::getItemFromQueryLite(const QSqlQuery query) const {
+c_item c_dbmanager::getItemFromQueryLite(const QSqlQuery &query) const {
     c_item asked_item;
     int id_item = query.record().indexOf("item.id");
     int idlvl = query.record().indexOf("lvl");
@@ -799,8 +857,9 @@ QVector<c_effect> c_dbmanager::getUseEffectFromItemId(const int id) const {
     QVector<c_effect> useEffect;
     QSqlQuery s_query(m_db);
     s_query.clear();
-    s_query.prepare("SELECT er.id_E FROM wakfu_builder.item AS it, wakfu_builder.item_useEffect_relation AS er "
-                    "WHERE it.id = :id AND er.id_item = it.id");
+    s_query.prepare(
+        "SELECT er.id_E FROM wakfu_builder.item AS it, wakfu_builder.item_useEffect_relation AS er "
+        "WHERE it.id = :id AND er.id_item = it.id");
     s_query.bindValue(":id", id);
     if (s_query.exec()) {
         int id = s_query.record().indexOf("id_E");
@@ -815,8 +874,10 @@ QVector<c_effect> c_dbmanager::getEquipEffectFromItemId(const int id) const {
     QVector<c_effect> equipEffect;
     QSqlQuery s_query(m_db);
     s_query.clear();
-    s_query.prepare("SELECT er.id_E FROM wakfu_builder.item AS it, wakfu_builder.item_useEquipEffect_relation AS er "
-                    "WHERE it.id = :id AND er.id_item = it.id");
+    s_query.prepare(
+        "SELECT er.id_E FROM wakfu_builder.item AS it, wakfu_builder.item_useEquipEffect_relation "
+        "AS er "
+        "WHERE it.id = :id AND er.id_item = it.id");
     s_query.bindValue(":id", id);
     if (s_query.exec()) {
         int id = s_query.record().indexOf("id_E");
@@ -829,10 +890,11 @@ QVector<c_effect> c_dbmanager::getEquipEffectFromItemId(const int id) const {
 
 int c_dbmanager::add_save_builder(const QString json, const QString name, const int lvl) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.builder_save (json,name,niveau) VALUES (:json,:name,:lvl)");
-    query.bindValue(":json",json);
-    query.bindValue(":lvl",lvl);
-    query.bindValue(":name",name);
+    query.prepare(
+        "INSERT INTO wakfu_builder.builder_save (json,name,niveau) VALUES (:json,:name,:lvl)");
+    query.bindValue(":json", json);
+    query.bindValue(":lvl", lvl);
+    query.bindValue(":name", name);
     if (query.exec()) {
         QSqlQuery s_query(m_db);
         s_query.prepare("SELECT LASTVAL()");
@@ -847,15 +909,18 @@ int c_dbmanager::add_save_builder(const QString json, const QString name, const 
     return 0;
 }
 
-int c_dbmanager::update_save_builder(const QString json, const int id, const QString name, const int lvl) {
+int c_dbmanager::update_save_builder(const QString json, const int id, const QString name,
+                                     const int lvl) {
     QSqlQuery query(m_db);
-    query.prepare("WITH rows AS ( UPDATE wakfu_builder.builder_save SET json = :json, name = :name, niveau = :lvl "
-                  "WHERE id = :id RETURNING 1) "
-                  "SELECT count(*) FROM rows;");
-    query.bindValue(":json",json);
-    query.bindValue(":id",id);
-    query.bindValue(":lvl",lvl);
-    query.bindValue(":name",name);
+    query.prepare(
+        "WITH rows AS ( UPDATE wakfu_builder.builder_save SET json = :json, name = :name, niveau = "
+        ":lvl "
+        "WHERE id = :id RETURNING 1) "
+        "SELECT count(*) FROM rows;");
+    query.bindValue(":json", json);
+    query.bindValue(":id", id);
+    query.bindValue(":lvl", lvl);
+    query.bindValue(":name", name);
     if (query.exec()) {
         int id = query.record().indexOf("count");
         while (query.next()) {
@@ -870,19 +935,17 @@ int c_dbmanager::update_save_builder(const QString json, const int id, const QSt
 int c_dbmanager::remove_builder(const int id) {
     QSqlQuery query(m_db);
     query.prepare("DELETE FROM wakfu_builder.builder_save WHERE id = :id");
-    query.bindValue(":id",id);
+    query.bindValue(":id", id);
     return query.exec();
 }
 
-QSqlDatabase c_dbmanager::getDb() const
-{
-    return m_db;
-}
+QSqlDatabase c_dbmanager::getDb() const { return m_db; }
 
 bool c_dbmanager::add_carac(const c_carac carac) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.carac (id,effect,value) "
-                  "VALUES (:id, :effect, :value)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.carac (id,effect,value) "
+        "VALUES (:id, :effect, :value)");
     query.bindValue(":id", carac.id);
     query.bindValue(":effect", carac.effect);
     query.bindValue(":value", carac.value);
@@ -893,9 +956,10 @@ bool c_dbmanager::add_carac(const c_carac carac) {
 
 c_carac c_dbmanager::get_carac(const int id) const {
     QSqlQuery query(m_db);
-    query.prepare("SELECT * FROM wakfu_builder.carac "
-                  "WHERE id = :id");
-    query.bindValue(":id",id);
+    query.prepare(
+        "SELECT * FROM wakfu_builder.carac "
+        "WHERE id = :id");
+    query.bindValue(":id", id);
     c_carac carac;
     if (query.exec()) {
         int id = query.record().indexOf("id");
@@ -914,25 +978,35 @@ c_carac c_dbmanager::get_carac(const int id) const {
 
 bool c_dbmanager::add_relation_item_carac(const int id_item, const int id_carac) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.relation_item_carac (id_item,id_carac) "
-                  "VALUES (:id_item, :id_carac)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.relation_item_carac (id_item,id_carac) "
+        "VALUES (:id_item, :id_carac)");
     query.bindValue(":id_item", id_item);
     query.bindValue(":id_carac", id_carac);
     bool flag = query.exec();
     return flag;
 }
 
-QString c_dbmanager::prepareQuery_simple(const QList<QString> carac_effect, const QList<int> rarities,
-                                         const QList<int> types, const QList<int> bondaries, const QString name,
+QString c_dbmanager::prepareQuery_simple(const QList<QString> carac_effect,
+                                         const QList<int> rarities, const QList<int> types,
+                                         const QList<int> bondaries, const QString name,
                                          const bool final) const {
     QString query_string;
     query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
-    for (int i = 0; i< carac_effect.size(); ++i) {
-        query_string += QString(", wakfu_builder.carac as carac%1, wakfu_builder.relation_item_carac as relation%1").arg(i);
+    for (int i = 0; i < carac_effect.size(); ++i) {
+        query_string +=
+            QString(
+                ", wakfu_builder.carac as carac%1, wakfu_builder.relation_item_carac as relation%1")
+                .arg(i);
     }
-    query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) %4 AND").arg(bondaries.at(0)).arg(bondaries.at(1))
-            .arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"")
-            .arg(final?"AND isFinal = true":"");
+    query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) %4 AND")
+                        .arg(bondaries.at(0))
+                        .arg(bondaries.at(1))
+                        .arg(types.contains(c_item::mapTypeToId.value("PET")) ||
+                                     types.contains(c_item::mapTypeToId.value("MOUNT"))
+                                 ? "OR item.lvl = -1"
+                                 : "")
+                        .arg(final ? "AND isFinal = true" : "");
 
     if (!carac_effect.isEmpty()) {
         for (int i = 0; i < carac_effect.size(); ++i) {
@@ -945,8 +1019,8 @@ QString c_dbmanager::prepareQuery_simple(const QList<QString> carac_effect, cons
         for (int i = 0; i < carac_effect.size(); ++i) {
             query_string += QString(" carac%1.effect = :carac_effect%1 AND").arg(i);
         }
-        query_string.remove(QRegExp("AND$"));
-        query_string.remove(QRegExp("OR$"));
+        query_string.remove(QRegularExpression("AND$"));
+        query_string.remove(QRegularExpression("OR$"));
         query_string.append(" AND");
     }
     if (!rarities.isEmpty()) {
@@ -954,7 +1028,7 @@ QString c_dbmanager::prepareQuery_simple(const QList<QString> carac_effect, cons
         for (int i = 0; i < rarities.size(); ++i) {
             query_string += QString(" item.rarity = :rarity%1 OR").arg(i);
         }
-        query_string.remove(QRegExp("OR$"));
+        query_string.remove(QRegularExpression("OR$"));
         query_string += (" ) ");
         query_string.append(" AND");
     }
@@ -963,7 +1037,7 @@ QString c_dbmanager::prepareQuery_simple(const QList<QString> carac_effect, cons
         for (int i = 0; i < types.size(); ++i) {
             query_string += QString(" item.itemTypeId = :types%1 OR").arg(i);
         }
-        query_string.remove(QRegExp("OR$"));
+        query_string.remove(QRegularExpression("OR$"));
         query_string += (" ) ");
         query_string.append(" AND");
     }
@@ -971,22 +1045,32 @@ QString c_dbmanager::prepareQuery_simple(const QList<QString> carac_effect, cons
         query_string.append(QString(" item.title LIKE '\%%1\%' ").arg(name));
         query_string.append(" AND");
     }
-    query_string.remove(QRegExp("AND$"));
-    query_string.remove(QRegExp("WHERE$"));
+    query_string.remove(QRegularExpression("AND$"));
+    query_string.remove(QRegularExpression("WHERE$"));
     query_string.push_back(" GROUP BY item.id,item.lvl ORDER BY item.lvl ASC");
     return query_string;
 }
 
-QString c_dbmanager::prepareQuery_condi(const QList<QString> carac_effect, const QList<int> rarities, const QList<int> types,
-                                        const QList<int> bondaries, const QString name, const bool final, const QList<bool> condi) const {
+QString c_dbmanager::prepareQuery_condi(const QList<QString> carac_effect,
+                                        const QList<int> rarities, const QList<int> types,
+                                        const QList<int> bondaries, const QString name,
+                                        const bool final, const QList<bool> condi) const {
     QString query_string;
     query_string = "SELECT item.id,item.lvl FROM wakfu_builder.item as item ";
-    for (int i = 0; i< carac_effect.size(); ++i) {
-        query_string += QString(", wakfu_builder.carac as carac%1, wakfu_builder.relation_item_carac as relation%1").arg(i);
+    for (int i = 0; i < carac_effect.size(); ++i) {
+        query_string +=
+            QString(
+                ", wakfu_builder.carac as carac%1, wakfu_builder.relation_item_carac as relation%1")
+                .arg(i);
     }
-    query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) %4 AND").arg(bondaries.at(0)).arg(bondaries.at(1))
-            .arg(types.contains(c_item::mapTypeToId["PET"])||types.contains(c_item::mapTypeToId["MOUNT"])?"OR item.lvl = -1":"")
-            .arg(final?"AND isFinal = true":"");
+    query_string += QString(" WHERE (item.lvl >= %1 AND item.lvl <= %2 %3) %4 AND")
+                        .arg(bondaries.at(0))
+                        .arg(bondaries.at(1))
+                        .arg(types.contains(c_item::mapTypeToId.value("PET")) ||
+                                     types.contains(c_item::mapTypeToId.value("MOUNT"))
+                                 ? "OR item.lvl = -1"
+                                 : "")
+                        .arg(final ? "AND isFinal = true" : "");
 
     if (!carac_effect.isEmpty()) {
         for (int i = 0; i < carac_effect.size(); ++i) {
@@ -996,8 +1080,8 @@ QString c_dbmanager::prepareQuery_condi(const QList<QString> carac_effect, const
             query_string += QString(" relation%1.id_carac = carac%1.id AND").arg(i);
         }
         query_string += generateCombiQuery_carac(condi);
-        query_string.remove(QRegExp("AND$"));
-        query_string.remove(QRegExp("OR$"));
+        query_string.remove(QRegularExpression("AND$"));
+        query_string.remove(QRegularExpression("OR$"));
         query_string.append(" AND");
     }
     if (!rarities.isEmpty()) {
@@ -1005,7 +1089,7 @@ QString c_dbmanager::prepareQuery_condi(const QList<QString> carac_effect, const
         for (int i = 0; i < rarities.size(); ++i) {
             query_string += QString(" item.rarity = :rarity%1 OR").arg(i);
         }
-        query_string.remove(QRegExp("OR$"));
+        query_string.remove(QRegularExpression("OR$"));
         query_string += (" ) ");
         query_string.append(" AND");
     }
@@ -1014,7 +1098,7 @@ QString c_dbmanager::prepareQuery_condi(const QList<QString> carac_effect, const
         for (int i = 0; i < types.size(); ++i) {
             query_string += QString(" item.itemTypeId = :types%1 OR").arg(i);
         }
-        query_string.remove(QRegExp("OR$"));
+        query_string.remove(QRegularExpression("OR$"));
         query_string += (" ) ");
         query_string.append(" AND");
     }
@@ -1022,8 +1106,8 @@ QString c_dbmanager::prepareQuery_condi(const QList<QString> carac_effect, const
         query_string.append(QString(" item.title LIKE '\%%1\%' ").arg(name));
         query_string.append(" AND");
     }
-    query_string.remove(QRegExp("AND$"));
-    query_string.remove(QRegExp("WHERE$"));
+    query_string.remove(QRegularExpression("AND$"));
+    query_string.remove(QRegularExpression("WHERE$"));
     query_string.push_back(" GROUP BY item.id,item.lvl ORDER BY item.lvl DESC");
     return query_string;
 }
@@ -1034,7 +1118,7 @@ bool c_dbmanager::setFinal(const QList<int> isFinalList) {
     foreach (int id, isFinalList) {
         query_string.append(QString(" id = %1 OR").arg(id));
     }
-    query_string.remove(QRegExp("OR$"));
+    query_string.remove(QRegularExpression("OR$"));
     query.prepare(query_string);
     bool flag = query.exec();
     return flag;
@@ -1064,131 +1148,186 @@ void c_dbmanager::empty_database() {
 void c_dbmanager::check_structure() {
     QSqlQuery query(m_db);
     qDebug() << m_db.tables();
-    if (!m_db.tables().contains("wakfu_builder.relation_item_carac") || (get_number_column("relation_item_carac") != 2)) {
-        debug_check_table_structure("relation_item_carac",3);
+    if (!m_db.tables().contains("wakfu_builder")) {
+        bool flag = query.exec("CREATE SCHEMA wakfu_builder AUTHORIZATION wakfu_builder;");
+        qDebug() << "Creation of schema: " << (flag ? "true" : "false");
+    }
+    if (!m_db.tables().contains("wakfu_builder.relation_item_carac") ||
+        (get_number_column("relation_item_carac") != 2)) {
+        debug_check_table_structure("relation_item_carac", 3);
         query.exec("DROP TABLE wakfu_builder.relation_item_carac");
-        query.exec("CREATE TABLE wakfu_builder.relation_item_carac( id_item integer, id_carac integer, PRIMARY KEY(id_item,id_carac));");
+        query.exec(
+            "CREATE TABLE wakfu_builder.relation_item_carac( id_item integer, id_carac integer, "
+            "PRIMARY KEY(id_item,id_carac));");
         qDebug() << "relation_item_carac table created";
     }
-    if (!m_db.tables().contains("wakfu_builder.eqptype_pos_relation") || (get_number_column("eqptype_pos_relation") != 2)) {
-        debug_check_table_structure("eqptype_pos_relation",2);
+    if (!m_db.tables().contains("wakfu_builder.eqptype_pos_relation") ||
+        (get_number_column("eqptype_pos_relation") != 2)) {
+        debug_check_table_structure("eqptype_pos_relation", 2);
         query.exec("DROP TABLE wakfu_builder.eqptype_pos_relation");
-        query.exec("CREATE TABLE wakfu_builder.eqptype_pos_relation(id_ET integer, id_Pos integer, CONSTRAINT relation_pos_pk PRIMARY KEY(id_ET,id_Pos))");
+        query.exec(
+            "CREATE TABLE wakfu_builder.eqptype_pos_relation(id_ET integer, id_Pos integer, "
+            "CONSTRAINT relation_pos_pk PRIMARY KEY(id_ET,id_Pos))");
         qDebug() << "eqptype_pos_relation table created";
     }
-    if (!m_db.tables().contains("wakfu_builder.eqptype_dispos_relation") || (get_number_column("eqptype_dispos_relation") != 2)) {
-        debug_check_table_structure("eqptype_dispos_relation",2);
+    if (!m_db.tables().contains("wakfu_builder.eqptype_dispos_relation") ||
+        (get_number_column("eqptype_dispos_relation") != 2)) {
+        debug_check_table_structure("eqptype_dispos_relation", 2);
         query.exec("DROP TABLE wakfu_builder.eqptype_dispos_relation");
-        query.exec("CREATE TABLE wakfu_builder.eqptype_dispos_relation (id_ET integer, id_Pos integer, CONSTRAINT relation_disPos_pk PRIMARY KEY(id_ET,id_Pos))");
+        query.exec(
+            "CREATE TABLE wakfu_builder.eqptype_dispos_relation (id_ET integer, id_Pos integer, "
+            "CONSTRAINT relation_disPos_pk PRIMARY KEY(id_ET,id_Pos))");
         qDebug() << "eqptype_dispos_relation table created";
     }
-    if (!m_db.tables().contains("wakfu_builder.item_properties_relation") || (get_number_column("item_properties_relation") != 2)) {
-        debug_check_table_structure("item_properties_relation",2);
+    if (!m_db.tables().contains("wakfu_builder.item_properties_relation") ||
+        (get_number_column("item_properties_relation") != 2)) {
+        debug_check_table_structure("item_properties_relation", 2);
         query.exec("DROP TABLE wakfu_builder.item_properties_relation");
-        query.exec("CREATE TABLE wakfu_builder.item_properties_relation(id_item integer, id_property integer, CONSTRAINT relation_prop_pk PRIMARY KEY(id_item,id_property));");
+        query.exec(
+            "CREATE TABLE wakfu_builder.item_properties_relation(id_item integer, id_property "
+            "integer, CONSTRAINT relation_prop_pk PRIMARY KEY(id_item,id_property));");
         qDebug() << "item_properties_relation table created";
     }
-    if (!m_db.tables().contains("wakfu_builder.item_useeffect_relation") || (get_number_column("item_useeffect_relation") != 2)) {
-        debug_check_table_structure("item_useeffect_relation",2);
+    if (!m_db.tables().contains("wakfu_builder.item_useeffect_relation") ||
+        (get_number_column("item_useeffect_relation") != 2)) {
+        debug_check_table_structure("item_useeffect_relation", 2);
         query.exec("DROP TABLE wakfu_builder.item_useeffect_relation");
-        query.exec("CREATE TABLE wakfu_builder.item_useeffect_relation (id_item integer, id_E integer, PRIMARY KEY(id_item,id_E))");
+        query.exec(
+            "CREATE TABLE wakfu_builder.item_useeffect_relation (id_item integer, id_E integer, "
+            "PRIMARY KEY(id_item,id_E))");
         qDebug() << "item_useeffect_relation table created";
     }
-    if (!m_db.tables().contains("wakfu_builder.item_usecriticaleffect_relation") || (get_number_column("item_usecriticaleffect_relation") != 2)) {
-        debug_check_table_structure("item_usecriticaleffect_relation",2);
+    if (!m_db.tables().contains("wakfu_builder.item_usecriticaleffect_relation") ||
+        (get_number_column("item_usecriticaleffect_relation") != 2)) {
+        debug_check_table_structure("item_usecriticaleffect_relation", 2);
         query.exec("DROP TABLE wakfu_builder.item_usecriticaleffect_relation");
-        query.exec("CREATE TABLE wakfu_builder.item_usecriticaleffect_relation (id_item integer, id_E integer, CONSTRAINT relation_uCE_pk PRIMARY KEY(id_item,id_E))");
+        query.exec(
+            "CREATE TABLE wakfu_builder.item_usecriticaleffect_relation (id_item integer, id_E "
+            "integer, CONSTRAINT relation_uCE_pk PRIMARY KEY(id_item,id_E))");
         qDebug() << "item_usecriticaleffect_relation table created";
     }
-    if (!m_db.tables().contains("wakfu_builder.item_useequipeffect_relation") || (get_number_column("item_useequipeffect_relation") != 2)) {
-        debug_check_table_structure("item_useequipeffect_relation",2);
+    if (!m_db.tables().contains("wakfu_builder.item_useequipeffect_relation") ||
+        (get_number_column("item_useequipeffect_relation") != 2)) {
+        debug_check_table_structure("item_useequipeffect_relation", 2);
         query.exec("DROP TABLE wakfu_builder.item_useequipeffect_relation");
-        query.exec("CREATE TABLE wakfu_builder.item_useequipeffect_relation (id_item integer, id_E integer, CONSTRAINT relation_uEE_pk PRIMARY KEY(id_item,id_E))");
+        query.exec(
+            "CREATE TABLE wakfu_builder.item_useequipeffect_relation (id_item integer, id_E "
+            "integer, CONSTRAINT relation_uEE_pk PRIMARY KEY(id_item,id_E))");
         qDebug() << "item_useequipeffect_relation table created";
     }
     if (!m_db.tables().contains("wakfu_builder.action") || (get_number_column("action") != 3)) {
-        debug_check_table_structure("action",2);
+        debug_check_table_structure("action", 2);
         query.exec("DROP TABLE wakfu_builder.action");
-        query.exec("CREATE TABLE wakfu_builder.action (id integer PRIMARY KEY, description text, effect text)");
+        query.exec(
+            "CREATE TABLE wakfu_builder.action (id integer PRIMARY KEY, description text, effect "
+            "text)");
         qDebug() << "action table created";
     }
     if (!m_db.tables().contains("wakfu_builder.effect") || (get_number_column("effect") != 6)) {
-        debug_check_table_structure("effect",6);
+        debug_check_table_structure("effect", 6);
         query.exec("DROP TABLE wakfu_builder.effect");
-        query.exec("CREATE TABLE wakfu_builder.effect (id integer PRIMARY KEY, actionId integer,areaShape integer, areaSize text, params text, description text)");
+        query.exec(
+            "CREATE TABLE wakfu_builder.effect (id integer PRIMARY KEY, actionId integer,areaShape "
+            "integer, areaSize text, params text, description text)");
         qDebug() << "effect table created";
     }
-    if (!m_db.tables().contains("wakfu_builder.itemproperties") || (get_number_column("itemproperties") != 3)) {
-        debug_check_table_structure("itemproperties",3);
+    if (!m_db.tables().contains("wakfu_builder.itemproperties") ||
+        (get_number_column("itemproperties") != 3)) {
+        debug_check_table_structure("itemproperties", 3);
         query.exec("DROP TABLE wakfu_builder.itemproperties");
-        query.exec("CREATE TABLE wakfu_builder.itemproperties (id integer PRIMARY KEY, name text, description text)");
+        query.exec(
+            "CREATE TABLE wakfu_builder.itemproperties (id integer PRIMARY KEY, name text, "
+            "description text)");
         qDebug() << "itemproperties table created";
     }
-    if (!m_db.tables().contains("wakfu_builder.equipmentitemtype") || (get_number_column("equipmentitemtype") != 5)) {
-        debug_check_table_structure("equipmentitemtype",5);
+    if (!m_db.tables().contains("wakfu_builder.equipmentitemtype") ||
+        (get_number_column("equipmentitemtype") != 5)) {
+        debug_check_table_structure("equipmentitemtype", 5);
         query.exec("DROP TABLE wakfu_builder.equipmentitemtype");
-        query.exec("CREATE TABLE wakfu_builder.equipmentitemtype (id integer PRIMARY KEY, parentId integer, recyclable bool, visibleInAnimation bool, title text);");
+        query.exec(
+            "CREATE TABLE wakfu_builder.equipmentitemtype (id integer PRIMARY KEY, parentId "
+            "integer, recyclable bool, visibleInAnimation bool, title text);");
         qDebug() << "equipmentitemtype table created";
     }
-    if (!m_db.tables().contains("wakfu_builder.equipmentposition") || (get_number_column("equipmentposition") != 2)) {
-        debug_check_table_structure("equipmentPosition",2);
+    if (!m_db.tables().contains("wakfu_builder.equipmentposition") ||
+        (get_number_column("equipmentposition") != 2)) {
+        debug_check_table_structure("equipmentPosition", 2);
         query.exec("DROP TABLE wakfu_builder.equipmentposition");
-        query.exec("CREATE TABLE wakfu_builder.equipmentPosition (id integer PRIMARY KEY, name text)");
+        query.exec(
+            "CREATE TABLE wakfu_builder.equipmentPosition (id integer PRIMARY KEY, name text)");
         qDebug() << "equipmentPosition table created";
     }
     if (!m_db.tables().contains("wakfu_builder.item") || (get_number_column("item") != 22)) {
-        debug_check_table_structure("item",22);
+        debug_check_table_structure("item", 22);
         query.exec("DROP TABLE wakfu_builder.relation_item_carac");
-        query.exec("CREATE TABLE wakfu_builder.relation_item_carac( id_item integer, id_carac integer, PRIMARY KEY(id_item,id_carac));");
+        query.exec(
+            "CREATE TABLE wakfu_builder.relation_item_carac( id_item integer, id_carac integer, "
+            "PRIMARY KEY(id_item,id_carac));");
         qDebug() << "relation_item_carac table created";
         query.exec("DROP TABLE wakfu_builder.item");
-        query.exec("CREATE TABLE wakfu_builder.item( id integer PRIMARY KEY, lvl integer, itemTypeId integer, itemSetId integer, rarity integer, "
-                   "bindType integer, minimumShardSlotNumber integer, maximumShardSlotNumber integer, useApCost integer, useMpCost integer, useWpCost integer, "
-                   "useMinRange integer, useMaxRange integer, useTestFreeCell bool, useTestLos bool, useTestOnlyLine bool, useTestNoBorderCell bool, "
-                   "useWorldTarget integer, gfxid integer, title text, description text, isFinal bool)");
+        query.exec(
+            "CREATE TABLE wakfu_builder.item( id integer PRIMARY KEY, lvl integer, itemTypeId "
+            "integer, itemSetId integer, rarity integer, "
+            "bindType integer, minimumShardSlotNumber integer, maximumShardSlotNumber integer, "
+            "useApCost integer, useMpCost integer, useWpCost integer, "
+            "useMinRange integer, useMaxRange integer, useTestFreeCell bool, useTestLos bool, "
+            "useTestOnlyLine bool, useTestNoBorderCell bool, "
+            "useWorldTarget integer, gfxid integer, title text, description text, isFinal bool)");
         qDebug() << "item table created";
     }
     if (!m_db.tables().contains("wakfu_builder.carac") || (get_number_column("carac") != 3)) {
-        debug_check_table_structure("carac",3);
+        debug_check_table_structure("carac", 3);
         query.exec("DROP TABLE wakfu_builder.carac");
-        query.exec("CREATE TABLE wakfu_builder.carac (id integer PRIMARY KEY, effect text, value integer)");
+        query.exec(
+            "CREATE TABLE wakfu_builder.carac (id integer PRIMARY KEY, effect text, value "
+            "integer)");
         qDebug() << "carac table created";
     }
-    if (!m_db.tables().contains("wakfu_builder.builder_save") || (get_number_column("builder_save") != 4)) {
-        debug_check_table_structure("builder_save",4);
+    if (!m_db.tables().contains("wakfu_builder.builder_save") ||
+        (get_number_column("builder_save") != 4)) {
+        debug_check_table_structure("builder_save", 4);
         query.exec("DROP TABLE wakfu_builder.builder_save");
-        query.exec(" CREATE TABLE wakfu_builder.builder_save (id SERIAL UNIQUE, json text, name text, niveau integer)");
+        query.exec(
+            " CREATE TABLE wakfu_builder.builder_save (id SERIAL UNIQUE, json text, name text, "
+            "niveau integer)");
         qDebug() << "builder_save table created";
     }
     if (!m_db.tables().contains("wakfu_builder.states") || (get_number_column("states") != 3)) {
-        debug_check_table_structure("states",3);
+        debug_check_table_structure("states", 3);
         query.exec("DROP TABLE wakfu_builder.states");
-        query.exec(" CREATE TABLE wakfu_builder.states (id integer PRIMARY KEY, name text, description text)");
+        query.exec(
+            " CREATE TABLE wakfu_builder.states (id integer PRIMARY KEY, name text, description "
+            "text)");
         qDebug() << "states table created";
     }
-    if (!m_db.tables().contains("wakfu_builder.enchant_effect") || (get_number_column("enchant_effect") != 7)) {
-        debug_check_table_structure("states",3);
+    if (!m_db.tables().contains("wakfu_builder.enchant_effect") ||
+        (get_number_column("enchant_effect") != 7)) {
+        debug_check_table_structure("states", 3);
         query.exec("DROP TABLE wakfu_builder.enchant_effect");
-        query.exec(" CREATE TABLE wakfu_builder.enchant_effect (id integer PRIMARY KEY, color integer, effect text, valueperlvl text, bonus text, "
-                   "levelingcruve text, levelrequirement text)");
+        query.exec(
+            " CREATE TABLE wakfu_builder.enchant_effect (id integer PRIMARY KEY, color integer, "
+            "effect text, valueperlvl text, bonus text, "
+            "levelingcruve text, levelrequirement text)");
         qDebug() << "enchant_effect table created";
     }
 }
 
 void c_dbmanager::debug_check_table_structure(const QString name, const int size) {
     qDebug() << name << " :";
-    qDebug() << "Exists :" << m_db.tables().contains(QString("wakfu_builder.%1").arg(name)) << " Supposed size : " << size << "Size : " << get_number_column(name);
+    qDebug() << "Exists :" << m_db.tables().contains(QString("wakfu_builder.%1").arg(name))
+             << " Supposed size : " << size << "Size : " << get_number_column(name);
 }
 
 int c_dbmanager::get_number_column(const QString table) const {
     QSqlQuery query(m_db);
     int number = 0;
     QString query_string(QString(" SELECT count(column_name) FROM information_schema.columns "
-                         " WHERE table_schema = 'wakfu_builder' and table_name = '%1'").arg(table));
-    //qDebug() << query_string;
+                                 " WHERE table_schema = 'wakfu_builder' and table_name = '%1'")
+                             .arg(table));
+    // qDebug() << query_string;
     query.prepare(query_string);
-    if(query.exec()) {
-        //qDebug() << query.record();
+    if (query.exec()) {
+        // qDebug() << query.record();
         int id = query.record().indexOf("count");
         while (query.next()) {
             number = query.value(id).toInt();
@@ -1199,8 +1338,10 @@ int c_dbmanager::get_number_column(const QString table) const {
 
 bool c_dbmanager::add_enchantement_effect(const c_enchantement_effect effect) {
     QSqlQuery query(m_db);
-    query.prepare("INSERT INTO wakfu_builder.enchant_effect (id, color, effect, valueperlvl, bonus, levelingcruve, levelrequirement)"
-                  "VALUES (:id, :color, :effect, :valueperlvl, :bonus, :levelingcruve, :levelrequirement)");
+    query.prepare(
+        "INSERT INTO wakfu_builder.enchant_effect (id, color, effect, valueperlvl, bonus, "
+        "levelingcruve, levelrequirement)"
+        "VALUES (:id, :color, :effect, :valueperlvl, :bonus, :levelingcruve, :levelrequirement)");
     query.bindValue(":id", effect.id());
     query.bindValue(":color", effect.color());
     query.bindValue(":effect", effect.effect());
@@ -1247,7 +1388,7 @@ c_enchantement_effect c_dbmanager::get_enchantement_effect(const QString effect)
     c_enchantement_effect res;
     QSqlQuery query(m_db);
     query.prepare("SELECT * FROM wakfu_builder.enchant_effect WHERE effect = :effect");
-    query.bindValue(":effect",effect);
+    query.bindValue(":effect", effect);
     if (query.exec()) {
         int id = query.record().indexOf("id");
         int idColor = query.record().indexOf("color");
@@ -1274,14 +1415,21 @@ QString c_dbmanager::generateCombiQuery_carac(const QList<bool> condi) const {
     if (condi.isEmpty()) {
         action = QString(" carac0.effect = :carac_effect0 ");
     } else {
-        action = QString(" %2 carac0.effect = :carac_effect0 %1 ").arg(condi.at(0)?"OR":"AND").arg(condi.at(0)?"(":"");
+        action = QString(" %2 carac0.effect = :carac_effect0 %1 ")
+                     .arg(condi.at(0) ? "OR" : "AND")
+                     .arg(condi.at(0) ? "(" : "");
         for (int i = 1; i < condi.size(); ++i) {
-            action += QString("%2 carac%1.effect = :carac_effect%1 %3 %4 ").arg(i).arg((!condi[i-1]&&condi[i])?"(":"").arg((condi[i-1]&&!condi[i])?")":"").arg(condi[i]?"OR":"AND");
+            action += QString("%2 carac%1.effect = :carac_effect%1 %3 %4 ")
+                          .arg(i)
+                          .arg((!condi[i - 1] && condi[i]) ? "(" : "")
+                          .arg((condi[i - 1] && !condi[i]) ? ")" : "")
+                          .arg(condi[i] ? "OR" : "AND");
         }
         if (condi.size()) {
-            action += QString("carac%1.effect = :carac_effect%1 %2").arg(condi.size()).arg(condi.last()?")":"");
+            action += QString("carac%1.effect = :carac_effect%1 %2")
+                          .arg(condi.size())
+                          .arg(condi.last() ? ")" : "");
         }
     }
     return action;
 }
-

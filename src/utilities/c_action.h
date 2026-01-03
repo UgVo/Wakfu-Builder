@@ -1,25 +1,25 @@
 #ifndef C_ACTION_H
 #define C_ACTION_H
 
+#include <QJsonObject>
 #include <QString>
 #include <QVector>
-#include <QJsonObject>
+
 #include "utilities/c_tokenizer.h"
 
-class c_action
-{
-public:
+class c_action {
+   public:
     c_action(int id = 0, QString effect = QString(), QString description = QString());
     c_action(QJsonObject actionObject);
 
-private:
+   private:
     int _id;
     QString _effect;
     QString _description;
     c_tokenizer tokenizer;
 
-public:
-    void setId(const int id) ;
+   public:
+    void setId(const int id);
     void setEffect(const QString effect);
     void setDescription(const QString description);
 
@@ -30,4 +30,4 @@ public:
     QString getText(const QList<float>, const int) const;
 };
 
-#endif // C_ACTION_H
+#endif  // C_ACTION_H

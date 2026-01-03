@@ -1,41 +1,39 @@
 #include "c_theory_craft_resume.h"
+
 #include "ui_c_theory_craft_resume.h"
 
-c_theory_craft_resume::c_theory_craft_resume(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::c_theory_craft_resume)
-{
+c_theory_craft_resume::c_theory_craft_resume(QWidget *parent)
+    : QWidget(parent), ui(new Ui::c_theory_craft_resume) {
     ui->setupUi(this);
 
-    ui->tabWidget_resume->setStyleSheet(QString( "QTabWidget::pane {"
-                                                 "  border: 0px solid black; "
-                                                 "  border-radius: 3px; "
-                                                 "  border-top-left-radius: 0px; "
-                                                 "  background: %1;"
-                                                 "} "
-                                                 "QTabBar::tab {"
-                                                 "  border: 0px solid black; "
-                                                 "  border-bottom-left-radius: 3px; "
-                                                 "  border-top-left-radius: 3px; "
-                                                 "  height: 60px;"
-                                                 "  width: 30px;"
-                                                 "  background: %1;"
-                                                 "  color : white;"
-                                                 "} "
-                                                 "QTabBar::tab:!selected {"
-                                                 "  background: %2;"
-                                                 "}"
-                                                 "QLabel {"
-                                                 "  color: white;"
-                                                 "}").arg(app_color::dark_blue).arg(app_color::grey_blue_3));
+    ui->tabWidget_resume->setStyleSheet(QString("QTabWidget::pane {"
+                                                "  border: 0px solid black; "
+                                                "  border-radius: 3px; "
+                                                "  border-top-left-radius: 0px; "
+                                                "  background: %1;"
+                                                "} "
+                                                "QTabBar::tab {"
+                                                "  border: 0px solid black; "
+                                                "  border-bottom-left-radius: 3px; "
+                                                "  border-top-left-radius: 3px; "
+                                                "  height: 60px;"
+                                                "  width: 30px;"
+                                                "  background: %1;"
+                                                "  color : white;"
+                                                "} "
+                                                "QTabBar::tab:!selected {"
+                                                "  background: %2;"
+                                                "}"
+                                                "QLabel {"
+                                                "  color: white;"
+                                                "}")
+                                            .arg(app_color::dark_blue)
+                                            .arg(app_color::grey_blue_3));
 }
 
-c_theory_craft_resume::~c_theory_craft_resume()
-{
-    delete ui;
-}
+c_theory_craft_resume::~c_theory_craft_resume() { delete ui; }
 
-void c_theory_craft_resume::setValues(QMap<QString,qreal> _values) {
+void c_theory_craft_resume::setValues(QMap<QString, qreal> _values) {
     values = _values;
     updateView();
 }

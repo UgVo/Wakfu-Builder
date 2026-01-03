@@ -1,20 +1,21 @@
 #ifndef C_ITEM_H
 #define C_ITEM_H
 
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QMap>
 #include <QString>
 #include <QVector>
-#include <QJsonObject>
-#include <QJsonArray>
-#include <QMap>
+
 #include "c_effect.h"
-#include "c_itemproperties.h"
 #include "c_equipmentitemtypes.h"
+#include "c_itemproperties.h"
 
 class c_dbmanager;
 
 class c_carac {
-public :
-    c_carac(int _id = 0, QString _effect = QString(),int _value = 0) {
+   public:
+    c_carac(int _id = 0, QString _effect = QString(), int _value = 0) {
         id = _id;
         effect = _effect;
         value = _value;
@@ -24,14 +25,12 @@ public :
     int value;
 };
 
-class c_item
-{
-public:
-    c_item(int id = 0,int lvl = 0, QString name = QString(), QString description = QString(),
+class c_item {
+   public:
+    c_item(int id = 0, int lvl = 0, QString name = QString(), QString description = QString(),
            c_equipmentItemTypes itemType = c_equipmentItemTypes(), int itemSetId = 0,
-           int rarity = 0, bool bindType = false, int minShNum = 0,
-           int maxShNum = 4, int ApCost = 0, int MpCost = 0,
-           int WpCost = 0, int minRange = 0, int maxRange = 0,
+           int rarity = 0, bool bindType = false, int minShNum = 0, int maxShNum = 4,
+           int ApCost = 0, int MpCost = 0, int WpCost = 0, int minRange = 0, int maxRange = 0,
            bool testFreeCell = false, bool testLos = false, bool testOnlyLine = false,
            bool testNoBorderCell = true, int worldTarget = 0, int gfxId = 0,
            QVector<c_itemProperties> properties = QVector<c_itemProperties>(),
@@ -56,12 +55,11 @@ public:
     const static QString MOUNT;
     const static QString NONE;
 
-//    enum class positions {FIRST_WEAPON, SECOND_WEAPON, LEFT_HAND, RIGHT_HAND,
-//                          LEGS,NECK, BACK, BELT, HEAD, CHEST, SHOULDERS,
-//                          ACCESSORY, PET, NONE};
+    //    enum class positions {FIRST_WEAPON, SECOND_WEAPON, LEFT_HAND, RIGHT_HAND,
+    //                          LEGS,NECK, BACK, BELT, HEAD, CHEST, SHOULDERS,
+    //                          ACCESSORY, PET, NONE};
 
-private:
-
+   private:
     int _id;
     int _lvl;
     QString _name;
@@ -80,7 +78,7 @@ private:
     int _useMinRange;
     int _useMaxRange;
     bool _useTestFreeCell;
-    bool _useTestLos; // Los = Line Off Sight
+    bool _useTestLos;  // Los = Line Off Sight
     bool _useTestOnlyLine;
     bool _useTestNoBorderCell;
     int _useWorldTarget;
@@ -92,24 +90,25 @@ private:
     QVector<c_effect> _useCriticalEffects;
     QVector<c_effect> _equipEffects;
 
-    QMap<QString,int> _bonuses;
+    QMap<QString, int> _bonuses;
     QList<c_carac> _list_bonuses;
-    QMap<QString,QString> _constraints;
+    QMap<QString, QString> _constraints;
     QList<QString> _elements;
     int _number_element;
     bool _isFinal;
 
-public:
-    static QMap<QString,int> mapTypeToId;
-    static QMap<QString,QString> mapPositionToType;
-    static QMap<QString,int> mapRarityToId;
-    static QMap<QString,int> mapCaracToId;
-    static QMap<QString,int> mapFamilierSpeToLvl;
-    static QMap<QString,int> init_mapTypeToId();
-    static QMap<QString,QString> init_mapPositionToType();
-    static QMap<QString,int> init_mapRarityToId();
-    static QMap<QString,int> init_mapCaracToId();
-    static QMap<QString,int> ini_mapFamilierSpeToLvl();
+   public:
+    static QMultiMap<QString, int> mapTypeToId;
+    static QMultiMap<QString, QString> mapPositionToType;
+    static QMap<QString, int> mapRarityToId;
+    static QMap<QString, int> mapCaracToId;
+    static QMap<QString, int> mapFamilierSpeToLvl;
+
+    static QMultiMap<QString, int> init_mapTypeToId();
+    static QMultiMap<QString, QString> init_mapPositionToType();
+    static QMap<QString, int> init_mapRarityToId();
+    static QMap<QString, int> init_mapCaracToId();
+    static QMap<QString, int> ini_mapFamilierSpeToLvl();
 
     int getId() const;
     int getLvl() const;
@@ -167,7 +166,7 @@ public:
     void setEquipEffets(const QVector<c_effect>);
 
     void initBonuses();
-    QMap<QString,int> getBonuses() const;
+    QMap<QString, int> getBonuses() const;
     bool isEmpty();
     QList<QString> getElements(int number = 4) const;
     void setElements(const QList<QString> &elements);
@@ -183,4 +182,4 @@ public:
     void setIsFinal(bool isFinal);
 };
 
-#endif // C_ITEM_H
+#endif  // C_ITEM_H

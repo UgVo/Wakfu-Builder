@@ -2,30 +2,31 @@
 #define C_DATAMANAGER_H
 
 #include <utilities/utilities.h>
-#include "c_dbmanager.h"
-#include "c_networkmanager.h"
-#include "ui/c_bdd_password_dialog.h"
-#include <QObject>
-#include <QStringList>
-#include <QFile>
+
+#include <QCoreApplication>
 #include <QDebug>
+#include <QFile>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
-#include <QString>
-#include <QTranslator>
 #include <QMainWindow>
-#include <QSet>
-#include <QVariantMap>
-#include <QJsonArray>
+#include <QObject>
 #include <QProgressDialog>
-#include <QCoreApplication>
+#include <QSet>
+#include <QString>
+#include <QStringList>
+#include <QTranslator>
+#include <QVariantMap>
 #include <QXmlStreamReader>
 
-class c_datamanager : public QObject
-{
+#include "c_dbmanager.h"
+#include "c_networkmanager.h"
+#include "ui/c_bdd_password_dialog.h"
+
+class c_datamanager : public QObject {
     Q_OBJECT
-public:
+   public:
     c_datamanager();
     void checkVersion();
     void updateVersion(QString newVersion);
@@ -42,7 +43,7 @@ public:
     void parseFinal();
     bool isNewSoftVersion();
 
-private:
+   private:
     QStringList _filelist;
     c_networkManager* networkManager;
     c_dbmanager* dbmanager;
@@ -64,26 +65,25 @@ private:
 
     bool stop;
 
-public slots:
+   public slots:
     void slot_downloadVersionFinished(QString out);
     void slot_newVersion();
     void trigger_download_element();
-    void trigger_download_images(QString out =  QString());
+    void trigger_download_images(QString out = QString());
     void savePassword(QString password);
     void slot_check_softVersion(QString);
     void slot_stop();
     void empty_db();
 
-signals:
+   signals:
     void newVersion(QString);
-    void newItem(QString name,int index, int size);
+    void newItem(QString name, int index, int size);
     void updateItemFinished();
     void newImage(int index, int size);
     void downloadImageFinished();
     void newFile(int index, int size);
     void downloadFileFinished();
     void update_soft_version();
-
 };
 
-#endif // C_DATAMANAGER_H
+#endif  // C_DATAMANAGER_H

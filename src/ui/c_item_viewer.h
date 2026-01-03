@@ -1,64 +1,63 @@
 #ifndef C_ITEM_VIEWER_H
 #define C_ITEM_VIEWER_H
 
-#include <QWidget>
-#include <QStackedLayout>
+#include <QAction>
 #include <QLabel>
 #include <QList>
-#include <QStringList>
-#include <QVBoxLayout>
-#include <QString>
 #include <QMenu>
-#include <QAction>
-#include <QTimer>
 #include <QMouseEvent>
-#include "utilities/c_item.h"
+#include <QStackedLayout>
+#include <QString>
+#include <QStringList>
+#include <QTimer>
+#include <QVBoxLayout>
+#include <QWidget>
+
 #include "c_element_dialog.h"
 #include "c_elements_display.h"
 #include "c_item_display.h"
-
+#include "utilities/c_datamanager.h"
+#include "utilities/c_item.h"
 
 namespace Ui {
 class c_item_viewer;
 }
 
-class c_item_viewer : public QWidget
-{
+class c_item_viewer : public QWidget {
     Q_OBJECT
 
-public:
+   public:
     explicit c_item_viewer(const QString position = c_item::NONE, QWidget *parent = nullptr);
     ~c_item_viewer();
-    void setItem(c_item *item =  nullptr);
+    void setItem(c_item *item = nullptr);
     void updateView();
 
     bool getDisabled() const;
 
-private:
+   private:
     void setBackgroundImage();
-
 
     Ui::c_item_viewer *ui;
     QStackedLayout *image_layout;
     QLabel *background;
     QLabel *image;
-    QList<QLabel*> elements;
-    QMap<QString,QPixmap> images_elements;
+    QList<QLabel *> elements;
+    QMap<QString, QPixmap> images_elements;
     QVBoxLayout *elements_layout;
     bool own_item;
     QString position;
 
-    c_item* item;
+    c_item *item;
     bool disabled;
 
     c_item_display *it_display;
-    QWidget* _parent;
-    QTimer * timer;
+    QWidget *_parent;
+    QTimer *timer;
     bool block;
 
     QString imageDir;
 
-public slots:
+   public slots:
     void slot_context_menu(const QPoint &pos);
     void slot_unequip();
     void slot_refresh_elements();
@@ -74,11 +73,10 @@ public slots:
     void show_item_at_pos(QPoint pos);
     void hide_item();
 
-signals:
+   signals:
     void unequip(QString position);
     void elementsChanged();
     void clicked(QString position);
-
 };
 
-#endif // C_ITEM_VIEWER_H
+#endif  // C_ITEM_VIEWER_H
