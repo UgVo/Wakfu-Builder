@@ -11,6 +11,7 @@
 #include <QWidget>
 
 #include "ui.h"
+#include "utilities/c_datamanager.h"
 #include "utilities/c_dbmanager.h"
 #include "utilities/c_item.h"
 

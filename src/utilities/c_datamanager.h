@@ -43,6 +43,8 @@ class c_datamanager : public QObject {
     void parseFinal();
     bool isNewSoftVersion();
 
+    static QString imageDirectory();
+
    private:
     QStringList _filelist;
     c_networkManager* networkManager;
@@ -52,13 +54,15 @@ class c_datamanager : public QObject {
     QString url_soft_vers;
     QString version_local;
     QString pathJson;
-    QString pathImage;
     QString password;
     int index_fileList;
     QList<int> _imageList;
     int index_imageList;
     QString imageDir;
     QString soft_version;
+
+    static QString _pathImage;
+    static QString _resourcesDirectory;
 
     QList<int> id_non_final_list;
     bool new_soft_version;

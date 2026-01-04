@@ -1,5 +1,8 @@
 #include "c_datamanager.h"
 
+QString c_datamanager::_pathImage = "";
+QString c_datamanager::_resourcesDirectory = "";
+
 c_datamanager::c_datamanager() {
     dbmanager = nullptr;
     networkManager = new c_networkManager();
@@ -45,7 +48,9 @@ c_datamanager::c_datamanager() {
                   "\"6\": \"jobsItems.json\","
                   "\"7\": \"recipes.json\""
                   "},"
-                  "\"password\" : \"%1\""
+                  "\"password\" : \"%1\","
+                  "\"resources_directory\": "
+                  "\"/path/to/application/executable/\""
                   "}")
                   .arg(password);
         file.write(val.toUtf8());
@@ -59,9 +64,10 @@ c_datamanager::c_datamanager() {
     version_local = jObject_config.value((QString("version"))).toString();
     url_json = jObject_config.value(QString("url_json")).toString();
     url_image = jObject_config.value(QString("url_image")).toString();
-    pathImage = jObject_config.value(QString("path_images")).toString();
+    _pathImage = jObject_config.value(QString("path_images")).toString();
     password = jObject_config.value(QString("password")).toString();
     url_soft_vers = jObject_config.value(QString("url_soft_vers")).toString();
+    _resourcesDirectory = jObject_config.value(QString("resources_directory")).toString();
 
     JObject_nameList = jObject_config.value(QString("filelist")).toObject();
     for (int i = 0; i < JObject_nameList.size(); ++i) {
@@ -86,6 +92,8 @@ c_datamanager::c_datamanager() {
 
     stop = false;
 }
+
+QString c_datamanager::imageDirectory() { return _resourcesDirectory + _pathImage; }
 
 void c_datamanager::checkVersion() {
     if (networkManager != nullptr) {
@@ -278,7 +286,7 @@ void c_datamanager::parseItem() {
 QString c_datamanager::getVersion() { return version_local; }
 
 void c_datamanager::getImages() {
-    QDir directory(imageDir + "/images/items");
+    QDir directory(imageDirectory());
     QStringList images = directory.entryList(QStringList() << "*.png", QDir::Files);
     QList<int> images_id;
     QList<int> dbmanager_image_list = dbmanager->getImagesList();
@@ -315,7 +323,7 @@ void c_datamanager::trigger_download_images(QString out) {
         QObject::connect(networkManager, SIGNAL(downloadFinished(QString)), this,
                          SLOT(trigger_download_images(QString)));
         QString url = url_image + QString("%1.png").arg(_imageList.at(index_imageList++));
-        networkManager->downloadFile(url,pathImage);
+        networkManager->downloadFile(url, imageDirectory());
         emit newImage(index_imageList, _imageList.size());
     } else {
         qWarning() << "All files have been downloaded";

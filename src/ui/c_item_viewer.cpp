@@ -83,7 +83,7 @@ void c_item_viewer::setItem(c_item *new_item) {
     updateView();
 }
 void c_item_viewer::updateView() {
-    QPixmap pixmap_image(QString(imageDir + "/images/items/%1.png").arg(item->getGfxId()));
+    QPixmap pixmap_image(QString(c_datamanager::imageDirectory() + "%1.png").arg(item->getGfxId()));
     image->setPixmap(pixmap_image);
     image->setBackgroundRole(QPalette::Base);
     image->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
