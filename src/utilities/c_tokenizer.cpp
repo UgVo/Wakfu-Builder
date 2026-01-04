@@ -1,14 +1,15 @@
 #include "c_tokenizer.h"
 
 c_tokenizer::c_tokenizer() {
-    rx_assig = QRegExp("(^\\[#(\\d)\\](.*))");
-    rx_word = QRegExp(
+    rx_assig = QRegularExpression("(^\\[#(\\d)\\](.*))");
+    rx_word = QRegularExpression(
         "(^[a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ%:\\(\\)0-9 ]+)(.*)");
-    rx_condi = QRegExp("(^\\{\\[(\\d?)(\\D)(\\d)\\]\\?([^\\:]*)\\:([^\\{]*|.*\\{.+\\}.*)\\})(.*)");
-    rx_elem = QRegExp("^\\[([a-zA-Z0-9]+)\\](.*)");
-    rx_state = QRegExp(".*\\[(\\d*)\\].*");
-    rx_value = QRegExp("(^[0-9\\-]+)%? (.*)");
-    rx_sentence = QRegExp(
+    rx_condi = QRegularExpression(
+        "(^\\{\\[(\\d?)(\\D)(\\d)\\]\\?([^\\:]*)\\:([^\\{]*|.*\\{.+\\}.*)\\})(.*)");
+    rx_elem = QRegularExpression("^\\[([a-zA-Z0-9]+)\\](.*)");
+    rx_state = QRegularExpression(".*\\[(\\d*)\\].*");
+    rx_value = QRegularExpression("(^[0-9\\-]+)%? (.*)");
+    rx_sentence = QRegularExpression(
         "([a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\\. "
         "]+)([0-9]*)([a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\\. ]*)");
 }
@@ -16,31 +17,33 @@ c_tokenizer::c_tokenizer() {
 QMap<QString, QString> c_tokenizer::tokenize(const QString string) const {
     QMap<QString, QString> elem;
     QStringList capturedText;
-    if (!rx_assig.indexIn(string)) {
-        capturedText = rx_assig.capturedTexts();
+    auto m_assig = rx_assig.match(string);
+    auto m_word = rx_word.match(string);
+    auto m_condi = rx_condi.match(string);
+    auto m_elem = rx_elem.match(string);
+
+    if (m_assig.hasMatch()) {
         elem.insert("type", "assignment");
         elem.insert("value", capturedText.at(2));
-        elem.insert("rest", capturedText.at(3));
-    } else if (!rx_word.indexIn(string)) {
-        capturedText = rx_word.capturedTexts();
+        elem.insert("value", m_assig.captured(3));
+        elem.insert("rest", m_assig.captured(4));
+    } else if (m_word.hasMatch()) {
         elem.insert("type", "texte");
-        elem.insert("text", capturedText.at(1));
-        elem.insert("rest", capturedText.at(2));
-    } else if (!rx_condi.indexIn(string)) {
-        capturedText = rx_condi.capturedTexts();
+        elem.insert("text", m_word.captured(1));
+        elem.insert("rest", m_word.captured(2));
+    } else if (m_condi.hasMatch()) {
         elem.insert("type", "condition");
-        elem.insert("expression", capturedText.at(1));
-        elem.insert("rest", capturedText.at(7));
-        elem.insert("operator", capturedText.at(3));
-        elem.insert("value", capturedText.at(4));
-        elem.insert("true", capturedText.at(5));
-        elem.insert("false", capturedText.at(6));
-        elem.insert("l_value", capturedText.at(2));
-    } else if (!rx_elem.indexIn(string)) {
-        capturedText = rx_elem.capturedTexts();
+        elem.insert("expression", m_condi.captured(1));
+        elem.insert("rest", m_condi.captured(7));
+        elem.insert("operator", m_condi.captured(3));
+        elem.insert("value", m_condi.captured(4));
+        elem.insert("true", m_condi.captured(5));
+        elem.insert("false", m_condi.captured(6));
+        elem.insert("l_value", m_condi.captured(2));
+    } else if (m_elem.hasMatch()) {
         elem.insert("type", "element");
-        elem.insert("elem", capturedText.at(1));
-        elem.insert("rest", capturedText.at(2));
+        elem.insert("elem", m_elem.captured(1));
+        elem.insert("rest", m_elem.captured(2));
 
     } else {
         elem.insert("type", "nothing");
@@ -141,9 +144,9 @@ QString c_tokenizer::formatString(const QString string, const QList<float> param
 
 int c_tokenizer::get_id_state(const QString string) const {
     QStringList capturedText;
-    if (!rx_state.indexIn(string)) {
-        capturedText = rx_state.capturedTexts();
-        return capturedText.at(1).toInt();
+    auto m_state = rx_state.match(string);
+    if (m_state.hasMatch()) {
+        return m_state.captured(1).toInt();
     }
     return 0;
 }
@@ -151,14 +154,15 @@ int c_tokenizer::get_id_state(const QString string) const {
 QMap<QString, QString> c_tokenizer::interpret_effect(const QString string) const {
     QStringList capturedText;
     QMap<QString, QString> res;
-    if (!rx_value.indexIn(string)) {
-        capturedText = rx_value.capturedTexts();
-        res["value"] = capturedText.at(1);
-        if (!rx_sentence.indexIn(capturedText.at(2))) {
-            QString type_effect = rx_sentence.capturedTexts().at(1);
+    auto m_value = rx_value.match(string);
+    if (m_value.hasMatch()) {
+        res["value"] = m_value.captured(1);
+        auto m_sentence = rx_sentence.match(m_value.captured(2));
+        if (m_sentence.hasMatch()) {
+            QString type_effect = m_sentence.captured(1);
             QString opt_number;
-            if (rx_sentence.capturedTexts().size() > 2) {
-                opt_number = rx_sentence.capturedTexts().at(2);
+            if (m_sentence.lastCapturedIndex() > 2) {
+                opt_number = m_sentence.captured(2);
             }
             if ((type_effect.contains("PV") || type_effect.contains("Vie")) &&
                 !type_effect.contains("Vol")) {

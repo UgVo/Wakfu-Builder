@@ -3,7 +3,7 @@
 
 #include <QDebug>
 #include <QMap>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QString>
 #include <QStringList>
 
@@ -17,13 +17,13 @@ class c_tokenizer {
     QMap<QString, QString> interpret_effect(const QString string) const;
 
    private:
-    QRegExp rx_assig;
-    QRegExp rx_word;
-    QRegExp rx_condi;
-    QRegExp rx_elem;
-    QRegExp rx_state;
-    QRegExp rx_value;
-    QRegExp rx_sentence;
+    QRegularExpression rx_assig;
+    QRegularExpression rx_word;
+    QRegularExpression rx_condi;
+    QRegularExpression rx_elem;
+    QRegularExpression rx_state;
+    QRegularExpression rx_value;
+    QRegularExpression rx_sentence;
 };
 
 #endif  // C_TOKENIZER_H
