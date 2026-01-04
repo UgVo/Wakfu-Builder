@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: postgres
+    ports:
+      - 127.0.0.1:5432:5432
+    environment:
+      - POSTGRES_USER=wakfu_builder
+      - POSTGRES_PASSWORD=0123456
+      - POSTGRES_DB=wakfu_builder
