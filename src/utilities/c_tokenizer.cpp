@@ -1,7 +1,7 @@
 #include "c_tokenizer.h"
 
 c_tokenizer::c_tokenizer() {
-    rx_assig = QRegularExpression("(^\\[#(\\d)\\](.*))");
+    rx_assig = QRegularExpression("(^\\[#charac ([A-Z_]*)\\] \\[#(\\d)\\](.*))");
     rx_word = QRegularExpression(
         "(^[a-zA-Z-áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ%:\\(\\)0-9 ]+)(.*)");
     rx_condi = QRegularExpression(
@@ -24,7 +24,7 @@ QMap<QString, QString> c_tokenizer::tokenize(const QString string) const {
 
     if (m_assig.hasMatch()) {
         elem.insert("type", "assignment");
-        elem.insert("value", capturedText.at(2));
+        elem.insert("charac_type", m_assig.captured(2));
         elem.insert("value", m_assig.captured(3));
         elem.insert("rest", m_assig.captured(4));
     } else if (m_word.hasMatch()) {
