@@ -81,16 +81,16 @@ MainWindow::~MainWindow() { delete ui; }
 QString MainWindow::getApp_path() const { return app_path; }
 
 void MainWindow::test() {
-    c_tokenizer tok;
+    Tokenizer tok;
     qDebug() << "------------------- Debuging and tests -------------------";
     Q_ASSERT(!tok.formatString(QString("{[>2]?true:false}"), {1, 2, 0, 5}, 10, 2).compare("true"));
     Q_ASSERT(!tok.formatString(QString("{[>1]?true:false}"), {1, 2, 0, 5}, 10, 2).compare("true"));
-    Q_ASSERT(!tok.formatString(QString("[#1] Point{[>2]?s:} de Vie"), {1, 0}, 10, 2)
+    Q_ASSERT(!tok.formatString(QString("[#charac HP] [#1] Point{[>2]?s:} de Vie"), {1, 0}, 10, 2)
                   .compare("1 Point de Vie"));
-    Q_ASSERT(!tok.formatString(QString("[#1] Point{[>2]?s:} de Vie"), {1, 1}, 10, 2)
+    Q_ASSERT(!tok.formatString(QString("[#charac HP] [#1] Point{[>2]?s:} de Vie"), {1, 1}, 10, 2)
                   .compare("11 Points de Vie"));
-    Q_ASSERT(!tok.formatString(QString("[#1] Point{[<2]?s:} de Vie"), {1, 1}, 10, 2)
-                  .compare("11 Point de Vie"));
+    Q_ASSERT(!tok.formatString(QString("[#charac HP] -[#1] Point{[<2]?s:} de Vie"), {1, 1}, 10, 2)
+                  .compare("-11 Point de Vie"));
     Q_ASSERT(!tok.formatString(QString("[#1] Point{[=2]?s:} de Vie"), {1, 1}, 10, 2)
                   .compare("11 Point de Vie"));
     Q_ASSERT(!tok.formatString(QString("[#1] Point{[=2]?s:} de Vie"), {2, 0}, 10, 2)
@@ -120,7 +120,7 @@ void MainWindow::test() {
 }
 
 void MainWindow::test_interpret_effect() {
-    c_tokenizer tok;
+    Tokenizer tok;
     qDebug() << tok.interpret_effect("12 PV");
     qDebug() << tok.interpret_effect("12 Points de Vie");
     qDebug() << tok.interpret_effect("12 Vol de Vie");

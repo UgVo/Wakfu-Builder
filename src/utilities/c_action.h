@@ -16,7 +16,7 @@ class c_action {
     int _id;
     QString _effect;
     QString _description;
-    c_tokenizer tokenizer;
+    Tokenizer tokenizer;
 
    public:
     void setId(const int id);

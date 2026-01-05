@@ -43,7 +43,7 @@ class c_effect {
     QVector<float> _params;
     QString _description;
     const c_dbmanager *_database;
-    c_tokenizer tokenizer;
+    Tokenizer tokenizer;
 };
 
 #endif  // C_EFFECT_H
