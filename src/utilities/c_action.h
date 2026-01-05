@@ -5,7 +5,7 @@
 #include <QString>
 #include <QVector>
 
-#include "utilities/c_tokenizer.h"
+#include "utilities/tokenizer.h"
 
 class c_action {
    public:

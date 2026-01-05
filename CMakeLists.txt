@@ -97,7 +97,7 @@ set(utils_sources
     ${utils_dir}/c_networkmanager.cpp
     ${utils_dir}/c_save_builder_model.cpp
     ${utils_dir}/c_state.cpp
-    ${utils_dir}/c_tokenizer.cpp
+    ${utils_dir}/tokenizer.cpp
 )
 
 qt_add_executable(${target}

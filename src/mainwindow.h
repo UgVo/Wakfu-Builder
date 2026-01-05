@@ -31,7 +31,7 @@
 #include "utilities/c_io_manager.h"
 #include "utilities/c_item_model.h"
 #include "utilities/c_networkmanager.h"
-#include "utilities/c_tokenizer.h"
+#include "utilities/tokenizer.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

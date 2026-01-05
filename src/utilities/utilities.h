@@ -18,7 +18,7 @@
 #include "utilities/c_itemproperties.h"
 #include "utilities/c_networkmanager.h"
 #include "utilities/c_state.h"
-#include "utilities/c_tokenizer.h"
+#include "utilities/tokenizer.h"
 
 const QMap<QString, QString> mapItemToType{{"Hache", "TWO_HAND_WEAPON"},
                                            {"Anneau", "RING"},
